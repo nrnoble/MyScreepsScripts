@@ -7,16 +7,19 @@ var roleRepairer = require('role.repairer');
 var roleWallRepairer = require('role.wallRepairer');
 var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 var roleLongDistanceBuilder = require('role.longDistanceBuilder');
+var Util = require('Util');
 
-var minimumNumberOfHarvesters = 3;
-var minimumNumberOfUpgraders = 2;
-var minimumNumberOfBuilders = 2;
+var minimumNumberOfHarvesters = 2;
+var minimumNumberOfUpgraders = 1;
+var minimumNumberOfBuilders = 1;
 var minimumNumberOfRepairers = 1;
 var minimumNumberOfWallRepairers = 1;
 var minimumNumberOfLongDistanceHarvestersW2N1 = 2;
 var minimumNumberOfLongDistanceHarvestersW3N1 = 3;
 var minimumNumberOfLongDistanceBuildersW2N1 = 1;
 var HOME = 'W2N2'; 
+
+
 
 module.exports.loop = function () {
     // check for memory entries of died creeps by iterating over Memory.creeps
@@ -102,6 +105,8 @@ module.exports.loop = function () {
         c.memory.role == 'longDistanceHarvester' && c.memory.target == 'W3N1');
 
     var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
+    var energy = 1000;
+
     var name = undefined;
 
     // if not enough harvesters
@@ -142,13 +147,15 @@ module.exports.loop = function () {
     // try to spawn one
     
         name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, HOME, 'W2N1', 0);
-//        console.log('Create createLongDistanceBuilder ' + name );
+      //  console.log('Create createLongDistanceBuilder ' + name );
 
     }
     // if not enough longDistanceHarvesters for W2N1
     else if (numberOfLongDistanceHarvestersW2N1 < minimumNumberOfLongDistanceHarvestersW2N1) {
         // try to spawn one
         name = Game.spawns.Spawn1.createLongDistanceHarvester(energy, 5, HOME, 'W2N1', 0);
+       // console.log('Create createLongDistanceBuilder ' + name );
+
     }
     // if not enough longDistanceHarvesters for W3N1
     else if (numberOfLongDistanceHarvestersW3N1 < minimumNumberOfLongDistanceHarvestersW3N1) {
@@ -163,6 +170,8 @@ module.exports.loop = function () {
     // print name to console if spawning was a success
     // name > 0 would not work since string > 0 returns false
     if (!(name < 0)) {
-        console.log("Spawned new creep: " + name);
+        //console.log("Spawned new creep: " + name + " (" + name  + ")");
+        //console.log( "Spawned new creep: " + JSON.stringify(Game.creeps[name].memory.role));
+        console.log("[line " + Util.LineNumber() + "] " + "Spawned new creep: " + name  + "(" + JSON.stringify(Game.creeps[name].memory.role)+ ")");
     }
 };

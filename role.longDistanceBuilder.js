@@ -12,10 +12,10 @@ module.exports = {
         if (creep.room.name == creep.memory.home) {
             var exit = creep.room.findExitTo('W2N1');
             // and move to exit
-            console.log(creep.name + "14 Moving to exit: " + exit);
+           // console.log(creep.name + "14 Moving to exit: " + exit);
 
             creep.moveTo(creep.pos.findClosestByRange(exit));
-            console.log(creep.name + " 19 creep.pos.findClosestByRange: (" + exit + ")");
+           // console.log(creep.name + " 19 creep.pos.findClosestByRange: (" + exit + ")");
             
             
         }

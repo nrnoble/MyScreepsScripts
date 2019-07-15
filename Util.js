@@ -188,10 +188,15 @@ module.exports =
             
             return newCreep;
             
+        },
+
+        CreepInfo: function (){
+
+            for (let name in Game.creeps) {
+                var creep = Game.creeps[name];
+                console.log(name + " " + creep.memory.role);
+            }   
         }
-
-
-
 
     };
 

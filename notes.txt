@@ -14,3 +14,29 @@
 
 
 Game.creeps['Jack'].memory.target ='W2N1'
+var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
+Game.creeps.John.memory
+
+console.log(JSON.stringify(<myVariable>))
+
+
+
+wikipedia
+
+
+module.exports = function () {
+   var log = Memory.log;
+   if(log === null || log === undefined){
+       log = Memory.log = [];
+   }
+
+   var parts = ["["+Game.time+"]"];
+   for(var i in arguments){
+       parts.push(arguments[i]);
+   }
+   var msg = parts.join(" ");
+   log.push(msg);
+   if(log.length > 10){
+       log.shift();
+   }
+}
