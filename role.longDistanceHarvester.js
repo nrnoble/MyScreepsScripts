@@ -2,11 +2,14 @@ module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
         
-        
-        var pickupresult = creep.pickup(creep.pos);
 
-        const targets = creep.room.find(FIND_DROPPED_RESOURCES);
-        console.log ("LDH targets: " + targets);
+        
+        
+        // var pickupresult = creep.pickup(creep.pos);
+
+        // const targets = creep.room.find(FIND_DROPPED_RESOURCES);
+        //console.log ("LDH targets: " + targets);
+        
         // if creep is bringing energy to a structure but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
