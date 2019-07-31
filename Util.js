@@ -1,11 +1,6 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('Util');
- * mod.thing == 'a thing'; // true
- */
+
+
+var fileName = "Util        ";
 
 module.exports =
     {
@@ -55,6 +50,20 @@ module.exports =
         }
     },
 
+    TimeToDie: function(creep, ticksRemaining, energyLevel) {
+        var ttl = creep.ticksToLive;
+        var energyRemaining = creep.carry.energy;
+
+        if ((ttl < ticksRemaining) && (energyRemaining == energyLevel)) {
+
+            //this.debug(1, this.lineNumber(), "time to Die", creep.name);
+            console.log("Time to die: " + creep.name + "(" + creep.role + ")");
+            return creep.suicide();
+
+        }
+    },
+
+
     GetCreepCountObj: function (roleName) {
         var sp1 = Memory.spawns.Spawn1;
         var creepName = "";
@@ -98,6 +107,10 @@ module.exports =
             sp1.minorsCount++;
             return sp1.minorsCount;
         }
+        else if (roleName == "roleTestCreep") {
+            sp1.testCreepCount++;
+            return sp1.testCreepCount;
+        }
     },
 
 
@@ -132,8 +145,8 @@ module.exports =
             }
 
             else if (roleName == "wallRepairer") {
-
-                namecount = sp1.wallRepairsCount;
+                                
+                namecount = sp1.wallRepairersCount;
                 creepName = roleName + "_" + namecount;
                 return creepName;
             }
@@ -156,6 +169,12 @@ module.exports =
                 creepName = roleName + "_" + namecount;
                 return creepName;
             }
+            else if (roleName == "Test") {
+
+                namecount = sp1.testCreepCount;
+                creepName = roleName + "_" + namecount;
+                return creepName;
+            }
     },
 
     getRndInteger: function (min, max) {
@@ -168,7 +187,7 @@ module.exports =
            var creepNewName = this.GetRoleName(SpawnObj, roleName);
             
             var newCreep = new Object;
-            this.debug(1, this.LineNumber(), "creating a " + roleName + "(" + creepNewName + ")", creepNewName);
+           // this.debug(1, this.LineNumber(), "creating a " + roleName + "(" + creepNewName + ")", creepNewName);
             newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, working: false });
             if (typeof (newCreep) == "string") {
                 console.log("successfully created a " + roleName + "(" + creepNewName + ")");
@@ -182,7 +201,7 @@ module.exports =
                // console.log("this.GetCreepCountObj(roleName): " + this.GetCreepCountObj(roleName));
                //this.GetCreepCountObj(roleName) = this.GetCreepCountObj(roleName) + 1;
               //  creepNewName = this.GetRoleName(SpawnObj, roleName);
-                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, working: false });
+                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: "E44S3", target: "E44S3", working: false });
                 console.log("creating a " + roleName + "(" + creepNewName + ")");
             }
             
@@ -190,13 +209,71 @@ module.exports =
             
         },
 
-        CreepInfo: function (){
+    pickupResources: function(creep, range)
+    {
+       //TODO: scan for resources in a limited rangesuch as within 3-5 squares     
+        droppedEngeryTarget = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        return creep.pickup(droppedEngeryTarget);
+    },
 
-            for (let name in Game.creeps) {
-                var creep = Game.creeps[name];
-                console.log(name + " " + creep.memory.role);
-            }   
+    runCreeps (Creeps)
+    {
+        for (let name in Game.creeps) {
+            // get the creep object
+            var creep = Game.creeps[name];
+    
+    
+            // if creep is harvester, call harvester script
+            if (creep.memory.role == 'harvester') {
+                roleHarvester.run(creep);
+            }
+            // if creep is upgrader, call upgrader script
+            else if (creep.memory.role == 'upgrader') {
+                roleUpgrader.run(creep);
+            }
+            // if creep is builder, call builder script
+            else if (creep.memory.role == 'builder') {
+                roleBuilder.run(creep);
+            }
+            // if creep is repairer, call repairer script
+            else if (creep.memory.role == 'repairer') {
+                roleRepairer.run(creep);
+            }
+            // if creep is wallRepairer, call wallRepairer script
+            else if (creep.memory.role == 'wallRepairer') {
+                roleWallRepairer.run(creep);
+            }
+            // if creep is longDistanceHarvester, call longDistanceHarvester script
+            else if (creep.memory.role == 'longDistanceHarvester') {
+                roleLongDistanceHarvester.run(creep);
+            }
+            // if creep is claimer, call claimer script
+            else if (creep.memory.role == 'claimer') {
+                roleClaimer.run(creep);
+            }
+            // if creep is miner, call miner script
+            else if (creep.memory.role == 'miner') {
+                roleMiner.run(creep);
+            }
+            // if creep is lorry, call miner lorry
+            else if (creep.memory.role == 'lorry') {
+                roleLorry.run(creep);
+            }
+            else if (creep.memory.role == 'longDistanceBuilder') {
+               // console.log("Main [line " + util.LineNumber() + "] running roleLongDistanceBuilder: " + creep.name);
+                roleLongDistanceBuilder.run(creep);
+            }
+            else if (creep.memory.role == 'roleTestCreep') {
+               // console.log("[Main line " + util.LineNumber() + "] running TestCreep: " + creep.name);
+                roleTestCreep.run(creep);
+             }
         }
+    
+    }
+
+
+
+
 
     };
 

@@ -1,11 +1,21 @@
 var roleBuilder = require('role.builder');
+var util = require('Util'); 
+var fileName = "WallerRepair";
+
 
 module.exports = {
     // a function to run the logic for this role
-    run: function(creep) {
-       
-        creep.pickup(creep.pos);
-        
+    run: function (creep) {
+
+
+
+        // if resouces are nearby, attempt to pickup.
+        util.pickupResources(creep,0);
+
+        // check to see if engery == 0 and ttl < 75
+        var status = util.SelfSecide(creep);
+
+
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
@@ -27,7 +37,7 @@ module.exports = {
             var target = undefined;
 
             // loop with increasing percentages
-            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001){
+            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
                 // find a wall with less than percentage hits
                 for (let wall of walls) {
                     if (wall.hits / wall.hitsMax < percentage) {
@@ -48,7 +58,7 @@ module.exports = {
                 // try to repair it, if not in range
                 if (creep.repair(target) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(target);
+                    creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
             }
             // if we can't fine one
@@ -57,16 +67,29 @@ module.exports = {
                 roleBuilder.run(creep);
             }
         }
-        // if creep is supposed to harvest energy from source
+        // if creep is supposed to get energy
         else {
-            // find closest source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE, {
-                filter: (s) => s.energy > 0
+            // find closest container //s.structureType == STRUCTURE_CONTAINER || 
+            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
+                    s.store[RESOURCE_ENERGY] > 0
             });
-            // try to harvest energy, if the source is not in range
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                // move towards the source
-                creep.moveTo(source);
+            // if one was found
+            if (container != undefined) {
+                // try to withdraw energy, if the container is not in range
+                if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    // move towards it
+                    creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                }
+            }
+            else {
+                // find closest source
+                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+                // try to harvest energy, if the source is not in range
+                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                    // move towards it
+                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                }
             }
         }
     }
