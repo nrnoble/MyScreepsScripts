@@ -14,7 +14,7 @@ var roleTestCreep = require('role.Test');
 var util = require('Util'); 
 var fileName = "Main        ";
 
-var HOME = 'E44S3'; //test
+var HOME = 'E44S3'; //test sdfgdsfg
 var minNUmberofTestScreeps = 2; //Test Test test Test foobar99 Neal Nobleewas testsdf
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
