@@ -1,5 +1,5 @@
 var util = require('Util'); 
-var roleBuilder = require('role.builder');
+var util = require('Util'); 
 var roleUpgrader = require('role.upgrader');
 var roleRepairer = require('role.repairer');
 
@@ -44,11 +44,11 @@ module.exports = {
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
                     || s.structureType == STRUCTURE_TOWER)
-                    && s.energy < (s.energyCapacity * .8)
+                    && s.energy < s.energyCapacity
             });
 
             if (structure == undefined) {
-                console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
+             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
                 structure = creep.room.storage;
                 // if (structure == undefined)
                 // {
@@ -80,9 +80,9 @@ module.exports = {
             var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
             if (source == null) {
               console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
-              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
-              roleBuilder.run(creep);
-              //roleUpgrader.run(creep);
+              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+
+              roleUpgrader.run(creep);
               return;
             }
 

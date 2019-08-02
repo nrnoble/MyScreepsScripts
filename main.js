@@ -14,14 +14,12 @@ var roleTestCreep = require('role.Test');
 var util = require('Util'); 
 var fileName = "Main        ";
 
-var HOME = 'W2N1';
-var minNUmberofTestScreeps = 0; 
+var HOME = 'E44S3'; //test
+var minNUmberofTestScreeps = 2; //Test Test test Test foobar99 Neal Nobleewas testsdf
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
 
 module.exports.loop = function () {
-
-    
    
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
@@ -61,6 +59,8 @@ module.exports.loop = function () {
         }
     }
 
+
+    Game
 
     // for every creep name in Game.creeps
     for (let name in Game.creeps) {
@@ -186,28 +186,28 @@ module.exports.loop = function () {
         var numberOfMiners = _.sum(creepsInRoom, (c) => c.memory.role == 'miner');
         var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry');
         
-        //var numberOflongDistanceBuildersE44S2 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceBuilder' && c.memory.home == 'E44S2');    
+        var numberOflongDistanceBuildersE44S2 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceBuilder' && c.memory.home == 'E44S2');    
         // console.log('[' + fileName + 'line:' + util.LineNumber() + ']   numberOflongDistanceBuildersE44S2 is ' + numberOflongDistanceBuildersE44S2);
           //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']   spawn.memory.minLongDistanceBuildersE44S2 is ' + spawn.memory.minLongDistanceBuildersE44S2);
           //   spawn.memory.minLongDistanceBuildersE44S2
 
         // count the number of long distance harvesters globally
-        var numberOfLongDistanceHarvestersW2N1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'W2N1');
-        var numberOfLongDistanceHarvestersW3N1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'W3N1');
-        //var numberOfLongDistanceHarvestersE43S3 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'E43S3');
+        var numberOfLongDistanceHarvestersE44S2 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'E44S2');
+        var numberOfLongDistanceHarvestersE45S2 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'E45S2');
+        var numberOfLongDistanceHarvestersE43S3 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == 'E43S3');
        
         var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
 
         var energy = spawn.room.energyCapacityAvailable;
-        var energy = 600;
+        var energy = 800;
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
 
-        // if (room ='E44S2')
-        // {
-        //     energy = 800;
-        // }
+        if (room ='E44S2')
+        {
+            energy = 800;
+        }
 
         var name = undefined;
        
@@ -353,93 +353,70 @@ module.exports.loop = function () {
                     util.debug(1, util.LineNumber(), "creating WallRepairer", name);
                 }
             }
+            else if (numberOflongDistanceBuildersE44S2 < spawn.memory.minLongDistanceBuildersE44S2) {
+                // try to spawn one
 
-            // else if (numberOflongDistanceBuildersE44S2 < spawn.memory.minLongDistanceBuildersE44S2) {
-            //     // try to spawn one
+                name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, "E44S2", 'E45S2', 0);
+                console.log("[Main line " + util.LineNumber() + "] Create createLongDistanceBuilder " + name );
 
-            //     name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, "E44S2", 'E45S2', 0);
-            //     console.log("[Main line " + util.LineNumber() + "] Create createLongDistanceBuilder " + name );
+            }
+            else if (numberOfTestScreeps < minNUmberofTestScreeps) {
+                // try to spawn one
 
-            //}
-            // else if (numberOfTestScreeps < minNUmberofTestScreeps) {
-            //     // try to spawn one
+                name = Game.spawns.Spawn1.createTestCreep(sp1,"roleTestCreep");
+                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep " + name );
 
-            //     name = Game.spawns.Spawn1.createTestCreep(sp1,"roleTestCreep");
-            //     console.log("Main [line " + util.LineNumber() + "] Create createTestCreep " + name );
-
-           // }
+            }
             
             
             
             
-            // if not enough longDistanceHarvesters for W2N1
-            else if (numberOfLongDistanceHarvestersW2N1 < spawn.memory.minLDW2N1)
+            // if not enough longDistanceHarvesters for E44S2
+            else if (numberOfLongDistanceHarvestersE44S2         < spawn.memory.minLDE44S2)
             {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] type: " + (typeof name));
-                name = spawn.createLongDistanceHarvester(energy, 2, spawn.room.name, 'W2N1', 0);
-                if (name == -4) {
-                    console.log('[' + fileName +  util.LineNumber() + ']  Creating a LongDistanceHarvester for W2N1');
-                }
-                else if (name == -6) {
-                    console.log('[' + fileName +  util.LineNumber() + ']  Not enough engergy yet to create a LongDistanceHarvester for W2N1');
-                    
-                } else {
-                    
-                }
-                
-
-                
+                name = spawn.createLongDistanceHarvester(energy, 2, spawn.room.name, 'E44S2', 0);
+                util.debug(1, util.LineNumber(), "create LongDistanceHarvester for E44S2", name);
                 if ((typeof name) == "string") {
-
-                    util.debug(1, util.LineNumber(), "created LongDistanceHarvester for W2N1", name);
-                    //console.log("[line " + util.LineNumber() + "] created LongDistanceHarvester: " + name);
+                    
+                    util.debug(1, util.LineNumber(), "create LongDistanceHarvester for E44S2", name);
+                    //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
                 }
-
 
             } 
-            // if not enough longDistanceHarvesters for W3N1
-            else if (numberOfLongDistanceHarvestersW3N1 < spawn.memory.minLDW3N1)
+            // if not enough longDistanceHarvesters for E45S2
+            else if (numberOfLongDistanceHarvestersE45S2 < spawn.memory.minLDE45S2)
             {
                 // try to spawn one
                // console.log("[Main    line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
-              // console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  create LongDistanceHarvester ' + name);
-                name = spawn.createLongDistanceHarvester(energy, 1, spawn.room.name, 'W3N1', 0);
-
-                if (name == -4) {
-                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + ' Creating a LongDistanceHarvester for W3N1');
-                }
-                else if (name == -6) {
-                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + ' Not enough engergy yet to create a LongDistanceHarvester for W3N1');
-                    
-                } else {
-                    
-                }
+               console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  create LongDistanceHarvester ' + name);
+                name = spawn.createLongDistanceHarvester(energy, 1, spawn.room.name, 'E45S2', 0);
                 
 
                 if ((typeof name) == "string") {
 
-                    util.debug(1, util.LineNumber(), "created LongDistanceHarvester for W3N1", name);
-                    //console.log("[line " + util.LineNumber() + "] created LongDistanceHarvester: " + name);
+                    util.debug(1, util.LineNumber(), "create LongDistanceHarvester for E45S2", name);
+                    //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
                 }
 
             }
 
-            // else if (numberOfLongDistanceHarvestersE43S3 < spawn.memory.minLDE43S3)
-            // {
-            //     // try to spawn one
-            //     //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
-            //     name = spawn.createLongDistanceHarvester(energy, 1, spawn.room.name, 'E43S3', 0);
-            //     console.log('[' + fileName + 'line ' + util.LineNumber() + '] ' +  creep.name + ' create LongDistanceHarvester: ' + name);
+            else if (numberOfLongDistanceHarvestersE43S3 < spawn.memory.minLDE43S3)
+            {
+                // try to spawn one
+                //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
+                name = spawn.createLongDistanceHarvester(energy, 1, spawn.room.name, 'E43S3', 0);
+                console.log('[' + fileName + 'line ' + util.LineNumber() + '] ' +  creep.name + ' create LongDistanceHarvester: ' + name);
                 
 
-            //     if ((typeof name) == "string") {
+                if ((typeof name) == "string") {
 
-            //         util.debug(1, util.LineNumber(), "create LongDistanceHarvester for E43S3", name);
-            //         //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
-            //     }
+                    util.debug(1, util.LineNumber(), "create LongDistanceHarvester for E43S3", name);
+                    //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
+                }
 
-            // }
+            }
 
             else {
                 
@@ -489,9 +466,9 @@ module.exports.loop = function () {
             console.log("WallRepairers : " + numberOfWallRepairers);
             console.log("Miners        : " + numberOfMiners);
             console.log("Lorries       : " + numberOfLorries);
-            console.log("LDH W2N1      : " + numberOfLongDistanceHarvestersW2N1);
-            console.log("LDH W3N1      : " + numberOfLongDistanceHarvestersW3N1);
-           // console.log("LDH E43S3     : " + numberOfLongDistanceHarvestersE43S3);
+            console.log("LDH E44S2     : " + numberOfLongDistanceHarvestersE44S2);
+            console.log("LDH E45S2     : " + numberOfLongDistanceHarvestersE45S2);
+            console.log("LDH E43S3     : " + numberOfLongDistanceHarvestersE43S3);
                                              
         }
     
