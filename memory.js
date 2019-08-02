@@ -11,8 +11,8 @@ module.exports = {
     
         
     Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
+    Game.spawns.Spawn1.memory.minLDHroom3 = 2;
     
     Game.spawns.Spawn1.memory.minHarvesters	= 3;
     Game.spawns.Spawn1.memory.minLorries = 0;

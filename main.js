@@ -14,12 +14,15 @@ var roleTestCreep = require('role.Test');
 var util = require('Util'); 
 var fileName = "Main        ";
 
-//var HOME = 'E44S3'; //test sdfgdsfg
-var HOME = Game.spawns.Spawn1.memory.home;
-var room1 = Game.spawns.Spawn1.memory.room1;
-var room2 = Game.spawns.Spawn1.memory.room2;
-var room3 = Game.spawns.Spawn1.memory.room3;
 
+
+// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + HOME);
+// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room1 is ' + room1);
+// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room2 is ' + room2);
+// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room3 is ' + room3);
+
+
+console.log('[' + fileName + 'line:' + util.LineNumber() + ']  test  ');
 var minNUmberofTestScreeps = 2; //Test Test test Test foobar99 Neal Nobleewas testsdf
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
@@ -28,6 +31,13 @@ module.exports.loop = function () {
    
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
+
+    //var HOME = 'E44S3'; //test sdfgdsfg
+var HOME = Game.spawns.Spawn1.memory.home;
+var room1 = Game.spawns.Spawn1.memory.room1;
+var room2 = Game.spawns.Spawn1.memory.room2;
+var room3 = Game.spawns.Spawn1.memory.room3;
+
 
    //console.log('[' + fileName + 'line:' + util.LineNumber() + '] bucket time is  ' + Game.cpu.bucket.toString());
    
@@ -65,7 +75,7 @@ module.exports.loop = function () {
     }
 
 
-    Game
+   
 
     // for every creep name in Game.creeps
     for (let name in Game.creeps) {
@@ -409,7 +419,7 @@ module.exports.loop = function () {
 
             }
 
-            else if (numberOfLongDistanceHarvestersE43S3 < spawn.memory.minLDroom3)
+            else if (numberOfLongDistanceHarvestersroom3 < spawn.memory.minLDroom3)
             {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
