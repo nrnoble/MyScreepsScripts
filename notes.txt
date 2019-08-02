@@ -1,5 +1,9 @@
 docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
 docker container rm 07e57c99bf31fac98974f83373c5fefbe062b4fc6d1c3072099092f085511e84
+
+
+C:\Users\Neal>docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
+
  Game.spawns.Spawn1.memory.claimRoom = "W2N1"  
  Game.spawns.Spawn1.memory.claimRoom = "W2N1"
 
@@ -11,6 +15,33 @@ docker container rm 07e57c99bf31fac98974f83373c5fefbe062b4fc6d1c3072099092f08551
  Game.spawns.Spawn1.memory.minimumNumberOfWallRepairers = 1;
  Game.spawns.Spawn1.memory.minimumNumberOfLongDistanceHarvestersW2N1 = 4;
  Game.spawns.Spawn1.memory.minimumNumberOfLongDistanceHarvestersW3N1 = 0;
+
+Game.spawns.Spawn1.memory.minLDE45S2 = 0;
+Game.spawns.Spawn1.memory.minLDE44S2 = 0;
+Game.spawns.Spawn1.memory.minHarvesters	= 3;
+Game.spawns.Spawn1.memory.minLorries = 0;
+Game.spawns.Spawn1.memory.minHarvesters = 0;
+Game.spawns.Spawn1.memory.minBuilders = 1;
+Game.spawns.Spawn1.memory.minWallRepairers = 1;
+Game.spawns.Spawn1.memory.minRepairers = 1;
+Game.spawns.Spawn1.memory.debug	= false;
+Game.spawns.Spawn1.memory.debuglevel = 1;
+Game.spawns.Spawn1.memory.E44S3 = 1;
+Game.spawns.Spawn1.memory.count = 0;
+Game.spawns.Spawn1.memory.HarverstersCount = 0;
+Game.spawns.Spawn1.memory.upgradersCount = 0;
+Game.spawns.Spawn1.memory.repairsCount = 0;
+Game.spawns.Spawn1.memory.buildersCount	=	0;
+Game.spawns.Spawn1.memory.wallRepairsCount = 0;
+Game.spawns.Spawn1.memory.minerCount = 0;
+Game.spawns.Spawn1.memory.lorrysCount =	0;
+Game.spawns.Spawn1.memory.wallRepairersCount = 0;
+Game.spawns.Spawn1.memory.minLongDistanceBuildersE44S2 = 0;
+Game.spawns.Spawn1.memory.testCreepCount = 0;
+Game.spawns.Spawn1.memory.minLDE43S3 = 0;
+Game.spawns.Spawn1.memory.foo = "test";
+
+
 
 
 Game.creeps['Jack'].memory.target ='W2N1'

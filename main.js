@@ -62,8 +62,6 @@ module.exports.loop = function () {
     }
 
 
-    Game
-
     // for every creep name in Game.creeps
     for (let name in Game.creeps) {
         // get the creep object
@@ -201,15 +199,15 @@ module.exports.loop = function () {
         var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
 
         var energy = spawn.room.energyCapacityAvailable;
-        var energy = 800;
+        var energy = 600;
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
 
-        if (room ='E44S2')
-        {
-            energy = 800;
-        }
+        // if (room ='E44S2')
+        // {
+        //     energy = 800;
+        // }
 
         var name = undefined;
        
@@ -374,33 +372,55 @@ module.exports.loop = function () {
             
             
             
-            // if not enough longDistanceHarvesters for E44S2
-            else if (numberOfLongDistanceHarvestersW2N1         < spawn.memory.minLDE44S2)
+            // if not enough longDistanceHarvesters for W2N1
+            else if (numberOfLongDistanceHarvestersW2N1 < spawn.memory.minLDW2N1)
             {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] type: " + (typeof name));
                 name = spawn.createLongDistanceHarvester(energy, 2, spawn.room.name, 'W2N1', 0);
-                util.debug(1, util.LineNumber(), "create LongDistanceHarvester for W2N1", name);
-                if ((typeof name) == "string") {
-                    
-                    util.debug(1, util.LineNumber(), "create LongDistanceHarvester for W2N1", name);
-                    //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
+                if (name == -4) {
+                    console.log('[' + fileName +  util.LineNumber() + ']  Creating a LongDistanceHarvester for W2N1');
                 }
+                else if (name == -6) {
+                    console.log('[' + fileName +  util.LineNumber() + ']  Not enough engergy yet to create a LongDistanceHarvester for W2N1');
+                    
+                } else {
+                    
+                }
+                
+
+                
+                if ((typeof name) == "string") {
+
+                    util.debug(1, util.LineNumber(), "created LongDistanceHarvester for W2N1", name);
+                    //console.log("[line " + util.LineNumber() + "] created LongDistanceHarvester: " + name);
+                }
+
 
             } 
             // if not enough longDistanceHarvesters for W3N1
-            else if (numberOfLongDistanceHarvestersW3N1 < spawn.memory.minLDE45S2)
+            else if (numberOfLongDistanceHarvestersW3N1 < spawn.memory.minLDW3N1)
             {
                 // try to spawn one
                // console.log("[Main    line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
-               console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  create LongDistanceHarvester ' + name);
+              // console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  create LongDistanceHarvester ' + name);
                 name = spawn.createLongDistanceHarvester(energy, 1, spawn.room.name, 'W3N1', 0);
+
+                if (name == -4) {
+                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + ' Creating a LongDistanceHarvester for W3N1');
+                }
+                else if (name == -6) {
+                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + ' Not enough engergy yet to create a LongDistanceHarvester for W3N1');
+                    
+                } else {
+                    
+                }
                 
 
                 if ((typeof name) == "string") {
 
-                    util.debug(1, util.LineNumber(), "create LongDistanceHarvester for W3N1", name);
-                    //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
+                    util.debug(1, util.LineNumber(), "created LongDistanceHarvester for W3N1", name);
+                    //console.log("[line " + util.LineNumber() + "] created LongDistanceHarvester: " + name);
                 }
 
             }
@@ -469,8 +489,8 @@ module.exports.loop = function () {
             console.log("WallRepairers : " + numberOfWallRepairers);
             console.log("Miners        : " + numberOfMiners);
             console.log("Lorries       : " + numberOfLorries);
-            console.log("LDH E44S2     : " + numberOfLongDistanceHarvestersW2N1);
-            console.log("LDH E45S2     : " + numberOfLongDistanceHarvestersW3N1);
+            console.log("LDH W2N1      : " + numberOfLongDistanceHarvestersW2N1);
+            console.log("LDH W3N1      : " + numberOfLongDistanceHarvestersW3N1);
            // console.log("LDH E43S3     : " + numberOfLongDistanceHarvestersE43S3);
                                              
         }

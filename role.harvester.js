@@ -1,5 +1,5 @@
 var util = require('Util'); 
-var util = require('Util'); 
+var roleBuilder = require('role.builder');
 var roleUpgrader = require('role.upgrader');
 var roleRepairer = require('role.repairer');
 
@@ -44,7 +44,7 @@ module.exports = {
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
                     || s.structureType == STRUCTURE_TOWER)
-                    && s.energy < s.energyCapacity
+                    && s.energy < (s.energyCapacity * .8)
             });
 
             if (structure == undefined) {
@@ -80,10 +80,10 @@ module.exports = {
             var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
             if (source == null) {
               console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
-              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
-
-              roleUpgrader.run(creep);
-             // return;
+              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
+              roleBuilder.run(creep);
+              //roleUpgrader.run(creep);
+              return;
             }
 
             if (source == undefined || source == null ) {

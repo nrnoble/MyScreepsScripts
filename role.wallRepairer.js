@@ -7,6 +7,12 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
+        if (Game.time % 4 !== 0){
+           //console.log('[' + fileName + 'line:' + util.LineNumber() + '] test ');
+          //do nothing
+            return;
+        }
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] test2 ');
 
 
         // if resouces are nearby, attempt to pickup.
