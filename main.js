@@ -14,7 +14,7 @@ var roleTestCreep = require('role.Test');
 var util = require('Util'); 
 var fileName = "Main        ";
 
-var HOME = 'W2N1';
+var HOME = 'W2N1'; /// Test
 var minNUmberofTestScreeps = 0; 
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
