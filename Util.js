@@ -260,7 +260,7 @@ module.exports =
     pickupResources: function(creep, range)
     {
        //TODO: scan for resources in a limited rangesuch as within 3-5 squares     
-        droppedEngeryTarget = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+        var droppedEngeryTarget = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
         return creep.pickup(droppedEngeryTarget);
     },
 

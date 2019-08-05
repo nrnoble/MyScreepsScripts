@@ -212,9 +212,37 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createMiner =
         function (sourceId) {
-            
-            return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+            var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.energyCapacityAvailable is  ' + Game.spawns.Spawn1.room.energyCapacityAvailable);
+            if(energy <= 300)
+            {
+                 return this.createCreep([WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
                                     { role: 'miner', sourceId: sourceId });
+            } else if(energy <= 400)
+            {
+                 return this.createCreep([WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                                    { role: 'miner', sourceId: sourceId });
+            } else if(energy <= 500)
+            {
+                 return this.createCreep([WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                                    { role: 'miner', sourceId: sourceId });
+            }
+            else if(energy <= 600)
+            {
+                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                                    { role: 'miner', sourceId: sourceId });
+            }            else if(energy <= 700)
+            {
+                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                                    { role: 'miner', sourceId: sourceId });
+            }
+           
+           
+            else
+            {
+                return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                                    { role: 'miner', sourceId: sourceId });
+            }
         };
      
     // create a new function for StructureSpawn
@@ -286,7 +314,7 @@ module.exports = function () {
             });
         };
 
-        StructureSpawn.prototype.createLongDistanceBuilder =
+    StructureSpawn.prototype.createLongDistanceBuilder =
         function (energy, numberOfWorkParts, home, target, sourceIndex) {
             // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
             var body = [];
@@ -339,7 +367,7 @@ module.exports = function () {
         };
 
 
-        StructureSpawn.prototype.LD_Upgrader =
+    StructureSpawn.prototype.LD_Upgrader =
         function (numberOfWorkParts, controlerID, target) {
             // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
             var body = [];

@@ -12,6 +12,7 @@ var roleMiner = require('role.miner');
 var roleLorry = require('role.lorry');
 var roleTestCreep = require('role.Test');
 var util = require('Util'); 
+var memory = require('memory'); 
 var fileName = "Main        ";
 
 
@@ -21,10 +22,11 @@ var fileName = "Main        ";
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room2 is ' + room2);
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room3 is ' + room3);
 
+memory.init();
 
 var test ="abcd";
 
-var minNUmberofTestScreeps = 2; //Test Test test Test testfoobar99 Neal Nobleewas testsdf
+var minNUmberofTestScreeps = 0; //Test Test test Test testfoobar99 Neal Nobleewas testsdf
 var sp1 = Memory.spawns.Spawn1;
 var sp2 = Memory.spawns.Spawn2;
 
@@ -43,8 +45,9 @@ module.exports.loop = function () {
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount is  ' +    postFixCount);
 //     sp1.creepCount++;
 //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount = Game.spawns.Spawn1.memory.creepCount is  ' + Game.spawns.Spawn1.memory.creepCount);
-
-
+ // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.energyCapacityAvailable is  ' + Game.spawns.Spawn1.room.energyCapacityAvailable);
+  // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.name is  ' +   Game.spawns.Spawn1.room.name ) ;
+// energy = Game.spawns.Spawn1.room.name;
 
 
 
@@ -53,8 +56,8 @@ module.exports.loop = function () {
 //     var sp2 = Memory.spawns.Spawn2;
 
     Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 2;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom3 = 0;
 
     //var HOME = 'E44S3'; //test sdfgdsfg
 var HOME = Game.spawns.Spawn1.memory.home;
@@ -187,7 +190,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
         if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
             // ...heal
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
-            tower.heal(targetCreep);
+           // tower.heal(targetCreep);
             continue;
         }
 
@@ -260,9 +263,19 @@ var room3 = Game.spawns.Spawn1.memory.room3;
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
 
+
+    
+
         if (room ='room1')
         {
-            energy = 800;
+    
+            if (spawn.room.energyCapacityAvailable < energy){
+                energy = spawn.room.energyCapacityAvailable-50;
+            }
+            else{
+            
+                energy = 800;
+            }
         }
 
         var name = undefined;

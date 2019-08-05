@@ -1,28 +1,30 @@
+var util = require('Util'); 
+var fileName = "memory";
+
 module.exports = {
     // a function to run the logic for this role
     init: function () {
     
-    Game.spawns.Spawn1.memory.home = "";   
-    Game.spawns.Spawn1.memory.room1 = "";
-    Game.spawns.Spawn1.memory.room2 = "";
-    Game.spawns.Spawn1.memory.room3 = "";
     
- 
+    if (Game.spawns.Spawn1.memory.init == true)
+    {
+        return;
+    }
     
-        
-    Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 2;
-    
+    Game.spawns.Spawn1.memory.init = true;
+
     Game.spawns.Spawn1.memory.minHarvesters	= 3;
-    Game.spawns.Spawn1.memory.minLorries = 0;
-    Game.spawns.Spawn1.memory.minHarvesters = 0;
+    Game.spawns.Spawn1.memory.minUpgraders = 1;
     Game.spawns.Spawn1.memory.minBuilders = 1;
-    Game.spawns.Spawn1.memory.minWallRepairers = 1;
-    Game.spawns.Spawn1.memory.minRepairers = 1;
+    Game.spawns.Spawn1.memory.minLorries = 0;
+    Game.spawns.Spawn1.memory.minWallRepairers = 0;
+    Game.spawns.Spawn1.memory.minRepairers = 0;
+    
+    
     Game.spawns.Spawn1.memory.debug	= false;
     Game.spawns.Spawn1.memory.debuglevel = 1;
-    Game.spawns.Spawn1.memory.E44S3 = 1;
+    Game.spawns.Spawn1.memory.E44S3 = 0;
+    
     Game.spawns.Spawn1.memory.count = 0;
     Game.spawns.Spawn1.memory.HarverstersCount = 0;
     Game.spawns.Spawn1.memory.upgradersCount = 0;
@@ -36,5 +38,24 @@ module.exports = {
     Game.spawns.Spawn1.memory.testCreepCount = 0;
     Game.spawns.Spawn1.memory.minLDE43S3 = 0;
     Game.spawns.Spawn1.memory.foo = "test";
+    Game.spawns.Spawn1.memory.creepCount = 0;
+   
+    Game.spawns.Spawn1.memory.home = "";   
+    Game.spawns.Spawn1.memory.room1 = "";
+    Game.spawns.Spawn1.memory.room2 = "";
+    Game.spawns.Spawn1.memory.room3 = "";
+    
+ 
+    
+        
+    Game.spawns.Spawn1.memory.minLDHroom1 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom3 = 0;
+
+
+   
+   
+   
+    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + Game.spawns.Spawn1.memory.home);
     }
 }
