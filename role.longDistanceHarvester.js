@@ -10,13 +10,13 @@ module.exports = {
         var ttl = creep.ticksToLive;
         var energyRemaining = creep.carry.energy;
 
-        if ((ttl < 200) && (energyRemaining == 0)) {
+        // if ((ttl < 200) && (energyRemaining == 0)) {
 
-            //this.debug(1, this.lineNumber(), "time to Die", creep.name);
-            console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
-            return creep.suicide();
+        //     //this.debug(1, this.lineNumber(), "time to Die", creep.name);
+        //     console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
+        //     return creep.suicide();
 
-        }
+        // }
 
 
         // if creep is bringing energy to a structure but has no energy left
@@ -41,6 +41,8 @@ module.exports = {
                     // we use the arrow operator to define it
                     filter: (s) => (s.structureType == STRUCTURE_SPAWN
                         || s.structureType == STRUCTURE_EXTENSION
+                        || s.structureType == STRUCTURE_LINK
+                        
                         || s.structureType == STRUCTURE_TOWER)
                         && s.energy < s.energyCapacity
                 });

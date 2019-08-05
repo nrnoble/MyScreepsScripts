@@ -212,7 +212,8 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createMiner =
         function (sourceId) {
-            return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], util.GetRoleName('miner'),
+            
+            return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
                                     { role: 'miner', sourceId: sourceId });
         };
      

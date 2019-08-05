@@ -22,15 +22,39 @@ var fileName = "Main        ";
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room3 is ' + room3);
 
 
-console.log('[' + fileName + 'line:' + util.LineNumber() + ']  test  ');
-var minNUmberofTestScreeps = 2; //Test Test test Test foobar99 Neal Nobleewas testsdf
+var test ="abcd";
+
+var minNUmberofTestScreeps = 2; //Test Test test Test testfoobar99 Neal Nobleewas testsdf
+var sp1 = Memory.spawns.Spawn1;
+var sp2 = Memory.spawns.Spawn2;
+
+var  postFixCount = sp1.creepCount;
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
 
 module.exports.loop = function () {
-   
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
+
+ //   var postFixCount = Game.spawns.Spawn1.memory.creepCount
+    
+
+//     console.log('[' + fileName + 'line:' + util.LineNumber() + '] sp1.creepCount is  ' + sp1.creepCount);
+//     console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount is  ' +    postFixCount);
+//     sp1.creepCount++;
+//    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount = Game.spawns.Spawn1.memory.creepCount is  ' + Game.spawns.Spawn1.memory.creepCount);
+
+
+
+
+
+//   //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  test  is ' + test );
+//     var sp1 = Memory.spawns.Spawn1;
+//     var sp2 = Memory.spawns.Spawn2;
+
+    Game.spawns.Spawn1.memory.minLDHroom1 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
+    Game.spawns.Spawn1.memory.minLDHroom3 = 2;
 
     //var HOME = 'E44S3'; //test sdfgdsfg
 var HOME = Game.spawns.Spawn1.memory.home;
@@ -38,23 +62,26 @@ var room1 = Game.spawns.Spawn1.memory.room1;
 var room2 = Game.spawns.Spawn1.memory.room2;
 var room3 = Game.spawns.Spawn1.memory.room3;
 
-
-   //console.log('[' + fileName + 'line:' + util.LineNumber() + '] bucket time is  ' + Game.cpu.bucket.toString());
-   
-    //console.log('[' + fileName + 'line:' + util.LineNumber() + ']  Game.spawns.Spawn1.memory.minLDE43S3 is ' + sp1.minLDE43S3);
-  //  console.log('[' + fileName  + util.LineNumber() + ']  spawn.memory.minLDE43S3 is ' + Game.spawns.Spawn1.memory.minLDE43S3);
-   // console.log(JSON.stringify(Game.flags['myFlag1'].name));
-   // console.log(JSON.stringify(Game.flags['myFlag1'].pos));
-   // console.log(JSON.stringify(Game.flags['myFlag1'].room.name));
-   // console.log(JSON.stringify(Game.flags));
-    // var doItOnlyOnce = 0;
-    // if (doItOnlyOnce == 0) {
-    //     doItOnlyOnce++;
-    //     name = Game.spawns.Spawn1.createTestCreep();
-    //     console.log("Creating testcreep: " + name);
+    //***************************************/    
+    // commented debug stuff
+    {
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] bucket time is  ' + Game.cpu.bucket.toString());
         
-    // }
-  
+         //console.log('[' + fileName + 'line:' + util.LineNumber() + ']  Game.spawns.Spawn1.memory.minLDE43S3 is ' + sp1.minLDE43S3);
+       //  console.log('[' + fileName  + util.LineNumber() + ']  spawn.memory.minLDE43S3 is ' + Game.spawns.Spawn1.memory.minLDE43S3);
+        // console.log(JSON.stringify(Game.flags['myFlag1'].name));
+        // console.log(JSON.stringify(Game.flags['myFlag1'].pos));
+        // console.log(JSON.stringify(Game.flags['myFlag1'].room.name));
+        // console.log(JSON.stringify(Game.flags));
+         // var doItOnlyOnce = 0;
+         // if (doItOnlyOnce == 0) {
+         //     doItOnlyOnce++;
+         //     name = Game.spawns.Spawn1.createTestCreep();
+         //     console.log("Creating testcreep: " + name);
+             
+         // }
+    }
+    //***************************************/    
 
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
@@ -65,7 +92,12 @@ var room3 = Game.spawns.Spawn1.memory.room3;
    // console.log(JSON.stringify(sp1));
    // console.log("sp1.minerCount:" + sp1.minerCount);
    // console.log("sp1.count: " + sp1.count++);
-    for (let name in Memory.creeps) {
+
+
+   //************************************** */    
+   // Clear dead creeps from game
+   //************************************** */   
+   for (let name in Memory.creeps) {
         // and checking if the creep is still alive
         if (Game.creeps[name] == undefined) {
             // if not, delete the memory entry
@@ -75,9 +107,9 @@ var room3 = Game.spawns.Spawn1.memory.room3;
     }
 
 
-   
-
-    // for every creep name in Game.creeps
+    //************************************** */
+    // for every creep name in Game.creeps execute roles
+    //************************************** */
     for (let name in Game.creeps) {
         // get the creep object
         var creep = Game.creeps[name];
@@ -129,7 +161,10 @@ var room3 = Game.spawns.Spawn1.memory.room3;
          }
     }
 
+
+    //************************************** */
     // find all towers
+    //************************************** */
     var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
     // for each tower
     for (let tower of towers) {
@@ -139,6 +174,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
         if (evilCreep != undefined) {
             // ...FIRE!
             tower.attack(evilCreep);
+            continue;
            
         }
       
@@ -180,7 +216,10 @@ var room3 = Game.spawns.Spawn1.memory.room3;
 
     }
 
+
+    //************************************** */
     // iterate over all the spawns
+    //************************************** */
     for (let spawnName in Game.spawns) {
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
@@ -195,6 +234,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
         // count the number of creeps alive for each role in this room
         // _.sum will count the number of properties in Game.creeps filtered by the
         //  arrow function, which checks for the creep being a specific role
+   
         var numberOfHarvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'harvester');
         var numberOfUpgraders = _.sum(creepsInRoom, (c) => c.memory.role == 'upgrader');
         var numberOfBuilders = _.sum(creepsInRoom, (c) => c.memory.role == 'builder');
@@ -217,7 +257,6 @@ var room3 = Game.spawns.Spawn1.memory.room3;
 
         var energy = spawn.room.energyCapacityAvailable;
         var energy = 800;
-      //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
 
@@ -389,7 +428,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
             
             
             // if not enough longDistanceHarvesters for room1
-            else if (numberOfLongDistanceHarvestersroom1         < spawn.memory.minLDroom1)
+            else if (numberOfLongDistanceHarvestersroom1  < spawn.memory.minLDHroom1)
             {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] type: " + (typeof name));
@@ -403,7 +442,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
 
             } 
             // if not enough longDistanceHarvesters for room2
-            else if (numberOfLongDistanceHarvestersroom2 < spawn.memory.minLDroom2)
+            else if (numberOfLongDistanceHarvestersroom2 < spawn.memory.minLDHroom2)
             {
                 // try to spawn one
                // console.log("[Main    line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);
@@ -419,7 +458,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
 
             }
 
-            else if (numberOfLongDistanceHarvestersroom3 < spawn.memory.minLDroom3)
+            else if (numberOfLongDistanceHarvestersroom3 < spawn.memory.minLDHroom3)
             {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] create LongDistanceHarvester: " + name);

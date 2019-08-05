@@ -113,8 +113,56 @@ module.exports =
         }
     },
 
-
+    
     GetRoleName: function (SpawnObj, roleName) {
+        
+        var name = roleName +" _" + Game.time;
+        return name;
+
+        SpawnObj = Memory.spawns.Spawn1;
+        console.log('[' + fileName + 'line:' + this.LineNumber() + '] SpawnObj is ' + SpawnObj.creepCount);
+        console.log('[' + fileName + 'line:' + this.LineNumber() + '] SpawnObj.creepCount is ' + SpawnObj.creepCount);
+
+
+        if(SpawnObj.creepCount  == null || SpawnObj.creepCount  == undefined)
+        {
+            console.log('[' + fileName + 'line:' + this.LineNumber() + '] SpawnObj.creepCount is ' + SpawnObj.creepCount + " reseting count to zero");
+            Game.spawns.Spawn1.memory.creepCount = 0;
+        }
+
+        var postFixCount = Game.spawns.Spawn1.memory.creepCount
+    
+        // console.log('[' + fileName + 'line:' + this.LineNumber() + '] calling GetRoleName ');
+        // console.log('[' + fileName + 'line:' + this.LineNumber() + '] postFixCount is  ' + postFixCount);
+        // postFixCount++;
+        // console.log('[' + fileName + 'line:' + this.LineNumber() + '] postFixCount = Game.spawns.Spawn1.memory.creepCount is  ' + Game.spawns.Spawn1.memory.creepCount);
+
+        console.log('[' + fileName + 'line:' + this.LineNumber() + '] Game.time ' + Game.time);
+
+        if (Game.creeps[roleName].name)
+        {
+           var newCreepName = roleName + "_" + SpawnObj.creepCount++;
+           var whileCount = 0;
+           while(Game.creeps[newCreepName]) 
+           {
+                whileCount++;
+                var newCreepName = roleName + "_" + SpawnObj.creepCount++;
+                if(whileCount++ > 36)
+                {
+                    console.log('[' + fileName + 'line:' + this.LineNumber() + '] Breaking out if while loop. Investigate!! ');
+                    break;
+                }
+            }
+           console.log('[' + fileName + 'line:' + this.LineNumber() + ']  New Creep name is ' + newCreepName);
+           return newCreepName;
+        }
+        
+        console.log('[' + fileName + 'line:' + this.LineNumber() + ']  New Creep name is ' + newCreepName);
+        return roleName;
+
+},
+
+    GetRoleNameold: function (SpawnObj, roleName) {
             var sp1 = Memory.spawns.Spawn1;
             var creepName = "";
             if (roleName == "harvester") {
@@ -269,6 +317,28 @@ module.exports =
              }
         }
     
+    },
+    
+    link: function(current_link){
+        if(current_link.memory.source_range == null){
+            var nearest_source = current_link.pos.findClosestByRange(FIND_SOURCES);
+            current_link.memory.source_range = current_link.pos.getRangeTo(nearest_source);
+        }else{
+            var target_link = current_link.room.find(FIND_STRUCTURES, {
+                filter : (s) => s.structureType == STRUCTURE_LINK && 
+                                s.memory.source_range > current_link.memory.source_range
+                });
+            if(target_link != null){ 
+                current_link.memory.is_receiver = false;
+				
+				//I get the memory is undefined error on the line below
+                target_link.memory.is_receiver = true;
+                
+				if(current_link.energy == current_link.energyCapacity && current_link.cooldown == 0){
+                    current_link.transferEnergy(target_link, current_link.energyCapacity);
+                }
+            }
+        }       
     }
 
 

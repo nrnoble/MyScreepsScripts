@@ -13,8 +13,15 @@ module.exports = {
             filter: s => s.structureType == STRUCTURE_CONTAINER
         })[0];
 
+       // console.log("Role.miner Unable to find a container " + container);
+        if(container == null || container == undefined)
+        {
+            console.log("Role.miner Unable to find a container. Container is " + container);
+            return;
+        }
+
         // if creep is on top of the container
-        if (creep.pos.isEqualTo(container.pos)) {
+        if (container != null && creep.pos.isEqualTo(container.pos)) {
             // harvest source
             const currentStoredEngery = _.sum(container.store);
           

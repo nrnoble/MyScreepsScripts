@@ -79,17 +79,26 @@ module.exports = {
             // find closest source
             var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
             if (source == null) {
-              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
-              console.log("roleHarvester [line " + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+             // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
+             // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
 
-              roleUpgrader.run(creep);
-              return;
+              //roleUpgrader.run(creep);
+              //return;
             }
 
             if (source == undefined || source == null ) {
                 //console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " Source is set to creep.room.storage;");
 
                 source = creep.room.storage;
+
+                if (source == null) {
+                     console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
+                     console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+       
+                    roleUpgrader.run(creep);
+                     return;
+                   }
+
             }
 
             // try to harvest energy, if the source is not in range
