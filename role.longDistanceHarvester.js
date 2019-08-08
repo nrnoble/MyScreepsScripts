@@ -10,13 +10,20 @@ module.exports = {
         var ttl = creep.ticksToLive;
         var energyRemaining = creep.carry.energy;
 
-        // if ((ttl < 200) && (energyRemaining == 0)) {
+        if(ttl < 190 && creep.memory.home == "E44S3" && energyRemaining == 0)
+        {
+            console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
+            return creep.suicide();
+        }
 
-        //     //this.debug(1, this.lineNumber(), "time to Die", creep.name);
-        //     console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
-        //     return creep.suicide();
 
-        // }
+        if ((ttl < 110) && (energyRemaining == 0)) {
+
+            //this.debug(1, this.lineNumber(), "time to Die", creep.name);
+            console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
+            return creep.suicide();
+
+        }
 
 
         // if creep is bringing energy to a structure but has no energy left
@@ -73,19 +80,39 @@ module.exports = {
             // if in target room
             if (creep.room.name == creep.memory.target) {
                 // find source
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in target room ' + creep.room.name);
                 var source = creep.room.find(FIND_SOURCES)[creep.memory.sourceIndex];
-
+                var sourcePos = source.pos;
+                if (source != null){}
+                {
+                    //exit = new RoomPosition(24, 21, 'E44S2'); 
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' sourcePos is ' + sourcePos);
+                    sourcePos = source.pos;
+                }
+               
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' source in room is ' + source);
+                status = creep.harvest(source);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.harvest(source) statis is ' + status);
                 // try to harvest energy, if the source is not in range
-                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                if (status == ERR_NOT_IN_RANGE) {
                     // move towards the source
-                    creep.moveTo(source);
+                    //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  moving towards source that is ' + source);
+                    //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' SourcePos is ' + sourcePos);
+                    status = creep.moveTo(source);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' MoveTo Status is ' + status );    
+
+                }else
+                {
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' unable to move. Status is ' );
+                    status = creep.moveTo(source);
                 }
             }
             // if not in target room
             else {
                 // find exit to target room
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' Trying to move toward exit ');
                 var exit = creep.room.findExitTo(creep.memory.target);
-              //  console.log("roleLDHarvester [line " + util.LineNumber() + "] exit: " + exit);
+               // console.log("roleLDHarvester [line " + util.LineNumber() + "] exit: " + exit);
                 // move to exit
                 creep.moveTo(creep.pos.findClosestByRange(exit));
             }

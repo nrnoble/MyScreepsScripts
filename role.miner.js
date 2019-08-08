@@ -6,6 +6,8 @@ module.exports = {
     run: function (creep) {
         // get source
     
+     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
+
         util.pickupResources(creep,0);
         let source = Game.getObjectById(creep.memory.sourceId);
         // find container next to source

@@ -76,39 +76,61 @@ module.exports = {
         }
         // if creep is supposed to harvest energy from source
         else {
-            // find closest source
-            var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-            if (source == null) {
-             // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
-             // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
 
-              //roleUpgrader.run(creep);
-              //return;
-            }
+            
+            var ClosestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                // the second argument for findClosestByPath is an object which takes
+                // a property called filter which can be a function
+                // we use the arrow operator to define it
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+            });
 
-            if (source == undefined || source == null ) {
-                //console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " Source is set to creep.room.storage;");
 
-                source = creep.room.storage;
-
+            var status = creep.harvest(ClosestContainer);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + creep.room.name + " " +  creep.name + ' current harvest status is ' + status );
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainer is  ' + ClosestContainer);
+            if (ClosestContainer != undefined || ClosestContainer != null && (creep.harvest(ClosestContainer) == ERR_NOT_IN_RANGE) && (creep.harvest(ClosestContainer) == -7))
+            {
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a container ');    
+                creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                return;
+            }else{
+                // find closest source
+                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if (source == null) {
-                     console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
-                     console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
-       
-                    roleUpgrader.run(creep);
-                     return;
-                   }
+                // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
+                // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
 
-            }
+                //roleUpgrader.run(creep);
+                //return;
+                }
 
-            // try to harvest energy, if the source is not in range
-            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                // move towards the source
+                if (source == undefined || source == null ) {
+                    //console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " Source is set to creep.room.storage;");
 
-                // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
+                    source = creep.room.storage;
 
-                creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    if (source == null) {
+                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
+                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+        
+                        roleUpgrader.run(creep);
+                        return;
+                    }
+
+                }
+
+                // try to harvest energy, if the source is not in range
+                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                    // move towards the source
+
+                    // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
+
+                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                }
             }
         }
+        
+        
     }
 };

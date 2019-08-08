@@ -12,6 +12,7 @@ var roleMiner = require('role.miner');
 var roleLorry = require('role.lorry');
 var roleTestCreep = require('role.Test');
 var util = require('Util'); 
+var link = require('Link'); 
 var memory = require('memory'); 
 var fileName = "Main        ";
 
@@ -26,7 +27,7 @@ memory.init();
 
 var test ="abcd";
 
-var minNUmberofTestScreeps = 0; //Test Test test Test testfoobar99 Neal Nobleewas testsdf
+var minNUmberofTestScreeps = 0; 
 var sp1 = Memory.spawns.Spawn1;
 var sp2 = Memory.spawns.Spawn2;
 
@@ -56,8 +57,8 @@ module.exports.loop = function () {
 //     var sp2 = Memory.spawns.Spawn2;
 
     Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 0;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
+    Game.spawns.Spawn1.memory.minLDHroom3 = 3;
 
     //var HOME = 'E44S3'; //test sdfgdsfg
 var HOME = Game.spawns.Spawn1.memory.home;
@@ -95,6 +96,14 @@ var room3 = Game.spawns.Spawn1.memory.room3;
    // console.log(JSON.stringify(sp1));
    // console.log("sp1.minerCount:" + sp1.minerCount);
    // console.log("sp1.count: " + sp1.count++);
+
+
+   var LinkSource = Game.getObjectById("5d44be6bea104379d906cbaf")
+  // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  LinkSource is '  + LinkSource);
+  // LinkSource.is_receiver = false;
+  // console.log('[' + fileName + 'line:' + util.LineNumber() + '] LinkSource ' + JSON.stringify(LinkSource));
+    link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
+
 
 
    //************************************** */    
@@ -282,7 +291,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
        
         // if no harvesters are left AND either no miners or no lorries are left
         //  create a backup creep
-        if (numberOfHarvesters == 0 && numberOfLorries == 0) {
+        if (numberOfLorries == 0) {
             // if there are still miners left
             if (numberOfMiners > 0 ||
                 (spawn.room.storage != undefined && spawn.room.storage.store[RESOURCE_ENERGY] >= 150 + 550)) {
@@ -292,8 +301,8 @@ var room3 = Game.spawns.Spawn1.memory.room3;
             // if there is no miner left
             else {
                 // create a harvester because it can work on its own
-                name = spawn.createCustomCreep(energy, 'harvester');
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] new creeep spawned: ' +  name + ' is a harvester');
+               // name = spawn.createCustomCreep(energy, 'harvester');
+                //console.log('[' + fileName + 'line:' + util.LineNumber() + '] new creeep spawned: ' +  name + ' is a harvester');
             }
         }
         // if no backup creep is required
@@ -347,7 +356,9 @@ var room3 = Game.spawns.Spawn1.memory.room3;
                 // util.debug(1, util.LineNumber(), "spawn.memory.minHarvesters", spawn.memory.minHarvesters);
                 // console.log("[Main line " + util.LineNumber() + "] energy: " + energy);
                 name = spawn.createCustomCreep(energy, 'harvester');
-                console.log("[Main line " + util.LineNumber() + "] create harvester: " + name);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
+                console.log("[Main line " + util.LineNumber() + "] "+ spawn.name + " is creating harvester: " + name);
 
             }
             // if not enough lorries

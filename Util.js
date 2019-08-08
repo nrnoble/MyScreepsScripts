@@ -41,7 +41,7 @@ module.exports =
         var ttl = creep.ticksToLive;
         var energyRemaining = creep.carry.energy;
 
-        if ((ttl < 75) && (energyRemaining == 0)) {
+        if ((ttl < 200) && (energyRemaining == 0)) {
 
             //this.debug(1, this.lineNumber(), "time to Die", creep.name);
             console.log("Time to die: " + creep.name + "(" + creep.role + ")");
@@ -256,6 +256,17 @@ module.exports =
             return newCreep;
             
         },
+
+    pickupResources2: function(creep, scanRange, minAmount)
+    {
+           //TODO: scan for resources in a limited rangesuch as within 3-5 squares     
+            droppedEngeryTarget = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
+            
+            status = creep.pickup(droppedEngeryTarget);
+            
+            return creep.pickup(droppedEngeryTarget);
+    },
+
 
     pickupResources: function(creep, range)
     {
