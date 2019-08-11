@@ -2,6 +2,8 @@ docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServ
 docker container rm 07e57c99bf31fac98974f83373c5fefbe062b4fc6d1c3072099092f085511e84
 
 
+Game.spawns['Spawn1'].room.controller.activateSafeMode();
+
 C:\Users\Neal>docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
 
  Game.spawns.Spawn1.memory.claimRoom = "W2N1"  

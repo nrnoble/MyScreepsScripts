@@ -80,19 +80,19 @@ module.exports = {
             // if in target room
             if (creep.room.name == creep.memory.target) {
                 // find source
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in target room ' + creep.room.name);
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in target room ' + creep.room.name);
                 var source = creep.room.find(FIND_SOURCES)[creep.memory.sourceIndex];
                 var sourcePos = source.pos;
                 if (source != null){}
                 {
                     //exit = new RoomPosition(24, 21, 'E44S2'); 
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' sourcePos is ' + sourcePos);
+                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' sourcePos is ' + sourcePos);
                     sourcePos = source.pos;
                 }
                
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' source in room is ' + source);
+              //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' source in room is ' + source);
                 status = creep.harvest(source);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.harvest(source) statis is ' + status);
+             //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.harvest(source) statis is ' + status);
                 // try to harvest energy, if the source is not in range
                 if (status == ERR_NOT_IN_RANGE) {
                     // move towards the source
@@ -103,7 +103,7 @@ module.exports = {
 
                 }else
                 {
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' unable to move. Status is ' );
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + '  '+  creep.name + ' unable to move. Status is ' );
                     status = creep.moveTo(source);
                 }
             }

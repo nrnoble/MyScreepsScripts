@@ -45,7 +45,28 @@ module.exports = {
         }
         // if creep is supposed to get energy
         else {
+           
+           
+            
             // find closest container
+
+            // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            //     filter: s => s.structureType == STRUCTURE_LINK || s.structureType == STRUCTURE_CONTAINER
+
+            // if (room contains links)
+            // {
+            //     let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            //         filter: s => s.structureType == STRUCTURE_LINK
+            //     });
+            // } 
+            // else
+            // {
+            //     let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            //        filter: s => s.structureType == STRUCTURE_CONTAINER
+            // }   
+
+                
+
             let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: s => s.structureType == STRUCTURE_LINK
             });

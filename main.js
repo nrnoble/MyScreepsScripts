@@ -13,7 +13,7 @@ var roleLorry = require('role.lorry');
 var roleTestCreep = require('role.Test');
 var util = require('Util'); 
 var link = require('Link'); 
-var memory = require('memory'); 
+var memoryfn = require('memory'); 
 var fileName = "Main        ";
 
 
@@ -23,13 +23,15 @@ var fileName = "Main        ";
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room2 is ' + room2);
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room3 is ' + room3);
 
-memory.init();
+// memoryfn.init(Game.spawns.Spawn3); //test test test
 
 var test ="abcd";
 
 var minNUmberofTestScreeps = 0; 
 var sp1 = Memory.spawns.Spawn1;
 var sp2 = Memory.spawns.Spawn2;
+var sp3 = Memory.spawns.Spawn3;
+
 
 var  postFixCount = sp1.creepCount;
 
@@ -57,14 +59,14 @@ module.exports.loop = function () {
 //     var sp2 = Memory.spawns.Spawn2;
 
     Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 2;
+    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
     Game.spawns.Spawn1.memory.minLDHroom3 = 3;
 
     //var HOME = 'E44S3'; //test sdfgdsfg
-var HOME = Game.spawns.Spawn1.memory.home;
-var room1 = Game.spawns.Spawn1.memory.room1;
-var room2 = Game.spawns.Spawn1.memory.room2;
-var room3 = Game.spawns.Spawn1.memory.room3;
+    var HOME = Game.spawns.Spawn1.memory.home;
+    var room1 = Game.spawns.Spawn1.memory.room1;
+    var room2 = Game.spawns.Spawn1.memory.room2;
+    var room3 = Game.spawns.Spawn1.memory.room3;
 
     //***************************************/    
     // commented debug stuff
@@ -102,7 +104,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
   // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  LinkSource is '  + LinkSource);
   // LinkSource.is_receiver = false;
   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] LinkSource ' + JSON.stringify(LinkSource));
-    link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
+   // link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
 
 
 
@@ -125,7 +127,33 @@ var room3 = Game.spawns.Spawn1.memory.room3;
     for (let name in Game.creeps) {
         // get the creep object
         var creep = Game.creeps[name];
+       // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.name room is ' + creep.room.name);
+      
+       if(creep.room.name == "E44S1"){
 
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in the wrong room ' + creep.room.name);
+            creep.memory.home = "E44S2";
+            creep.memory.target = "E45S2";
+            creep.memory.role = "longDistanceBuilder";
+            // var exit = creep.room.findExitTo(creep.memory.home);
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' exit is ' + exit);
+
+            // //   console.log('LD Builder ' + util.LineNumber() + '] ' +  creep.name + ' Test');
+            //    // move to exit
+            //    var status =  creep.moveTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' moving toward exit. Status is ' + status);
+
+       }
+
+
+        // if( creep.room.name == "E45S2"){ 
+        
+        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' room name is ' + creep.room.name);    
+        //     return;
+        // }else
+        // {
+        //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' room name is ' + creep.room.name); 
+        // }
 
         // if creep is harvester, call harvester script
         if (creep.memory.role == 'harvester') {
@@ -177,21 +205,33 @@ var room3 = Game.spawns.Spawn1.memory.room3;
     //************************************** */
     // find all towers
     //************************************** */
+    
     var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
+  
     // for each tower
     for (let tower of towers) {
+        
+
         // find closes hostile creep
         var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        
         // if one is found...
         if (evilCreep != undefined) {
             // ...FIRE!
-            tower.attack(evilCreep);
-            continue;
-           
+           // var status = evilCreep.getActiveBodyparts(HEAL)   ;
+           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+
+           // if (evilCreep.getActiveBodyparts(HEAL) > 0){
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+                tower.attack(evilCreep);
+              
+                continue;
+            //}
+          
         }
       
         var targetCreep = tower.pos.findClosestByRange(FIND_CREEPS);
-       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
+         // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
 
 
         
@@ -199,7 +239,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
         if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
             // ...heal
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
-           // tower.heal(targetCreep);
+             tower.heal(targetCreep);
             continue;
         }
 
@@ -234,7 +274,27 @@ var room3 = Game.spawns.Spawn1.memory.room3;
     //************************************** */
     for (let spawnName in Game.spawns) {
         /** @type {Spawn} */
-        let spawn = Game.spawns[spawnName];
+        let spawn = Game.spawns[spawnName]; 
+
+    
+      //  var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
+
+    //TODO: HACK. 
+      if (spawnName == "Spawn1"){     
+            link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
+
+        }
+        
+
+//         if (spawnName == "Spawn3")
+//         {
+// //            console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
+//                 var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
+//                  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
+      
+//   //          return;
+//         }
+
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
         /** @type {Room} */
         let room = spawn.room;
@@ -279,7 +339,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
         {
     
             if (spawn.room.energyCapacityAvailable < energy){
-                energy = spawn.room.energyCapacityAvailable-50;
+                energy = spawn.room.energyCapacityAvailable;
             }
             else{
             
@@ -287,33 +347,93 @@ var room3 = Game.spawns.Spawn1.memory.room3;
             }
         }
 
+
+        if (room ='E45S2')
+        {
+    
+            if (spawn.room.energyCapacityAvailable < energy){
+                energy = spawn.room.energyCapacityAvailable;
+            }
+            else{
+            
+                energy = 550;
+            }
+        }
+
+
+
         var name = undefined;
        
+        if (numberOfMiners == 0){
+            {
+                // check if all sources have miners
+                let sources = spawn.room.find(FIND_SOURCES);
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + spawn.name + ' sources = spawn.room.find(FIND_SOURCES) is' + sources);
+                // iterate over all sources
+                for (let source of sources)
+                {
+                   //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name +'  '+ creep.name + '');
+                    // if the source has no miner
+                    if (!_.some(creepsInRoom, c => c.memory.role == 'miner' && c.memory.sourceId == source.id)) {
+                        
+    
+                        // check whether or not the source has a container
+                        let containers = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                            filter: s => s.structureType == STRUCTURE_CONTAINER
+                        });
+                        // if there is a container next to the source
+                       
+    
+                         //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  hack hack hack ');
+                         //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  spawn.room.name is  ' + spawn.room.name);
+    
+                            if (containers.length > 0) {
+                                // spawn a miner
+                                name = spawn.createMiner(spawn, source.id);
+                              //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
+                                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +" is try to create create miner with the name of " + name);
+                                if (name == -4 || name == -6) {
+                                    return;
+                                }
+                                break;
+                            }
+                        
+                    }
+                }
+               
+            }
+
+
+        }
+
+
         // if no harvesters are left AND either no miners or no lorries are left
         //  create a backup creep
-        if (numberOfLorries == 0) {
-            // if there are still miners left
-            if (numberOfMiners > 0 ||
-                (spawn.room.storage != undefined && spawn.room.storage.store[RESOURCE_ENERGY] >= 150 + 550)) {
-                // create a lorry
-                name = spawn.createLorry(450);
-            }
-            // if there is no miner left
-            else {
-                // create a harvester because it can work on its own
-               // name = spawn.createCustomCreep(energy, 'harvester');
-                //console.log('[' + fileName + 'line:' + util.LineNumber() + '] new creeep spawned: ' +  name + ' is a harvester');
-            }
+        if (numberOfLorries == 3) {
+            // // if there are still miners left
+            // if (numberOfMiners > 0 ||
+            //     (spawn.room.storage != undefined && spawn.room.storage.store[RESOURCE_ENERGY] >= 150 + 550)) {
+            //     // create a lorry
+            //     name = spawn.createLorry(450);
+            // }
+            // // if there is no miner left
+            // else {
+            
+               
+            //     // create a harvester because it can work on its own
+            //    // name = spawn.createCustomCreep(energy, 'harvester');
+            //   //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name +' new creeep spawned: ' +  name + ' is a harvester');
+            // }
         }
         // if no backup creep is required
         else {
             // check if all sources have miners
             let sources = spawn.room.find(FIND_SOURCES);
-     
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + spawn.name + ' sources = spawn.room.find(FIND_SOURCES) is' + sources);
             // iterate over all sources
             for (let source of sources)
             {
-               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '');
+               //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name +'  '+ creep.name + '');
                 // if the source has no miner
                 if (!_.some(creepsInRoom, c => c.memory.role == 'miner' && c.memory.sourceId == source.id)) {
                
@@ -325,12 +445,12 @@ var room3 = Game.spawns.Spawn1.memory.room3;
                     // if there is a container next to the source
                    
 
-                        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  hack hack hack ');
-                        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  spawn.room.name is  ' + spawn.room.name);
+                     //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  hack hack hack ');
+                     //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  spawn.room.name is  ' + spawn.room.name);
 
                         if (containers.length > 0) {
                             // spawn a miner
-                            name = spawn.createMiner(source.id);
+                            name = spawn.createMiner(spawn, source.id);
                             console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
                             break;
                         }
@@ -356,8 +476,8 @@ var room3 = Game.spawns.Spawn1.memory.room3;
                 // util.debug(1, util.LineNumber(), "spawn.memory.minHarvesters", spawn.memory.minHarvesters);
                 // console.log("[Main line " + util.LineNumber() + "] energy: " + energy);
                 name = spawn.createCustomCreep(energy, 'harvester');
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
+               //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
                 console.log("[Main line " + util.LineNumber() + "] "+ spawn.name + " is creating harvester: " + name);
 
             }
@@ -368,7 +488,7 @@ var room3 = Game.spawns.Spawn1.memory.room3;
                 // try to spawn one
                 // console.log("[Main line " + util.LineNumber() + "] createLorry: " + name);
                 name = spawn.createLorry(energy);
-                console.log("[Main line " + util.LineNumber() + "] createLorry: " + name);
+                console.log("[Main line " + util.LineNumber() + "]" + spawnName +  " is creating a createLorry: " + name);
             }
             // if there is a claim order defined
           //  console.log("[line " + util.LineNumber() + "] spawn.memory.claimRoom != undefined: " spawn.memory.claimRoom != undefined);
@@ -417,8 +537,8 @@ var room3 = Game.spawns.Spawn1.memory.room3;
 
                 name = spawn.createCustomCreep(energy, 'builder');
 
-                console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create builder. Status is " + name);
-              //  console.log("[Main line " + util.LineNumber() + "] create builder: " + name);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName +" is try to create create builder. Status is " + name);
+                //  console.log("[Main      line " + util.LineNumber() + "] create builder: " + name);
                 if ((typeof name) == "string") {
                    
                     console.log("[line " + util.LineNumber() + "] create builder: " + name);
@@ -426,18 +546,35 @@ var room3 = Game.spawns.Spawn1.memory.room3;
             }
             // if not enough wallRepairers
             else if (numberOfWallRepairers < spawn.memory.minWallRepairers) {
-               // util.debug(1, util.LineNumber(), "creating WallRepairer", name);
+            
                 name = spawn.createCustomCreep(energy, 'wallRepairer');
+
+
+                if(name == -4 || name == -6)
+                {
+                    console.log("[Main      line " + util.LineNumber() + "] " + spawnName + " is Creating a wall repairer " + name );
+                    return;
+                }
+
                if ((typeof name) == "string") {
                    
-                    util.debug(1, util.LineNumber(), "creating WallRepairer", name);
+                    //util.debug(1, util.LineNumber(), "a WallRepairer has been created named:", name);
+                    console.log("[Main      line " + util.LineNumber() + "] " + spawnName + " a WallRepairer has been created named:" + name);
+
                 }
             }
             else if (numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1) {
                 // try to spawn one
 
                 name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, room1, room2, 0);
-                console.log("[Main line " + util.LineNumber() + "] Create createLongDistanceBuilder " + name );
+               
+                if(name == -4 || name == -6)
+                {
+                    console.log("[Main        line " + util.LineNumber() + "] " + spawnName + " is Creating a LongDistanceBuilder " + name );
+                    return;
+                }
+                
+                //return;
 
             }
             else if (numberOfTestScreeps < minNUmberofTestScreeps) {

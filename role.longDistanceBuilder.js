@@ -44,9 +44,9 @@ module.exports = {
  
  
                  
-         if (creep.carry.energy == creep.carryCapacity && creep.memory.target != "E44S2")
+         if (creep.carry.energy == creep.carryCapacity && creep.memory.target != "E45S2")
          {
-             creep.memory.target = "E44S2";
+             creep.memory.target = "E45S2";
              console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' Switching target to ' + creep.memory.target);
  
          }
@@ -96,7 +96,7 @@ module.exports = {
             } else if (numberOfMiners < 1)
             {
 
-                
+
             //     console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' changing role to builder');
             //     Game.creeps[creep.name].memory.role = 'miner';
             //     Game.creeps[creep.name].memory.target = "E44S2";

@@ -7,8 +7,10 @@ module.exports = {
         // get source
     
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
+       
 
-        util.pickupResources(creep,0);
+        util.pickupResources(creep,0); //5bbcafa89099fc012e63af90
+        //let source = Game.getObjectById(creep.memory.sourceId);
         let source = Game.getObjectById(creep.memory.sourceId);
         // find container next to source
         let container = source.pos.findInRange(FIND_STRUCTURES, 1, {

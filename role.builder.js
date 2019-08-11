@@ -14,7 +14,6 @@ module.exports = {
         {
             Game.creeps[creep.name].home =="E44S2";
             Game.creeps[creep.name].target =="E44S2";
-
         }
 
         // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' running');

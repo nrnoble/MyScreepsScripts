@@ -350,10 +350,26 @@ module.exports =
                 }
             }
         }       
+    },
+
+
+    structuresInRoom: function(spawn, structureType){
+
+        // var numberOfLongDistanceHarvestersroom1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == room1 );
+        // var numberOfLongDistanceHarvestersroom1 = _.sum(Game.structures, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == room1 );
+
+       // var room = Game.spawns.Spawn1.room;
+        var room = spawn.room;
+        //console.log('[' + fileName + 'line:' + this.LineNumber() + ']  spawn is '  + JSON.stringify(spawn));
+
+       // console.log('[' + fileName + 'line:' + this.LineNumber() + ']  room is '  + room.name);
+        var structuresFound = room.find(FIND_STRUCTURES,{ filter: (s) => s.structureType == STRUCTURE_LINK});
+       // console.log('[' + fileName + 'line:' + this.LineNumber() + ']  structuresFound is '  + structuresFound);
+
+        var count = structuresFound.length;
+        return count;
+
     }
-
-
-
 
 
     };

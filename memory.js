@@ -3,59 +3,59 @@ var fileName = "memory";
 
 module.exports = {
     // a function to run the logic for this role
-    init: function () {
+    init: function (spawnObj) {
     
     
-    if (Game.spawns.Spawn1.memory.init == true)
+    if (spawnObj.memory.init == true)
     {
         return;
     }
     
-    Game.spawns.Spawn1.memory.init = true;
+    spawnObj.memory.init = true;
 
-    Game.spawns.Spawn1.memory.minHarvesters	= 3;
-    Game.spawns.Spawn1.memory.minUpgraders = 1;
-    Game.spawns.Spawn1.memory.minBuilders = 1;
-    Game.spawns.Spawn1.memory.minLorries = 0;
-    Game.spawns.Spawn1.memory.minWallRepairers = 0;
-    Game.spawns.Spawn1.memory.minRepairers = 0;
+    spawnObj.memory.minHarvesters	= 3;
+    spawnObj.memory.minUpgraders = 1;
+    spawnObj.memory.minBuilders = 1;
+    spawnObj.memory.minLorries = 0;
+    spawnObj.memory.minWallRepairers = 0;
+    spawnObj.memory.minRepairers = 0;
     
     
-    Game.spawns.Spawn1.memory.debug	= false;
-    Game.spawns.Spawn1.memory.debuglevel = 1;
-    Game.spawns.Spawn1.memory.E44S3 = 0;
+    spawnObj.memory.debug	= false;
+    spawnObj.memory.debuglevel = 1;
+    spawnObj.memory.E44S3 = 0;
     
-    Game.spawns.Spawn1.memory.count = 0;
-    Game.spawns.Spawn1.memory.HarverstersCount = 0;
-    Game.spawns.Spawn1.memory.upgradersCount = 0;
-    Game.spawns.Spawn1.memory.repairsCount = 0;
-    Game.spawns.Spawn1.memory.buildersCount	=	0;
-    Game.spawns.Spawn1.memory.wallRepairsCount = 0;
-    Game.spawns.Spawn1.memory.minerCount = 0;
-    Game.spawns.Spawn1.memory.lorrysCount =	0;
-    Game.spawns.Spawn1.memory.wallRepairersCount = 0;
-    Game.spawns.Spawn1.memory.minLongDistanceBuildersE44S2 = 0;
-    Game.spawns.Spawn1.memory.testCreepCount = 0;
-    Game.spawns.Spawn1.memory.minLDE43S3 = 0;
-    Game.spawns.Spawn1.memory.foo = "test";
-    Game.spawns.Spawn1.memory.creepCount = 0;
+    spawnObj.memory.count = 0;
+    spawnObj.memory.HarverstersCount = 0;
+    spawnObj.memory.upgradersCount = 0;
+    spawnObj.memory.repairsCount = 0;
+    spawnObj.memory.buildersCount	=	0;
+    spawnObj.memory.wallRepairsCount = 0;
+    spawnObj.memory.minerCount = 0;
+    spawnObj.memory.lorrysCount =	0;
+    spawnObj.memory.wallRepairersCount = 0;
+    spawnObj.memory.minLongDistanceBuildersE44S2 = 0;
+    spawnObj.memory.testCreepCount = 0;
+    spawnObj.memory.minLDE43S3 = 0;
+    spawnObj.memory.foo = "test";
+    spawnObj.memory.creepCount = 0;
    
-    Game.spawns.Spawn1.memory.home = "";   
-    Game.spawns.Spawn1.memory.room1 = "";
-    Game.spawns.Spawn1.memory.room2 = "";
-    Game.spawns.Spawn1.memory.room3 = "";
+    spawnObj.memory.home = "";   
+    spawnObj.memory.room1 = "";
+    spawnObj.memory.room2 = "";
+    spawnObj.memory.room3 = "";
     
  
     
         
-    Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 0;
+    spawnObj.memory.minLDHroom1 = 0;
+    spawnObj.memory.minLDHroom2 = 0;
+    spawnObj.memory.minLDHroom3 = 0;
 
 
    
    
    
-    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + Game.spawns.Spawn1.memory.home);
+    console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawnObj.memory.home  is ' + spawnObj.memory.home);
     }
 }
