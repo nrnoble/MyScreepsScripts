@@ -1,0 +1,8 @@
+TODOs
+
+- Connect the links in Room E44S2
+- Create a custom creep that has one source and and target, such a builder
+- Save a path and have a creep follow that path
+- Repair that is assigned to Repair tunnels as a priority
+- Room E45S2, create a long distance builder to E44S2
+- Start mining minrals

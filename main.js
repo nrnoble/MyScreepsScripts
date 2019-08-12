@@ -391,7 +391,7 @@ module.exports.loop = function () {
                                 // spawn a miner
                                 name = spawn.createMiner(spawn, source.id);
                               //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
-                                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +" is try to create create miner with the name of " + name);
+                                console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + spawnName + " is try to create create miner with the name of " + name);
                                 if (name == -4 || name == -6) {
                                     return;
                                 }
@@ -478,8 +478,8 @@ module.exports.loop = function () {
                 name = spawn.createCustomCreep(energy, 'harvester');
                //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
-                console.log("[Main line " + util.LineNumber() + "] "+ spawn.name + " is creating harvester: " + name);
-
+              
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + name);
             }
             // if not enough lorries
             else if (numberOfLorries < spawn.memory.minLorries)

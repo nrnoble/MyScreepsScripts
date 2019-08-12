@@ -103,7 +103,7 @@ module.exports = {
 
                 }else
                 {
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + '  '+  creep.name + ' unable to move. Status is ' );
+                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + '  '+  creep.name + ' unable to move. Status is ' );
                     status = creep.moveTo(source);
                 }
             }

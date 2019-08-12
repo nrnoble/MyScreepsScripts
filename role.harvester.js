@@ -140,9 +140,9 @@ module.exports = {
 
                     if (source == undefined || source == null ) {
                         console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
-                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
         
-                        roleUpgrader.run(creep);
+                        roleBuilder.run(creep);
                         return;
                     }
 
