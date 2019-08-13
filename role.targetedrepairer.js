@@ -1,30 +1,20 @@
 var roleBuilder = require('role.builder');
+var roleBuilder = require('role.builder');
 var util = require('Util'); 
-var fileName = "Repairer    ";
+var fileName = "t-repairer ";
 
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-
-        var localTargetStructure = null;
 
         // check to see if engery == 0 and ttl < 75
         var status = util.SelfSecide(creep);
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-      
-        if(creep.memory.targetStructure == undefined)
-        {
-            creep.memory.targetStructure = null; 
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.targetStructure is ' + creep.memory.targetStructure );
-        }
 
-        if (creep.memory.targetStructure != null)
-        {
-            localTargetStructure == creep.memory.targetStructure;
-        }
-       
+ 
+
 
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
@@ -46,11 +36,14 @@ module.exports = {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
-                filter: (s) => s.hits  < (s.hitsMax *.50) && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART
+                filter: (s) => s.hits < s.hitsMax && s.structureType == STRUCTURE_ROAD && s.hitsMax == 750000
             });
 
             // if we find one
-            if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {
+            if (structure != undefined) {
+
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' tunnel found that needs to be repaired ' + structure);    
+
                 // try to repair it, if it is out of range
                 var repairStatus = creep.repair(structure);
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
@@ -58,6 +51,11 @@ module.exports = {
                     // move towards it
                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
                     creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                }
+                else
+                {
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+
                 }
             }
             else  if (structure != undefined) {

@@ -52,7 +52,8 @@ module.exports.loop = function () {
   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.name is  ' +   Game.spawns.Spawn1.room.name ) ;
 // energy = Game.spawns.Spawn1.room.name;
 
-
+    //var energySource2 = Game.getObjectById("5d5101c06507e179e61a2ec3");
+   // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  energySource2 ' + JSON.stringify(energySource2));
 
 //   //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  test  is ' + test );
 //     var sp1 = Memory.spawns.Spawn1;
@@ -214,19 +215,25 @@ module.exports.loop = function () {
 
         // find closes hostile creep
         var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-        
+       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
         // if one is found...
         if (evilCreep != undefined) {
             // ...FIRE!
-           // var status = evilCreep.getActiveBodyparts(HEAL)   ;
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+         
+         
+             var status = evilCreep.getActiveBodyparts(HEAL)   ;
+             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
 
-           // if (evilCreep.getActiveBodyparts(HEAL) > 0){
+            if (evilCreep.getActiveBodyparts(HEAL) > 0){
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
                 tower.attack(evilCreep);
               
                 continue;
-            //}
+            }
+
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+                tower.attack(evilCreep);
+                continue;
           
         }
       
@@ -239,7 +246,7 @@ module.exports.loop = function () {
         if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
             // ...heal
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
-             tower.heal(targetCreep);
+            // tower.heal(targetCreep);
             continue;
         }
 
@@ -253,12 +260,19 @@ module.exports.loop = function () {
                 // we use the arrow operator to define it
                 filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART });
 
-        // if one is found...
-            if (structure != undefined)
-            {
+        // if one is found...750000
+                if (structure != undefined)
+                {
+                     if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 725000) {
+                        var status = tower.repair(structure);
+                 }
+                 else{   
+
+
                var status = tower.repair(structure);
                if(status != 0){
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + structure.room + '\'s tower is repairing "' + structure.structureType + '". Repair Status is ' + status);      
+               }
             }
 
         }
@@ -313,7 +327,10 @@ module.exports.loop = function () {
         var numberOfRepairers = _.sum(creepsInRoom, (c) => c.memory.role == 'repairer');
         var numberOfWallRepairers = _.sum(creepsInRoom, (c) => c.memory.role == 'wallRepairer');
         var numberOfMiners = _.sum(creepsInRoom, (c) => c.memory.role == 'miner');
-        var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry');
+        var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry'); //createCustumReparier
+
+        var numberOfCustumRepariers = _.sum(creepsInRoom, (c) => c.memory.role == 'CustomReparier'); 
+
         
         var numberOflongDistanceBuildersroom1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceBuilder' && c.memory.home == room1);    
         // console.log('[' + fileName + 'line:' + util.LineNumber() + ']   numberOflongDistanceBuildersE44S2 is ' + numberOflongDistanceBuildersE44S2);
@@ -324,6 +341,9 @@ module.exports.loop = function () {
         var numberOfLongDistanceHarvestersroom1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == room1 );
         var numberOfLongDistanceHarvestersroom2 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == room2);
         var numberOfLongDistanceHarvestersroom3 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceHarvester' && c.memory.target == room3);
+
+        var numberOfTargetedReparier = _.sum(creepsInRoom, (c) => c.memory.role == 'targetedReparier'); 
+
        
         var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
 
@@ -335,7 +355,7 @@ module.exports.loop = function () {
 
     
 
-        if (room ='room1')
+        if (room =='room1')
         {
     
             if (spawn.room.energyCapacityAvailable < energy){
@@ -347,9 +367,21 @@ module.exports.loop = function () {
             }
         }
 
+     
+//        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name)
 
-        if (room ='E45S2')
+        if (spawn.room.name =='E45S2')
         {
+
+           //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name);
+            //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' numberOfTargetedReparier is ' + numberOfTargetedReparier);
+              //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
+            if (numberOfTargetedReparier < spawn.memory.foo)
+            {
+             //   name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, room1, room2, 0);
+              //  name = spawn.createTargetRepairer(spawn,"targetedRepairer", "5bbcafa89099fc012e63af8f", "5d4f2eb0ac2d2d20dcee9a27");
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] creating a targeted Spawn. Status is ' + name);
+            }
     
             if (spawn.room.energyCapacityAvailable < energy){
                 energy = spawn.room.energyCapacityAvailable;
@@ -364,6 +396,10 @@ module.exports.loop = function () {
 
         var name = undefined;
        
+
+
+
+
         if (numberOfMiners == 0){
             {
                 // check if all sources have miners

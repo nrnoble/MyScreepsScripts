@@ -214,7 +214,7 @@ module.exports = function () {
         function (spawn, sourceId) {
           //  var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
             var energy = spawn.room.energyCapacityAvailable;
-
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + energy);
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.energyCapacityAvailable is  ' + Game.spawns.Spawn1.room.energyCapacityAvailable);
             if(energy <= 300)
             {
@@ -466,54 +466,103 @@ module.exports = function () {
             });
         }; 
         
-        StructureSpawn.prototype.createCustomeBuilder =
-        function (SpawnObj, roleName, energySource, targetStructure) {
-            // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
-            var body = [];
-            //for (let i = 0; i < numberOfWorkParts; i++) {
-            //    body.push(WORK);
-            //}
+    StructureSpawn.prototype.createCustomeBuilder =
+    function (SpawnObj, roleName, energySource, targetStructure) {
+        // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        var body = [];
+        //for (let i = 0; i < numberOfWorkParts; i++) {
+        //    body.push(WORK);
+        //}
 
-            //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
-            //energy -= 150 * numberOfWorkParts;
+        //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+        //energy -= 150 * numberOfWorkParts;
 
-            //var numberOfParts = Math.floor(energy / 100);
-            //for (let i = 0; i < numberOfParts; i++) {
-            //    body.push(CARRY);
-            //}
-            //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-            //    body.push(MOVE);
-            //}
+        //var numberOfParts = Math.floor(energy / 100);
+        //for (let i = 0; i < numberOfParts; i++) {
+        //    body.push(CARRY);
+        //}
+        //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+        //    body.push(MOVE);
+        //}
 
-            body.push(WORK);
-           // body.push(WORK);
-           // body.push(WORK);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
+        body.push(WORK);
+        // body.push(WORK);
+        // body.push(WORK);
+        body.push(CARRY);
+        body.push(CARRY);
+        body.push(CARRY);
+        body.push(CARRY);
+        body.push(CARRY);
+        body.push(MOVE);
+        body.push(MOVE);
+        body.push(MOVE);
+        body.push(MOVE);
+        body.push(MOVE);
+        body.push(MOVE);
 
 
-            // create creep with the created body
-         //   return util.CreateNewScreep(this, roleName, body, {
-             
+        // create creep with the created body
+        //   return util.CreateNewScreep(this, roleName, body, {
             
-            return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
-                role: roleName,
-                home: SpawnObj.room.name,
-                targetstructure: targetStructure,
-                engerysource: energySource,
-                creator: 'Neal R. Noble 2019',
-                cachedSource: null
-            });
-        };  
+        
+        return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+            role: roleName,
+            home: SpawnObj.room.name,
+            targetstructure: targetStructure,
+            engerysource: energySource,
+            creator: 'Neal R. Noble 2019',
+            cachedSource: null
+        });
+    };
+    
+    StructureSpawn.prototype.createTargetReparier =
+    function (SpawnObj, roleName, energySource, targetStructure) {
+        // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        var body = [];
+        //for (let i = 0; i < numberOfWorkParts; i++) {
+        //    body.push(WORK);
+        //}
+
+        //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+        //energy -= 150 * numberOfWorkParts;
+
+        //var numberOfParts = Math.floor(energy / 100);
+        //for (let i = 0; i < numberOfParts; i++) {
+        //    body.push(CARRY);
+        //}
+        //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+        //    body.push(MOVE);
+        //}
+
+        body.push(WORK);
+        // body.push(WORK);
+        // body.push(WORK);
+        body.push(CARRY);
+        body.push(CARRY);
+      //  body.push(CARRY);
+      //  body.push(CARRY);
+        body.push(CARRY);
+        body.push(MOVE);
+        body.push(MOVE);
+      // body.push(MOVE);
+      // body.push(MOVE);
+        // body.push(MOVE);
+       // body.push(MOVE);
+
+
+        // create creep with the created body
+        //   return util.CreateNewScreep(this, roleName, body, {
+            
+        
+        return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+            role: roleName,
+            home: SpawnObj.room.name,
+            targetstructure: targetStructure,
+            engerysource: energySource,
+            creator: 'Neal R. Noble 2019',
+            cachedSource: null
+        });
+    };  
         
         
         

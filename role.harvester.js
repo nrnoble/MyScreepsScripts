@@ -107,7 +107,12 @@ module.exports = {
                 if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
-                }
+                } else{
+                    console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+                     roleUpgrader.run(creep);
+                     return;
+                }   
+
             }
             else{
            
