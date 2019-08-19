@@ -195,6 +195,12 @@ module.exports = function () {
             // create creep with the created body
             return this.createCreep(body, undefined, {
                 role: 'longDistanceHarvester',
+                pause: false,
+                group1: 'longDistanceHarvester',
+                group2: 'builder',
+                group3: 'repairer',
+                group4: 'updater',
+                changeRole: false,
                 home: home,
                 target: target,
                 sourceIndex: sourceIndex,
@@ -209,12 +215,20 @@ module.exports = function () {
             return this.createCreep([CLAIM, MOVE], undefined, { role: 'claimer', target: target });
         };
 
+
+    // create a new function for StructureSpawn
+    StructureSpawn.prototype.createReserver =
+    function (spawn, target) {
+       // console.log("Creating a Reserver");
+        return this.createCreep([CLAIM,CLAIM,CLAIM, MOVE,MOVE,MOVE], undefined, { role: 'reserver', target: target, spawnId: spawn.id });
+    };
+
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createMiner =
         function (spawn, sourceId) {
           //  var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
             var energy = spawn.room.energyCapacityAvailable;
-            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + energy);
+         //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + energy);
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.energyCapacityAvailable is  ' + Game.spawns.Spawn1.room.energyCapacityAvailable);
             if(energy <= 300)
             {

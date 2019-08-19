@@ -6,25 +6,29 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-        var localTargetStructure = null;
+
 
         // check to see if engery == 0 and ttl < 75
         var status = util.SelfSecide(creep);
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-      
-        if(creep.memory.targetStructure == undefined)
+
+        var localTargetStructure = null; //5d1dde21b6fe552a9e36646c
+        if(creep.memory.targetStructureId == undefined)
         {
-            creep.memory.targetStructure = null; 
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.targetStructure is ' + creep.memory.targetStructure );
+         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' setting creep.memory.targetStructure null ' );
+            creep.memory.targetStructureId = null; 
+         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.targetStructure is ' + creep.memory.targetStructureId );
         }
 
-        if (creep.memory.targetStructure != null)
-        {
-            localTargetStructure == creep.memory.targetStructure;
-        }
+        // if (creep.memory.targetStructureId != null)
+        // {
+        //     localTargetStructure = creep.memory.targetStructureId;
+        // }
        
+
+        
 
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
@@ -39,40 +43,94 @@ module.exports = {
 
         // if creep is supposed to repair something
         if (creep.memory.working == true) {
+
+            // check for a specific structure
+           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+            
+            if(creep.memory.targetStructureId != undefined){
+               //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+                structure = Game.getObjectById(creep.memory.targetStructureId);
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
+                var repairStatus = creep.repair(structure);
+                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+                    if (repairStatus == ERR_NOT_IN_RANGE) {
+                        // move towards structure
+                       //console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
+                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
+            }
+
             // find closest structure with less than max hits
             // Exclude walls because they have way too many max hits and would keep
             // our repairers busy forever. We have to find a solution for that later.
+            
+            else      
+           {    
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
-                filter: (s) => s.hits  < (s.hitsMax *.50) && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART
+                filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
             });
 
-            // if we find one
-            if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {
-                // try to repair it, if it is out of range
-                var repairStatus = creep.repair(structure);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
-                if (repairStatus == ERR_NOT_IN_RANGE) {
-                    // move towards it
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                    creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+
+            // var x = "0";
+            // switch (structure.structureType) {
+            //   case STRUCTURE_ROAD:
+                
+            //     break;
+            //   case STRUCTURE_RAMPART:
+            //     text = "On";
+            //     break;
+              
+            //     default:
+            //     text = "No value found";
+            // }
+
+
+
+                var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    // the second argument for findClosestByPath is an object which takes
+                    // a property called filter which can be a function
+                    // we use the arrow operator to define it
+                    filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL,ignoreCreeps: true
+                });
+
+                // if we find one
+                if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {
+                    // try to repair it, if it is out of range
+                    var repairStatus = creep.repair(structure);
+                  //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+                    if (repairStatus == ERR_NOT_IN_RANGE) {
+                        // move towards it
+                        // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
+                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
+                }else if (structure != undefined && structure.structureType == STRUCTURE_RAMPART && structure.hits < structure.hitsMax * .21){
+
+                    var repairStatus = creep.repair(structure);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXXrepair status is ' + repairStatus);
+                    if (repairStatus == ERR_NOT_IN_RANGE) {
+                        // move towards it
+                        // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
+                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
                 }
-            }
-            else  if (structure != undefined) {
-                // try to repair it, if it is out of range
-             //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' structure type is ' + structure.structureType);
-                if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
-                    // move towards it
-                    creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                else  if (structure != undefined && structure.structureType != STRUCTURE_RAMPART) {
+                    // try to repair it, if it is out of range
+                 //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' structure type is ' + structure.structureType);
+                    if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
+                        // move towards it
+                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
                 }
-            }
-            // can't fine one
-            else {
-                // look for construction sites
-                roleBuilder.run(creep);
-            }
+                // can't fine one
+                else {
+                    // look for construction sites
+                    roleBuilder.run(creep);
+                }
+            } // end if
+
         }
         // if creep is supposed to get energy
         else {

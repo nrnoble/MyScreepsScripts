@@ -82,7 +82,7 @@ module.exports = {
                 // find closest source
                 var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if(source == null ){
-                    console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " source is null");
+                    // console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " source is null");
 
                 }
 

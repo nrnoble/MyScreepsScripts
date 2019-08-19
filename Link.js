@@ -35,7 +35,7 @@ module.exports = {
           var  linkDestination = Game.getObjectById(destinationID);
           if(linkSource.energy == linkSource.energyCapacity && linkSource.cooldown == 0){
                 var status = linkSource.transferEnergy(linkDestination, linkSource.energyCapacity);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
+             //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
         }
     }
 }

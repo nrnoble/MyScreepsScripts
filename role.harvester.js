@@ -108,7 +108,7 @@ module.exports = {
                     // move towards it
                     creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                 } else{
-                    console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+                   // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
                      roleUpgrader.run(creep);
                      return;
                 }   
@@ -147,7 +147,7 @@ module.exports = {
                         console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
                         console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
         
-                        roleBuilder.run(creep);
+                      roleUpgrader.run(creep);
                         return;
                     }
 

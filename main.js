@@ -1,5 +1,6 @@
 // import modules
 require('prototype.spawn')();
+//var events = require('events');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -8,6 +9,7 @@ var roleWallRepairer = require('role.wallRepairer');
 var roleLongDistanceHarvester = require('role.longDistanceHarvester');
 var roleLongDistanceBuilder = require('role.longDistanceBuilder');
 var roleClaimer = require('role.claimer');
+var roleReserver = require('role.reserveController');
 var roleMiner = require('role.miner');
 var roleLorry = require('role.lorry');
 var roleTestCreep = require('role.Test');
@@ -41,8 +43,7 @@ module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
 
- //   var postFixCount = Game.spawns.Spawn1.memory.creepCount
-    
+
 
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] sp1.creepCount is  ' + sp1.creepCount);
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount is  ' +    postFixCount);
@@ -59,9 +60,25 @@ module.exports.loop = function () {
 //     var sp1 = Memory.spawns.Spawn1;
 //     var sp2 = Memory.spawns.Spawn2;
 
-    Game.spawns.Spawn1.memory.minLDHroom1 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom2 = 0;
-    Game.spawns.Spawn1.memory.minLDHroom3 = 3;
+ var controller = Game.getObjectById("5bbcaf869099fc012e63ab6c");
+ var tte = controller.reservation.ticksToEnd;
+ // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tte is ' + tte);
+  var creepsInRoom = controller.room.find(FIND_MY_CREEPS);
+  var numberOfreserverCreeps =  _.sum(creepsInRoom, (c) => c.memory.role == 'reserver');
+ //console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfreserverCreeps is ' + numberOfreserverCreeps);
+
+ if((tte == 4020 || tte == 3725 || tte == 3525 || tte == 3325 || tte == 3225 || tte == 31825 || tte == 2000 || tte == 1000 ) && numberOfreserverCreeps == 0)
+{
+    var spawn = Game.getObjectById("5d1314a8f1c8960c5d83fec7");
+    spawn.memory.reserveroom = "E43S3";
+    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
+}
+
+
+
+    //Game.spawns.Spawn1.memory.minLDHroom1 = 0;
+    //Game.spawns.Spawn1.memory.minLDHroom2 = 0;
+   // Game.spawns.Spawn1.memory.minLDHroom3 = 5;
 
     //var HOME = 'E44S3'; //test sdfgdsfg
     var HOME = Game.spawns.Spawn1.memory.home;
@@ -130,11 +147,12 @@ module.exports.loop = function () {
         var creep = Game.creeps[name];
        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.name room is ' + creep.room.name);
       
+       // TODO HACK. For reasons unknown, screep wander into this room.
        if(creep.room.name == "E44S1"){
 
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in the wrong room ' + creep.room.name);
-            creep.memory.home = "E44S2";
-            creep.memory.target = "E45S2";
+            creep.memory.home = "E45S2";
+            creep.memory.target = "E44S2";
             creep.memory.role = "longDistanceBuilder";
             // var exit = creep.room.findExitTo(creep.memory.home);
             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' exit is ' + exit);
@@ -145,6 +163,11 @@ module.exports.loop = function () {
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' moving toward exit. Status is ' + status);
 
        }
+
+
+
+
+       
 
 
         // if( creep.room.name == "E45S2"){ 
@@ -183,6 +206,10 @@ module.exports.loop = function () {
         // if creep is claimer, call claimer script
         else if (creep.memory.role == 'claimer') {
             roleClaimer.run(creep);
+        }
+        // if creep is reserver, call reserver script
+        else if (creep.memory.role == 'reserver') {
+            roleReserver.run(creep);
         }
         // if creep is miner, call miner script
         else if (creep.memory.role == 'miner') {
@@ -288,9 +315,8 @@ module.exports.loop = function () {
     //************************************** */
     for (let spawnName in Game.spawns) {
         /** @type {Spawn} */
-        let spawn = Game.spawns[spawnName]; 
-
-    
+        let spawn = Game.spawns[spawnName];
+        
       //  var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
 
     //TODO: HACK. 
@@ -300,14 +326,14 @@ module.exports.loop = function () {
         }
         
 
-//         if (spawnName == "Spawn3")
-//         {
-// //            console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
-//                 var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
-//                  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
+        if (spawnName == "Spawn3")
+        {
+//          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
+                var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
+               //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
       
-//   //          return;
-//         }
+  //          return;
+        }
 
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
         /** @type {Room} */
@@ -348,7 +374,7 @@ module.exports.loop = function () {
         var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
 
         var energy = spawn.room.energyCapacityAvailable;
-        var energy = 800;
+        var energy = 1000;
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
 
@@ -429,7 +455,7 @@ module.exports.loop = function () {
                               //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
                                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + spawnName + " is try to create create miner with the name of " + name);
                                 if (name == -4 || name == -6) {
-                                    return;
+                               //     return;
                                 }
                                 break;
                             }
@@ -541,7 +567,22 @@ module.exports.loop = function () {
                     delete spawn.memory.claimRoom;
                 }
                 /// console.log("line 177");
+            } else if (spawn.memory.reserveroom != undefined)
+            {
+                // try to spawn a claimer
+                console.log("[line " + util.LineNumber() + "] createReserver");
+                name = spawn.createReserver(spawn, spawn.memory.reserveroom);
+                console.log("[line " + util.LineNumber() + "] create Reserver:" + name);
+                // if that worked
+                if (!(name < 0)) {
+                    // delete the claim order
+                    delete spawn.memory.reserveroom;
+                }
+                /// console.log("line 177");
             }
+
+
+
             // if not enough upgraders
             //console.log("line 180 spawn.memory.minUpgraders: " + spawn.memory.minUpgraders);
             else if (numberOfUpgraders < spawn.memory.minUpgraders) {

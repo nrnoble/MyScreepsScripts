@@ -6,6 +6,13 @@ Game.spawns['Spawn1'].room.controller.activateSafeMode();
 
 C:\Users\Neal>docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
 
+var myRoomSource = Game.getObjectById("5bbcafa89099fc012e63af8f")
+myTestPos = new RoomPosition(42, 7, 'E45S2');
+
+controller {"room":{"name":"E43S3","energyAvailable":0,"energyCapacityAvailable":0,"visual":{"roomName":"E43S3"}},"pos":{"x":17,"y":27,"roomName":"E43S3"},"id":"5bbcaf869099fc012e63ab6c","reservation":{"username":"nrnoble","ticksToEnd":3149},"level":0,"safeModeAvailable":0,"isPowerEnabled":false,"structureType":"controller"}
+[5:11:27 PM][shard3][Main        line:47] controller {"room":{"name":"E43S3","energyAvailable":0,"energyCapacityAvailable":0,"visual":{"roomName":"E43S3"}},"pos":{"x":17,"y":27,"roomName":"E43S3"},"id":"5bbcaf869099fc012e63ab6c","reservation":{"username":"nrnoble","ticksToEnd":3148},"level":0,"safeModeAvailable":0,"isPowerEnabled":false,"structureType":"controller"}
+
+
  Game.spawns.Spawn1.memory.claimRoom = "W2N1"  
  Game.spawns.Spawn1.memory.claimRoom = "W2N1"
 
@@ -92,3 +99,35 @@ OK: 0,
     ERR_NOT_ENOUGH_EXTENSIONS: -6,
     ERR_RCL_NOT_ENOUGH: -14,
     ERR_GCL_NOT_ENOUGH: -15,
+
+[*************************************************************************]
+    //Logic 1
+var before = Game.cpu.getUsed();
+//****Test Script/Process
+var after = Game.cpu.getUsed();
+console.log('CPU USED ON OPERATION 1: '+(after-before));
+var logicOne = (after-before);
+//Logic 2
+var before = Game.cpu.getUsed();
+// *** 2nd test script / process
+var after = Game.cpu.getUsed();
+console.log('CPU USED ON OPERATION2: '+(after-before));
+var logicTwo = (after-before);
+// Determine a winner:
+if(logicOne < logicTwo){
+    console.log('LOGIC ONE WINS BY: '+(logicTwo-logicOne));
+} else{
+    console.log('LOGIC TWO WINS BY: '+(logicOne-logicTwo));
+}
+[*************************************************************************]
+
+So output = (Something) => Console.log('This thing is: '+Something); (edited) 
+
+
+global.measure = function( fn, ...args ) {
+    const start = Game.cpu.getUsed();
+    fn.apply(null, args);
+    return _.round(Game.cpu.getUsed() - start, 4); // Precision level
+}
+And from command line:
+measure( () => /* call something, time will be printed to console */)

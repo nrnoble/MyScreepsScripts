@@ -12,7 +12,7 @@ module.exports = {
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");
         
         // check to see if engery == 0 and ttl < 75
-          var status = util.SelfSecide(creep);
+        //  var status = util.SelfSecide(creep);
 
         // if creep is bringing energy to the controller but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
@@ -51,32 +51,54 @@ module.exports = {
             }
         }
         // if creep is supposed to get energy
-        else{ 
-            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working != true)");
-            // find closest container //s.structureType == STRUCTURE_CONTAINER || 
-            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                    s.store[RESOURCE_ENERGY] > 0
-            });
-            // if one was found
-            if (container != undefined) {
-                // try to withdraw energy, if the container is not in range
-                if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    // move towards it
-                    // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
-                    creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+        // else{ 
+        //     // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working != true)");
+        //     // find closest container //s.structureType == STRUCTURE_CONTAINER || 
+        //     let link = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+        //         filter: s => (s.structureType == STRUCTURE_LINK) && s.energy > 0});
+        //         if (creep.room.name == "E44S3" && link != null && link != undefined){
+        //            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' link engery is ' + link);
+        //           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' link engery is ' + link.energy);
+        
+        //         }
+        //     if (link != undefined)
+        //     {
+        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] Link found ');
+        //         // try to withdraw energy, if the container is not in range
+        //         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        //             // move towards it
+        //             // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
+        //             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
+        //         }
+        //     }
+            else{
+
+
+
+                let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
+                        s.store[RESOURCE_ENERGY] > 0
+                });
+                // if one was found
+                if (container != undefined) {
+                    // try to withdraw energy, if the container is not in range
+                    if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                        // move towards it
+                        // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
+                        creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
                 }
-            }
-            else {
-                // find closest source
-                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-                // try to harvest energy, if the source is not in range
-                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                    // move towards it
-                   // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
-                }
+                else {
+                    // find closest source
+                    var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+                    // try to harvest energy, if the source is not in range
+                    if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                        // move towards it
+                    // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
+                        creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
+                } // else
             }
         }
-    }
+    
 };

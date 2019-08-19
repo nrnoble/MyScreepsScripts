@@ -41,7 +41,7 @@ module.exports =
         var ttl = creep.ticksToLive;
         var energyRemaining = creep.carry.energy;
 
-        if ((ttl < 200) && (energyRemaining == 0)) {
+        if ((ttl < 25) && (energyRemaining == 0)) {
 
             //this.debug(1, this.lineNumber(), "time to Die", creep.name);
             console.log("Time to die: " + creep.name + "(" + creep.role + ")");
