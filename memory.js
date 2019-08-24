@@ -48,12 +48,22 @@ module.exports = {
  
     
         
-    spawnObj.memory.minLDHroom1 = 0;
-    spawnObj.memory.minLDHroom2 = 0;
-    spawnObj.memory.minLDHroom3 = 0;
+    // Game.spawns.Spawn1.memory.minLDHroom1 = 0;
+    // Game.spawns.Spawn1.memory.minLDHroom2 = 0;
+    // Game.spawns.Spawn1.memory.minLDHroom3 = 0;
 
 
-   
+    // Game.spawns.Spawn2.memory.home = ""
+    // Game.spawns.Spawn2.memory.room1 = ""
+    // Game.spawns.Spawn2.memory.room2 = ""
+    // Game.spawns.Spawn2.memory.room3 = ""
+    
+ 
+    
+        
+    // Game.spawns.Spawn2.memory.minLDHroom1 = 0
+    // Game.spawns.Spawn2.memory.minLDHroom2 = 0
+    // Game.spawns.Spawn2.memory.minLDHroom3 = 0
    
    
     console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawnObj.memory.home  is ' + spawnObj.memory.home);

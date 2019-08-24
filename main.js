@@ -17,7 +17,7 @@ var util = require('Util');
 var link = require('Link'); 
 var memoryfn = require('memory'); 
 var fileName = "Main        ";
-
+var towers = require('Towers');
 
 
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + HOME);
@@ -29,7 +29,7 @@ var fileName = "Main        ";
 
 var test ="abcd";
 
-var minNUmberofTestScreeps = 0; 
+var minNUmberofTestScreeps = Memory.spawns.Spawn1.minTesters; 
 var sp1 = Memory.spawns.Spawn1;
 var sp2 = Memory.spawns.Spawn2;
 var sp3 = Memory.spawns.Spawn3;
@@ -39,11 +39,28 @@ var  postFixCount = sp1.creepCount;
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
 
+
+global.injectNAME = function(){//*
+    if(!global.NAMEInjected) {
+        global.NAMEInjected = true;
+        var output = `<SPAN>Trying to inject NAME code!</SPAN>
+<SCRIPT>
+​
+</SCRIPT>`
+	    console.log(output.replace(/(\r\n|\n|\r)\t+|(\r\n|\n|\r) +|(\r\n|\n|\r)/gm, ''));
+    }
+//*/
+}
+
+global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
+
+
 module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
     var sp2 = Memory.spawns.Spawn2;
 
 
+    injectNAME();
 
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] sp1.creepCount is  ' + sp1.creepCount);
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount is  ' +    postFixCount);
@@ -60,6 +77,9 @@ module.exports.loop = function () {
 //     var sp1 = Memory.spawns.Spawn1;
 //     var sp2 = Memory.spawns.Spawn2;
 
+try {
+
+    
  var controller = Game.getObjectById("5bbcaf869099fc012e63ab6c");
  var tte = controller.reservation.ticksToEnd;
  // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tte is ' + tte);
@@ -74,6 +94,10 @@ module.exports.loop = function () {
     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
 }
 
+} catch (e) {
+
+    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Can not see controller in room E43S3');
+}
 
 
     //Game.spawns.Spawn1.memory.minLDHroom1 = 0;
@@ -148,7 +172,7 @@ module.exports.loop = function () {
        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.name room is ' + creep.room.name);
       
        // TODO HACK. For reasons unknown, screep wander into this room.
-       if(creep.room.name == "E44S1"){
+       if(creep.room.name == "E44S1" && creep.memory.role != "longDistanceHarvester"){
 
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in the wrong room ' + creep.room.name);
             creep.memory.home = "E45S2";
@@ -225,89 +249,96 @@ module.exports.loop = function () {
         }
         else if (creep.memory.role == 'roleTestCreep') {
            // console.log("[Main line " + util.LineNumber() + "] running TestCreep: " + creep.name);
-            roleTestCreep.run(creep);
+           var sourceStorageId = "5d252e5a2aba2447ced2a570"; 
+           var targetStorageID = "5d3d74d7576a94745c39de30"; 
+
+           roleTestCreep.run(creep,sourceStorageId, targetStorageID);
          }
     }
 
 
-    //************************************** */
-    // find all towers
-    //************************************** */
+
+    towers.run();
+
+
+    // //************************************** */
+    // // find all towers
+    // //************************************** */
     
-    var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
+    // var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
   
-    // for each tower
-    for (let tower of towers) {
+    // // for each tower
+    // for (let tower of towers) {
         
 
-        // find closes hostile creep
-        var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
-        // if one is found...
-        if (evilCreep != undefined) {
-            // ...FIRE!
+    //     // find closes hostile creep
+    //     var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+    //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
+    //     // if one is found...
+    //     if (evilCreep != undefined) {
+    //         // ...FIRE!
          
          
-             var status = evilCreep.getActiveBodyparts(HEAL)   ;
-             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+    //          var status = evilCreep.getActiveBodyparts(HEAL)   ;
+    //          console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
 
-            if (evilCreep.getActiveBodyparts(HEAL) > 0){
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-                tower.attack(evilCreep);
+    //         if (evilCreep.getActiveBodyparts(HEAL) > 0){
+    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+    //             tower.attack(evilCreep);
               
-                continue;
-            }
+    //             continue;
+    //         }
 
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-                tower.attack(evilCreep);
-                continue;
+    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+    //             tower.attack(evilCreep);
+    //             continue;
           
-        }
+    //     }
       
-        var targetCreep = tower.pos.findClosestByRange(FIND_CREEPS);
-         // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
+    //     var targetCreep = tower.pos.findClosestByRange(FIND_CREEPS);
+    //      // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
 
 
         
-        // if one is found...
-        if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
-            // ...heal
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
-            // tower.heal(targetCreep);
-            continue;
-        }
+    //     // if one is found...
+    //     if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
+    //         // ...heal
+    //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
+    //         tower.heal(targetCreep);
+    //         continue;
+    //     }
 
 
+    //     // if (creep != null && tower.energy > 300)
+    //     if (tower.energy > 300)
+    //     {
+    //         var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
+    //             // the second argument for findClosestByPath is an object which takes
+    //             // a property called filter which can be a function
+    //             // we use the arrow operator to define it
+    //             filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART });
 
-        if (creep != null && tower.energy > 300)
-        {
-            var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                // the second argument for findClosestByPath is an object which takes
-                // a property called filter which can be a function
-                // we use the arrow operator to define it
-                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART });
-
-        // if one is found...750000
-                if (structure != undefined)
-                {
-                     if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 725000) {
-                        var status = tower.repair(structure);
-                 }
-                 else{   
-
-
-               var status = tower.repair(structure);
-               if(status != 0){
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + structure.room + '\'s tower is repairing "' + structure.structureType + '". Repair Status is ' + status);      
-               }
-            }
-
-        }
-
-     }
+    //     // if one is found...750000
+    //             if (structure != undefined)
+    //             {
+    //                  if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 725000) {
+    //                     var status = tower.repair(structure);
+    //              }
+    //              else{   
 
 
-    }
+    //            var status = tower.repair(structure);
+    //            if(status != 0){
+    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + structure.room + '\'s tower is repairing "' + structure.structureType + '". Repair Status is ' + status);      
+    //            }
+    //         }
+
+    //     }
+
+    //  }
+
+
+    // }
 
 
     //************************************** */
@@ -414,7 +445,7 @@ module.exports.loop = function () {
             }
             else{
             
-                energy = 550;
+                energy = 650;
             }
         }
 
@@ -654,11 +685,11 @@ module.exports.loop = function () {
                 //return;
 
             }
-            else if (numberOfTestScreeps < minNUmberofTestScreeps) {
+            else if (numberOfTestScreeps < Memory.spawns.Spawn1.minTesters) {
                 // try to spawn one
-
+                
                 name = Game.spawns.Spawn1.createTestCreep(sp1,"roleTestCreep");
-                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep " + name );
+                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep1 " + name );
 
             }
             

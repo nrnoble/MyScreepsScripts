@@ -59,12 +59,14 @@ module.exports = {
                 if (creep.repair(target) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
                 }
             }
             // if we can't fine one
             else {
                 // look for construction sites
                 roleBuilder.run(creep);
+                util.repairRoad(creep);
             }
         }
         // if creep is supposed to get energy

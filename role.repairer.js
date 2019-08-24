@@ -106,10 +106,12 @@ module.exports = {
                         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
                         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
-                }else if (structure != undefined && structure.structureType == STRUCTURE_RAMPART && structure.hits < structure.hitsMax * .21){
+                }else if (structure != undefined && structure.structureType == STRUCTURE_RAMPART && structure.hits < structure.hitsMax * .31){
 
                     var repairStatus = creep.repair(structure);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXXrepair status is ' + repairStatus);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structure.hitsMax * .229 is ' + structure.hitsMax * .239);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  structure.hits is ' + structure.hits);
+                    //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name +', ' +  creep.name + ' repairing rampart status is ' + repairStatus);
                     if (repairStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');

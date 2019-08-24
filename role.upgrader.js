@@ -38,6 +38,7 @@ module.exports = {
                 // if not in range, move towards the controller
                // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
                 creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+                util.repairRoad(creep);
             }
             else
             {

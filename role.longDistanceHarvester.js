@@ -47,7 +47,7 @@ module.exports = {
         if(creep.ticksToLive < 160 && creep.room.name == "E44S3" && creep.carry.energy == 0)
         {
             creep.memory.target = "E44S3"
-            creep.memory.role = "upgrader";
+            creep.memory.role = "harvester";
           
           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + "Switching from LD harvester to upgrader");
             return;

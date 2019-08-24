@@ -368,7 +368,26 @@ module.exports =
 
         var count = structuresFound.length;
         return count;
+    },
 
+    repairRoad: function(creep){
+        
+        try {
+            structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+            for (let i = 0; i < structures.length; i++) {
+                var road =  structures[i].structure
+
+                if (road.hits < road.hitsMax) {
+                    var repairStatus = creep.repair(road);
+                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                  break;
+                }
+                 
+              }
+        } catch (e) {
+        
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+        }
     }
 
 

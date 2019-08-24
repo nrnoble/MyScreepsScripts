@@ -46,7 +46,7 @@ module.exports = {
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
-                    || s.structureType == STRUCTURE_TOWER)
+                    || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 250 ) ) 
                     && s.energy < s.energyCapacity
             });
 
@@ -74,6 +74,7 @@ module.exports = {
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                     util.repairRoad(creep);
                 }
             }
         }
@@ -107,6 +108,8 @@ module.exports = {
                 if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
+
                 } else{
                    // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
                      roleUpgrader.run(creep);
@@ -126,6 +129,7 @@ module.exports = {
             {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a container ');    
                 creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                util.repairRoad(creep);
                 return;
             }else{
                 // find closest source
@@ -160,6 +164,7 @@ module.exports = {
                     // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
 
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
                 }
             }
         }

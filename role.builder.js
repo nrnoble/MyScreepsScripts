@@ -55,12 +55,14 @@ module.exports = {
                 if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
                     // move towards the constructionSite
                     creep.moveTo(constructionSite, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
                 }
             }
             // if no constructionSite is found
             else {
                 // go upgrading the controller
                 roleUpgrader.run(creep);
+                util.repairRoad(creep);
             }
         }
         // if creep is supposed to get energy
@@ -93,6 +95,8 @@ module.exports = {
                     // move towards it
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
+
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Energy is gone and source is on cool down ');
             }
         }
     }
