@@ -19,6 +19,10 @@ var memoryfn = require('memory');
 var fileName = "Main        ";
 var towers = require('Towers');
 
+const E44S3_MINER_TTL = 25;
+const E44S2_MINER_TTL = 125;
+const E45S2_MINER_TTL = 125;
+
 
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + HOME);
 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room1 is ' + room1);
@@ -57,10 +61,10 @@ global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
 
 module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
-    var sp2 = Memory.spawns.Spawn2;
+ //   var sp2 = Memory.spawns.Spawn2;
 
 
-    injectNAME();
+  //  injectNAME();
 
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] sp1.creepCount is  ' + sp1.creepCount);
 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] postFixCount is  ' +    postFixCount);
@@ -96,7 +100,7 @@ try {
 
 } catch (e) {
 
-    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Can not see controller in room E43S3');
+    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Can not see controller in room E43S3. Error is ' + e);
 }
 
 
@@ -132,9 +136,9 @@ try {
     //***************************************/    
 
     var sp1 = Memory.spawns.Spawn1;
-    var sp2 = Memory.spawns.Spawn2;
+ //   var sp2 = Memory.spawns.Spawn2;
 
-    sp1.count++;
+  //  sp1.count++;
 
    //console.log("sp1.count:" + sp1.count); 
    // console.log(JSON.stringify(sp1));
@@ -166,11 +170,18 @@ try {
     //************************************** */
     // for every creep name in Game.creeps execute roles
     //************************************** */
+    var lockedTargetIds = [];
+    
     for (let name in Game.creeps) {
         // get the creep object
         var creep = Game.creeps[name];
        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.name room is ' + creep.room.name);
-      
+       
+    //    if(creep.memory.lockedTargetId != undefined)
+    //    {
+    //         lockedTargetIds.push(lockTargetId);
+    //    }
+
        // TODO HACK. For reasons unknown, screep wander into this room.
        if(creep.room.name == "E44S1" && creep.memory.role != "longDistanceHarvester"){
 
@@ -257,90 +268,15 @@ try {
     }
 
 
+    // //************************************** */
+    // // All towers
+    // //************************************** */
 
     towers.run();
 
 
-    // //************************************** */
-    // // find all towers
-    // //************************************** */
     
-    // var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
-  
-    // // for each tower
-    // for (let tower of towers) {
-        
-
-    //     // find closes hostile creep
-    //     var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-    //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
-    //     // if one is found...
-    //     if (evilCreep != undefined) {
-    //         // ...FIRE!
-         
-         
-    //          var status = evilCreep.getActiveBodyparts(HEAL)   ;
-    //          console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-
-    //         if (evilCreep.getActiveBodyparts(HEAL) > 0){
-    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-    //             tower.attack(evilCreep);
-              
-    //             continue;
-    //         }
-
-    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-    //             tower.attack(evilCreep);
-    //             continue;
-          
-    //     }
-      
-    //     var targetCreep = tower.pos.findClosestByRange(FIND_CREEPS);
-    //      // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
-
-
-        
-    //     // if one is found...
-    //     if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
-    //         // ...heal
-    //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] healing creep ' + targetCreep);
-    //         tower.heal(targetCreep);
-    //         continue;
-    //     }
-
-
-    //     // if (creep != null && tower.energy > 300)
-    //     if (tower.energy > 300)
-    //     {
-    //         var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
-    //             // the second argument for findClosestByPath is an object which takes
-    //             // a property called filter which can be a function
-    //             // we use the arrow operator to define it
-    //             filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART });
-
-    //     // if one is found...750000
-    //             if (structure != undefined)
-    //             {
-    //                  if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 725000) {
-    //                     var status = tower.repair(structure);
-    //              }
-    //              else{   
-
-
-    //            var status = tower.repair(structure);
-    //            if(status != 0){
-    //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + structure.room + '\'s tower is repairing "' + structure.structureType + '". Repair Status is ' + status);      
-    //            }
-    //         }
-
-    //     }
-
-    //  }
-
-
-    // }
-
-
+    
     //************************************** */
     // iterate over all the spawns
     //************************************** */
@@ -351,7 +287,7 @@ try {
       //  var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
 
     //TODO: HACK. 
-      if (spawnName == "Spawn1"){     
+      if (spawnName == "Spawn1" && spawn.room.name =="E44S3"){     
             link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
 
         }
@@ -429,7 +365,7 @@ try {
 
         if (spawn.room.name =='E45S2')
         {
-
+            energy = 750;
            //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name);
             //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' numberOfTargetedReparier is ' + numberOfTargetedReparier);
               //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
@@ -445,7 +381,7 @@ try {
             }
             else{
             
-                energy = 650;
+                energy = 750;
             }
         }
 
@@ -483,7 +419,7 @@ try {
                             if (containers.length > 0) {
                                 // spawn a miner
                                 name = spawn.createMiner(spawn, source.id);
-                              //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
+                              //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" YYYYYYYY is try to create create miner with the name of " + name);
                                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + spawnName + " is try to create create miner with the name of " + name);
                                 if (name == -4 || name == -6) {
                                //     return;
@@ -544,7 +480,13 @@ try {
                         if (containers.length > 0) {
                             // spawn a miner
                             name = spawn.createMiner(spawn, source.id);
-                            console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
+                            console.log("[Main line " + util.LineNumber() + "] " + spawnName +" XXXXXXX is try to create create miner with the name of " + name);
+                            if (!(name < 0)) {
+                                // delete the claim order
+                                 spawn.memory.qMiner = spawn.memory.qMiner -1;
+                            }
+                            
+                            
                             break;
                         }
                     
@@ -575,13 +517,20 @@ try {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + name);
             }
             // if not enough lorries
-            else if (numberOfLorries < spawn.memory.minLorries)
+           // else if (numberOfLorries < spawn.memory.minLorries)
+             else if (numberOfLorries < spawn.memory.minLorries || (spawn.memory.qLorry > 0 && numberOfLorries < spawn.memory.minLorries + spawn.memory.qLorry ))
             {
                // console.log("[line "+ util.LineNumber() + "] numberOfLorries < spawn.memory.minLorries");
                 // try to spawn one
                 // console.log("[Main line " + util.LineNumber() + "] createLorry: " + name);
                 name = spawn.createLorry(energy);
                 console.log("[Main line " + util.LineNumber() + "]" + spawnName +  " is creating a createLorry: " + name);
+                if (!(name < 0)) {
+                   
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qLorry = spawn.memory.qLorry -1');
+                    spawn.memory.qLorry = spawn.memory.qLorry -1;
+                }
+
             }
             // if there is a claim order defined
           //  console.log("[line " + util.LineNumber() + "] spawn.memory.claimRoom != undefined: " spawn.memory.claimRoom != undefined);
@@ -616,29 +565,41 @@ try {
 
             // if not enough upgraders
             //console.log("line 180 spawn.memory.minUpgraders: " + spawn.memory.minUpgraders);
-            else if (numberOfUpgraders < spawn.memory.minUpgraders) {
+            else if (numberOfUpgraders < spawn.memory.minUpgraders || (spawn.memory.qUpgrader > 0 && numberOfUpgraders < spawn.memory.minUpgraders + spawn.memory.qUpgrader )) {
                 // try to spawn one
                 //console.log("[line " + util.LineNumber() + "] numberOfUpgraders < spawn.memory.minUpgraders: ");
                 // console.log("[Main line " + util.LineNumber() + "] energy: " + energy);
                 name = spawn.createCustomCreep(energy, 'upgrader');
                     // console.log("[Main line " + util.LineNumber() + "] create upgrader: " + name);
 
-                    if ((typeof name) == "string") {
+                if ((typeof name) == "string") {
                    // console.log("[line " + util.LineNumber() + "] create upgrader: " + name);
                 }
+
+                if (!(name < 0)) {
+                   
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qUpgrader = spawn.memory.qUpgrader -1');
+                    spawn.memory.qUpgrader = spawn.memory.qUpgrader -1;
+                }
+
                 
             }
             // if not enough repairers
-            else if (numberOfRepairers < spawn.memory.minRepairers) {
+            else if (numberOfRepairers < spawn.memory.minRepairers || (spawn.memory.qRepairer > 0 && (numberOfRepairers < spawn.memory.minRepairers + spawn.memory.qRepairer ) )) {
                 // try to spawn one
                 name = spawn.createCustomCreep(energy, 'repairer');
                // console.log("[Main line " + util.LineNumber() + "] create repairer: " + name );
                 if ((typeof name) == "string") {
                  //   console.log("[Main line " + util.LineNumber() + "] create repairer: " + name);
                 }
+                if (!(name < 0)) {
+                   
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qRepairer = spawn.memory.qRepairers -1');
+                    spawn.memory.qRepairer = spawn.memory.qRepairer -1;
+                }
             }
             // if not enough builders
-            else if (numberOfBuilders < spawn.memory.minBuilders) {
+            else if (numberOfBuilders < spawn.memory.minBuilders || (spawn.memory.qBuilder > 0 && (numberOfBuilders < spawn.memory.minBuilders + spawn.memory.qBuilder) )) {
                 // try to spawn one
                 // "[line " + util.LineNumber() + "]
                // console.log("[Main line " + util.LineNumber() + "] create builder: " + name);
@@ -650,6 +611,11 @@ try {
                 if ((typeof name) == "string") {
                    
                     console.log("[line " + util.LineNumber() + "] create builder: " + name);
+                }
+                if (!(name < 0)) {
+                   
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qBuilder1 = spawn.memory.qBuilder1 -1');
+                    spawn.memory.qBuilder = spawn.memory.qBuilder -1;
                 }
             }
             // if not enough wallRepairers

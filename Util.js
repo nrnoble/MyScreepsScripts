@@ -371,22 +371,28 @@ module.exports =
     },
 
     repairRoad: function(creep){
-        
+
         try {
-            structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+            var structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+         //   console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);
+           
+            if (structures == undefined || structures == [])
+            {
+                return;
+            }
             for (let i = 0; i < structures.length; i++) {
                 var road =  structures[i].structure
 
                 if (road.hits < road.hitsMax) {
                     var repairStatus = creep.repair(road);
-                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                   // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
                   break;
                 }
                  
               }
         } catch (e) {
         
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
         }
     }
 

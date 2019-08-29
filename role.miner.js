@@ -9,6 +9,19 @@ module.exports = {
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
        
 
+     if (creep.ticksToLive == 75) {
+           
+        var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+             filter: { structureType: STRUCTURE_SPAWN}
+         });
+         
+         var Spawn1 = spawns[0];
+         Spawn1.memory.qMiner = Spawn1.memory.qMiner + 0;
+ 
+        }
+
+
+
         util.pickupResources(creep,0); //5bbcafa89099fc012e63af90
         //let source = Game.getObjectById(creep.memory.sourceId);
         let source = Game.getObjectById(creep.memory.sourceId);

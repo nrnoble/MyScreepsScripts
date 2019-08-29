@@ -7,6 +7,18 @@ module.exports = {
     /** @param {Creep} creep */
     run: function (creep) {
         // if creep is bringing energy to a structure but has no energy left
+       
+       if (creep.ticksToLive == 25) {
+           
+       var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+            filter: { structureType: STRUCTURE_SPAWN}
+        });
+
+        var Spawn1 = spawns[0];
+        Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
+
+       }
+       
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
             creep.memory.working = false;

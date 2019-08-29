@@ -9,6 +9,19 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
+        if (creep.ticksToLive == 50) {
+           
+            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+                 filter: { structureType: STRUCTURE_SPAWN}
+             });
+             
+             var Spawn1 = spawns[0];
+             Spawn1.memory.qUpgrader = Spawn1.memory.qUpgrader + 0;
+     
+            }
+
+
+
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");
         
         // check to see if engery == 0 and ttl < 75

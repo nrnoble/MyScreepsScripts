@@ -9,10 +9,25 @@ module.exports = {
 
 
         // check to see if engery == 0 and ttl < 75
-        var status = util.SelfSecide(creep);
+        //var status = util.SelfSecide(creep);
+
+        
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
+
+        if (creep.ticksToLive == 50) {
+           
+            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+                 filter: { structureType: STRUCTURE_SPAWN}
+             });
+             
+             var Spawn1 = spawns[0];
+             Spawn1.memory.qRepairer = Spawn1.memory.qRepairer + 1;
+     
+            }
+
+
 
         var localTargetStructure = null; //5d1dde21b6fe552a9e36646c
         if(creep.memory.targetStructureId == undefined)

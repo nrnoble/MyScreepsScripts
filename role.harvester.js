@@ -16,6 +16,17 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
+        if (creep.ticksToLive == 50) {
+           
+            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+                 filter: { structureType: STRUCTURE_SPAWN}
+             });
+             
+             var Spawn1 = spawns[0];
+             Spawn1.memory.qHarvester = Spawn1.memory.qHarvester + 1;
+     
+            }
+
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
         //console.log(status);
@@ -70,6 +81,14 @@ module.exports = {
             if (structure != undefined) {
                 // try to transfer energy, if it is not in range
                 // console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");
+
+
+                if (creep.lockedTargetId == undefined ) {
+                    
+                    creep.lockedTargetId = structure.id;
+                }
+
+
 
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
@@ -138,7 +157,7 @@ module.exports = {
                 // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
                 // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
 
-                //roleUpgrader.run(creep);
+                roleUpgrader.run(creep);
                 //return;
                 }
 

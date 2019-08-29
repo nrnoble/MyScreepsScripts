@@ -10,6 +10,19 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
+
+        if (creep.ticksToLive == 50) {
+           
+            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+                 filter: { structureType: STRUCTURE_SPAWN}
+             });
+     
+             var Spawn1 = spawns[0];
+             Spawn1.memory.qBuilder = Spawn1.memory.qBuilder + 0;
+     
+        }
+    
+
         if (Game.creeps[creep.name].memory.home == undefined)
         {
             Game.creeps[creep.name].home =="E44S2";

@@ -7,6 +7,17 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
+        if (creep.ticksToLive == 50) {
+           
+            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+                 filter: { structureType: STRUCTURE_SPAWN}
+             });
+     
+             var Spawn1 = spawns[0];
+             Spawn1.memory.qLDH = Spawn1.memory.qLDH + 1;
+     
+            }
+
 
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.x is ' + creep.pos.x);
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.y is ' + creep.pos.y);

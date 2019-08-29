@@ -18,10 +18,11 @@ module.exports =
     
     var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
   
+
     // for each tower
     for (let tower of towers) {
         
-
+      //  tower.memory.test = "test";
         // find closes hostile creep
         var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
