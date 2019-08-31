@@ -255,31 +255,31 @@ module.exports = function () {
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.room.energyCapacityAvailable is  ' + Game.spawns.Spawn1.room.energyCapacityAvailable);
             if(energy <= 300)
             {
-                 return this.createCreep([WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                 return this.createCreep([WORK, WORK, MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             } else if(energy <= 400)
             {
-                 return this.createCreep([WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                 return this.createCreep([WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             } else if(energy <= 500)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                 return this.createCreep([WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }
             else if(energy <= 600)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }            else if(energy <= 700)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }
            
            
             else
             {
-                return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], util.GetRoleName(Game.spawns.Spawn1, 'miner'),
+                return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }
         };

@@ -36,13 +36,13 @@ module.exports =
 
             if (evilCreep.getActiveBodyparts(HEAL) > 0){
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-                tower.attack(evilCreep);
+             //   tower.attack(evilCreep);
               
                 continue;
             }
 
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-                tower.attack(evilCreep);
+            //    tower.attack(evilCreep);
                 continue;
           
         }
@@ -62,27 +62,54 @@ module.exports =
 
 
         // if (creep != null && tower.energy > 300)
-        if (tower.energy > 300)
+        if (tower.energy > 749)
         {
             var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
-                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL  && s.structureType != STRUCTURE_RAMPART });
+                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL &&   s.structureType != STRUCTURE_RAMPART});
 
         // if one is found...750000
                 if (structure != undefined)
                 {
-                     if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 75000) {
+                    
+                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
+                     if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 750000)
+                     {
+                       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
                         var status = tower.repair(structure);
+                     }
+                     else if (structure.structureType == STRUCTURE_RAMPART && structure.hits < 100000) {
+                        console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is '+ structure.hits + " type  is " + structure.structureType);
+                        var status = tower.repair(structure);
+                     }
+                     else{
+
+                        var status = tower.repair(structure);
+                        if(status != 0){
+                         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tower is repairing ' + structure.structureType + '". Repair Status is ' + status);      
+                        }
+
+                     }
+
                  }
+                //  else if ( structure != undefined && struture.structureType == STRUCTURE_RAMPART)
+                //  {
+                //      if (structure.hits < 75000){
+                //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType); 
+                //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] Tower is repainging rampart  Hits remainging: ' + structure.hits); 
+
+                //         var status = tower.repair(structure);
+                //      }
+                //  }
                  else{   
 
 
-               var status = tower.repair(structure);
-               if(status != 0){
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + structure.room + '\'s tower is repairing "' + structure.structureType + '". Repair Status is ' + status);      
-               }
+            //    var status = tower.repair(structure);
+            //    if(status != 0){
+            //     console.log('[' + fileName + 'line:' + util.LineNumber() + ']   Repair Status is ' + status);      
+            //    }
             }
 
         }
@@ -91,7 +118,6 @@ module.exports =
 
 
     }
-    }
-    
-    
 }
+    
+    
