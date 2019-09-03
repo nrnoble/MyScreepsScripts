@@ -30,19 +30,20 @@ module.exports =
         if (evilCreep != undefined) {
             // ...FIRE!
          
-         
+            var badguycreep = Game.getObjectById("5d6b2c15a15b166db2e08304");
              var status = evilCreep.getActiveBodyparts(HEAL)   ;
              console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
 
             if (evilCreep.getActiveBodyparts(HEAL) > 0){
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-             //   tower.attack(evilCreep);
+              
+               tower.attack(evilCreep);
               
                 continue;
             }
 
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-            //    tower.attack(evilCreep);
+               tower.attack(evilCreep);
                 continue;
           
         }

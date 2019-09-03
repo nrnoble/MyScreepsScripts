@@ -14,10 +14,29 @@ module.exports = {
              });
      
              var Spawn1 = spawns[0];
-             Spawn1.memory.qLDH = Spawn1.memory.qLDH + 1;
+           //  Spawn1.memory.qLDH = Spawn1.memory.qLDH + 1;
      
             }
 
+
+            if (creep.memory.retreat == true) {
+                
+                var spawn = Game.getObjectById (creep.memory.spawnId)
+                var status = moveTo(creep.memory.spawn);
+
+                // var exit = creep.room.findExitTo(creep.memory.home);
+                // // and move to exit
+                // creep.moveTo(creep.pos.findClosestByRange(exit));
+                // var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                //     // the second argument for findClosestByPath is an object which takes
+                //     // a property called filter which can be a function
+                //     // we use the arrow operator to define it
+                //     filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL,ignoreCreeps: true
+                // });
+
+
+
+            }
 
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.x is ' + creep.pos.x);
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.y is ' + creep.pos.y);

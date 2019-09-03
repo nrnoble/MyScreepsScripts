@@ -16,22 +16,24 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
-        if (creep.ticksToLive == 50) {
+        // if (creep.ticksToLive == 50) {
            
-            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-                 filter: { structureType: STRUCTURE_SPAWN}
-             });
+        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+        //          filter: { structureType: STRUCTURE_SPAWN}
+        //      });
              
-             var Spawn1 = spawns[0];
-             Spawn1.memory.qHarvester = Spawn1.memory.qHarvester + 1;
+        //      var Spawn1 = spawns[0];
+        //      Spawn1.memory.qHarvester = Spawn1.memory.qHarvester + 1;
      
-            }
+        //     }
 
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
         //console.log(status);
          //console.log("roleHarverster.js [line " + util.LineNumber() + "] Name: " + creep.name + " (" + creep.memory.role + ")");
-        // if creep is bringing energy to a structure but has no energy left
+       
+       
+         // if creep is bringing energy to a structure but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
             creep.memory.working = false;
@@ -49,7 +51,23 @@ module.exports = {
         if (creep.memory.working == true) {
            // console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
 
+            // energy in room is too low, only supple spawn and extentions. 
+            // Skip towers while rooom energy is low.
+            if (creep.memory.spawnSourcesOnly == true) {
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
+                // find closest spawn, extension or tower which is not full
+                var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                    // the second argument for findClosestByPath is an object which takes
+                    // a property called filter which can be a function
+                    // we use the arrow operator to define it
+                    filter: (s) => (s.structureType == STRUCTURE_SPAWN
+                        || s.structureType == STRUCTURE_EXTENSION) 
+                        && s.energy < s.energyCapacity
+                });
 
+            }
+            // room energy is OK, so supple towers.
+            else{
             // find closest spawn, extension or tower which is not full
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
@@ -61,23 +79,31 @@ module.exports = {
                     && s.energy < s.energyCapacity
             });
 
-            if (structure == undefined) {
-             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
-                structure = creep.room.storage;
-                if (structure == undefined)
-                {
-                    // TODO: Hack
-                    if( creep.room.name == "E44S2"){    
-                      //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
-                        console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
-                       
-                        roleBuilder.run(creep);
-                    }
-                }
-            
-            }
+            if (structure !=  null) {
+                
+           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
+        }
+        }
 
-            // if we found one
+
+
+        if (structure == undefined) {
+            //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
+            structure = creep.room.storage;
+            if (structure == undefined)
+            {
+                // TODO: Hack
+                if( creep.room.name == "E44S2"){    
+                    //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
+                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
+                    
+                    roleBuilder.run(creep);
+                }
+            }
+        
+        }
+
+            // if we found have a structure that needs energy
             if (structure != undefined) {
                 // try to transfer energy, if it is not in range
                 // console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");

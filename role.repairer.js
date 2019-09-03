@@ -6,7 +6,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-
+//return;
 
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
@@ -16,16 +16,16 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
-        if (creep.ticksToLive == 50) {
+        // if (creep.ticksToLive == 50) {
            
-            var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-                 filter: { structureType: STRUCTURE_SPAWN}
-             });
+        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+        //          filter: { structureType: STRUCTURE_SPAWN}
+        //      });
              
-             var Spawn1 = spawns[0];
-             Spawn1.memory.qRepairer = Spawn1.memory.qRepairer + 1;
+        //      var Spawn1 = spawns[0];
+        //      Spawn1.memory.qRepairer = Spawn1.memory.qRepairer + 1;
      
-            }
+        //     }
 
 
 
@@ -33,7 +33,7 @@ module.exports = {
         if(creep.memory.targetStructureId == undefined)
         {
          //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' setting creep.memory.targetStructure null ' );
-            creep.memory.targetStructureId = null; 
+          //  creep.memory.targetStructureId = null; 
          //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.targetStructure is ' + creep.memory.targetStructureId );
         }
 
@@ -65,6 +65,11 @@ module.exports = {
             if(creep.memory.targetStructureId != undefined){
                //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
                 structure = Game.getObjectById(creep.memory.targetStructureId);
+                if (structure.hits == structure.hitsMax) {
+                
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
+                    creep.memory.targetStructureId = undefined;
+                }
                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
                 var repairStatus = creep.repair(structure);
                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);

@@ -64,10 +64,13 @@ module.exports = {
     // Game.spawns.Spawn2.memory.room1 = ""
     // Game.spawns.Spawn2.memory.room2 = ""
     // Game.spawns.Spawn2.memory.room3 = ""
+
+    Game.creeps.LDH_10098030.memory.sourceTarget = "5d54123bbbfeab73fabe5c65";
+    Game.creeps.LDH_10098030.memory.buildTarget = "5d6a2e444a1ceb4af6ec201e";
+    Game.creeps.LDH_10098030.memory.role = "LDBuilder";
     
- 
+    //  buildTarget	:	5d6a2e444a1ceb4af6ec201e
     
-        
     // Game.spawns.Spawn2.memory.minLDHroom1 = 0
     // Game.spawns.Spawn2.memory.minLDHroom2 = 0
     // Game.spawns.Spawn2.memory.minLDHroom3 = 0

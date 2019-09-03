@@ -83,7 +83,7 @@ module.exports = {
             // find closest container
             let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                    s.store[RESOURCE_ENERGY] > 0
+                    s.store[RESOURCE_ENERGY] > 0 || (s.structureType == STRUCTURE_LINK && s.energy > 0)
             });
             // if one was found
             if (container != undefined) {
@@ -109,7 +109,7 @@ module.exports = {
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
 
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Energy is gone and source is on cool down ');
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Energy is gone and source is on cool down ');
             }
         }
     }

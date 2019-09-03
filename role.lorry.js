@@ -45,6 +45,7 @@ module.exports = {
 
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_STORAGE
+                    || s.structureType == STRUCTURE_TERMINAL
                     || s.structureType == STRUCTURE_CONTAINER)
                     && s.energy < s.energyCapacity
             });

@@ -33,9 +33,12 @@ module.exports = {
         transferEnergy: function(sourceID, destinationID){
           var  linkSource = Game.getObjectById(sourceID);
           var  linkDestination = Game.getObjectById(destinationID);
-          if(linkSource.energy == linkSource.energyCapacity && linkSource.cooldown == 0){
-                var status = linkSource.transferEnergy(linkDestination, linkSource.energyCapacity);
-             //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
+         // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkSource.cooldown  is '+ linkSource.cooldown );
+  //       if(linkSource.energy >= 400 && linkSource.cooldown == 0){
+        
+         if(linkSource.cooldown == 0){
+                var status = linkSource.transferEnergy(linkDestination, linkSource.energy);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
         }
     }
 }

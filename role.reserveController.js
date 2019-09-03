@@ -16,22 +16,72 @@ module.exports = {
         // room E45S2 controller ID = 5bbcafa89099fc012e63af8e
         // room E43S3 controller ID = 5bbcaf869099fc012e63ab6c    
         // room E44S3 Spawn1 = 5d1314a8f1c8960c5d83fec7
-        creep.memory.spawnId = "5d1314a8f1c8960c5d83fec7"; 
-        creep.memory.cachedSource = "5bbcaf869099fc012e63ab6c";
+       // creep.memory.spawnId = "5d1314a8f1c8960c5d83fec7"; 
+      //  creep.memory.cachedSource = "5bbcaf869099fc012e63ab6c";
+        // The 'cachedSource' is the unreserved controller
+        if (creep.room.name == "E44S3" || creep.room.name == "E43S3") {
+            creep.memory.spawnId = "5d1314a8f1c8960c5d83fec7"; 
+            creep.memory.cachedSource = "5bbcaf869099fc012e63ab6c";   
+        }
 
-        // var ttl = creep.ticksToLive
-        // if(ttl == 12)
-        // {
-        //     var spawn = Game.getObjectById(creep.memory.spawnId);
-        //     spawn.memory.reserveroom = "E43S3";
-        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
-        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
-        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
-        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting  Reserve room');
-        // }
-
+        if (creep.room.name == "E45S3" || creep.room.name == "E45S2") {
+            creep.memory.spawnId = "5d4c4994d2b64f7a1b14871f"; 
+            creep.memory.cachedSource = "5bbcafa89099fc012e63af93";   
+        }
 
         let controller = Game.getObjectById(creep.memory.cachedSource);
+
+        try {
+            
+            
+            var ttl = creep.ticksToLive;
+            if (ttl == 100 ){
+                spawn =  Game.getObjectById(creep.memory.spawnId);
+                spawn.memory.reserveroom = controller.room.name;
+                
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] Adding reserve creep to queque');
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                
+                // if (creep.room.name == "E43S3") {
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                
+                // }
+                
+               // creep.suicide();     
+            }
+        
+            
+        } catch (error) {
+           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped Error ' + error); 
+        }
+
+        // if (controller.ticksToLive < 3800) {
+            
+        //     var ttl = creep.ticksToLive;
+        //     if (ttl < 5) {
+        //         spawn =  Game.getObjectById(creep.memory.spawnId);
+        //         spawn.memory.reserveroom = controller.room.name;
+        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                
+        //         if (creep.room.name == "E43S3") {
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+        //             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' ERROR ERROR ERROR. This should not happen in this room. Reserve room is in build up mode to Max 5000 hits. Current controller hits is ' + controller.ticksToLive);
+                
+        //         }
+                
+        //         creep.suicide();     
+        //     }
+        // }
+
 
         if (creep.room.name != creep.memory.target) {
             // find exit to target room
@@ -42,10 +92,7 @@ module.exports = {
         else {
 
 
-            // try to claim controller
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserving room');
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.room is '+ creep.room);
-          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.room.controller is '+ controller);
+
             if (creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
              //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(controller)');
                // creep.moveTo(creep.room.controller);
