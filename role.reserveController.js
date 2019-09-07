@@ -56,8 +56,9 @@ module.exports = {
             }
         
             
-        } catch (error) {
-           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped Error ' + error); 
+        } catch (error) 
+        {
+           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped Error in role.reserveController' + error); 
         }
 
         // if (controller.ticksToLive < 3800) {

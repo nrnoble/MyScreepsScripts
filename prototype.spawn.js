@@ -222,7 +222,44 @@ module.exports = function () {
     StructureSpawn.prototype.createReserver =
     function (spawn, target) {
        // console.log("Creating a Reserver");
-        return this.createCreep([CLAIM,MOVE,MOVE], "reserver_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id });
+       
+       try {
+            var room = Game.rooms[target];
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  ');
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is ' + room.name);
+            if (room != undefined) {
+                var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
+                if (controller[0].reservation != undefined) 
+                {
+                    tte = controller[0].reservation.ticksToEnd; 
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' controller.ticksToLive is' + tte);
+                    if (tte < 4000)
+                    {
+                        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  ');
+                        return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverUnder4K_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, tte:  tte });
+                    }
+                    else{
+                        return this.createCreep([CLAIM,MOVE,MOVE], "reserverOver4K_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id});
+                    }
+                }
+        }
+        else{
+            return this.createCreep([CLAIM,MOVE,MOVE], "reserverRoomUndefied_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
+           }
+    
+       } catch (e) {
+       
+        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' error trapped creating a reserver: ' + e);
+        return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverFailOver_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'large ' });
+      
+    }                   
+       
+
+      
+           
+       
+
+     
     };
 
     // create a new function for StructureSpawn
@@ -580,6 +617,12 @@ module.exports = function () {
         });
     };
    
+    // create a new function for StructureSpawn
+    StructureSpawn.prototype.createAttackScout =
+        function (spawn, target) {
+           // console.log("Creating a attack Scout");
+            return this.createCreep([TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,ATTACK, ], undefined, { role: 'attackScout', spawn: spawn, target: target });
+        };
 
 
 };

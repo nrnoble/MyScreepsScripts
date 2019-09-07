@@ -27,6 +27,8 @@ module.exports = {
     spawnObj.memory.minWallRepairers = 0;
     spawnObj.memory.minRepairers = 0;
     
+
+
     
     spawnObj.memory.debug	= false;
     spawnObj.memory.debuglevel = 1;
@@ -75,7 +77,9 @@ module.exports = {
     // Game.spawns.Spawn2.memory.minLDHroom2 = 0
     // Game.spawns.Spawn2.memory.minLDHroom3 = 0
    
-   
-    console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawnObj.memory.home  is ' + spawnObj.memory.home);
+   Game.spawns.Spawn1.home = E44S3
+   Game.spawns.Spawn1.target = E44S3
+   Game.spawns.Spawn1.role = builder 
+   console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawnObj.memory.home  is ' + spawnObj.memory.home);
     }
 }

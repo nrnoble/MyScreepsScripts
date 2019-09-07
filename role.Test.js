@@ -9,7 +9,12 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep,sourceStorageId, targetStorageId) {
 
-     // return;
+      // var
+      // var room = Game.rooms[target];
+      // var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
+      // var ttl = controller.ticksToLive
+
+      return;
     
 
         // }

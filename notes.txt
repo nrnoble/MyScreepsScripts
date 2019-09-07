@@ -1,6 +1,14 @@
+Steam Key, 0R525-E56WB-FVL6H
+
 docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
 docker container rm 07e57c99bf31fac98974f83373c5fefbe062b4fc6d1c3072099092f085511e84
 
+
+{"E43S3":
+{"name":"E43S3","energyAvailable":0,"energyCapacityAvailable":0,"visual":{"roomName":"E43S3"}},"E44S2":{"name":"E44S2","energyAvailable":300,"energyCapacityAvailable":1750,"visual":{"roomName":"E44S2"}},"E44S3":{"name":"E44S3","energyAvailable":2497,"energyCapacityAvailable":5300,"visual":{"roomName":"E44S3"}},"E45S2":{"name":"E45S2","energyAvailable":600,"energyCapacityAvailable":2300,"visual":{"roomName":"E45S2"}},"E45S3":{"name":"E45S3","energyAvailable":0,"energyCapacityAvailable":0,"visual":{"roomName":"E45S3"}}}
+
+
+ine:18] E45S2 upgrader _10187149 controller is [{"room":{"name":"E45S3","energyAvailable":0,"energyCapacityAvailable":0,"visual":{"roomName":"E45S3"}},"pos":{"x":13,"y":24,"roomName":"E45S3"},"id":"5bbcafa89099fc012e63af93","reservation":{"username":"nrnoble","ticksToEnd":60},"level":0,"safeModeAvailable":0,"sign":{"username":"wtfrank","text":"Non-coding players unwelcome outside shard0 - expect summary execution 🤖","time":9036020,"datetime":"2019-07-28T11:36:06.989Z"},"isPowerEnabled":false,"structureType":"controller"}]
 
 Game.spawns['Spawn1'].room.controller.activateSafeMode();
 

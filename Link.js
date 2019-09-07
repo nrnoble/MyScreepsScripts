@@ -38,7 +38,9 @@ module.exports = {
         
          if(linkSource.cooldown == 0){
                 var status = linkSource.transferEnergy(linkDestination, linkSource.energy);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
-        }
+                if(Game.time % 10 == 0){
+              //      console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
+                }
+            }
     }
 }

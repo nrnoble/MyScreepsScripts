@@ -149,6 +149,13 @@ module.exports = {
                 // can't fine one
                 else {
                     // look for construction sites
+                    
+                    if(creep.name.startsWith("LDH"))
+                    {
+                      //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + 'Creep name is ' + creep.name);
+                        creep.memory.role = "longDistanceHarvester";
+                    }
+                    
                     roleBuilder.run(creep);
                 }
             } // end if
