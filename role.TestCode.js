@@ -9,7 +9,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' testing 123 ');
+        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXtesting 123 ');
 
         
       var target = "E45S3";

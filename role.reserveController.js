@@ -29,7 +29,7 @@ module.exports = {
             creep.memory.cachedSource = "5bbcafa89099fc012e63af93";   
         }
 
-        let controller = Game.getObjectById(creep.memory.cachedSource);
+        let controller = creep.room.controller;
 
         try {
             
@@ -95,17 +95,17 @@ module.exports = {
 
 
             if (creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
-             //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(controller)');
-               // creep.moveTo(creep.room.controller);
-               // myTestPos = new RoomPosition(42, 7, 'E45S2');
-               // myTestPos = new RoomPosition(17, 27, 'E43S3');
+                //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(controller)');
+                // creep.moveTo(creep.room.controller);
+                // myTestPos = new RoomPosition(42, 7, 'E45S2');
+                // myTestPos = new RoomPosition(17, 27, 'E43S3');
 
-                
+                    
                 // move towards the controller
                 creep.moveTo(controller);
                 // creep.moveTo(myTestPos);
                 var reserveStatus = creep.reserveController(controller);
-               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserve status is ' + reserveStatus );
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserve status is ' + reserveStatus );
 
                 //myTestPos = new RoomPosition(42, 8, 'E45S2');
                 //creep.moveTo(myTestPos);

@@ -223,19 +223,29 @@ module.exports = function () {
     function (spawn, target) {
        // console.log("Creating a Reserver");
        
-       try {
+    //    try {
             var room = Game.rooms[target];
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  ');
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is ' + room.name);
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  target is ' + target);
+        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is ' + room.name);
             if (room != undefined) {
-                var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
-                if (controller[0].reservation != undefined) 
+        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is defined as ' + room.name);
+              
+               // var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
+                var controller = room.controller;
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room  controller is' + controller);
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' controller.reservation is' + concontroller.reservation);
+
+
+                if (controller.reservation != undefined) 
                 {
-                    tte = controller[0].reservation.ticksToEnd; 
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' controller.ticksToLive is' + tte);
+           //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room  controllcontroller[0].reservation is ' + controller[0].reservation );
+
+                    tte = controller.reservation.ticksToEnd; 
+
+              //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' controller.ticksToLive is' + tte);
                     if (tte < 4000)
                     {
-                        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  ');
+                     // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  ');
                         return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverUnder4K_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, tte:  tte });
                     }
                     else{
@@ -244,15 +254,21 @@ module.exports = function () {
                 }
         }
         else{
-            return this.createCreep([CLAIM,MOVE,MOVE], "reserverRoomUndefied_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
+            return this.createCreep([CLAIM,MOVE,MOVE], "reserverRoomUndefined_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
            }
     
-       } catch (e) {
-       
-        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' error trapped creating a reserver: ' + e);
-        return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverFailOver_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'large ' });
+//        } catch (e) {
+
+//         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');    
+//         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ***************************************************************************************** ');
+//         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ******** error trapped creating a reserver: ' + e);
+//         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ***************************************************************************************** ');
+//         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');    
+//         return this.createCreep([CLAIM,MOVE,MOVE], "reserverRoomERROR_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
+     
+// //        return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverFailOver_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'large ' });
       
-    }                   
+//     }                   
        
 
       
@@ -624,5 +640,62 @@ module.exports = function () {
             return this.createCreep([TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,ATTACK, ], undefined, { role: 'attackScout', spawn: spawn, target: target });
         };
 
+        
+    // create a new function for StructureSpawn
+    StructureSpawn.prototype.scout =
+    function (energy, numberOfWorkParts, home, target, sourceIndex) {
+        // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        var body = [];
+        // for (let i = 0; i < numberOfWorkParts; i++) {
+        //     body.push(WORK);
+        // }
 
+        // // 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+        // energy -= 150 * numberOfWorkParts;
+
+        // var numberOfParts = Math.floor(energy / 100);
+        // for (let i = 0; i < numberOfParts; i++) {
+        //     body.push(CARRY);
+        // }
+        // for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+        //     body.push(MOVE);
+        // }
+
+
+        if (energy < 350 )
+        {
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
+        }
+        energy = energy - 350;
+
+        body.push(WORK);
+        body.push(WORK);
+        body.push(MOVE);
+        body.push(CARRY);
+        body.push(MOVE);
+
+         var numberOfParts = Math.floor(energy / 100);
+        for (let i = 0; i < numberOfParts; i++) {
+            body.push(CARRY);
+        }
+        for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+            body.push(MOVE);
+        }
+
+        // create creep with the created body
+        return this.createCreep(body, "LDH_" +Game.time, {
+            role: 'scout',
+            retreat: false,
+            pause: false,
+            group1: 'longDistanceHarvester',
+            group2: 'builder',
+            group3: 'repairer',
+            group4: 'updater',
+            changeRole: false,
+            home: home,
+            target: target,
+            sourceIndex: sourceIndex,
+            working: false
+        });
+    };
 };

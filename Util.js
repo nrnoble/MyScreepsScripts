@@ -25,7 +25,7 @@ module.exports =
                 var frame = stack.shift();
             } while (!frameRE.exec(frame) && stack.length);
 
-            return frameRE.exec(stack.shift())[1];
+            return this.pad (frameRE.exec(stack.shift())[1],4);
         },
 
         debug: function(level, linenumber, message, somevar) {
@@ -394,6 +394,15 @@ module.exports =
         
             console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
         }
+    },
+
+    numberWithCommas: function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }, 
+
+     pad: function (num, size) {
+        var s = "000000000" + num;
+        return s.substr(s.length-size);
     }
 
 
