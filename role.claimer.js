@@ -28,11 +28,11 @@ module.exports = {
             if (creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(creep.room.controller)');
                 creep.moveTo(creep.room.controller);
-                myTestPos = new RoomPosition(42, 7, 'E45S2');
+             //   myTestPos = new RoomPosition(42, 7, 'E45S2');
                 
                 // move towards the controller
                // creep.moveTo(creep.room.controller);
-                creep.moveTo(myTestPos);
+            //   creep.moveTo(myTestPos);
                 var claimstatus = creep.reserveController(creep.room.controller);
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' claimstatus is ' + claimstatus );
 

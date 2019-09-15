@@ -36,6 +36,9 @@ module.exports = {
 
             var target = undefined;
 
+            
+
+
             // loop with increasing percentages
             for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
                 // find a wall with less than percentage hits
@@ -87,8 +90,9 @@ module.exports = {
             else {
                 // find closest source
                 var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] FIND_SOURCES_ACTIVE is ' + source);
                 // try to harvest energy, if the source is not in range
-                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                if (creep.harvest(source) != 0) {
                     // move towards it
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }

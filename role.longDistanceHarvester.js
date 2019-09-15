@@ -1,3 +1,4 @@
+var roleWallRepairer = require('role.wallRepairer');
 var util = require('Util'); 
 var fileName = "LD Harvester ";
 module.exports = {
@@ -17,6 +18,21 @@ module.exports = {
            //  Spawn1.memory.qLDH = Spawn1.memory.qLDH + 1;
      
             }
+
+            // check for creeps in room. If any, run wall Repairer
+              // var controller = creep.room.find (FIND_STRUCTURES, {filter: s=> s.structureType == STRUCTURE_CONTROLLER })
+              var controller = creep.room.controller;
+            //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', controller.room is ' + creep.room.controller);
+  
+              var invaders = controller.room.find(FIND_HOSTILE_CREEPS).length;
+       //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', invaders is  ' + invaders);
+
+              if (invaders > 0) {
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', ******* WARNING Creep in room. Running LDH as Wall Repairer ');
+
+                    roleWallRepairer.run(creep);
+                  //  return;
+              }  
 
 
             // if (creep.memory.retreat == true) {
@@ -189,7 +205,7 @@ module.exports = {
             //     }
                 
 
-                try {
+             //   try {
                     structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
                     for (let i = 0; i < structures.length; i++) {
                         var road =  structures[i].structure
@@ -201,10 +217,10 @@ module.exports = {
                         }
                          
                       }
-                } catch (e) {
+              //  } catch (e) {
                 
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
-                }
+              //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+             //   }
 
 
 

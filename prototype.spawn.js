@@ -8,6 +8,7 @@ module.exports = function () {
         function(energy, roleName) {
             // create a balanced body as big as possible with the given energy
             var numberOfParts = Math.floor(energy / 200);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Role is ' + roleName + ', energy is ' + energy  );
             var body = [];
             for (let i = 0; i < numberOfParts; i++) {
                 body.push(WORK);
@@ -221,24 +222,24 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createReserver =
     function (spawn, target) {
-       // console.log("Creating a Reserver");
+       console.log(" ************************ Creating a Reserver");
        
     //    try {
             var room = Game.rooms[target];
-          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  target is ' + target);
-        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is ' + room.name);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']   target is ' + target);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']    room is ' + room.name);
             if (room != undefined) {
-        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room is defined as ' + room.name);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room is defined as ' + room.name);
               
-               // var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
+               //var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
                 var controller = room.controller;
-                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room  controller is' + controller);
-                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' controller.reservation is' + concontroller.reservation);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] room  controller is' + controller);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] controller.reservation is ' + controller.reservation);
 
 
                 if (controller.reservation != undefined) 
                 {
-           //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + ' room  controllcontroller[0].reservation is ' + controller[0].reservation );
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room  controllcontroller[0].reservation is ' + controller.reservation );
 
                     tte = controller.reservation.ticksToEnd; 
 
@@ -252,8 +253,15 @@ module.exports = function () {
                         return this.createCreep([CLAIM,MOVE,MOVE], "reserverOver4K_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id});
                     }
                 }
+                else{
+                    return this.createCreep([CLAIM,MOVE,MOVE], "reserverController_undefined_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
+
+                }
+                
         }
         else{
+//            return this.createCreep([CLAIM,CLAIM,CLAIM,MOVE,MOVE,MOVE], "reserverUnder4K_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, tte:  tte });
+
             return this.createCreep([CLAIM,MOVE,MOVE], "reserverRoomUndefined_" + Game.time, { role: 'reserver', target: target, spawnId: spawn.id, test: 'test3' });
            }
     
@@ -274,7 +282,7 @@ module.exports = function () {
       
            
        
-
+           return (-12);
      
     };
 
@@ -443,6 +451,55 @@ module.exports = function () {
         };        
 
 
+    StructureSpawn.prototype.createTerminalLorry =
+        function (SpawnObj, roleName) {
+            // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+            var body = [];
+            //for (let i = 0; i < numberOfWorkParts; i++) {
+            //    body.push(WORK);
+            //}
+
+            //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+            //energy -= 150 * numberOfWorkParts;
+
+            //var numberOfParts = Math.floor(energy / 100);
+            //for (let i = 0; i < numberOfParts; i++) {
+            //    body.push(CARRY);
+            //}
+            //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+            //    body.push(MOVE);
+            //}
+
+            //body.push(WORK);
+           // body.push(WORK);
+           // body.push(WORK);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+           // body.push(CARRY);
+           // body.push(CARRY);
+          //  body.push(CARRY);
+
+           // body.push(MOVE);
+           // body.push(MOVE);
+           // body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+
+
+            // create creep with the created body
+         //   return util.CreateNewScreep(this, roleName, body, {
+             
+            
+            return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+                role: 'roleTestCreep',
+                home: 'E44S3',
+                target: 'E44S2',
+                creator: 'Neal R. Noble 1999',
+                cachedSource: null
+            });
+        }; 
 
     StructureSpawn.prototype.createTestCreep =
         function (SpawnObj, roleName) {
@@ -469,13 +526,13 @@ module.exports = function () {
             body.push(CARRY);
             body.push(CARRY);
             body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);
+           // body.push(CARRY);
+           // body.push(CARRY);
+          //  body.push(CARRY);
 
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
+           // body.push(MOVE);
+           // body.push(MOVE);
+           // body.push(MOVE);
             body.push(MOVE);
             body.push(MOVE);
             body.push(MOVE);
@@ -637,7 +694,7 @@ module.exports = function () {
     StructureSpawn.prototype.createAttackScout =
         function (spawn, target) {
            // console.log("Creating a attack Scout");
-            return this.createCreep([TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,ATTACK, ], undefined, { role: 'attackScout', spawn: spawn, target: target });
+            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,ATTACK, ], undefined, { role: 'attackScout', spawn: spawn, target: target });
         };
 
         
