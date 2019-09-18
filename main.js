@@ -619,7 +619,8 @@ module.exports.loop = function () {
                             ', Repairers: ' +  numberOfRepairers + 
                             ', WallRepairers: ' + numberOfWallRepairers + 
                             ', Miners: ' + numberOfMiners + 
-                            ', numberOfTestScreeps: ' + numberOfTestScreeps);
+                            ', numberOfTestScreeps: ' + numberOfTestScreeps + 
+                            ', cpu.bucket: ' + Game.cpu.bucket);
 
         }
 
