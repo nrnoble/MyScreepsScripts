@@ -17,11 +17,9 @@ var roleTerminalLorry = require('role.TerminalLorry');
 var roleLDBuilder = require('role.LDBuilder');
 var util = require('Util'); 
 var link = require('Link'); 
-var memoryfn = require('memory'); 
 var towers = require('Towers');
 var testCode = require('role.TestCode');
 var roleAttackScout = require('role.attackScout');
-var term = require('terminal'); 
 var fileName = "Main        ";
 var roomE43S3 = require("room.E43S3");
 
@@ -33,66 +31,36 @@ var roomE43S3 = require("room.E43S3");
 // add  var numberFunction= _.sum(creepsInRoom, (c) => c.memory.role == 'Function');
 
 
-const E44S3_MINER_TTL = 25;
-const E44S2_MINER_TTL = 125;
-const E45S2_MINER_TTL = 125;
+{ // dead code
+// const E44S3_MINER_TTL = 25;
+// const E44S2_MINER_TTL = 125;
+// const E45S2_MINER_TTL = 125;
+}
+
 
 let consoleDelay = 5;
 let unitsToTransfer = 25000;
 
 
- //term.transferEnergy("E44S3","E45S2",unitsToTransfer); ////////
-//term.transferEnergy("E44S3","E44S2",unitsToTransfer); 
 
-const cost = Game.market.calcTransactionCost(unitsToTransfer, 'E44S3', 'E45S2');
-console.log('[' + fileName + 'line:' + util.LineNumber() + ']  Game.market.calcTransactionCost ' + unitsToTransfer + ' units from E44S3 --> E45S2 is ' + cost ) ;
-
-// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.home  is ' + HOME);
-// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room1 is ' + room1);
-// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room2 is ' + room2);
-// console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.spawns.Spawn1.memory.room3 is ' + room3);
-
-// memoryfn.init(Game.spawns.Spawn3); //test test test
-
-var test ="abcd";
-
-var minNUmberofTestScreeps = Memory.spawns.Spawn1.minTesters; 
 let sp1 = Memory.spawns.Spawn1;
-let Spawn2 = Memory.spawns.Spawn2;
 let Spawn3 = Memory.spawns.Spawn3;
 
-  //  Spawn3.minLDHroom3 = 2;
-//    console.trace();
-   var thisError= new Error("This is a new error");
- //  var stack = new Error().stack;
-    console.log(' ');
-    console.log('thisError: ' + thisError);
-    console.log('stack: ' + thisError.stack);
-    console.log('JSON.stringify (thisError): ' + JSON.stringify (thisError));
-    // console.log('lineNumber: ' + thisError.lineNumber );
+// KEEP: Clear memory
+errorObjectTest();
 
 
 
 
 
-var  postFixCount = sp1.creepCount;
+
 
 // err -6 is ERR_NOT_ENOUGH_ENERGY 
 
 
-global.injectNAME = function(){//*
-    if(!global.NAMEInjected) {
-        global.NAMEInjected = true;
-        var output = `<SPAN>Trying to inject NAME code!</SPAN>
-<SCRIPT>
-​
-</SCRIPT>`
-	    console.log(output.replace(/(\r\n|\n|\r)\t+|(\r\n|\n|\r) +|(\r\n|\n|\r)/gm, ''));
-    }
-//*/
-}
+// injectNAME();
 
-global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
+// global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
 
 
 
@@ -157,11 +125,6 @@ module.exports.loop = function () {
 
 
       let observer = Game.getObjectById("5d724309f146cf075e07c966");
-      let status1 = observer.observeRoom("E45S3");
-    //  let status2 = observer.observeRoom("E43S3");
-//  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  observer status is ' + status1);
-
- var status = observer.observeRoom('E45S3');
   
  var room = Game.rooms["E45S3"];
   //console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room is  '  + room);
@@ -176,7 +139,6 @@ module.exports.loop = function () {
     var invaders = controller.room.find(FIND_HOSTILE_CREEPS);
     var LDHs = controller.room.find(FIND_MY_CREEPS, {filter: s=> s.memory.role == "longDistanceHarvester"});
     var invaderCount =  invaders.length;
-    var LDHsCount = LDHs.length;
     
     //console.log('[' + fileName + 'line:' + util.LineNumber() + ']  LDHsCount is ' + LDHsCount);
    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  xxxxxxxxxxxxxxxxxxx LDHs[0].id is ' + LDHs[0].id);
@@ -333,9 +295,6 @@ module.exports.loop = function () {
         // }
 
         try {
-          //  var observer = Game.getObjectById("5d724309f146cf075e07c966");
-            var status = observer.observeRoom("E45S3");
-            var status = observer.observeRoom("E43S3");
             observer.observeRoom("E45S3");
         var repairsInRoom = controller.room.find(FIND_MY_CREEPS, {filter: s => s.memory.role == "repairer"} );     
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + controller.room.name + ' repairsInRoom.length is ' + repairsInRoom.length);
@@ -343,8 +302,6 @@ module.exports.loop = function () {
         {
    //         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  there are no repairers currently in room ' + repairsInRoom);
             var LDHs = controller.room.find(FIND_MY_CREEPS, {filter: s => s.memory.role =="longDistanceHarvester"} );
-      //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + controller.room.name + ' LDHs.length is ' + LDHs.length);
-           var sortedLDH = _.sortBy(LDHs);
           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + controller.room.name + ' sortedLDH[0] is ' + sortedLDH[0].ticksToLive);
            var structuresFound = controller.room.find(FIND_STRUCTURES, {filter: s => s.hits < (s.hitsMax - s.hitsMax *.10 )} ); 
             if(structuresFound.length >= 1 )
@@ -403,20 +360,6 @@ module.exports.loop = function () {
              
          // }
     }
-    //***************************************/    
-
- //   var sp1 = Memory.spawns.Spawn1;
- //   var sp2 = Memory.spawns.Spawn2;
-
-  //  sp1.count++;
-
-   //console.log("sp1.count:" + sp1.count); 
-   // console.log(JSON.stringify(sp1));
-   // console.log("sp1.minerCount:" + sp1.minerCount);
-   // console.log("sp1.count: " + sp1.count++);
-
-//TODO Get rid of object by id where ever possible.
-   var LinkSource = Game.getObjectById("5d44be6bea104379d906cbaf")
 
 
   // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  LinkSource is '  + LinkSource);
@@ -429,21 +372,12 @@ module.exports.loop = function () {
    //************************************** */    
    // Clear dead creeps from game
    //************************************** */   
-   for (let name in Memory.creeps) {
-        // and checking if the creep is still alive
-        if (Game.creeps[name] == undefined) {
-            // if not, delete the memory entry
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  name + ' is undefined. Clearing from memory');
-            delete Memory.creeps[name];
-        }
-    }
+   clearMemory();
 
 
 
-    //************************************** */
-    // for every creep name in Game.creeps execute roles
-    //************************************** */
-    var lockedTargetIds = [];
+
+
     
     for (let name in Game.creeps) {
         // get the creep object
@@ -596,11 +530,6 @@ module.exports.loop = function () {
         
         var progress = spawn.room.controller.progress;
         var progressTotal = spawn.room.controller.progressTotal;
-        var remaining = progressTotal - progress;
-      //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' +  spawn.name + ' progress is ' + remaining);
-
-
-        var HOME = spawn.memory.home;
         let room1 = spawn.memory.room1;
         let room2 = spawn.memory.room2;
         let room3 = spawn.memory.room3;
@@ -653,7 +582,6 @@ module.exports.loop = function () {
         var numberOfMiners = _.sum(creepsInRoom, (c) => c.memory.role == 'miner');
         var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry'); //createCustumReparier
         var numberOfTerminalLorries =_.sum(creepsInRoom, (c) => c.memory.role == 'terminalLorry');
-        var numberOfCustumRepariers = _.sum(creepsInRoom, (c) => c.memory.role == 'CustomReparier'); 
 
 
         
@@ -670,17 +598,15 @@ module.exports.loop = function () {
 
 
         var numberOfScouts = _.sum(Game.creeps, (c) => c.memory.role == 'scout');
+        var numberOfTargetedReparier = _.sum(creepsInRoom, (c) => c.memory.role == 'targetedReparier'); 
 
-        const cost1 = Game.market.calcTransactionCost(unitsToTransfer, 'E44S3', 'E45S2');
+        var numberOfTestScreeps = _.sum(creepsInRoom, (c) => c.memory.role == 'roleTestCreep');
+        var numberOfLDBuilders = _.sum(creepsInRoom, (c) => c.memory.role == 'LDBuilder');
         
         if (Game.time %5 == 0) {
             
        
-            var numberOfTargetedReparier = _.sum(creepsInRoom, (c) => c.memory.role == 'targetedReparier'); 
 
-            const cost = Game.market.calcTransactionCost(1000, 'E44S3', 'E45S2');
-            var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
-            var numberOfLDBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'LDBuilder');
 
         console.log('[' + fileName + 'line:' + 
                            util.LineNumber() + 
@@ -698,9 +624,6 @@ module.exports.loop = function () {
         }
 
 
-        //var observer = Game.getObjectById("5d724309f146cf075e07c966");
-        var status = observer.observeRoom("E45S3");
-        var status = observer.observeRoom("E43S3");
        // var roomx = Game.rooms['E43S3']
        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + 'DDDDDDDDDDDDD roomx ' + roomx.controller);
 
@@ -1103,8 +1026,9 @@ module.exports.loop = function () {
 
                 // try to spawn one
                 
-                name = Game.spawns.Spawn1.createTestCreep(sp1,"roleTestCreep");
-                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep1 T" + name );
+                name = spawn.createTestCreep( spawn,"roleTestCreep");
+              //  console.log("Main [line " + util.LineNumber() + "] Create createTestCreep1 T" + name );
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + '  Create createTestCreep ' + name );
 
             }
             
@@ -1269,3 +1193,25 @@ module.exports.loop = function () {
 
 
 };
+
+
+function errorObjectTest() {
+    var thisError = new Error("This is a new error");
+    //  var stack = new Error().stack;
+    console.log(' ');
+    console.log('thisError: ' + thisError);
+    console.log('stack: ' + thisError.stack);
+    console.log('JSON.stringify (thisError): ' + JSON.stringify(thisError));
+        // console.log('lineNumber: ' + thisError.lineNumber );
+}
+
+function clearMemory() {
+    for (let name in Memory.creeps) {
+        // and checking if the creep is still alive
+        if (Game.creeps[name] == undefined) {
+            // if not, delete the memory entry
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  name + ' is undefined. Clearing from memory');
+            delete Memory.creeps[name];
+        }
+    }
+}
