@@ -496,8 +496,8 @@ module.exports = function () {
             
             return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
                 role: 'roleTestCreep',
-                home: 'E44S3',
-                target: 'E44S2',
+                home: SpawnObj.room.name,
+                target: SpawnObj.room.name,
                 creator: 'Neal R. Noble 1999',
                 cachedSource: null
             });

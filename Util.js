@@ -236,7 +236,7 @@ module.exports =
             
             var newCreep = new Object;
            // this.debug(1, this.LineNumber(), "creating a " + roleName + "(" + creepNewName + ")", creepNewName);
-            newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, working: false });
+            newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: SpawnObj.room.name, target: SpawnObj.room.name, working: false });
             if (typeof (newCreep) == "string") {
                 console.log("successfully created a " + roleName + "(" + creepNewName + ")");
             }

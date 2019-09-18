@@ -15,6 +15,17 @@ module.exports = {
         // check to see if engery == 0 and ttl < 75
         var status = util.SelfSecide(creep);
 
+        if (creep.memory.target != creep.room.name) {
+            
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' For some reason Wall repairer creep is not in target room: ' + creep.memory.target );
+            
+            var exit = creep.room.findExitTo(creep.memory.target);
+           // var exit = creep.pos.findExitTo(creep.memory.target)
+            status = creep.moveTo(creep.pos.findClosestByRange(exit));
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.moveTo(exit) is ' + status);
+            return;
+        } 
+
 
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
