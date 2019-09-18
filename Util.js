@@ -403,6 +403,22 @@ module.exports =
      pad: function (num, size) {
         var s = "000000000" + num;
         return s.substr(s.length-size);
+    },
+
+    stayInTargetRoom: function(creep)
+    {
+        if (creep.memory.target != creep.room.name) {
+            
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' For some reason Wall repairer creep is not in target room: ' + creep.memory.target );
+            
+            var exit = creep.room.findExitTo(creep.memory.target);
+            var status = creep.moveTo(creep.pos.findClosestByRange(exit));
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.moveTo(exit) is ' + status);
+            return 0;
+        }
+        else{
+            return -1;
+        }
     }
 
 
