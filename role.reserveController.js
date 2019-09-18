@@ -35,7 +35,9 @@ module.exports = {
             
             
             var ttl = creep.ticksToLive;
-            if (ttl == 100 ){
+            // make sure no more than two reservers have been spawned already.
+            var reserverCount = creep.room.find(FIND_MY_CREEPS,  {filter: s=> s.memory.role == "reserver" }).length;
+            if (ttl == 100 && reserverCount <= 2){
                 spawn =  Game.getObjectById(creep.memory.spawnId);
                 spawn.memory.reserveroom = controller.room.name;
                 

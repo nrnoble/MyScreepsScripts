@@ -8,7 +8,7 @@ module.exports = function () {
         function(energy, roleName) {
             // create a balanced body as big as possible with the given energy
             var numberOfParts = Math.floor(energy / 200);
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Role is ' + roleName + ', energy is ' + energy  );
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] Role is ' + roleName + ', energy is ' + energy  );
             var body = [];
             for (let i = 0; i < numberOfParts; i++) {
                 body.push(WORK);
@@ -178,12 +178,14 @@ module.exports = function () {
             {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
             }
-            energy = energy - 350;
+            energy = energy - 500;
 
+            body.push(WORK);
             body.push(WORK);
             body.push(WORK);
             body.push(MOVE);
             body.push(CARRY);
+            body.push(MOVE);
             body.push(MOVE);
 
              var numberOfParts = Math.floor(energy / 100);
@@ -222,24 +224,24 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createReserver =
     function (spawn, target) {
-       console.log(" ************************ Creating a Reserver");
+     //  console.log(" ************************ Creating a Reserver");
        
     //    try {
             var room = Game.rooms[target];
-            console.log('[' + fileName + 'line:' + util.LineNumber() + ']   target is ' + target);
-            console.log('[' + fileName + 'line:' + util.LineNumber() + ']    room is ' + room.name);
+      //      console.log('[' + fileName + 'line:' + util.LineNumber() + ']   target is ' + target);
+       //     console.log('[' + fileName + 'line:' + util.LineNumber() + ']    room is ' + room.name);
             if (room != undefined) {
-                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room is defined as ' + room.name);
+            //     console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room is defined as ' + room.name);
               
                //var controller = room.find(FIND_STRUCTURES,{filter: (s) =>  s.structureType == STRUCTURE_CONTROLLER })
                 var controller = room.controller;
-                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] room  controller is' + controller);
-                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] controller.reservation is ' + controller.reservation);
+          //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] room  controller is' + controller);
+         //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] controller.reservation is ' + controller.reservation);
 
 
                 if (controller.reservation != undefined) 
                 {
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room  controllcontroller[0].reservation is ' + controller.reservation );
+               //     console.log('[' + fileName + 'line:' + util.LineNumber() + ']  room  controllcontroller[0].reservation is ' + controller.reservation );
 
                     tte = controller.reservation.ticksToEnd; 
 
@@ -694,7 +696,7 @@ module.exports = function () {
     StructureSpawn.prototype.createAttackScout =
         function (spawn, target) {
            // console.log("Creating a attack Scout");
-            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,ATTACK, ], undefined, { role: 'attackScout', spawn: spawn, target: target });
+            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,RANGED_ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
         };
 
         

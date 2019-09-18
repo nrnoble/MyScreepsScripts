@@ -24,6 +24,10 @@ module.exports = {
               var controller = creep.room.controller;
             //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', controller.room is ' + creep.room.controller);
   
+
+
+
+
               var invaders = controller.room.find(FIND_HOSTILE_CREEPS).length;
        //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', invaders is  ' + invaders);
 
@@ -31,7 +35,7 @@ module.exports = {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', ******* WARNING Creep in room. Running LDH as Wall Repairer ');
 
                     roleWallRepairer.run(creep);
-                  //  return;
+                    return;
               }  
 
 
@@ -205,7 +209,7 @@ module.exports = {
             //     }
                 
 
-             //   try {
+                try {
                     structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
                     for (let i = 0; i < structures.length; i++) {
                         var road =  structures[i].structure
@@ -217,10 +221,10 @@ module.exports = {
                         }
                          
                       }
-              //  } catch (e) {
+                } catch (e) {
                 
-              //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
-             //   }
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+               }
 
 
 

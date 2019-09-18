@@ -23,36 +23,90 @@ module.exports =
     for (let tower of towers) {
         
       //  tower.memory.test = "test";
-        // find closes hostile creep
+        // find closes hostile creep that has a heal part.
+       
+        
+       // var invadersCount = tower.room.find(FIND_HOSTILE_CREEPS).length;
+       var mycreeps = tower.room.find(FIND_MY_CREEPS);
+     //   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  @@@@@@ @@@@ mycreeps is ' + mycreeps);
+
+         var results = _.filter(mycreeps,_.filter({'owner': 'nrnoble'}));   
+    // /     console.log('[' + fileName + 'line:' + util.LineNumber() + ']  @@@@@@ @@@@ results is ' + results);
+       // var mycreeps  = tower.room.find(FIND_MY_CREEPS);
+      //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  JSON.stringify(mycreeps) is ' + JSON.stringify(mycreeps) );
+
+    var invadersCount = tower.room.find(FIND_HOSTILE_CREEPS).length;
+   // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  JSON.stringify(mycreeps) is ' + JSON.stringify(mycreeps) );
+    
+    if (invadersCount > 0) {
+      
         var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreep is ' + evilCreep);
+        var evilCreepHeal = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS, {filter: (s) => s.getActiveBodyparts(HEAL)});
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] @@@ww@@@ evilcreep is ' + evilCreep);
+        
         // if one is found...
-        if (evilCreep != undefined) {
+
+        var invaders = tower.room.find(FIND_HOSTILE_CREEPS);
+        var mycreeps = tower.room.find(FIND_MY_CREEPS);
+
+
+ //       Once I have a array of invaders, how can I use lodash to filter that array for invaders that have HEAL part.
+        // I have not used lodash much. How can I filter an array for invaders that have HEAL part
+       // `var invaders`
+
+      
+        if (evilCreepHeal != undefined) {
             // ...FIRE!
          
             var badguycreep = Game.getObjectById("5d6b2c15a15b166db2e08304");
-             var status = evilCreep.getActiveBodyparts(HEAL)   ;
-             console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+             var status = evilCreepHeal.getActiveBodyparts(HEAL)   ;
+             console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!! evilCreep.getActiveBodyparts(HEAL) status  is ' + status);
 
-            if (evilCreep.getActiveBodyparts(HEAL) > 0){
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+            if (evilCreepHeal.getActiveBodyparts(HEAL) > 0){
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTACK HEAL ATTACK firing on evil creep status  is ' + status);
               
-               tower.attack(evilCreep);
+               tower.attack(evilCreepHeal);
               
                 continue;
             }
-
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
-               tower.attack(evilCreep);
-                continue;
           
         }
+        else
+        {
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
+
+            tower.attack(evilCreep);
+        }
+
+
+    }
+
+
+    
+
+
+
+
+        // if (evilCreep == null) {
+         
+    
+        //     //  tower.memory.test = "test";
+        //     // find closes hostile creep
+        //     var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
+        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] evilcreepevilcreepevilcreepevilcreep evilcreep is ' + evilCreep);
+        //     // if one is found...
+        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] firing on evil creep status  is ' + status);
+        //     tower.attack(evilCreep);
+        //     continue;
+
+        // }
+
       
         var targetCreep = tower.pos.findClosestByRange(FIND_CREEPS);
          // console.log('[' + fileName + 'line:' + util.LineNumber() + '] targetCreep.my is ' + targetCreep.my);
 
 
-        
+
         // if one is found...
         if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax ) {
             // ...heal

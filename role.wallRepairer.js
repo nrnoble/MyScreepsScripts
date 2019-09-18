@@ -1,6 +1,6 @@
 var roleBuilder = require('role.builder');
 var util = require('Util'); 
-var fileName = "WallerRepair";
+var fileName = "WallRepair  ";
 
 
 module.exports = {
@@ -90,7 +90,7 @@ module.exports = {
             else {
                 // find closest source
                 var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] FIND_SOURCES_ACTIVE is ' + source);
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] FIND_SOURCES_ACTIVE is ' + source);
                 // try to harvest energy, if the source is not in range
                 if (creep.harvest(source) != 0) {
                     // move towards it

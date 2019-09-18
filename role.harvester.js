@@ -75,7 +75,7 @@ module.exports = {
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
-                    || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 250 ) ) 
+                    || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
                     && s.energy < s.energyCapacity
             });
 
@@ -193,7 +193,7 @@ module.exports = {
                     source = creep.room.storage;
 
                     if (source == undefined || source == null ) {
-                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
+                       // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
                         console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
         
                       roleUpgrader.run(creep);

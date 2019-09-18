@@ -1,4 +1,9 @@
+${selectedText}
+
+
 Steam Key, 0R525-E56WB-FVL6H
+
+
 
 docker run --env STEAM_KEY=7D8D2C38AF02AD9B98784DE663C31681 --name MyScreepsServer -v screeps:\screeps -p 21025:21025 screepers/screeps-launcher
 docker container rm 07e57c99bf31fac98974f83373c5fefbe062b4fc6d1c3072099092f085511e84

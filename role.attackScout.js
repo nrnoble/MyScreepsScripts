@@ -48,11 +48,11 @@ module.exports = {
         
 
 
-    // if (creep.room.name != creep.memory.target) { 
-        if (false) {
+     if (creep.room.name != creep.memory.target) { 
+       // if (false) {
 
             // find exit to target room
-            var exit = creep.room.findExitTo(roomTarget);
+            var exit = creep.room.findExitTo(creep.memory.target);
             console.log('[' + fileName + 'line:' + util.LineNumber() + ']  exit is ' + exit);
             console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.memory.target is ' + creep.memory.target);
             console.log('[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.name is ' + creep.room.name);
@@ -64,7 +64,7 @@ module.exports = {
         }
         else {
 
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', *********** looking for creeps to destroy ');
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', @*********** looking for creeps to destroy ');
             //var controller = Game.getObjectById("5bbcafa89099fc012e63af93");
            // var controller = creep.room.find (FIND_STRUCTURES, {filter: s=> s.structureType == STRUCTURE_CONTROLLER })
             var controller = creep.room.controller;
@@ -80,15 +80,20 @@ module.exports = {
             
          
             //creep.moveTo(invaders[0].pos);
-            var invader = LDHs[0];
-            creep.attack(invader);
+           // var invader = invaders[0];
+         //   creep.attack(invader);
                  
             if (invaderCount > 0){
-                var invader = LDHs[0];
-                if (creep.attack(invader) == ERR_NOT_IN_RANGE) {
+                var invader = invaders[0];
+              //  var attackStatus = creep.attack(invader);
+                var attackStatus = creep.rangedAttack(invader);
+
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!! attackStatus ' + attackStatus );
+
+                if (attackStatus != 0) {
                     // move towards the invader
                     creep.moveTo(invader);
-                 
+                   // creep.attack(invader);
                     // var attackStatus = creep.attack(invader);
                     // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserve status is ' + attackStatus );
 
@@ -96,9 +101,12 @@ module.exports = {
                     //creep.moveTo(myTestPos);
                     //creep.upgradeController(creep.room.controller);
                 }
-            else {
+                else 
+                {
 
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '!!!!!! Attack successful !!!!!!.  attackStatus ' + attackStatus );
 
+                   // creep.attack(invader);
                 //   myTestPos = new RoomPosition(42, 8, 'E45S2');
                 //   creep.moveTo(myTestPos);
 

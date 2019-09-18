@@ -23,6 +23,7 @@ var testCode = require('role.TestCode');
 var roleAttackScout = require('role.attackScout');
 var term = require('terminal'); 
 var fileName = "Main        ";
+var roomE43S3 = require("room.E43S3");
 
 // create role.Function.js file
 // add  roleFunction= require('role.Function');
@@ -40,7 +41,7 @@ let consoleDelay = 5;
 let unitsToTransfer = 25000;
 
 
-//term.transferEnergy("E44S3","E45S2",unitsToTransfer); ////
+ //term.transferEnergy("E44S3","E45S2",unitsToTransfer); ////////
 //term.transferEnergy("E44S3","E44S2",unitsToTransfer); 
 
 const cost = Game.market.calcTransactionCost(unitsToTransfer, 'E44S3', 'E45S2');
@@ -68,8 +69,7 @@ let Spawn3 = Memory.spawns.Spawn3;
     console.log('thisError: ' + thisError);
     console.log('stack: ' + thisError.stack);
     console.log('JSON.stringify (thisError): ' + JSON.stringify (thisError));
-
- //   console.log('lineNumber: ' + lineNumber);
+    // console.log('lineNumber: ' + thisError.lineNumber );
 
 
 
@@ -103,6 +103,8 @@ global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
 module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
 
+
+    roomE43S3.reserverSpawnCheck();
 
     // Dead code 9-3-2019
     {
@@ -191,12 +193,12 @@ module.exports.loop = function () {
       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] iiiiiiiiiiiiiiiiiiiii invaderCount count is ' + invaderCount);
         if (invaderCount > 0 ) {
              console.log('[' + fileName + 'line:' + util.LineNumber() + '] iiiiiiiiiiiiiiiiiiiii invaderCount count is ' + invaderCount);
-            Spawn3.minLDHroom3 = 0;
+           // Spawn3.minLDHroom3 = 0;
             if (Spawn3.minLDHroom3Restore == undefined )
             {
                 Spawn3.minLDHroom3Restore = Spawn3.minLDHroom3; 
             } 
-            Spawn3.minLDHroom3 = 0;
+          //  Spawn3.minLDHroom3 = 0;
             Game.notify("invader in the room");
 
             // create an attack invader that targets each invader    
@@ -243,7 +245,7 @@ module.exports.loop = function () {
             //     Spawn3.minLDHroom3Restore = Spawn3.minLDHroom3; 
             // }       
             
-            Spawn3.minLDHroom3 = 0;
+           // Spawn3.minLDHroom3 = 0;
             
             var creepsInRoom = room.find(FIND_MY_CREEPS);
             console.log('[' + fileName + 'line:' + util.LineNumber() + ']  Evil creeps detected in room ' + controller.room.name);
@@ -674,9 +676,15 @@ module.exports.loop = function () {
         if (Game.time %5 == 0) {
             
        
+            var numberOfTargetedReparier = _.sum(creepsInRoom, (c) => c.memory.role == 'targetedReparier'); 
+
+            const cost = Game.market.calcTransactionCost(1000, 'E44S3', 'E45S2');
+            var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
+            var numberOfLDBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'LDBuilder');
+
         console.log('[' + fileName + 'line:' + 
                            util.LineNumber() + 
-                           '] ' + spawn.room.name +  
+                           '] ' + spawn.name +  
                             ',  Current number of LDH: ' + numberOfLongDistanceHarvestersroom3 + 
                             ", Reservers: " + numberOfReservers + 
                             ', Harvesters: ' + numberOfHarvesters + 
@@ -685,14 +693,10 @@ module.exports.loop = function () {
                             ', Repairers: ' +  numberOfRepairers + 
                             ', WallRepairers: ' + numberOfWallRepairers + 
                             ', Miners: ' + numberOfMiners + 
-                            ', cost: ' + cost1);
+                            ', numberOfTestScreeps: ' + numberOfTestScreeps);
 
         }
-        var numberOfTargetedReparier = _.sum(creepsInRoom, (c) => c.memory.role == 'targetedReparier'); 
 
-        const cost = Game.market.calcTransactionCost(1000, 'E44S3', 'E45S2');
-        var numberOfTestScreeps = _.sum(Game.creeps, (c) => c.memory.role == 'roleTestCreep');
-        var numberOfLDBuilders = _.sum(Game.creeps, (c) => c.memory.role == 'LDBuilder');
 
         //var observer = Game.getObjectById("5d724309f146cf075e07c966");
         var status = observer.observeRoom("E45S3");
@@ -726,7 +730,7 @@ module.exports.loop = function () {
             }
             else{
             
-                energy = 800;
+                energy = 900;
             }
         }
 
@@ -751,7 +755,7 @@ module.exports.loop = function () {
             }
             else{
             
-                energy = 750;
+                energy = 900;
             }
         }
 
@@ -873,7 +877,7 @@ module.exports.loop = function () {
                             // spawn a miner
                             name = spawn.createMiner(spawn, source.id);
                             if (Game.time % consoleDelay == 0) {
-                               console.log('[' + fileName + 'line:' + util.LineNumber() + '] is trying to create create miner with the name of ' + name); 
+                               console.log('[' + fileName + 'line:' + util.LineNumber() + ']' + spawn.name +' is trying to create create miner. Time: ' + name); 
                             }
                             if (!(name < 0)) {
                                 // delete the claim order
@@ -906,9 +910,13 @@ module.exports.loop = function () {
            // console.log("[line " + util.LineNumber() + "] Starting:" + name);
            // util.debug(1, util.LineNumber(), "Starting", name);
             //    console.log("line 153 name == undefined");
-
+         
             
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ spawn.name + ' numberOfWallRepairers is ' + numberOfWallRepairers);
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ spawn.name + ' minWallRepairers is ' + minWallRepairers);
+           
             if (spawn.memory.attackScout != undefined)
+         
             {
                 // try to spawn a 
 
@@ -933,7 +941,7 @@ module.exports.loop = function () {
                //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
                if(Game.time % consoleDelay == 0){
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + spawn.remainingTime);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + name);
                }
             }
             // if not enough lorries
@@ -947,7 +955,7 @@ module.exports.loop = function () {
                 name = spawn.createLorry(energy);
                 
                 if (Game.time % consoleDelay == 0) {
-                    console.log("[Main line " + util.LineNumber() + "]" + spawnName +  " @@@@@@@@@@@@@@@@@@@@@@@ is creating a createLorry: " + spawn.remainingTime);
+                    console.log("[Main line " + util.LineNumber() + "]" + spawnName +  "  is creating a createLorry: " + name);
                 }
 
                 if ((typeof name) == "string") {
@@ -979,7 +987,7 @@ module.exports.loop = function () {
                 // try to spawn a reserver
 
                 name = spawn.createReserver(spawn.name, spawn.memory.reserveroom);
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ' ' + spawn.name + '  creating Reserver ' + name);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' is creating a Reserver ');
 
                 // if that worked
                 if ((typeof name) == "string") {
@@ -1051,7 +1059,7 @@ module.exports.loop = function () {
             else if (numberOfWallRepairers < spawn.memory.minWallRepairers) {
             
                 name = spawn.createCustomCreep(energy, 'wallRepairer');
-                //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.room.name + ', ' + spawn.name + ' room 3 is XX-'  + room3 + '-XX,  Current number of LDH: ' + numberOfLongDistanceHarvestersroom3);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' room 3 is XX-'  + room3 + '-XX,  Current number of LDH: ' + numberOfLongDistanceHarvestersroom3);
 
 
 
@@ -1087,13 +1095,16 @@ module.exports.loop = function () {
 
             }
             
+            
 
+         //  else if (numberOfTestScreeps < Memory.spawns.Spawn1.minTesters) {
+             
+            else if (numberOfTestScreeps < spawn.memory.minTesters) {
 
-            else if (numberOfTestScreeps < Memory.spawns.Spawn1.minTesters) {
                 // try to spawn one
                 
                 name = Game.spawns.Spawn1.createTestCreep(sp1,"roleTestCreep");
-                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep1 " + name );
+                console.log("Main [line " + util.LineNumber() + "] Create createTestCreep1 T" + name );
 
             }
             

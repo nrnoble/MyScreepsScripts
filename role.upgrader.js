@@ -93,7 +93,10 @@ module.exports = {
                     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
                             || s.structureType == STRUCTURE_TERMINAL
                             || s.structureType == STRUCTURE_STORAGE) 
-                            && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
+                            && s.store[RESOURCE_ENERGY] > 0 ) 
+                           // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+
+                           
                 });
                 // if one was found
                 if (container != undefined) {
