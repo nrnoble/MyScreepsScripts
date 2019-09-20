@@ -24,6 +24,8 @@ var fileName = "Main        ";
 var roomE43S3 = require("room.E43S3");
 var term = require('terminal'); 
 var  roleStorageToLink = require('role.StorageToLink');
+var  roleLinkToTerminal = require('role.LinkToTerminal');
+
 
 // create role.Function.js file
 // add  roleFunction= require('role.Function');
@@ -470,6 +472,9 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'lorry') {
             roleLorry.run(creep);
         }
+        else if (creep.memory.role == 'linkToTerminal') {
+            roleLinkToTerminal.run(creep);
+        }
         else if (creep.memory.role == 'storageToLink') {
             roleStorageToLink.run(creep);
         }
@@ -565,21 +570,19 @@ module.exports.loop = function () {
 
         if (spawnName == "Spawn3")
         {
-            if (Game.time  %2 == 0)
-            {     
-                link.transferEnergy("5d6b7e3252d12c73f0332b33","5d841c9f9c6f0448bfc4dd2e");
-            }         //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
-            else{
 
+              //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d841c9f9c6f0448bfc4dd2e");
+                link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
+    
 //          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
                 //var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
-                link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
-               // link.transferEnergy("5d6b40742f60936360c7d0cc","5d841c9f9c6f0448bfc4dd2e");
+             //   link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
+                link.transferEnergy("5d6b40742f60936360c7d0cc","5d841c9f9c6f0448bfc4dd2e");
 
   //          return;
 
-            }            
+                        
                         //term.transferEnergy("E44S3","E45S2",100);
                 
 
@@ -607,8 +610,10 @@ module.exports.loop = function () {
         var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry'); //createCustumReparier
         var numberOfTerminalLorries =_.sum(creepsInRoom, (c) => c.memory.role == 'terminalLorry');
         var numberOfStorageToLink =_.sum(creepsInRoom, (c) => c.memory.role == 'storageToLink');
+        var numberOfLinkToTerminals =_.sum(creepsInRoom, (c) => c.memory.role == 'linkToTerminal');
 
 
+        
         
         var numberOflongDistanceBuildersroom1 = _.sum(Game.creeps, (c) => c.memory.role == 'longDistanceBuilder' && c.memory.home == room1);    
         // console.log('[' + fileName + 'line:' + util.LineNumber() + ']   numberOflongDistanceBuildersE44S2 is ' + numberOflongDistanceBuildersE44S2);
@@ -843,11 +848,10 @@ module.exports.loop = function () {
 
 
 
-
-
-
-      
+        // ********************************************************************************//
         // if none of the above caused a spawn command check for other roles
+        // ********************************************************************************//
+
         if (name == undefined)
         {
          //  console.log("[line " + util.LineNumber() + "] spawn.memory.claimRoom != undefined: " spawn.memory.claimRoom != undefined);
@@ -914,7 +918,7 @@ module.exports.loop = function () {
                 }
 
             }
-
+            
             else if (numberOfStorageToLink < spawn.memory.minStorageToLink  )
             {
              
@@ -929,11 +933,9 @@ module.exports.loop = function () {
                if ((typeof name) == "string") {
                   
                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' ' + creep.name + ' has been created');
-                                 }
-
-           }
-
-
+            }           
+           
+        }
             // if there is a claim order defined
           //  console.log("[line " + util.LineNumber() + "] spawn.memory.claimRoom != undefined: " spawn.memory.claimRoom != undefined);
 
@@ -1171,6 +1173,22 @@ module.exports.loop = function () {
                 }
 
             }
+            else if (numberOfLinkToTerminals < spawn.memory.minLinkToTerminal)
+            {
+             
+               // try to spawn one
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!!!!!!!!!!numberOfLinkToTerminals is ' + numberOfLinkToTerminals);
+               name = spawn.createLinkToTerminal (energy);
+               
+               if (Game.time % consoleDelay == 0) {
+                   console.log("[Main line " + util.LineNumber() + "]" + spawnName +  "  is creating a LinkToTerminal creep: " + name);
+               }
+
+               if ((typeof name) == "string") {
+                  
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' ' + creep.name + ' has been created');
+                }
+           }
 
             else {
                 
@@ -1193,9 +1211,10 @@ module.exports.loop = function () {
                 // name = -1;
                 //numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1
                /// console.log("Main [line " + util.LineNumber() + "] numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1 " + spawn.memory.minLongDistanceBuildersroom1);
-
+                
              //   console.log("[" + fileName + "Line " + util.LineNumber() + "] " + spawn.name + " is idle. Game Time: " + util.numberWithCommas(Game.time));
-
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ spawn.name + ' spawn.memory.minLinkToTerminal is ' + spawn.memory.minLinkToTerminal);
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + ']'+ spawn.name + ' numberOfLinkToTerminals is ' + numberOfLinkToTerminals);
             }
         }
 
