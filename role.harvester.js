@@ -99,7 +99,12 @@ module.exports = {
                     
                     roleBuilder.run(creep);
                 }
+                else{
+                    roleBuilder.run(creep);
+                }
             }
+
+            
         
         }
 

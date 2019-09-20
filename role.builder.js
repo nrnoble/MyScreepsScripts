@@ -10,8 +10,8 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
-        var status = util.stayInTargetRoom(creep); 
-        
+      //  var status = util.stayInTargetRoom(creep); 
+
         if (creep.ticksToLive == 50) {
            
             var spawns =  creep.room.find(FIND_MY_STRUCTURES, {

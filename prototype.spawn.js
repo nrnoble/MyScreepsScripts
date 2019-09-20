@@ -352,6 +352,33 @@ module.exports = function () {
         };
 
 
+    // create a new function for StructureSpawn
+    StructureSpawn.prototype.createStorageToLink =
+    function (energy) {
+        // // create a body with twice as many CARRY as MOVE parts
+        // var numberOfParts = Math.floor(energy / 150);
+        var body = [];
+        // for (let i = 0; i < numberOfParts * 2; i++) {
+        //     body.push(CARRY);
+        // }
+        // for (let i = 0; i < numberOfParts; i++) {
+        //     body.push(MOVE);
+        // }
+
+
+        
+        body.push(CARRY);
+        body.push(CARRY);
+       // body.push(CARRY);
+        body.push(MOVE);
+        //body.push(MOVE);
+
+        // create creep with the created body and the role 'lorry'
+        return this.createCreep(body, 'StorageToLink_' + Game.time, { role: 'storageToLink', working: false });
+    };
+
+
+
     StructureSpawn.prototype.createLongDistanceBuilder =
         function (energy, numberOfWorkParts, home, target, sourceIndex) {
             // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
@@ -497,7 +524,7 @@ module.exports = function () {
             return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
                 role: 'roleTestCreep',
                 home: SpawnObj.room.name,
-                target: SpawnObj.room.name,
+                target: SpawnObj.ro.name,
                 creator: 'Neal R. Noble 1999',
                 cachedSource: null
             });

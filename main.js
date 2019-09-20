@@ -22,14 +22,18 @@ var testCode = require('role.TestCode');
 var roleAttackScout = require('role.attackScout');
 var fileName = "Main        ";
 var roomE43S3 = require("room.E43S3");
+var term = require('terminal'); 
+var  roleStorageToLink = require('role.StorageToLink');
 
 // create role.Function.js file
 // add  roleFunction= require('role.Function');
 // add  StructureSpawn.prototype.createFunction = function (parm1, parm2, parm2){}
-// add  (creep.memory.role == 'role.Function') {
-// add  roleAttackScout.run(creep);
+// add  if (creep.memory.role == 'role.Function') { create spawn}
+// add   else if (creep.memory.role == 'StorageToLink') {
+//              roleStorageToLink.run(creep);
+//       }
 // add  var numberFunction= _.sum(creepsInRoom, (c) => c.memory.role == 'Function');
-
+//
 
 { // dead code
 // const E44S3_MINER_TTL = 25;
@@ -41,7 +45,8 @@ var roomE43S3 = require("room.E43S3");
 let consoleDelay = 5;
 let unitsToTransfer = 25000;
 
-
+//term.transferEnergy("E44S2","E45S2",unitsToTransfer); ////	//asdf
+//term.transferEnergy("E44S3","E45S2",unitsToTransfer); //////
 
 let sp1 = Memory.spawns.Spawn1;
 let Spawn3 = Memory.spawns.Spawn3;
@@ -465,6 +470,9 @@ module.exports.loop = function () {
         else if (creep.memory.role == 'lorry') {
             roleLorry.run(creep);
         }
+        else if (creep.memory.role == 'storageToLink') {
+            roleStorageToLink.run(creep);
+        }
         else if (creep.memory.role == 'longDistanceBuilder') {
            // console.log("Main [line " + util.LineNumber() + "] running roleLongDistanceBuilder: " + creep.name);
             roleLongDistanceBuilder.run(creep);
@@ -544,8 +552,8 @@ module.exports.loop = function () {
 
     //TODO: HACK. 
       if (spawnName == "Spawn1" && spawn.room.name =="E44S3"){     
-            
-        link.transferEnergy("5d44be6bea104379d906cbaf","5d46b9cad16c4b73af5c1269");
+    
+       link.transferEnergy("5d83549715c0ff3c201c2b82","5d46b9cad16c4b73af5c1269");
         //term.transferEnergy("E44S3","E45S2",100);
 
 
@@ -553,13 +561,29 @@ module.exports.loop = function () {
         
 
 
+
+
         if (spawnName == "Spawn3")
         {
+            if (Game.time  %2 == 0)
+            {     
+                link.transferEnergy("5d6b7e3252d12c73f0332b33","5d841c9f9c6f0448bfc4dd2e");
+            }         //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
+            else{
+
 //          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
                 //var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
                 link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
+               // link.transferEnergy("5d6b40742f60936360c7d0cc","5d841c9f9c6f0448bfc4dd2e");
+
   //          return;
+
+            }            
+                        //term.transferEnergy("E44S3","E45S2",100);
+                
+
+
         }
 
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
@@ -582,6 +606,7 @@ module.exports.loop = function () {
         var numberOfMiners = _.sum(creepsInRoom, (c) => c.memory.role == 'miner');
         var numberOfLorries = _.sum(creepsInRoom, (c) => c.memory.role == 'lorry'); //createCustumReparier
         var numberOfTerminalLorries =_.sum(creepsInRoom, (c) => c.memory.role == 'terminalLorry');
+        var numberOfStorageToLink =_.sum(creepsInRoom, (c) => c.memory.role == 'storageToLink');
 
 
         
@@ -889,6 +914,26 @@ module.exports.loop = function () {
                 }
 
             }
+
+            else if (numberOfStorageToLink < spawn.memory.minStorageToLink  )
+            {
+             
+               // try to spawn one
+         
+               name = spawn.createStorageToLink (energy);
+               
+               if (Game.time % consoleDelay == 0) {
+                   console.log("[Main line " + util.LineNumber() + "]" + spawnName +  "  is creating a StorageToLink creep: " + name);
+               }
+
+               if ((typeof name) == "string") {
+                  
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' ' + creep.name + ' has been created');
+                                 }
+
+           }
+
+
             // if there is a claim order defined
           //  console.log("[line " + util.LineNumber() + "] spawn.memory.claimRoom != undefined: " spawn.memory.claimRoom != undefined);
 

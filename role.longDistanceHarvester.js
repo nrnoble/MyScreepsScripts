@@ -138,18 +138,27 @@ module.exports = {
                         || s.structureType == STRUCTURE_EXTENSION
                         || s.structureType == STRUCTURE_LINK
                         || s.structureType == STRUCTURE_CONTAINER
+                        || s.structureType == STRUCTURE_STORAGE
                         || s.structureType == STRUCTURE_TOWER)
                         && s.energy < s.energyCapacity
                 });
 
                 
  
-                if (structure == undefined) {
-                    structure = creep.room.storage;
-                }
+                // if (structure == undefined) {
+                //     structure = creep.room.storage;
+                // }
+
+                // if(structure.structureType == STRUCTURE_STORAGE)
+                // {
+                //     if (creep.store(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                //     {
+                //         creep.moveTo(structure);
+                //     }
+                // }
 
                 // if we found one
-                if (structure != undefined) {
+                 if (structure != undefined) {
                     // try to transfer energy, if it is not in range
                     if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         // move towards it
