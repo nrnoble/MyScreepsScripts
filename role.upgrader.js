@@ -21,6 +21,20 @@ module.exports = {
      
         //     }
 
+        // ********************************************************************************//
+        // Room Specific code
+        // ********************************************************************************//
+
+        // if (creep.room.name == "E45S2") {
+        //     if (creep.memory.orginalRole == undefined) {
+        //         creep.memory.orginalRole = creep.memory.role             
+        //     }
+
+        //     if (creep.pos == ) {
+                
+        //     }
+
+        // }
 
 
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");

@@ -6,7 +6,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
        
-
+        let container = undefined;
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
@@ -24,11 +24,11 @@ module.exports = {
         // }
     
 
-        if (Game.creeps[creep.name].memory.home == undefined)
-        {
-            Game.creeps[creep.name].home =="E44S2";
-            Game.creeps[creep.name].target =="E44S2";
-        }
+        // if (Game.creeps[creep.name].memory.home == undefined)
+        // {
+        //     Game.creeps[creep.name].home =="E44S2";
+        //     Game.creeps[creep.name].target =="E44S2";
+        // }
 
         // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' running');
         // creep.memory.home2 =="E44S2";
@@ -53,13 +53,22 @@ module.exports = {
             // switch state
             creep.memory.working = false;
         }
+        
+        
+        // ********************************************************************************//
         // if creep is harvesting energy but is full
+        // ********************************************************************************//
+
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
             // switch state
             creep.memory.working = true;
         }
 
-        // if creep is supposed to complete a constructionSite
+        
+        // ********************************************************************************//
+        //  if creep is supposed to complete a constructionSite
+        // ********************************************************************************//
+
         if (creep.memory.working == true) {
             // find closest constructionSite
             var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
@@ -79,21 +88,24 @@ module.exports = {
                 util.repairRoad(creep);
             }
         }
+        
+        
+        // ********************************************************************************//
         // if creep is supposed to get energy
+        // ********************************************************************************//
+        
         else {
-            // find closest container
-            // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     filter: s => (s.structureType == STRUCTURE_CONTAINER 
-            //         || s.structureType == STRUCTURE_STORAGE) 
-            //         && s.store[RESOURCE_ENERGY] > 0 
-            //         || (s.structureType == STRUCTURE_LINK && s.energy > 0)
+            
+         //   var terminalCount = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_TERMINAL)}).length;  
+            
+         container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                    || s.structureType == STRUCTURE_TERMINAL
+                    || s.structureType == STRUCTURE_STORAGE) 
+                    && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
+        });
 
-            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-                        || s.structureType == STRUCTURE_TERMINAL
-                        || s.structureType == STRUCTURE_STORAGE) 
-                        && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
-            });
+        }
             // if one was found
             if (container != undefined) {
                 // try to withdraw energy, if the container is not in range
@@ -121,5 +133,5 @@ module.exports = {
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Energy is gone and source is on cool down ');
             }
         }
-    }
+    
 };

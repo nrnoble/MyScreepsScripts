@@ -1,5 +1,6 @@
 var util = require('Util'); 
-var fileName = "Lorry       ";
+
+var fileName = "LinkToTerm  ";
 
 
 module.exports = {
@@ -28,7 +29,9 @@ module.exports = {
 
         if (creep.memory.working == true) {
             // find closest spawn, extension or tower which is not full
-        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  is supposed to transfer energy to a structure');
+        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  !!!!!!! !!!!!!!!!!!!!!!!!!!!!!!! creep.room.spawn.terminalId  is' + creep.room.memory.terminalId);
+        //    var termId =  Game.rooms[creep.room.name].memory.terminalId;
+        //    var terminal = Game.getObjectById(termId);
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
@@ -84,10 +87,16 @@ module.exports = {
             //        filter: s => s.structureType == STRUCTURE_CONTAINER
             // }   
 
-                
+            // Find the closet Link to terminal
 
-            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s => s.structureType == STRUCTURE_LINK
+                
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  !!!!!!! !!!!!!!!!!!!!!!!!!!!!!!! creep.room.spawn.terminalId  is' + creep.room.memory.terminalId);
+            var termId =  Game.rooms[creep.room.name].memory.terminalId;
+            var terminal = Game.getObjectById(termId);
+           
+            let container = terminal.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: s => s.structureType == STRUCTURE_LINK 
+                
             });
 
             // if (container == undefined) {
