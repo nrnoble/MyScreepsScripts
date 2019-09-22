@@ -25,16 +25,22 @@ module.exports = {
         // Room Specific code
         // ********************************************************************************//
 
-        // if (creep.room.name == "E45S2") {
-        //     if (creep.memory.orginalRole == undefined) {
-        //         creep.memory.orginalRole = creep.memory.role             
-        //     }
-
-        //     if (creep.pos == ) {
+        if (creep.room.name == "E45S2") {
+            
+            // backup original role
+            if (creep.memory.orginalRole == undefined) {
+                creep.memory.orginalRole = creep.memory.role             
+            }
+            const pos = new RoomPosition(42, 10, 'E45S2');
+          // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!! creep.pos is ' + creep.pos);
+          // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!      pos is ' + pos);
+            if (creep.pos.isEqualTo (45,8)) {
                 
-        //     }
+                creep.moveTo (pos);
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + ']XXXXXXXXXXXXXXXXXXXXXXX the spot has been taken ' + creep.name);
+            }
 
-        // }
+        }
 
 
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");

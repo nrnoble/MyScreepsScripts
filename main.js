@@ -65,27 +65,7 @@ let Spawn3 = Memory.spawns.Spawn3;
 
 
 
-// for (let roomName in Game.rooms) {
 
-//     let room = Game.rooms[roomName];
-//     let structuresInRoom = room.find(FIND_MY_STRUCTURES, );
-//        // var LDHs = controller.room.find(FIND_MY_CREEPS, {filter: s=> s.memory.role == "longDistanceHarvester"});
-//     var terminals = room.find(FIND_MY_STRUCTURES,   {filter: s=> s.structureType == STRUCTURE_TERMINAL});
-      
-//    //var numberOfHarvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'harvester');
-//  //   var terminalCount =_.sum(structuresInRoom, (s)=> s.structureType == STRUCTURE_TOWER);
-//     var terminalCount = terminals.length; 
-//     var terminal = terminals[0];
-//     if (terminalCount == 1 ) {
-//          // console.log('[' + fileName + 'line:' + util.LineNumber() + '] structuresInRoom is ' + structuresInRoom);  
-//         console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ roomName + ', terminalCount is ' + terminalCount);
-//         // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ spawnName + ', JSON.stringify(terminal) is ' + JSON.stringify(terminals));
-//         console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ roomName + ', terminal.id is ' + terminal.id);//
-//         room.memory.terminalId = terminal.id;
-//         console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ roomName + ', terminal.id is ' + room.memory.terminalId);//
-
-//     }  
-// }
 
 
 

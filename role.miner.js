@@ -33,7 +33,7 @@ module.exports = {
        // console.log("Role.miner Unable to find a container " + container);
         if(container == null || container == undefined)
         {
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' Unable to find a container. Container is ' + container  );
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  '+ creep.name + ', '+ creep.room.name + ', Unable to find a container. Container is ' + container  );
             return;
         }
 

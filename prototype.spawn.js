@@ -558,6 +558,72 @@ module.exports = function () {
             });
         }; 
 
+// /minflagToFlagHarvester
+        StructureSpawn.prototype.createflagToFlagHarvester =
+        function (SpawnObj, roleName, energy, _flagSource,_flagContainer) {
+            // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        
+            //for (let i = 0; i < numberOfWorkParts; i++) {
+            //    body.push(WORK);
+            //}
+
+            //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+            //energy -= 150 * numberOfWorkParts;
+
+            //var numberOfParts = Math.floor(energy / 100);
+            //for (let i = 0; i < numberOfParts; i++) {
+            //    body.push(CARRY);
+            //}
+            //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+            //    body.push(MOVE);
+            //}
+
+            var body = [];
+            // var numberOfParts = Math.floor(energy / 100);
+            // for (let index = 0; index < numberOfParts; index++) {
+            //   //  const element = array[index];
+            //     body.push(CARRY);
+            //     body.push(MOVE);
+            // }
+
+            //body.push(WORK);
+           // body.push(WORK);
+           // body.push(WORK);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+           // body.push(CARRY);
+           // body.push(CARRY);
+          //  body.push(CARRY);
+
+           // body.push(MOVE);
+           // body.push(MOVE);
+           // body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+
+
+            // create creep with the created body
+         //   return util.CreateNewScreep(this, roleName, body, {
+             
+            
+            return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+                role: 'flagToFlagHarvester',
+                home: SpawnObj.room.name,
+                target: SpawnObj.ro.name,
+                flagSource: _flagSource,
+                flagSource: _flagContainer,
+                creator: 'Neal R. Noble 2019',
+                cachedSource: null
+            });
+        }; 
+
     StructureSpawn.prototype.createTestCreep =
         function (SpawnObj, roleName) {
             // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part

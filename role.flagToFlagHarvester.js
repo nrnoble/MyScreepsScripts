@@ -1,3 +1,5 @@
+//minflagToFlagHarvester
+
 
 var util = require('Util'); 
 var roleUpgrader = require('role.upgrader');
@@ -6,6 +8,8 @@ var roleBuilder = require('role.builder');
 
 
 var fileName = "Harvester   ";
+var fileName = "f2fHarvester";
+
 
 
 module.exports = {
@@ -75,12 +79,9 @@ module.exports = {
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
-                  //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
-                    || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
+                    || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
                     && s.energy < s.energyCapacity
             });
-
-            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 
             if (structure !=  null) {
                 

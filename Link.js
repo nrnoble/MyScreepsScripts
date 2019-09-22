@@ -38,10 +38,10 @@ module.exports = {
         
          if(linkSource.cooldown == 0){
                 var transferUnits = 400
-                if(transferUnits <   linkSource.energy)
-                {
-                    transferUnits = linkSource.energy
-                }
+                // if(transferUnits <   linkSource.energy)
+                // {
+                //     transferUnits = linkSource.energy
+                // }
 
                 var status = linkSource.transferEnergy(linkDestination, transferUnits);
                 if(Game.time % 10 == 0){
