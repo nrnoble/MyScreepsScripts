@@ -4,7 +4,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-
+    //    creep.say ("up: " + + creep.ticksToLive);
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);

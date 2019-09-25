@@ -104,6 +104,29 @@ module.exports = function () {
 
             }
 
+
+            else if (roleName == "upgrader2x") {
+
+                //namecount = sp1.buildersCount;
+                //creepNewName = util.GetRoleName(sp1, roleName);
+                //console.log("creating a " + roleName + "(" + creepNewName + ")");
+                //var newCreep = this.createCreep(body, creepNewName, { role: roleName, working: false });
+                //if (typeof (newCreep) == "string") {
+                //    console.log("successfully created a " + roleName + "(" + creepNewName + ")");
+
+                //}
+
+                //if (newCreep == - 3) {
+                //    sp1.buildersCount++;
+                //    var newCreep = this.createCreep(body, roleName + namecount, { role: roleName, working: false });
+                //}
+
+                var newCreep = util.CreateNewScreep(this, roleName, body);
+                return newCreep;
+
+            }
+
+
             else if (roleName == "wallRepairer") {
 
                 //namecount = sp1.wallRepairersCount;
@@ -314,14 +337,14 @@ module.exports = function () {
                                     { role: 'miner', sourceId: sourceId });
             }            else if(energy <= 700)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
+                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK, MOVE,MOVE,MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }
            
            
             else
             {
-                return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE], 'miner_' + Game.time,
+                return this.createCreep([WORK, WORK, WORK, WORK, WORK, WORK,MOVE,MOVE,MOVE], 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId });
             }
         };
@@ -559,7 +582,7 @@ module.exports = function () {
         }; 
 
 // /minflagToFlagHarvester
-        StructureSpawn.prototype.createflagToFlagHarvester =
+        StructureSpawn.prototype.createFlagToFlagHarvester =
         function (SpawnObj, roleName, energy, _flagSource,_flagContainer) {
             // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         
@@ -614,15 +637,84 @@ module.exports = function () {
              
             
             return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
-                role: 'flagToFlagHarvester',
+                role: roleName,
                 home: SpawnObj.room.name,
-                target: SpawnObj.ro.name,
+                target: SpawnObj.room.name,
+                working: true,
                 flagSource: _flagSource,
-                flagSource: _flagContainer,
+                flagContainer: _flagContainer,
                 creator: 'Neal R. Noble 2019',
                 cachedSource: null
             });
         }; 
+
+
+        StructureSpawn.prototype.createFlagToFlagHarvester2 =
+        function (SpawnObj, roleName, energy, _flagSource,_flagContainer) {
+            // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        
+            //for (let i = 0; i < numberOfWorkParts; i++) {
+            //    body.push(WORK);
+            //}
+
+            //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+            //energy -= 150 * numberOfWorkParts;
+
+            //var numberOfParts = Math.floor(energy / 100);
+            //for (let i = 0; i < numberOfParts; i++) {
+            //    body.push(CARRY);
+            //}
+            //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+            //    body.push(MOVE);
+            //}
+
+            var body = [];
+            // var numberOfParts = Math.floor(energy / 100);
+            // for (let index = 0; index < numberOfParts; index++) {
+            //   //  const element = array[index];
+            //     body.push(CARRY);
+            //     body.push(MOVE);
+            // }
+
+            //body.push(WORK);
+           // body.push(WORK);
+           // body.push(WORK);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+            body.push(CARRY);
+           // body.push(CARRY);
+           // body.push(CARRY);
+          //  body.push(CARRY);
+
+           // body.push(MOVE);
+           // body.push(MOVE);
+           // body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+            body.push(MOVE);
+
+
+            // create creep with the created body
+         //   return util.CreateNewScreep(this, roleName, body, {
+             
+            
+            return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+                role: roleName,
+                home: SpawnObj.room.name,
+                target: SpawnObj.room.name,
+                working: true,
+                flagSource: _flagSource,
+                flagContainer: _flagContainer,
+                creator: 'Neal R. Noble 2019',
+                cachedSource: null
+            });
+        }; 
+
 
     StructureSpawn.prototype.createTestCreep =
         function (SpawnObj, roleName) {
@@ -670,6 +762,65 @@ module.exports = function () {
                 home: 'E44S3',
                 target: 'E44S2',
                 creator: 'Neal R. Noble 1999',
+                cachedSource: null
+            });
+        }; 
+
+
+        StructureSpawn.prototype.createStorageToExt = function (SpawnObj, roleName, energy) {
+            // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+            var body = [];
+            //for (let i = 0; i < numberOfWorkParts; i++) {
+            //    body.push(WORK);
+            //}
+
+            //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+            //energy -= 150 * numberOfWorkParts;
+
+            //var numberOfParts = Math.floor(energy / 100);
+            //for (let i = 0; i < numberOfParts; i++) {
+            //    body.push(CARRY);
+            //}
+            //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+            //    body.push(MOVE);
+            //}
+
+            var numberOfParts = Math.floor(energy / 50);
+            for (let i = 0; i < numberOfParts; i++) {
+               body.push(CARRY);
+               body.push(MOVE);
+
+            }
+
+
+        //     //body.push(WORK);
+        //    // body.push(WORK);
+        //    // body.push(WORK);
+        //     body.push(CARRY);
+        //     body.push(CARRY);
+        //     body.push(CARRY);
+        //    // body.push(CARRY);
+        //    // body.push(CARRY);
+        //   //  body.push(CARRY);
+
+        //    // body.push(MOVE);
+        //    // body.push(MOVE);
+        //    // body.push(MOVE);
+        //     body.push(MOVE);
+        //     body.push(MOVE);
+        //     body.push(MOVE);
+
+
+        //     // create creep with the created body
+        //  //   return util.CreateNewScreep(this, roleName, body, {
+             
+            
+            return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+                role: roleName,
+                working: true,
+                home: SpawnObj.room.name,
+                target: SpawnObj.room.name,
+                creator: 'Neal R. Noble 2019',
                 cachedSource: null
             });
         }; 
