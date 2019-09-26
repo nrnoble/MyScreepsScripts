@@ -10,13 +10,18 @@ var fileName = 'StorageToExt ';
  
  
 module.exports = {
-    run: function () {
+    run: function (creep) {
  
-        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
-        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
-        console.log('[' + fileName + 'line:' + util.LineNumber() + '] *           running  role. StorageToExt creep: ' + creep.name);
-        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
-        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+      //  creep.say ("S2E " + creep.ticksToLive);
+
+        util.say(creep,"S2E", 300);
+        
+
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] *           running  role. StorageToExt creep: ' + creep.name);
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
  
 
 

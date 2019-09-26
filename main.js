@@ -62,7 +62,7 @@ let consoleDelay = 5;
 let unitsToTransfer = 50000;
 
 // term.transferEnergy("E44S2","E45S2",unitsToTransfer); //
-/// term.transferEnergy("E44S3","E45S2",unitsToTransfer); //////
+//term.transferEnergy("E44S3","E45S2",unitsToTransfer); ////
 
 let sp1 = Memory.spawns.Spawn1;
 let Spawn3 = Memory.spawns.Spawn3;
@@ -535,8 +535,8 @@ module.exports.loop = function () {
          {
             roleTerminalLorry.run(creep);
          }
-         else if (creep.memory.role == 'roleStorageToExt') {
-            roleTestCreep.run(creep);
+         else if (creep.memory.role == 'storageToExt') {
+            roleStorageToExt.run(creep);
           }
          // run for every creep
          

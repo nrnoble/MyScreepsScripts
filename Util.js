@@ -449,6 +449,20 @@ module.exports =
 
         //     }  
         // }
+    },
+
+    say: function (creep,say, ticksToLive){
+        if (ticksToLive != undefined) {
+           if (creep.ticksToLive < ticksToLive) {
+                creep.say(say + creep.ticksToLive);
+           }
+            
+        }
+        else{
+
+            creep.say(say);
+        }
+
     }
 
 

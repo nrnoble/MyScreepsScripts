@@ -13,7 +13,7 @@ var fileName = "test   ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-
+        return;
     //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXtesting 123 ');
       
  //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] running test creep ');     
