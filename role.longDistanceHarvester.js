@@ -7,7 +7,7 @@ module.exports = {
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-
+        util.say(creep,"LDH ", 300);
         if (creep.ticksToLive == 50) {
            
             var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
@@ -39,47 +39,7 @@ module.exports = {
               }  
 
 
-            // if (creep.memory.retreat == true) {
-                
-            //     var spawn = Game.getObjectById (creep.memory.spawnId)
-            //     var status = moveTo(creep.memory.spawn);
-
-            //     // var exit = creep.room.findExitTo(creep.memory.home);
-            //     // // and move to exit
-            //     // creep.moveTo(creep.pos.findClosestByRange(exit));
-            //     // var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     //     // the second argument for findClosestByPath is an object which takes
-            //     //     // a property called filter which can be a function
-            //     //     // we use the arrow operator to define it
-            //     //     filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL,ignoreCreeps: true
-            //     // });
-
-
-
-            // }
-
-        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.x is ' + creep.pos.x);
-        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.y is ' + creep.pos.y);
-
-        // var structures = null;
-        // try{
-        //     structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
-        //     structures.forEach(function(element) {
-        //     console.log(++count + ". " +JSON.stringify (element))});
-        //     console.log();
-
-        // }
-
-        // catch(e)
-        // {
-
-        // }
-
-        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + JSON.stringify(structures));
-        // var count = 0;
-        // structures.forEach(function(element) {
-        // console.log(++count +". " +JSON.stringify (element))});
-        // console.log();
+ 
 
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);   
         if(creep.memory.pause == true){ return}
@@ -87,23 +47,20 @@ module.exports = {
         // var ttl = creep.ticksToLive;
         // var energyRemaining = creep.carry.energy;
 
-        // if(creep.ticksToLive < 85 && creep.room.name == "E44S3" && creep.carry.energy == 0)
-        // {
-        //     console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
-        //     creep.suicide();
-        // }
 
         // can't make a full round trip if less than 160 ticks. 35 travel to souce, + 75 mining + 40 travel to link. + 10 ticks padding
-        if(creep.ticksToLive < 160 && creep.room.name == "E44S3" && creep.carry.energy == 0)
+        if(creep.ticksToLive < 225 && creep.room.name == "E43S3" && creep.carry.energy == 0)
         {
-            creep.memory.target = "E44S3"
-            creep.memory.role = "harvester";
+          //  creep.memory.target = "E43S3"
+            creep.memory.role = "builder";
           
           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + "Switching from LD harvester to upgrader");
             return;
         }
 
 
+
+ 
 
         // if ((creep.ticksToLive < 110) && (creep.carry.energy == 0)) {
 

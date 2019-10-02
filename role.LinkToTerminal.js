@@ -10,6 +10,7 @@ module.exports = {
     //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Executing role StorageToLink ');
         // if creep is bringing energy to a structure but has no energy left   
 
+        util.say("ltt",creep,300);
        
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state

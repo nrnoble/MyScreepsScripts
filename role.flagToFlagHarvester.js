@@ -15,10 +15,12 @@ module.exports = {
     run: function (creep) {
 
        
-        creep.say ("f2f " +creep.ticksToLive);
+        util.say("f2f",creep,300);
+
+
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-
+        util.repairRoad(creep);
 
     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running flag to flag harvester ');
 

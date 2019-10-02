@@ -23,7 +23,7 @@ module.exports = {
             var reserveRoom =  Game.spawns.Spawn1.memory.reserveroom;
             if (reserverCount == 0 && reserveRoom == undefined)
             {
-                tte = controller.reservation.ticksToEnd;
+                tte = controller.reservation.ticksToLive;
                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tte  is ' + tte);
                 if (tte < 3900) {
                     Game.spawns.Spawn1.memory.reserveroom = "E43S3";

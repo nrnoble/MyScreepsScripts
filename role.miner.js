@@ -7,7 +7,50 @@ module.exports = {
         // get source
     
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
-       
+     
+     // death warning
+     util.say(creep,"mine ",300);
+    util.stayInTargetRoom(creep);
+//
+ //   if (creep.room.name == "E45S2") {
+      
+     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+        var triggerTime = 100;
+     
+        if (creep.room.name == "E44S3") {
+            triggerTime = 50;
+        }
+
+        if (creep.room.name == "E44S2") {
+            triggerTime = 56;
+        }
+
+        if (creep.room.name == "E45S2") {
+            triggerTime = 50;
+        }
+
+      
+        if (creep.ticksToLive < triggerTime) {
+          
+            //5bbcaf979099fc012e63ad55 is room source ID
+            var spawn = creep.room.find(FIND_MY_SPAWNS)[0];      
+            var status = creep.memory.respawn;
+           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+            if (status == undefined) {
+                var name;
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name);
+                
+                name = spawn.createMiner(spawn, creep.memory.sourceId);
+                if (name == -4) {
+                    creep.memory.respawn = false;
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] X!C!CC!C!!!CC!C! creep.memory.respawn is ' + creep.memory.respawn);
+
+                }
+            }
+        }
+
+
+ //   }
 
      if (creep.ticksToLive == 75) {
            
@@ -16,14 +59,16 @@ module.exports = {
          });
          
          var Spawn1 = spawns[0];
-         Spawn1.memory.qMiner = Spawn1.memory.qMiner + 0;
+         spawns[0].memory.spawnMiner = false;
  
         }
 
-
+//#Miner
 
         util.pickupResources(creep,0); //5bbcafa89099fc012e63af90
-        //let source = Game.getObjectById(creep.memory.sourceId);
+
+        util.repairRoad(creep);
+        //let source = Game.getObjectById(creep.memory.sourceId); 5bbcaf979099fc012e63ad59
         let source = Game.getObjectById(creep.memory.sourceId);
         // find container next to source
         let container = source.pos.findInRange(FIND_STRUCTURES, 1, {

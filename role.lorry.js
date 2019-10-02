@@ -8,6 +8,10 @@ module.exports = {
     run: function (creep) {
         // if creep is bringing energy to a structure but has no energy left
        
+        util.pickupResources(creep,3);
+        util.TimeToDie(creep,10,0);
+
+
        if (creep.ticksToLive == 25) {
            
        var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
@@ -43,10 +47,11 @@ module.exports = {
                 //     && s.energy < s.energyCapacity
 
 
-                filter: (s) => (s.structureType == STRUCTURE_SPAWN
-                    || s.structureType == STRUCTURE_STORAGE
-                    || s.structureType == STRUCTURE_TERMINAL
-                    || s.structureType == STRUCTURE_CONTAINER)
+                filter: (s) => (
+                 //   s.structureType == STRUCTURE_SPAWN
+                     s.structureType == STRUCTURE_STORAGE)
+                    //|| s.structureType == STRUCTURE_TERMINAL
+                   // || s.structureType == STRUCTURE_CONTAINER)
                     && s.energy < s.energyCapacity
             });
 
@@ -63,6 +68,8 @@ module.exports = {
                 }
             }
         }
+
+
         // if creep is supposed to get energy
         else {
            

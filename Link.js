@@ -37,7 +37,7 @@ module.exports = {
   //       if(linkSource.energy >= 400 && linkSource.cooldown == 0){
         
          if(linkSource.cooldown == 0){
-                var transferUnits = 400
+                var transferUnits = 800
                 // if(transferUnits <   linkSource.energy)
                 // {
                 //     transferUnits = linkSource.energy

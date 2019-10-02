@@ -21,6 +21,12 @@ module.exports = {
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
 
+        var status =  util.stayInTargetRoom(creep);
+        if (status == 0) {
+            return;
+        }
+
+
         if (creep.memory.working == undefined) {
             creep.memory.working = false;
         }

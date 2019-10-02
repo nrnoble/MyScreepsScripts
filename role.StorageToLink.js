@@ -6,7 +6,16 @@ module.exports = {
     // a function to run the logic for this role
     /** @param {Creep} creep */
     run: function (creep) {
-    //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Executing role StorageToLink ');
+        
+        creep.say ("S2L2");
+
+
+
+
+
+
+  
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Executing role StorageToLink ');
         // if creep is bringing energy to a structure but has no energy left   
        if (creep.ticksToLive == 25) {
            
@@ -14,11 +23,23 @@ module.exports = {
             filter: { structureType: STRUCTURE_SPAWN}
         });
 
+
         var Spawn1 = spawns[0];
         Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
 
        }
        
+
+             //  var termId =  Game.rooms[creep.room.name].memory.terminalId;
+       // var terminal = Game.getObjectById(termId);
+       const totalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store);
+     //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalEnergy);
+       if (totalEnergy > 70000) {
+           return;
+       }
+
+
+
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
             creep.memory.working = false;

@@ -18,6 +18,7 @@ module.exports = {
         }
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
+     //   util.stayInTargetRoom(creep);
 
         // if (creep.ticksToLive == 50) {
            

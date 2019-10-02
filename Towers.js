@@ -117,7 +117,7 @@ module.exports =
 
 
         // if (creep != null && tower.energy > 300)
-        if (tower.energy > 749)
+        if (tower.energy > 799)
         {
             var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes

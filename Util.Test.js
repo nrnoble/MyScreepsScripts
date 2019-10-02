@@ -1,6 +1,6 @@
 module.exports =
 {
-        function ln() 
+       test: function ln() 
         {
         var e = new Error();
         if (!e.stack)
@@ -21,5 +21,5 @@ module.exports =
             var frame = stack.shift();
         } while (!frameRE.exec(frame) && stack.length);
         return frameRE.exec(stack.shift())[1];
-    };
+    }
 }

@@ -14,9 +14,20 @@ module.exports = {
 
       
         
-        if (creep.ticksToLive < 300) {
-            creep.say ("bld:" + creep.ticksToLive);
+        util.say(creep,"bld ",300);
+        util.TimeToDie(creep,32,0);
 
+        if (creep.room.name == "E43S3") {
+            util.TimeToDie(creep,125,0);
+        }
+        
+
+//        util.TimeToDie(creep,32,0);
+
+     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] 0000000000000000000000 creep.pos.y is ' + creep.pos.y);
+        var status =     util.stayInTargetRoom(creep);
+        if (status == 0) {
+            return;
         }
 
       //  var status = util.stayInTargetRoom(creep); 
@@ -59,7 +70,7 @@ module.exports = {
 
         // if creep is trying to complete a constructionSite but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
-         console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXXXXXXXXXXXXXXXXXXXXXXX creep.memory.working == true && creep.carry.energy == 0');
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXXXXXXXXXXXXXXXXXXXXXXX creep.memory.working == true && creep.carry.energy == 0');
             creep.memory.working = false;
         }
         
@@ -70,7 +81,7 @@ module.exports = {
 
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
             
-           console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!! creep.memory.working == false && creep.carry.energy == creep.carryCapacity');
+         //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!! creep.memory.working == false && creep.carry.energy == creep.carryCapacity');
             // switch state
             creep.memory.working = true;
         }
@@ -81,7 +92,7 @@ module.exports = {
         // ********************************************************************************//
 
         if (creep.memory.working == true) {
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working == true ');
+        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working == true ');
 
             // find closest constructionSite
             var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
@@ -101,7 +112,7 @@ module.exports = {
             // if no constructionSite is found
             else {
 
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!! no constructionSite is found ');
+              //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!! no constructionSite is found ');
                 // go upgrading the controller
                // roleHarvester.run(creep);
                 roleUpgrader.run(creep);
@@ -133,7 +144,7 @@ module.exports = {
         // if one was found
         if (container != undefined) {
             
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] try to withdraw energy, if the container is not in range ');
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] try to withdraw energy, if the container is not in range ');
             // try to withdraw energy, if the container is not in range
             if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 // move towards it
@@ -143,10 +154,10 @@ module.exports = {
         else {
             // find closest source
 
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXfind closest sourceXXX  ');
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXfind closest sourceXXX  ');
             var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
             if(source == null ){
-                    console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " source is null");
+              //      console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " source is null");
 
             }
 
@@ -158,7 +169,7 @@ module.exports = {
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
                 else{
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.harvest(source) status is '  + creep.harvest(source));
+        //            console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.harvest(source) status is '  + creep.harvest(source));
                 }
 
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Energy is gone and source is on cool down ');

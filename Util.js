@@ -54,9 +54,7 @@ module.exports =
         var ttl = creep.ticksToLive;
         var energyRemaining = creep.carry.energy;
 
-        if ((ttl < ticksRemaining) && (energyRemaining == energyLevel)) {
-
-            //this.debug(1, this.lineNumber(), "time to Die", creep.name);
+        if ((ttl < ticksRemaining) && (energyRemaining <= energyLevel)) {
             console.log("Time to die: " + creep.name + "(" + creep.role + ")");
             return creep.suicide();
 
@@ -249,7 +247,7 @@ module.exports =
                // console.log("this.GetCreepCountObj(roleName): " + this.GetCreepCountObj(roleName));
                //this.GetCreepCountObj(roleName) = this.GetCreepCountObj(roleName) + 1;
               //  creepNewName = this.GetRoleName(SpawnObj, roleName);
-                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: "E44S3", target: "E44S3", working: false });
+                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: creep.room.name, target: creep.room.name, orginalRole: roleName, working: false });
                 console.log("creating a " + roleName + "(" + creepNewName + ")");
             }
             
@@ -272,7 +270,33 @@ module.exports =
     {
        //TODO: scan for resources in a limited rangesuch as within 3-5 squares     
         var droppedEngeryTarget = creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES);
-        return creep.pickup(droppedEngeryTarget);
+     
+        if (droppedEngeryTarget != undefined) {
+    //        console.log('[' + fileName + 'line:' + this.LineNumber() + '] YYYYYYYYYYYYYYY droppedEngeryTarget is ' + droppedEngeryTarget);
+            var status = creep.pickup(droppedEngeryTarget);
+        }
+
+        //   //  console.log('[' + fileName + 'line:' + this.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxx droppedEngeryTarget status ' + status);
+        //     if (droppedEngeryTarget !=undefined && status == ERR_NOT_IN_RANGE) {
+        //         creep.moveTo(droppedEngeryTarget);
+        //     }
+        
+        this.pickupResourcesFromTombstone(creep,3);
+        return;
+    },
+
+    pickupResourcesFromTombstone: function(creep, range)
+    {
+       //TODO: scan for resources in a limited rangesuch as within 3-5 squares     
+        var droppedEngeryTarget = creep.pos.findInRange(FIND_TOMBSTONES,range);
+        // if (droppedEngeryTarget != undefined && creep.carry < creep.carryCapacity) {
+            var status = creep.withdraw(droppedEngeryTarget);
+            if (status == ERR_NOT_IN_RANGE) {
+                creep.moveTo(droppedEngeryTarget);
+            }
+       //}
+        
+        return creep.withdraw(droppedEngeryTarget);
     },
 
     runCreeps (Creeps)
@@ -408,12 +432,27 @@ module.exports =
     stayInTargetRoom: function(creep)
     {
         if (creep.memory.target != creep.room.name) {
-            
-            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' For some reason Wall repairer creep is not in target room: ' + creep.memory.target );
+        //    return;
+            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' For some reason creep is not in target room: ' + creep.memory.target );
             
             var exit = creep.room.findExitTo(creep.memory.target);
             var status = creep.moveTo(creep.pos.findClosestByRange(exit));
-            console.log('[' + fileName + 'line:' + this.LineNumber() + '] creep.moveTo(exit) is ' + status);
+
+            if (creep.memory.orginalRole != undefined) {
+                creep.memory.role = creep.memory.orginalRole;
+            }
+            else{
+                
+                // if (creep.name.includes ("link1")) {
+                //     creep.memory.role = "link1Harvester";
+                // }                
+                // if (creep.name.includes ("miner")) {
+                //     creep.memory.role = "miner";
+                // }
+
+               // creep.memory.role = "harvester";
+            }
+         //   console.log('[' + fileName + 'line:' + this.LineNumber() + '] !!!!!!!!!!!!!!!!!!!!!! creep.moveTo(exit) is ' + status);
             return 0;
         }
         else{

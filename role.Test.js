@@ -13,13 +13,39 @@ var fileName = "test   ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-        return;
-    //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXtesting 123 ');
+  //      return;
+    
+
+    
+        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXtesting 123 ');
       
  //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] running test creep ');     
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
+
+
+        util.say(creep,"tst ",300);
+
+
+        // only transfer more energy into Terminal if below threshold and storage is above threshold
+        if (creep.room.name == "E44S3") {
+            
+            var termEnergyAvailable = _.sum(Game.rooms['E44S3'].terminal.store);
+            var StorageEnergyAvailable = _.sum(Game.rooms['E44S3'].storage.store);
+        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ########## StorageEnergyAvailable is ' + StorageEnergyAvailable);
+        
+
+            // ********************************************************************************//;
+            // Do not transfer if Terminal has enough energy, 
+            // Do not transfer if Storage is too low on energy
+            // ********************************************************************************//;
+            if (termEnergyAvailable > 50000 || StorageEnergyAvailable < 50000) {
+                return;
+            }
+
+        }
+
 
         if (creep.memory.working == undefined) {
             creep.memory.working = false;

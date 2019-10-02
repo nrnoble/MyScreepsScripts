@@ -8,9 +8,12 @@ module.exports = {
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-       // var status = util.stayInTargetRoom(creep); 
+        var status = util.stayInTargetRoom(creep); 
 
-        // if (creep.ticksToLive == 50) {
+       util.say(creep,"up ",300);
+       util.stayInTargetRoom(creep);
+
+       // if (creep.ticksToLive == 50) {
            
         //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
         //          filter: { structureType: STRUCTURE_SPAWN}
@@ -25,8 +28,23 @@ module.exports = {
         // Room Specific code
         // ********************************************************************************//
 
+        // if (creep.room.name == "E44S2") {
+        //     var time  = Game.time % 5;
+        //     if (time == 0) {
+        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.time % 5 is  ' + Game.time % 5);
+        //         return;
+        //     }
+    
+        // }
+
+
+
+
         if (creep.room.name == "E45S2") {
             
+
+
+
             // backup original role
             if (creep.memory.orginalRole == undefined) {
                 creep.memory.orginalRole = creep.memory.role             

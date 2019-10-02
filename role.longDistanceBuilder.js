@@ -71,8 +71,7 @@ module.exports = {
               Game.creeps[creep.name].memory.role = 'harvester';
               Game.creeps[creep.name].memory.target = "E44S2";
 
-              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' role is now ' + creep.memory.role );
-              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now ' + creep.memory.target );
+              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' + creep.memory.target );
              
               roleHarvester.run(creep);
           } else if (numberOfRepairers < 1){
