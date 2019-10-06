@@ -66,11 +66,11 @@ module.exports = {
             if(creep.memory.targetStructureId != undefined){
                //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
                 structure = Game.getObjectById(creep.memory.targetStructureId);
-                if (structure.hits == structure.hitsMax) {
+                // if (structure.hits == structure.hitsMax) {
                 
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
-                    creep.memory.targetStructureId = undefined;
-                }
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
+                //     creep.memory.targetStructureId = undefined;
+                // }
                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
                 var repairStatus = creep.repair(structure);
                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);

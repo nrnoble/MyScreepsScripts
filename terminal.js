@@ -41,9 +41,34 @@ module.exports = {
     // }
 
 
+        throttledTransfer: function(sourceRoom,destinationRoom,transferQuantity = 100,minSource = 1000,minDestination = 1000, debug = false)
+        {
+            if (sourceRoom == undefined || destinationRoom == undefined) {
+                return -1;
+            }
+        
+            var  destinationTerminal = Game.rooms[destinationRoom].terminal;
+            var  sourceTerminal = Game.rooms[sourceRoom].terminal;
+
+                
+             //   const total = _.sum(Game.rooms['W1N1'].terminal.store);
+                const sourceTerminalEnergy = _.sum(sourceTerminal.store);
+                const destinationTerminalEnergy = _.sum(destinationTerminal.store);
+               
+                if (debug == true)  {
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] destinationTerminalEnergy is ' + destinationTerminalEnergy + ", minDestination is " + minDestination);     
+                }
+
+                if (destinationTerminalEnergy < minDestination) {
+                  return  this.transferEnergy(sourceRoom,destinationRoom,transferQuantity);     
+                }
+        },
+
+
         transferEnergy: function(sourceRoom, destinationRoom, quantity){
         //   var  terminalSource = Game.getObjectById(sourceID);
         //   var  terminalDestination = Game.getObjectById(destinationID);
+
 
         var  terminalSource = Game.rooms[sourceRoom].terminal;
      //   var  terminalDestination = Game.rooms[destinationRoom].terminal;
@@ -52,6 +77,7 @@ module.exports = {
         
          if(terminalSource.cooldown == 0){
                 var status = terminalSource.send(RESOURCE_ENERGY, quantity, destinationRoom,'trade contract #1');
+                return status;
                 if(Game.time % 10 == 0){
               //      console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
                 }

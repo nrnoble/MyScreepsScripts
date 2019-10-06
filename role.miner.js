@@ -11,6 +11,7 @@ module.exports = {
      // death warning
      util.say(creep,"mine ",300);
     util.stayInTargetRoom(creep);
+    util.pickupResources(creep,2);
 //
  //   if (creep.room.name == "E45S2") {
       
@@ -34,15 +35,36 @@ module.exports = {
           
             //5bbcaf979099fc012e63ad55 is room source ID
             var spawn = creep.room.find(FIND_MY_SPAWNS)[0];      
-            var status = creep.memory.respawn;
+            var respawnStatus = creep.memory.respawn;
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
-            if (status == undefined) {
+            if (respawnStatus == undefined) {
                 var name;
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name);
+                var status 
                 
+                
+
+
                 name = spawn.createMiner(spawn, creep.memory.sourceId);
-                if (name == -4) {
-                    creep.memory.respawn = false;
+                var spawnStats = false;
+                if (spawn.spawning != null) {
+                    spawnStatus =  spawn.spawning.name.includes("mine");
+                }
+             
+               
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name);
+
+
+                if (name == -4 && spawnStatus == true) {
+                   creep.memory.respawn = false;
+                
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name +",   spawn.spawning.name.includes('mine') is "+ status);
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');                
+                   
+                 
+                 
                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] X!C!CC!C!!!CC!C! creep.memory.respawn is ' + creep.memory.respawn);
 
                 }

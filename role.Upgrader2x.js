@@ -25,6 +25,19 @@ module.exports = {
        util.TimeToDie(creep,32,0);
 
 
+
+   // if (creep.room.name == "E45S2") {
+      
+     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+  
+  
+  
+  //   var status = respawn(creep, status);
+   
+
+
+
+
        // if (creep.ticksToLive == 50) {
            
         //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
@@ -173,3 +186,42 @@ module.exports = {
  
     
 };
+
+function respawn(creep, status) {
+    var triggerTime = 100;
+    if (creep.room.name == "E44S3") {
+        triggerTime = 125;
+    }
+    if (creep.room.name == "E44S2") {
+        triggerTime = 125;
+    }
+    if (creep.room.name == "E45S2") {
+        triggerTime = 150;
+    }
+    //
+    if (creep.ticksToLive < triggerTime) {
+        var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
+        var status = creep.memory.respawn;
+        if (status == undefined) {
+            var name;
+            var status;
+            //  name = spawn.createMiner(spawn, creep.memory.sourceId);
+            name = spawn.createCustomCreep(1000 * 2, 'upgrader2x');
+            var spawnStatus;
+            if (spawn.spawning != null) {
+                spawnStatus = spawn.spawning.name.includes("upgrader2x");
+            }
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name + ",   spawn.spawning.name.includes('upgrader2x') is " + spawnStatus);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+            if (name == -4 && spawnStatus == true) {
+                creep.memory.respawn = false;
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] X!C!CC!C!!!CC!C! creep.memory.respawn is ' + creep.memory.respawn);
+            }
+        }
+    }
+    return status;
+}

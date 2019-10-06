@@ -862,7 +862,7 @@ module.exports = function () {
         //    body.push(MOVE);
         //}
 
-        var numberOfParts = Math.floor(energy / 50);
+        var numberOfParts = Math.floor(energy / 100);
         for (let i = 0; i < numberOfParts; i++) {
             body.push(CARRY);
             body.push(MOVE);

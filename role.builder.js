@@ -22,7 +22,7 @@ module.exports = {
         }
         
 
-//        util.TimeToDie(creep,32,0);
+//        u til.TimeToDie(creep,32,0);
 
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] 0000000000000000000000 creep.pos.y is ' + creep.pos.y);
         var status =     util.stayInTargetRoom(creep);

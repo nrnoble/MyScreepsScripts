@@ -100,11 +100,7 @@ module.exports.loop = function () {
    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!! transfering 10000 unit E45S2 ' + energyRemainging);
 
     // if the terminal in E45S2 is below the min level, then transfer more energy.
-    if (energyRemainging < 132000) {
-//        console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!XXXXXXXXX transfering 10000 unit E45S2 ' + energyRemainging);
-
-        term.transferEnergy("E44S3","E45S2",1000); //
-    }
+// ]
 
     // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.cpu.bucket is ' + Game.cpu.bucket);
     // return;
@@ -654,10 +650,14 @@ module.exports.loop = function () {
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
-      
-      
+        //var status = spawn.spawning.remainingTime;
+    //     var status = spawn.spawning;
+    //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] @@@@@@@@@@@@@@@@@@@@@@@@@ spawn.Spawning.name is ' + status);
 
-        
+    //     if (status != null) {
+    //       //  var status =  spawn.spawning.name.includes("upgrader2x");
+    //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] @@@@@@@@@@@@@@@@@@@@@@@@@ spawn.Spawning.name is ' + spawn.spawning.name.includes("LDH"));
+    //     }
         
         var progress = spawn.room.controller.progress;
         var progressTotal = spawn.room.controller.progressTotal;
@@ -669,20 +669,15 @@ module.exports.loop = function () {
     
 
 
+     // term.throttledTransfer("E44S3","E44S2",500, 60000,10000, true);
 
 
-      //  var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
-
-    //TODO: HACK. 
-      if (spawnName == "Spawn1" && spawn.room.name =="E44S3"){     
-    
-       link.transferEnergy("5d83549715c0ff3c201c2b82","5d46b9cad16c4b73af5c1269");
-        //term.transferEnergy("E44S3","E45S2",100);
-
-
+        if (spawnName == "Spawn1") {
+        
+            term.throttledTransfer("E44S3","E44S2",500, 60000,10000, false);
+            
         }
         
-
  
 
         if (spawnName == "Spawn2") {
@@ -697,15 +692,16 @@ module.exports.loop = function () {
         if (spawnName == "Spawn3")
         {
 
-              //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d841c9f9c6f0448bfc4dd2e");
-                link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
+              //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
     
 //          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] skipping Spawn3  ');
                 //var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
-               link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
-               // link.transferEnergy("5d6b40742f60936360c7d0cc","5d841c9f9c6f0448bfc4dd2e");
+            //   link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
+             
+              
                link.transferEnergy("5d88c2f732a61a437872fb20","5d6b7e3252d12c73f0332b33");
+               link.transferEnergy("5d88c2f732a61a437872fb20","5d5542d8f0e41373bf60b75e");
 
                //5d9073cc4a5d4371ee5fa926
 
@@ -792,6 +788,7 @@ module.exports.loop = function () {
                             ', Repairers: ' +  numberOfRepairers + 
                             ', WallRepairers: ' + numberOfWallRepairers + 
                             ', Miners: ' + numberOfMiners + 
+                            ', Lorries: ' + numberOfLorries + 
                             ', numberOfTestScreeps: ' + numberOfTestScreeps + 
                             ', cpu.bucket: ' + Game.cpu.bucket);
 
@@ -831,7 +828,31 @@ module.exports.loop = function () {
             }
         }
 
-     
+
+        // if (creep.room.name =='E45S3')
+        // {
+    
+        //     energy = 600;
+        //     if (spawn.room.energyCapacityAvailable < energy){
+        //         energy = spawn.room.energyCapacityAvailable;
+        //     }
+        //     else{
+            
+        //         energy = 600;
+        //     }
+        // }
+
+
+
+        if (spawn.room.name =='E43S3')
+        {
+            energy = 300;
+            if (spawn.room.energyCapacityAvailable < energy){
+                energy = spawn.room.energyCapacityAvailable;
+            }
+        }
+
+
 //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name)
 
         if (spawn.room.name =='E45S2')
@@ -860,23 +881,11 @@ module.exports.loop = function () {
         if (spawn.room.name =='E45S3')
         {
             energy = spawn.room.energyCapacityAvailable;;
+            energy = 600;
            //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name);
             //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' numberOfTargetedReparier is ' + numberOfTargetedReparier);
               //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
-            if (numberOfTargetedReparier < spawn.memory.foo)
-            {
-             //   name = Game.spawns.Spawn1.createLongDistanceBuilder(energy, 5, room1, room2, 0);
-              //  name = spawn.createTargetRepairer(spawn,"targetedRepairer", "5bbcafa89099fc012e63af8f", "5d4f2eb0ac2d2d20dcee9a27");
-               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] creating a targeted Spawn. Status is ' + name);
-            }
-    
-            if (spawn.room.energyCapacityAvailable <= energy){
-                energy = spawn.room.energyCapacityAvailable;
-            }
-            else{
-            
-                energy = 750;
-            }
+
         }
 
 
@@ -894,7 +903,7 @@ module.exports.loop = function () {
         // This code only gets triggered when there no miner creep in room
 
         //#miners
-        if (numberOfMiners == 0)
+        if (numberOfMiners == 1 || numberOfMiners == 0)
         {
             {
                 // if (spawn.name == "Spawn3_2") {
@@ -952,7 +961,7 @@ module.exports.loop = function () {
 
         // if no harvesters are left AND either no miners or no lorries are left
         //  create a backup creep
-        if (numberOfLorries == 3) {
+        if (numberOfLorries == 0) {
             // // if there are still miners left
             // if (numberOfMiners > 0 ||
             //     (spawn.room.storage != undefined && spawn.room.storage.store[RESOURCE_ENERGY] >= 150 + 550)) {
@@ -1115,9 +1124,9 @@ module.exports.loop = function () {
          //    else if (numberOfLorries < spawn.memory.minLorries || (spawn.memory.qLorry > 0 && numberOfLorries < spawn.memory.minLorries + spawn.memory.qLorry ))
              else if (numberOfLorries < spawn.memory.minLorries )
              {
-               // console.log("[line "+ util.LineNumber() + "] numberOfLorries < spawn.memory.minLorries");
+               console.log("[line "+ util.LineNumber() + "] @SAASDSADASD numberOfLorries < spawn.memory.minLorries");
                 // try to spawn one
-                // console.log("[Main line " + util.LineNumber() + "] createLorry: " + name);
+                 console.log("[Main line " + util.LineNumber() + "] createLorry: " + name);
                 name = spawn.createLorry(energy);
                 
                 if (Game.time % consoleDelay == 0) {
