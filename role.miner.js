@@ -18,17 +18,27 @@ module.exports = {
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
         var triggerTime = 100;
      
+        if (creep.room.name == "E43S3") {
+            triggerTime = 65;
+        }
+
+
         if (creep.room.name == "E44S3") {
-            triggerTime = 50;
+            triggerTime = 60; 
         }
 
         if (creep.room.name == "E44S2") {
-            triggerTime = 56;
+            triggerTime = 80;
         }
 
         if (creep.room.name == "E45S2") {
-            triggerTime = 50;
+            triggerTime = 65;
         }
+
+        if (creep.room.name == "E45S3") {
+            triggerTime = 35;
+        }
+
 
       
         if (creep.ticksToLive < triggerTime) {

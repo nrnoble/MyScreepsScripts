@@ -17,17 +17,17 @@ module.exports = {
   
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Executing role StorageToLink ');
         // if creep is bringing energy to a structure but has no energy left   
-       if (creep.ticksToLive == 25) {
+    //    if (creep.ticksToLive == 25) {
            
-       var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-            filter: { structureType: STRUCTURE_SPAWN}
-        });
+    //    var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+    //         filter: { structureType: STRUCTURE_SPAWN}
+    //     });
 
 
-        var Spawn1 = spawns[0];
-        Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
+    //     var Spawn1 = spawns[0];
+    //     Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
 
-       }
+    //    }
        
 
              //  var termId =  Game.rooms[creep.room.name].memory.terminalId;
@@ -40,15 +40,7 @@ module.exports = {
 
 
 
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+        workCheck(creep);
 
         // if creep is supposed to transfer energy to a structure
         if (creep.memory.working == true) {
@@ -125,3 +117,15 @@ module.exports = {
         }
     }
 };
+
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        creep.memory.working = false;
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        creep.memory.working = true;
+    }
+}

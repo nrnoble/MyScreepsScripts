@@ -1,5 +1,6 @@
 var roleUpgrader = require('role.upgrader');
 //var roleHarvester = require('role.harvester');
+//var roleHarvester = require('role.harvester');
 
 var util = require('Util'); 
 var fileName = "Builder     ";
@@ -30,30 +31,19 @@ module.exports = {
             return;
         }
 
-      //  var status = util.stayInTargetRoom(creep); 
+    if (creep.room.name=="E45S3" || creep.room.name == "E43S3") {
+        var havesterCreepsInRoom  = creep.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'harvester')});  
+        if (havesterCreepsInRoom.length == 0) {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  havesterCreepsInRoom.length is '+ havesterCreepsInRoom.length + '</>');    
+            creep.memory.role = "harvester";
+            return;
+        }
+        
+    }
 
-        // if (creep.ticksToLive == 50) {
-           
-        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-        //          filter: { structureType: STRUCTURE_SPAWN}
-        //      });
-     
-        //      var Spawn1 = spawns[0];
-        //      Spawn1.memory.qBuilder = Spawn1.memory.qBuilder + 0;
-     
-        // }
-    
 
-        // if (Game.creeps[creep.name].memory.home == undefined)
-        // {
-        //     Game.creeps[creep.name].home =="E44S2";
-        //     Game.creeps[creep.name].target =="E44S2";
-        // }
 
-        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' running');
-        // creep.memory.home2 =="E44S2";
-        // Game.spawns.Spawn1.creep['builder_9'].foo = "test";
-        // Game.creeps[creep.name].memory.foo = "test2";
+
 
         // if target is defined and creep is not in target room
         if (creep.memory.target != undefined && creep.room.name != creep.memory.target) {

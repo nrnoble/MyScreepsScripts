@@ -53,7 +53,23 @@ module.exports = {
                     //|| s.structureType == STRUCTURE_TERMINAL
                    // || s.structureType == STRUCTURE_CONTAINER)
                     && s.energy < s.energyCapacity
-            });
+            
+                });
+
+                if (creep.room.name == "E44S2") {
+                    
+                    var terminalE44S2 = creep.room.terminal
+                  // var terminalEnergy = _.sum(terminalE44S2.store);
+                   var terminalEnergy = terminalE44S2.store.energy;
+
+                   // const terminalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store); size="1"
+                //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] <b><font color="yellow">terminalEnergy is ' + terminalEnergy +"</font></b>");
+                    if (terminalEnergy < 13600) {
+                        structure = terminalE44S2;
+                    }
+
+                }
+
 
             if (structure == undefined) {
                 structure = creep.room.storage;
@@ -70,7 +86,10 @@ module.exports = {
         }
 
 
-        // if creep is supposed to get energy
+       // ********************************************************************************//;
+       // else creep is supposed to get energy
+       // ********************************************************************************//;
+
         else {
            
            
@@ -98,7 +117,9 @@ module.exports = {
                 filter: s => s.structureType == STRUCTURE_LINK
             });
 
-            if (container == undefined) {
+
+
+            if (container == undefined  || container.energy == 0) {
                 container = creep.room.storage;
             }
 

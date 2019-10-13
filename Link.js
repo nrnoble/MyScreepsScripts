@@ -37,16 +37,20 @@ module.exports = {
   //       if(linkSource.energy >= 400 && linkSource.cooldown == 0){
         
          if(linkSource.cooldown == 0){
-                var transferUnits = 800
+                var transferUnits = 200;
+                if (transferUnits < linkSource.energy) {
+                    transferUnits = linkSource.energy;
+                }
+                
+                
                 // if(transferUnits <   linkSource.energy)
                 // {
                 //     transferUnits = linkSource.energy
                 // }
 
                 var status = linkSource.transferEnergy(linkDestination, transferUnits);
-                if(Game.time % 10 == 0){
-              //      console.log('[' + fileName + 'line:' + util.LineNumber() + ']  transferEnergy status is ' + status);
-                }
+                return status;
+     
             }
     }
 }

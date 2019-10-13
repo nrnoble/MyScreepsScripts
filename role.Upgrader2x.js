@@ -22,48 +22,12 @@ module.exports = {
 
        util.say(creep,"up ",300);
        util.stayInTargetRoom(creep);
-       util.TimeToDie(creep,32,0);
-
-
-
-   // if (creep.room.name == "E45S2") {
-      
-     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
-  
-  
-  
-  //   var status = respawn(creep, status);
-   
-
-
-
-
-       // if (creep.ticksToLive == 50) {
-           
-        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-        //          filter: { structureType: STRUCTURE_SPAWN}
-        //      });
-             
-        //      var Spawn1 = spawns[0];
-        //      Spawn1.memory.qUpgrader = Spawn1.memory.qUpgrader + 0;
-     
-        //     }
-
+       util.TimeToDie(creep,10,0); // die before getting more energy
+ 
+       
         // ********************************************************************************//
-        // Room Specific code
+        //                       Room Specific code
         // ********************************************************************************//
-
-        if (creep.room.name == "E44S2") {
-            var time  = Game.time % 5;
-            if (time == 0) {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] Game.time % 5 is  ' + Game.time % 5);
-                return;
-            }
-    
-        }
-
-
-
 
         if (creep.room.name == "E45S2") {
             
@@ -87,22 +51,14 @@ module.exports = {
 
 
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");
-        
-        // check to see if engery == 0 and ttl < 75
-        //  var status = util.SelfSecide(creep);
+  
 
         // if creep is bringing energy to the controller but has no energy left
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+        workCheck(creep);
 
-        // if creep is supposed to transfer energy to the controller
+        // ********************************************************************************//;
+        //         transfer energy to the controller
+        // ********************************************************************************//;
         if (creep.memory.working == true) {
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
@@ -122,13 +78,10 @@ module.exports = {
               //  console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading controller");
                 // find closest container //s.structureType == STRUCTURE_CONTAINER || 
                var status = creep.upgradeController(creep.room.controller);
-               // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading status " + status);
-
-                
 
             }
         }
-        // if creep is supposed to get energy
+      
         // else{ 
         //     // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working != true)");
         //     // find closest container //s.structureType == STRUCTURE_CONTAINER || 
@@ -149,19 +102,61 @@ module.exports = {
         //             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         //         }
         //     }
+
+
+        // ********************************************************************************//;
+        //             creep gets energy
+        // ********************************************************************************//;
             else{
-
-
-
-                let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-                            || s.structureType == STRUCTURE_TERMINAL
-                            || s.structureType == STRUCTURE_STORAGE) 
-                            && s.store[RESOURCE_ENERGY] > 0 ) 
-                           // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+                let container = undefined;
+                if (creep.room.name == "E44S3") {
+                    
+                
+                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s => (s.structureType == STRUCTURE_STORAGE
+                             || s.structureType == STRUCTURE_TERMINAL)
+                           
+                            
+                            && s.store[RESOURCE_ENERGY] > 0  
+                            || (s.structureType == STRUCTURE_LINK)
 
                            
                 });
+
+                }
+                else {    
+                    container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: s => (s.structureType == STRUCTURE_STORAGE
+                                || s.structureType == STRUCTURE_TERMINAL) 
+                                && s.store[RESOURCE_ENERGY] > 0 
+                            // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+
+                            
+                    });
+                }
+                if (container == undefined) {
+                    
+               
+                        let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                                || s.structureType == STRUCTURE_TERMINAL
+                                || s.structureType == STRUCTURE_STORAGE) 
+                                && s.store[RESOURCE_ENERGY] > 0 ) 
+                               // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+    
+                               
+                    });
+                
+                }
+                // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                //     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                //             || s.structureType == STRUCTURE_TERMINAL
+                //             || s.structureType == STRUCTURE_STORAGE) 
+                //             && s.store[RESOURCE_ENERGY] > 0 ) 
+                //            // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+
+                           
+                // });
                 // if one was found
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
@@ -186,6 +181,18 @@ module.exports = {
  
     
 };
+
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        creep.memory.working = false;
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        creep.memory.working = true;
+    }
+}
 
 function respawn(creep, status) {
     var triggerTime = 100;

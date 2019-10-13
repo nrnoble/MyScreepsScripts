@@ -93,8 +93,8 @@ module.exports = {
                 
           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  !!!!!!! !!!!!!!!!!!!!!!!!!!!!!!! creep.room.spawn.terminalId  is' + creep.room.memory.terminalId);
             var termId =  Game.rooms[creep.room.name].memory.terminalId;
-            var terminal = Game.getObjectById(termId);
-           
+            //var terminal = Game.getObjectById(termId);
+            var terminal = creep.room.terminal; 
             let container = terminal.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: s => s.structureType == STRUCTURE_LINK 
                 

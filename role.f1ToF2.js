@@ -12,22 +12,32 @@ var fileName = "f2fHarvester";
 
 module.exports = {
     // a function to run the logic for this role
-    run: function (creep) {
+    run: function (creep,debug = false) {
+
+        var sourceflagName = creep.memory.sourceflagName;
+        var destinationFlagName =creep.memory.destinationFlagName;
+
+        if (sourceflagName == undefined || destinationFlagName == undefined) {
+            return;
+        }
+
+
+        let flagSource = Game.flags[sourceflagName];
+        let destinationFlag= Game.flags[destinationFlagName];    
+
+        if (destinationFlag == undefined || sourceflag == undefined) {
+            return;
+        }
 
 
 
 
-       
         util.say("f2f",creep,300);
 
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
         util.repairRoad(creep);
-
-        // if (creep.room.name == "E45S2") {
-        //     return;
-        // }
 
     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running flag to flag harvester ');
 
@@ -79,39 +89,22 @@ module.exports = {
 
         // if creep is supposed to transfer energy to a structure
         if (creep.memory.working == true) {
-        //    console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
-            var flagContainer = Game.flags["Container_" + creep.room.name];
-            // energy in room is too low, only supple spawn and extentions. 
-            // Skip towers while rooom energy is low.
-            if (creep.memory.spawnSourcesOnly == true) {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
-                // find closest spawn, extension or tower which is not full
-                var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
-                    filter: (s) => (s.structureType == STRUCTURE_STORAGE)
-                        // || s.structureType == STRUCTURE_EXTENSION) 
-                        // && s.energy < s.energyCapacity
-                });
+          //  var flagContainer = Game.flags[sourceflag];
 
-            }
 
             // ********************************************************************************//;
-            //             // find closest Storage,Terminal,Container to deposit energery
+            //             // Use flag location to find closest Storage,Terminal,Container to deposit energery
             // ********************************************************************************//;
-            else{
 
-                var flagContainer = Game.flags["Container_" + creep.room.name];
+            //   var flagContainer = Game.flags["Container_" + creep.room.name];
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  XXXX flagContainer is ' + flagContainer);
 
-            
+            // OK for Source to be empty
             var structure = flagContainer.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 filter: (s) => (s.structureType == STRUCTURE_STORAGE
                          || s.structureType == STRUCTURE_TERMINAL
-                         || s.structureType == STRUCTURE_CONTAINER)
-                //   //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
-                //     || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
+                         || s.structureType == STRUCTURE_CONTAINER
+                         || s.structureType == STRUCTURE_LINK) 
                 //     && s.energy < s.energyCapacity
             });
 
@@ -120,26 +113,39 @@ module.exports = {
             if (structure !=  null) {
                 
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
-        }
-        }
+            }
+        
 
 
-
+        // if No structure can be found, there is somekind of problem
         if (structure == undefined) {
             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
             structure = creep.room.storage;
             if (structure == undefined)
             {
-                // TODO: Hack
-                if( creep.room.name == "E44S2"){    
-                    //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
-                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
+                 // do nothing.    
+              
+                console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] WARNING WARNING WARNING No source structure can be found at flag ');
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+                
+              return;
+                
+                
+                
+                
+                 // // TODO: Hack
+                // if( creep.room.name == "E44S2"){    
+                //     //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
+                //     console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
                     
-                    roleBuilder.run(creep);
-                }
-                else{
-                    roleBuilder.run(creep);
-                }
+                //     roleBuilder.run(creep);
+                // }
+                // else{
+                //     roleBuilder.run(creep);
+                // }
             }
 
             
@@ -170,8 +176,8 @@ module.exports = {
         
         
         // ********************************************************************************//;
-        //                if creep is supposed to harvest energy from source
-        // ********************************************************************************//;       
+        //          if creep is supposed to harvest energy from source
+        // ********************************************************************************//;
         else {
 
             
@@ -187,36 +193,24 @@ module.exports = {
   
             // }
 
-//            var flagSource = Game.flags["Source_" + creep.room.name];
-            let ClosestContainer = undefined;
-            flagSource = Game.flags[creep.memory.flagSource.name];    
-            if (creep.room.name == "E43S3") {
-                    var ClosestContainers = flagSource.room.find(FIND_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
-                    filter: s => s.structureType == STRUCTURE_CONTAINER
-                    && s.store[RESOURCE_ENERGY] > 0
-                   //filter: {structureType: STRUCTURE_CONTAINER}
-                });
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] flagSource is ' +  flagSource+ '</\>');                
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] typeof (ClosestContainers) is ' +  typeof (ClosestContainers) + '</\>');
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] flagSource.room is ' +  flagSource.room + '</\>');
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainers.length ' +  ClosestContainers.length + '</\>');
-               
-                ClosestContainer = ClosestContainers[0];
-            }
-            else{
+//            var flagSource = Game.flags["Source_" + creep.room.name];    
+            var flagSource = Game.flags[creep.memory.flagSource.name];    
+
 
          //   let ClosestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                ClosestContainer = flagSource.pos.findClosestByPath(FIND_STRUCTURES, {
+            
+            const targets = flagSource.pos.findInRange(FIND_STRUCTURES, 3);
+         
+         
+         
+            let ClosestContainer = flagSource.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
                 filter: s => s.structureType == STRUCTURE_CONTAINER &&
                 s.store[RESOURCE_ENERGY] > 0
             });
-        }
+
         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
 
             if (ClosestContainer != undefined) {

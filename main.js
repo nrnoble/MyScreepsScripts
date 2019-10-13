@@ -30,6 +30,7 @@ var  roleStorageToExt = require('role.StorageToExt');
 var  roleLink1Harvester = require('role.Link1Harvester');
 var  roleRepairerRampart = require('role.repairerRampart');//
 var  roleUpgrader2x = require("role.Upgrader2x");//
+var  roleLink2Harvester = require("role.Link2Harvester");//
 
 
 //minSourceToLinkHarvesters
@@ -581,6 +582,12 @@ module.exports.loop = function () {
             roleLink1Harvester.run(creep);
          }
         
+         else if(creep.memory.role == 'link2Harvester') 
+         {
+            roleLink2Harvester.run(creep);
+         }
+        
+
 
          else if(creep.memory.role == 'repairerRampart') 
          {
@@ -629,27 +636,14 @@ module.exports.loop = function () {
     // iterate over all the spawns
     //************************************** */
     for (let spawnName in Game.spawns) {
-      
-        // if (spawnName =="Spawn3_2") {
-           
-        //     spawnName ="Spawn3";
-        // }
-
-
-
-        // only allow Spawn3_2 to process if
-        // if (spawnName =="Spawn3_2") {
-           
-        //     var spawn3Status = Game.spawns["Spawn3"].spawning
-        //     if (spawn3Status == null) {
-        //         return;
-        //     }
-        // }
- 
 
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
+        let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
+
+
+
         //var status = spawn.spawning.remainingTime;
     //     var status = spawn.spawning;
     //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] @@@@@@@@@@@@@@@@@@@@@@@@@ spawn.Spawning.name is ' + status);
@@ -669,23 +663,53 @@ module.exports.loop = function () {
     
 
 
-     // term.throttledTransfer("E44S3","E44S2",500, 60000,10000, true);
+    
 
 
         if (spawnName == "Spawn1") {
-        
-            term.throttledTransfer("E44S3","E44S2",500, 60000,10000, false);
-            
+           //  term.throttledTransfer("E44S3","E44S2",500, 60000,15600, true);
+           // term.throttledTransfer("E44S3","E45S3",500, 60000 ,50500, false);
+           // link next to storage 5d46b9cad16c4b73af5c1269
+           // link next to controller 5d9fd0108fad390001e30945
+           var storageLink = "5d46b9cad16c4b73af5c1269";
+           var controllerLink = "5d9fd0108fad390001e30945";
+           var source1Link ="5da2f14886db5e00019fbf17";
+           var source2Link ="5da2f8adb541ee0001bf98ab";
+
+           var status1 = link.transferEnergy(source1Link,controllerLink);
+           if (status1 != 0) { 
+             //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
+                var status2 = link.transferEnergy(source1Link,storageLink);
+               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
+           }
+
+           var status4 = link.transferEnergy(source2Link,controllerLink);
+           if (status4 != 0) {
+              //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
+                var status3 = link.transferEnergy(source2Link,storageLink);
+              //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+           }
+      
+
+
+           
+          // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+
+
+
         }
         
- 
+        
 
         if (spawnName == "Spawn2") {
             //5d4f7683b5e0621e0bbb07b6 is link by storage
             //5d836db1128ef459c47e20af is link by energy source
-            link.transferEnergy("5d836db1128ef459c47e20af","5d4f7683b5e0621e0bbb07b6");
-            link.transferEnergy("5d92bc8e0232ef0001c8b5ba","5d4f7683b5e0621e0bbb07b6");
+            var status1 = link.transferEnergy("5d836db1128ef459c47e20af","5d4f7683b5e0621e0bbb07b6");
+            
+            var status2 = link.transferEnergy("5d92bc8e0232ef0001c8b5ba","5d4f7683b5e0621e0bbb07b6");
+
            // 5d836db1128ef459c47e20af -->5d4f7683b5e0621e0bbb07b6
+          
         }
 
 
@@ -698,13 +722,21 @@ module.exports.loop = function () {
                 //var linkCountTest = util.structuresInRoom(spawn,STRUCTURE_LINK);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkCountTest is ' + linkCountTest);
             //   link.transferEnergy("5d6b40742f60936360c7d0cc","5d5542d8f0e41373bf60b75e");
-             
-              
+           
+        //    link.transferEnergy("5d88c2f732a61a437872fb20","5d6b7e3252d12c73f0332b33");
+            const terminalE45S2 = _.sum(Game.rooms['E45S2'].terminal.store);
+            //var terminalE45S2 = Spawn3.room.terminal                  
+             //const terminalEnergy = _.sum(terminalE45S2.store);   
+             if (terminalE45S2 < 225500) {
+                // transfer to link next to terminal
+                link.transferEnergy("5d88c2f732a61a437872fb20","5d5542d8f0e41373bf60b75e"); 
+            }
+            else{
+                // transfer to link next to storage
                link.transferEnergy("5d88c2f732a61a437872fb20","5d6b7e3252d12c73f0332b33");
-               link.transferEnergy("5d88c2f732a61a437872fb20","5d5542d8f0e41373bf60b75e");
-
-               //5d9073cc4a5d4371ee5fa926
-
+            } 
+            link.transferEnergy("5d99e0fba33c040001cfced0","5d6b7e3252d12c73f0332b33");
+              // source2 link : 5d99e0fba33c040001cfced0
   //          return;
 
                         
@@ -714,9 +746,38 @@ module.exports.loop = function () {
         }
 
 
+        
+        if (spawnName == "Spawn4")
+        {
+
+             const terminalEnergyE45S3 = spawn.room.terminal.store.energy;
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] 1XXXXXXXXXXXXXXXXXXXXX terminalEnergyE45S3 is ' + terminalEnergyE45S3);
+          //  const terminalEnergyE45S3 = _.sum(Game.rooms['E45S3'].terminal.store);
+          //  const terminalEnergyE45S3 = creep.room.terminal.store.energy;
+
+             if (terminalEnergyE45S3 < 54500) {
+                // transfer to link next to terminal
+                link.transferEnergy("5d99ba677069c70001aba38d","5d99b0a69c30e60001320810"); 
+            }
+
+        }
 
 
-        let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
+        if (spawnName == "Spawn5")
+        {
+
+            var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  constructionSites.length is ' + constructionSites.length +  '</>');
+            if (constructionSites == 0) {
+                  // var havesterCreepsInRoom  = spawn.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'builder')});  
+                 spawn.memory.minBuilders = 0;
+                 
+                }
+        }
+
+
+
+ 
         /** @type {Room} */
         let room = spawn.room;
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
@@ -743,7 +804,8 @@ module.exports.loop = function () {
          var numberOfFlagToFlagHarvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'flagToFlagHarvester');
         var numberOfFlagToFlagHarvesters2 =_.sum(creepsInRoom, (c) => c.memory.role == 'flagToFlagHarvester2');
         var numberOfStorageToExtMinis =_.sum(creepsInRoom, (c) => c.memory.role == 'storageToExtMini');//  
-        var numberOfLink1Harvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'link1Harvester');//  
+        var numberOfLink1Harvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'link1Harvester');//
+        var numberOfLink2Harvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'link2Harvester');//  
         var numberOfRepairRamparts =_.sum(creepsInRoom, (c) => c.memory.role == 'repairRampart');//  
 
 
@@ -804,7 +866,7 @@ module.exports.loop = function () {
 //        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  observer status: ' + status);
 //        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  testController: ' + testController);
 
-        
+        //#energy management
         var energy = spawn.room.energyCapacityAvailable;
 
         var energy = 1000;
@@ -846,7 +908,7 @@ module.exports.loop = function () {
 
         if (spawn.room.name =='E43S3')
         {
-            energy = 300;
+            energy = 450;
             if (spawn.room.energyCapacityAvailable < energy){
                 energy = spawn.room.energyCapacityAvailable;
             }
@@ -881,7 +943,7 @@ module.exports.loop = function () {
         if (spawn.room.name =='E45S3')
         {
             energy = spawn.room.energyCapacityAvailable;;
-            energy = 600;
+            energy = 700;
            //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name);
             //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' numberOfTargetedReparier is ' + numberOfTargetedReparier);
               //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
@@ -1149,8 +1211,9 @@ module.exports.loop = function () {
                name = spawn.createStorageToLink (energy);
                
                if (Game.time % consoleDelay == 0) {
-                   console.log("[Main line " + util.LineNumber() + "]" + spawnName +  "  is creating a StorageToLink creep: " + name);
-               }
+                  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' is creating a StorageToLink creep. Status is ' + name);
+
+                }
 
                if ((typeof name) == "string") {
                   
@@ -1436,7 +1499,7 @@ module.exports.loop = function () {
             {
              
                // try to spawn one
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!!!!!!!!!!numberOfLinkToTerminals is ' + numberOfLinkToTerminals);
+              //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!!!!!!!!!!numberOfLinkToTerminals is ' + numberOfLinkToTerminals);
                name = spawn.createLinkToTerminal (energy);
                
                if (Game.time % consoleDelay == 0) {
@@ -1575,6 +1638,37 @@ module.exports.loop = function () {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' ' + creep.name + ' has been created');
              }
         }
+        else if (numberOfLink2Harvesters < spawn.memory.minLink2Harvesters)
+        {    
+              var flagSource = Game.flags["Source2_" + spawn.room.name];             
+              var flagContainer = Game.flags["Link2_" + spawn.room.name] ;
+
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.room.name is ' + creep.room.name);
+
+             if (flagSource == undefined || flagContainer == undefined) {
+                 spawn.memory.minLink2Harvesters = 0;
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']    Resetting minLink1Harvesters to ' + spawn.memory.minLink2Harvesters);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']                       flagSource is ' + flagSource);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']                    flagContainer is ' + flagContainer);
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                 
+                 return;
+             }
+
+
+             
+            name = spawn.createLink2Harvester (spawn,"link2Harvester", energy, flagSource, flagContainer);
+           
+           if (Game.time % consoleDelay == 0) {
+              console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName +  "  is creating a link2Harvester creep: " + name);
+           }
+
+           if ((typeof name) == "string") {
+              
+               console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + ' ' + creep.name + ' has been created');
+            }
+       }
 
 
 

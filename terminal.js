@@ -59,7 +59,7 @@ module.exports = {
                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] destinationTerminalEnergy is ' + destinationTerminalEnergy + ", minDestination is " + minDestination);     
                 }
 
-                if (destinationTerminalEnergy < minDestination) {
+                if (destinationTerminalEnergy < minDestination && sourceTerminal > minSource) {
                   return  this.transferEnergy(sourceRoom,destinationRoom,transferQuantity);     
                 }
         },

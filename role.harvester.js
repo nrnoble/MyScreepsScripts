@@ -20,40 +20,16 @@ module.exports = {
         util.pickupResources(creep,0);
      //   util.stayInTargetRoom(creep);
 
-        // if (creep.ticksToLive == 50) {
-           
-        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-        //          filter: { structureType: STRUCTURE_SPAWN}
-        //      });
-             
-        //      var Spawn1 = spawns[0];
-        //      Spawn1.memory.qHarvester = Spawn1.memory.qHarvester + 1;
-     
-        //     }
 
-        // check to see if engery == 0 and ttl < 75
-        //var status = util.SelfSecide(creep);
-        //console.log(status);
-         //console.log("roleHarverster.js [line " + util.LineNumber() + "] Name: " + creep.name + " (" + creep.memory.role + ")");
-       
-       
          // if creep is bringing energy to a structure but has no energy left
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-          //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is false name:" + creep.name + " (" + creep.memory.role + ")");
-
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+        workCheck(creep);
         
 
-        // if creep is supposed to transfer energy to a structure
+       // ********************************************************************************//;
+       //                          transfer energy to a structure
+       // ********************************************************************************//;
         if (creep.memory.working == true) {
-           // console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
+         //   console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
 
             // energy in room is too low, only supple spawn and extentions. 
             // Skip towers while rooom energy is low.
@@ -98,7 +74,9 @@ module.exports = {
 
         if (structure == undefined) {
             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
-            structure = creep.room.storage;
+            //structure = creep.room.storage;
+            
+            roleBuilder.run(creep);
             if (structure == undefined)
             {
                 // TODO: Hack
@@ -137,20 +115,15 @@ module.exports = {
                 }
             }
         }
-        // if creep is supposed to harvest energy from source
+
+
+       // ********************************************************************************//;
+       //  // else creep is supposed to harvest energy from source
+       // ********************************************************************************//;
         else {
 
+          //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is " + creep.memory.working + ", " + creep.name + ", (" + creep.memory.role + ")");
             
-
-
-            //  if (creep.room.name != "E45S2") {
-            //     let xcontainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //         filter: s => s.structureType == STRUCTURE_CONTAINER});
-            //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' Test xcontainer is ' + xcontainer);
-            //         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] Test xcontainer is ' + xcontainer);
-            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Test ClosestContainer is ' + ClosestContainer);
-  
-            // }
             let ClosestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
@@ -226,9 +199,23 @@ module.exports = {
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
                 }
+                
             }
         }
         
         }
     }
 };
+
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        creep.memory.working = false;
+        //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is false name:" + creep.name + " (" + creep.memory.role + ")");
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        creep.memory.working = true;
+    }
+}
