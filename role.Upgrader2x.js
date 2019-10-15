@@ -24,7 +24,7 @@ module.exports = {
        util.stayInTargetRoom(creep);
        util.TimeToDie(creep,10,0); // die before getting more energy
  
-       
+
         // ********************************************************************************//
         //                       Room Specific code
         // ********************************************************************************//
@@ -109,7 +109,7 @@ module.exports = {
         // ********************************************************************************//;
             else{
                 let container = undefined;
-                if (creep.room.name == "E44S3") {
+                if (creep.room.name == "E44S3" || creep.room.name == "E43S3") {
                     
                 
                 container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -134,6 +134,11 @@ module.exports = {
                             
                     });
                 }
+
+
+                
+
+
                 if (container == undefined) {
                     
                

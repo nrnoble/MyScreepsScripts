@@ -1,6 +1,6 @@
 var util = require('Util'); 
 //var fileName = "Upgrader    ";
-var fileName = "Prototype   ";
+var fileName = "Prototype   "; ///
 
 module.exports = function () {
     // create a new function for StructureSpawn

@@ -32,13 +32,17 @@ module.exports = {
 
              //  var termId =  Game.rooms[creep.room.name].memory.terminalId;
        // var terminal = Game.getObjectById(termId);
-       const totalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store);
-     //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalEnergy);
-       if (totalEnergy > 70000) {
-           return;
-       }
+   
+       var terminal = creep.room.terminal;
+       if (terminal != undefined) {
+            const totalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store);
+            //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalEnergy);
+            if (totalEnergy > 70000) {
+                  return;
+            }  
+       }  
 
-
+       
 
         workCheck(creep);
 

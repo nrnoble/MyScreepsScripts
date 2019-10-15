@@ -36,21 +36,29 @@ module.exports = {
          // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkSource.cooldown  is '+ linkSource.cooldown );
   //       if(linkSource.energy >= 400 && linkSource.cooldown == 0){
         
+
+            if (linkSource.cooldown  > 0) {
+                
+                return - 11;
+            }
+
          if(linkSource.cooldown == 0){
                 var transferUnits = 200;
                 if (transferUnits < linkSource.energy) {
                     transferUnits = linkSource.energy;
                 }
                 
-                
-                // if(transferUnits <   linkSource.energy)
-                // {
-                //     transferUnits = linkSource.energy
-                // }
+        
 
                 var status = linkSource.transferEnergy(linkDestination, transferUnits);
+                if (status == -8) {
+                    transferUnits = linkSource.energy - linkDestination;
+                    status = linkSource.transferEnergy(linkDestination, transferUnits+25);
+                }
                 return status;
      
             }
+
+            return -1;
     }
 }

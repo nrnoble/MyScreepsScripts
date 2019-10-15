@@ -98,7 +98,7 @@ module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
     //var energyRemainging = Game.rooms["E45S2"].terminal.energy
     const energyRemainging = _.sum(Game.rooms['E45S2'].terminal.store);
-   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!! transfering 10000 unit E45S2 ' + energyRemainging);
+ //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] E45S2 energyRemainging is ' + energyRemainging);
 
     // if the terminal in E45S2 is below the min level, then transfer more energy.
 // ]
@@ -671,25 +671,62 @@ module.exports.loop = function () {
            // term.throttledTransfer("E44S3","E45S3",500, 60000 ,50500, false);
            // link next to storage 5d46b9cad16c4b73af5c1269
            // link next to controller 5d9fd0108fad390001e30945
-           var storageLink = "5d46b9cad16c4b73af5c1269";
-           var controllerLink = "5d9fd0108fad390001e30945";
-           var source1Link ="5da2f14886db5e00019fbf17";
-           var source2Link ="5da2f8adb541ee0001bf98ab";
+           var storageLinkObj = "5d46b9cad16c4b73af5c1269";
+           var controllerLinkObj = "5d9fd0108fad390001e30945";
+           var source1LinkObj ="5da2f14886db5e00019fbf17";
+           var source2LinkObj ="5da2f8adb541ee0001bf98ab";
 
-           var status1 = link.transferEnergy(source1Link,controllerLink);
-           if (status1 != 0) { 
-             //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
-                var status2 = link.transferEnergy(source1Link,storageLink);
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
-           }
 
-           var status4 = link.transferEnergy(source2Link,controllerLink);
-           if (status4 != 0) {
-              //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
-                var status3 = link.transferEnergy(source2Link,storageLink);
-              //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
-           }
-      
+            var storageEnergy = spawn.room.storage.store[RESOURCE_ENERGY];
+            var storageEnergy = spawn.room.storage.store.energy;
+
+          //  console.log('<font color ="yellow" >[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxstorageEnergy is ' + storageEnergy+ '</>');
+           
+            var storageLink = Game.getObjectById(storageLinkObj);
+            var controllerLink = Game.getObjectById(controllerLinkObj);
+            var source1Link = Game.getObjectById(source1LinkObj);
+            var source2Link = Game.getObjectById(source2LinkObj);
+
+
+            var controllerLinkEngery = controllerLink.energy;
+            var storageLinkEngery = storageLink.energy;
+
+            var TargetLinkobj = storageLinkObj;
+            var backupTargetLinkObj = controllerLinkObj;
+            if (controllerLinkEngery < 600) {
+                TargetLinkobj = controllerLinkObj;
+                //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
+            }
+
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source1Link.cooldown is ' + util.pad (source1Link.cooldown,3) + ', controllerLinkEngery is ' + util.pad(controllerLinkEngery,3) + '</>' ); 
+          
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source2Link.cooldown is ' + util.pad (source2Link.cooldown,3) + ',    storageLinkEngery is ' + util.pad (storageLinkEngery,3) + '</>');
+            
+            
+
+            if (storageEnergy > 105000) {
+                var status1 = link.transferEnergy(source1LinkObj,TargetLinkobj);
+                if (status1 == -7 || status1 == -8 || status1 == -11) { 
+                  //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
+                     var status2 = link.transferEnergy(source1LinkObj,backupTargetLinkObj);
+                 //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
+                }
+     
+                var status4 = link.transferEnergy(source2LinkObj,TargetLinkobj);
+                if (status4 == -7 || status4 == -8 || status4 == -11 ) { 
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
+                     var status3 = link.transferEnergy(source2LinkObj,backupTargetLinkObj);
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+                }
+           
+            }
+            else{
+                var status3 = link.transferEnergy(source2LinkObj,TargetLinkobj);
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+
+            }
+
+
 
 
            
@@ -727,7 +764,9 @@ module.exports.loop = function () {
             const terminalE45S2 = _.sum(Game.rooms['E45S2'].terminal.store);
             //var terminalE45S2 = Spawn3.room.terminal                  
              //const terminalEnergy = _.sum(terminalE45S2.store);   
-             if (terminalE45S2 < 225500) {
+             if (spawn.room.storage.store.energy < 76000) {
+                link.transferEnergy("5d88c2f732a61a437872fb20","5d6b7e3252d12c73f0332b33");
+             } else if (terminalE45S2 < 225500) {
                 // transfer to link next to terminal
                 link.transferEnergy("5d88c2f732a61a437872fb20","5d5542d8f0e41373bf60b75e"); 
             }
@@ -735,6 +774,7 @@ module.exports.loop = function () {
                 // transfer to link next to storage
                link.transferEnergy("5d88c2f732a61a437872fb20","5d6b7e3252d12c73f0332b33");
             } 
+
             link.transferEnergy("5d99e0fba33c040001cfced0","5d6b7e3252d12c73f0332b33");
               // source2 link : 5d99e0fba33c040001cfced0
   //          return;
@@ -765,9 +805,12 @@ module.exports.loop = function () {
 
         if (spawnName == "Spawn5")
         {
-
+            var storageLinkObj = "5da30daa2f9e9b0001a77901";
+            var controlLink = "5da33a7b86db5e00019fe09c";
+            var transferStatus =link.transferEnergy(storageLinkObj,controlLink);
+           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] transferStatus is '  + transferStatus + '</>');
             var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  constructionSites.length is ' + constructionSites.length +  '</>');
+           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  constructionSites.length is ' + constructionSites.length +  '</>');
             if (constructionSites == 0) {
                   // var havesterCreepsInRoom  = spawn.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'builder')});  
                  spawn.memory.minBuilders = 0;
