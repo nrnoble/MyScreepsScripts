@@ -163,12 +163,12 @@ module.exports = function () {
 
                 return this.createCreep(body, roleName + namecount, { role: roleName, working: false });
             }
-            else if (roleName == "minor") {
+            else if (roleName == "minor" || roleName == "miner") {
 
-                namecount = sp1.minorsCount;
+               // namecount = sp1.minorsCount;
               //  console.log("creating a " + roleName + "(" + roleName + namecount + ")");
           
-                return this.createCreep(body, roleName + namecount, { role: roleName, working: false });
+                return this.createCreep(body, roleName + namecount, { role: roleName, working: false, gameStartTick: Game.time, respawnOffSet: body *3 });
             }
             
             //return this.createCreep(body, undefined, { role: roleName, working: false });
@@ -337,32 +337,39 @@ module.exports = function () {
       
             if(energy <= 300)
             {
-                 return this.createCreep([WORK, WORK, MOVE], 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name});
+                var body = [WORK, WORK, MOVE];
+                 return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
             } else if(energy <= 400)
             {
-                 return this.createCreep([WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
-                                    { role: 'miner', orginalRole: 'miner',sourceId: sourceId, home: spawn.room.name, target: spawn.room.name });
+                var body =  [WORK, WORK, WORK, MOVE];
+                return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner', orginalRole: 'miner',sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
             } else if(energy <= 500)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name });
+                var body =  [WORK, WORK, WORK, WORK, MOVE];
+                 return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
             }
             else if(energy <= 600)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name });
+                var body =  [WORK, WORK, WORK, WORK, WORK, MOVE];
+                 return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
             }            else if(energy <= 700)
             {
-                 return this.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE,MOVE], 'miner_' + Game.time,
-                                    { role: 'miner', orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name });
+                var body = [WORK, WORK, WORK, WORK, WORK,MOVE,MOVE];
+                 return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner', orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length * 3 });
             }
            
            
             else
             {
-                return this.createCreep([WORK, WORK, WORK, WORK, WORK,MOVE,MOVE], 'miner_' + Game.time,
-                                    { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name });
+                var body = [WORK, WORK, WORK, WORK, WORK,MOVE,MOVE];
+
+                return this.createCreep(body, 'miner_' + Game.time,
+                                    { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
             }
         };
      

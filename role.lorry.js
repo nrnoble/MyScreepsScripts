@@ -18,22 +18,20 @@ module.exports = {
             filter: { structureType: STRUCTURE_SPAWN}
         });
 
-        var Spawn1 = spawns[0];
-        Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
+      //  var Spawn1 = spawns[0];
+        var Spawn1 = creep.room.spawn;
+
+
+       // Spawn1.memory.qLorry = Spawn1.memory.qLorry + 1;
 
        }
        
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+        workCheck(creep);
 
-        // if creep is supposed to transfer energy to a structure
+        // ********************************************************************************//;
+        //          if creep is supposed to transfer energy to a structure
+        // ********************************************************************************//;
+
         if (creep.memory.working == true) {
             // find closest spawn, extension or tower which is not full
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
@@ -93,6 +91,12 @@ module.exports = {
         else {
            
            
+            var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
+                   s.structureType == STRUCTURE_SPAWN 
+                   || s.structureType == STRUCTURE_EXTENSION
+                   && s.energy < s.energyCapacity)
+            
+                });
 
             // find closest container
 
@@ -119,9 +123,9 @@ module.exports = {
 
 
 
-            if (container == undefined  || container.energy == 0) {
-                container = creep.room.storage;
-            }
+            // if (container == undefined  || container.energy == 0) {
+            //     container = creep.room.storage;
+            // }
 
             // if one was found
             if (container != undefined) {
@@ -134,3 +138,15 @@ module.exports = {
         }
     }
 };
+
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        creep.memory.working = false;
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        creep.memory.working = true;
+    }
+}

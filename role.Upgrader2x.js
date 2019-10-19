@@ -20,19 +20,40 @@ module.exports = {
         util.pickupResources(creep,0);
         var status = util.stayInTargetRoom(creep); 
 
-       util.say(creep,"up ",300);
+       util.say(creep,"up2x ",300);
        util.stayInTargetRoom(creep);
-       util.TimeToDie(creep,10,0); // die before getting more energy
+       util.TimeToDie2(creep,"E43S3",53,0); // die before getting more energy
+       util.TimeToDie2(creep,"E44S3",53,0); // die before getting more energy
+       util.TimeToDie2(creep,"E45S2",53,0); // die before getting more energy
+
+
  
 
         // ********************************************************************************//
         //                       Room Specific code
         // ********************************************************************************//
 
+
+        if (creep.room.name == "E44S2") {
+            
+            // only upgrade controller while Storage is above 310K energy units
+            var storageEnergy = creep.room.storage.store.energy;
+            if (storageEnergy < 310500) {
+                return;
+            }
+
+            
+
+        }
+
         if (creep.room.name == "E45S2") {
             
 
-
+            // only upgrade controller while Storage is above 125K energy units
+            var storageEnergy = creep.room.storage.store.energy;
+            if (storageEnergy < 125500) {
+                return;
+            }
 
             // backup original role
             if (creep.memory.orginalRole == undefined) {
@@ -49,6 +70,30 @@ module.exports = {
 
         }
 
+
+
+        if (creep.room.name == "E45S3") {
+            
+            // only upgrade controller while Storage is above 450K energy units
+            var storageEnergy = creep.room.storage.store.energy;
+            if (storageEnergy < 450600) {
+                return;
+            }
+        }
+
+
+
+        if (creep.room.name == "E43S3") {
+            
+            // only upgrade controller while Storage is above 100K energy units
+            storageEnergy = creep.room.storage.store.energy;
+            if (storageEnergy < 100500) {
+                return;
+            }
+
+            
+
+        }
 
         //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is now running as a upgrader");
   
@@ -109,7 +154,7 @@ module.exports = {
         // ********************************************************************************//;
             else{
                 let container = undefined;
-                if (creep.room.name == "E44S3" || creep.room.name == "E43S3") {
+                if (creep.room.name == "E44S3" || creep.room.name == "E43S3"  || creep.room.name == "E45S2") {
                     
                 
                 container = creep.pos.findClosestByPath(FIND_STRUCTURES, {

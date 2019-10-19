@@ -450,22 +450,6 @@ module.exports.loop = function () {
               //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] Reservered location. Most move somewhere else ' + creep.name);
                     }
         
-        // if (creep.pos()) {
-            
-        // }
-
-
-         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' is in the wrong room ' + creep.room.name);
-        //     creep.memory.home = "E45S2";
-        //     creep.memory.target = "E44S2";
-        //    creep.memory.role = "longDistanceBuilder";
-            // var exit = creep.room.findExitTo(creep.memory.home);
-            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' exit is ' + exit);
-
-            // //   console.log('LD Builder ' + util.LineNumber() + '] ' +  creep.name + ' Test');
-            //    // move to exit
-            //    var status =  creep.moveTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
-            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' moving toward exit. Status is ' + status);
 
 
        }
@@ -473,16 +457,6 @@ module.exports.loop = function () {
 
 
        
-
-
-        // if( creep.room.name == "E45S2"){ 
-        
-        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' room name is ' + creep.room.name);    
-        //     return;
-        // }else
-        // {
-        //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' room name is ' + creep.room.name); 
-        // }
 
         // if creep is harvester, call harvester script
         if (creep.memory.role == 'harvester') {
@@ -627,7 +601,7 @@ module.exports.loop = function () {
     // // All towers
     // //************************************** */
 
-   towers.run();
+    towers.run();
 
 
     
@@ -698,9 +672,9 @@ module.exports.loop = function () {
                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
             }
 
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source1Link.cooldown is ' + util.pad (source1Link.cooldown,3) + ', controllerLinkEngery is ' + util.pad(controllerLinkEngery,3) + '</>' ); 
+            //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source1Link.cooldown is ' + util.pad (source1Link.cooldown,3) + ', controllerLinkEngery is ' + util.pad(controllerLinkEngery,3) + '</>' ); 
           
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source2Link.cooldown is ' + util.pad (source2Link.cooldown,3) + ',    storageLinkEngery is ' + util.pad (storageLinkEngery,3) + '</>');
+            //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']    source2Link.cooldown is ' + util.pad (source2Link.cooldown,3) + ',    storageLinkEngery is ' + util.pad (storageLinkEngery,3) + '</>');
             
             
 
@@ -750,7 +724,60 @@ module.exports.loop = function () {
         }
 
 
+
         if (spawnName == "Spawn3")
+        {
+
+            var controllerLinkObj = "5d5542d8f0e41373bf60b75e";
+            var source1LinkObj = "5d88c2f732a61a437872fb20";
+            var source2LinkObj = "5d99e0fba33c040001cfced0";
+            var storageLinkObj = "5d6b7e3252d12c73f0332b33";
+            var backupTargetLinkObj = controllerLinkObj;
+
+            var controllerLink = Game.getObjectById(controllerLinkObj);
+            var source1Link = Game.getObjectById(source1LinkObj);
+            var source2Link = Game.getObjectById(source2LinkObj);
+            var storageLink = Game.getObjectById(storageLinkObj);
+
+            var controllerLinkEngery = controllerLink.energy;
+            var storageLinkEngery = storageLink.energy;
+            
+            var TargetLinkobj = storageLinkObj;
+
+            if (controllerLinkEngery < 601) {
+                TargetLinkobj = controllerLinkObj;
+                //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
+            }
+
+          //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  E45S2 source1Link.cooldown is ' + util.pad (source1Link.cooldown,3) + ', controllerLinkEngery is ' + util.pad(controllerLinkEngery,3) + '</>' );       
+          //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  E45S2 source2Link.cooldown is ' + util.pad (source2Link.cooldown,3) + ',    storageLinkEngery is ' + util.pad (storageLinkEngery,3) + '</>');
+            
+            if (storageEnergy > 76000) {
+                var status1 = link.transferEnergy(source1LinkObj,TargetLinkobj);
+                if (status1 == -7 || status1 == -8 || status1 == -11) { 
+                  //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
+                     var status2 = link.transferEnergy(source1LinkObj,backupTargetLinkObj);
+                 //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
+                }
+     
+                var status4 = link.transferEnergy(source2LinkObj,TargetLinkobj);
+                if (status4 == -7 || status4 == -8 || status4 == -11 ) { 
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
+                     var status3 = link.transferEnergy(source2LinkObj,backupTargetLinkObj);
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+                }
+           
+            }
+            else{
+                var status3 = link.transferEnergy(source2LinkObj,storageLinkObj);
+                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+
+            }
+
+        }
+
+        
+        if (spawnName == "Spawn3bak")
         {
 
               //  link.transferEnergy("5d6b7e3252d12c73f0332b33","5d5542d8f0e41373bf60b75e");
@@ -795,7 +822,7 @@ module.exports.loop = function () {
           //  const terminalEnergyE45S3 = _.sum(Game.rooms['E45S3'].terminal.store);
           //  const terminalEnergyE45S3 = creep.room.terminal.store.energy;
 
-             if (terminalEnergyE45S3 < 54500) {
+             if (terminalEnergyE45S3 < 73600) {
                 // transfer to link next to terminal
                 link.transferEnergy("5d99ba677069c70001aba38d","5d99b0a69c30e60001320810"); 
             }
@@ -895,7 +922,9 @@ module.exports.loop = function () {
                             ', Miners: ' + numberOfMiners + 
                             ', Lorries: ' + numberOfLorries + 
                             ', numberOfTestScreeps: ' + numberOfTestScreeps + 
-                            ', cpu.bucket: ' + Game.cpu.bucket);
+                            ', cpu.bucket: ' + Game.cpu.bucket +
+                            ', Game.time: ' + util.numberWithCommas(Game.time));
+                            
 
         }
 

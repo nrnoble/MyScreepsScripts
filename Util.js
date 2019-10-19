@@ -60,6 +60,21 @@ module.exports =
 
         }
     },
+   
+    TimeToDie2: function(creep, roomName, ticksRemaining, energyLevel) {
+       if (creep.room.name == roomName) {
+            var ttl = creep.ticksToLive;
+            var energyRemaining = creep.carry.energy;
+
+            if ((ttl < ticksRemaining) && (energyRemaining <= energyLevel)) {
+                console.log("Time to die: " + creep.name + "(" + creep.role + ")");
+                return creep.suicide();
+            }
+        }
+
+        return;
+    },
+   
 
 
     GetCreepCountObj: function (roleName) {
@@ -234,7 +249,7 @@ module.exports =
             
             var newCreep = new Object;
            // this.debug(1, this.LineNumber(), "creating a " + roleName + "(" + creepNewName + ")", creepNewName);
-            newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: SpawnObj.room.name, target: SpawnObj.room.name, working: false });
+            newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: SpawnObj.room.name, target: SpawnObj.room.name, working: false,gameStartTick: Game.time, respawnOffSet: body.length * CREEP_SPAWN_TIME  });
             if (typeof (newCreep) == "string") {
                 console.log("successfully created a " + roleName + "(" + creepNewName + ")");
             }
@@ -247,7 +262,7 @@ module.exports =
                // console.log("this.GetCreepCountObj(roleName): " + this.GetCreepCountObj(roleName));
                //this.GetCreepCountObj(roleName) = this.GetCreepCountObj(roleName) + 1;
               //  creepNewName = this.GetRoleName(SpawnObj, roleName);
-                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: creep.room.name, target: creep.room.name, orginalRole: roleName, working: false });
+                newCreep = SpawnObj.createCreep(body, creepNewName, { role: roleName, home: creep.room.name, target: creep.room.name, orginalRole: roleName, working: false, gameStartTick: Game.time, respawnOffset: body.length * CREEP_SPAWN_TIME });
                 console.log("creating a " + roleName + "(" + creepNewName + ")");
             }
             

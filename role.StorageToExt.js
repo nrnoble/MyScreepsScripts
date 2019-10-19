@@ -31,7 +31,7 @@ module.exports = {
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-        util.TimeToDie(creep,12,0);
+        util.TimeToDie(creep,50,0);
 
 
         if (creep.memory.working == undefined) {
