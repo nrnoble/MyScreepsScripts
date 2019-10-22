@@ -67,15 +67,7 @@ module.exports = {
         //  var status = util.SelfSecide(creep);
 
         // if creep is bringing energy to the controller but has no energy left
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+        var workStatus = workCheck(creep);
 
         // if creep is supposed to transfer energy to the controller
         if (creep.memory.working == true) {
@@ -133,7 +125,7 @@ module.exports = {
                             || s.structureType == STRUCTURE_TERMINAL
                             || s.structureType == STRUCTURE_STORAGE) 
                             && s.store[RESOURCE_ENERGY] > 0 ) 
-                           // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+                             || (s.structureType == STRUCTURE_LINK)
 
                            
                 });
@@ -160,3 +152,15 @@ module.exports = {
         }
     
 };
+
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        return creep.memory.working = false;
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        return creep.memory.working = true;
+    }
+}
