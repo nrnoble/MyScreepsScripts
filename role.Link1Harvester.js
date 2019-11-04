@@ -64,18 +64,7 @@ module.exports = {
        
        
          // if creep is bringing energy to a structure but has no energy left
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-          //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is false name:" + creep.name + " (" + creep.memory.role + ")");
-
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working  ' + creep.memory.working);
-        }
+        var workStatus = workCheck(creep);
         
 
         // if creep is supposed to transfer energy to a structure
@@ -171,22 +160,12 @@ module.exports = {
         
         
         
-        // if creep is supposed to harvest energy from source
+        // ********************************************************************************//;
+        // creep is supposed to harvest energy from source
+        // ********************************************************************************//;
         
         else {
 
-        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] if creep is supposed to harvest energy from source ');
-        //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] flagContainer is ' + flagContainer);
-
-         //  return;
-            //  if (creep.room.name != "E45S2") {
-            //     let xcontainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //         filter: s => s.structureType == STRUCTURE_CONTAINER});
-            //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' Test xcontainer is ' + xcontainer);
-            //         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] Test xcontainer is ' + xcontainer);
-            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Test ClosestContainer is ' + ClosestContainer);
-  
-            // }
 
 //            var flagSource = Game.flags["Source_" + creep.room.name];    
             var flagSource = Game.flags[creep.memory.flagSource.name];    
@@ -200,6 +179,22 @@ module.exports = {
                 filter: s => s.structureType == STRUCTURE_CONTAINER
                  && s.store[RESOURCE_ENERGY] > 0
             });
+
+            let containers = flagSource.pos.findInRange(FIND_STRUCTURES, 2, {
+                filter: s => s.structureType == STRUCTURE_CONTAINER
+              //  && s.store[RESOURCE_ENERGY] > 0
+            });
+
+            if (containers.length > 0) {
+             //  var containers2 = containers.sort(compareStoredEngery);
+             //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containers2.length is ' + containers2.length +'</>');
+               //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containers2[0].store.engergy is ' + containers2[0].store[RESOURCE_ENERGY] +'</>');
+               //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containers2[1].store[RESOURCE_ENERGY]is ' + containers2[1].store[RESOURCE_ENERGY] +'</>');
+              // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containers2[2].store[RESOURCE_ENERGY] is ' + containers2[2].store[RESOURCE_ENERGY]+'</>');
+
+
+            }
+
 
         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
 
@@ -273,3 +268,28 @@ module.exports = {
         }
     }
 };
+function workCheck(creep) {
+    if (creep.memory.working == true && creep.carry.energy == 0) {
+        // switch state
+        creep.memory.working = false;
+        //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is false name:" + creep.name + " (" + creep.memory.role + ")");
+    }
+    // if creep is harvesting energy but is full
+    else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+        // switch state
+        creep.memory.working = true;
+        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working  ' + creep.memory.working);
+    }
+}
+
+
+function compareStoredEngery( a, b ) {
+    if ( a.store.energy > b.store.energy ){
+      return -1;
+    }
+    if ( a.store.energy < b.store.energy){
+      return 1;
+    }
+    return 0;
+  }
+

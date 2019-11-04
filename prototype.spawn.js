@@ -969,7 +969,6 @@ module.exports = function () {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
 
-
         var numberOfParts = Math.floor(energy / 50);
         for (let i = 0; i < numberOfParts; i++) {
             body.push(CARRY);
@@ -1192,4 +1191,71 @@ module.exports = function () {
             working: false
         });
     };
+
+
+    StructureSpawn.prototype.createRecycler = function (SpawnObj, roleName, energy){
+
+          // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+          var body = [];
+          // for (let i = 0; i < numberOfWorkParts; i++) {
+          //     body.push(WORK);
+          // }
+  
+          // // 150 = 100 (cost of WORK) + 50 (cost of MOVE)
+          // energy -= 150 * numberOfWorkParts;
+  
+          // var numberOfParts = Math.floor(energy / 100);
+          // for (let i = 0; i < numberOfParts; i++) {
+          //     body.push(CARRY);
+          // }
+          // for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+          //     body.push(MOVE);
+          // }
+  
+  
+        //   if (energy < 350 )
+        //   {
+        //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
+        //   }
+
+        body.push(WORK);
+        body.push(MOVE);
+        body.push(CARRY);
+        
+        
+        // var workCost = BODYPART_COST[WORK];
+        // var carryCost = BODYPART_COST[CARRY];
+        // var moveCost = BODYPART_COST[MOVE];
+        
+        energy = energy - BODYPART_COST[WORK] + BODYPART_COST[CARRY];
+        if (energy >= 50) {
+            var numberOfParts = Math.floor(energy / (BODYPART_COST[WORK] + BODYPART_COST[CARRY]));
+            for (let i = 0; i < numberOfParts; i++) {
+                body.push(CARRY);
+                body.push(MOVE);
+    
+            } 
+        }
+
+
+  
+        //    var numberOfParts = Math.floor(energy / 100);
+        //   for (let i = 0; i < numberOfParts; i++) {
+        //       body.push(CARRY);
+        //   }
+        //   for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+        //       body.push(MOVE);
+        //   }
+  
+          // create creep with the created body
+          return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+            role: roleName,
+            orginalRole: roleName,
+            working: true,
+            home: SpawnObj.room.name,
+            target: SpawnObj.room.name,
+            creator: 'Neal R. Noble 2019',
+            cachedSource: null
+        });
+    }
 };

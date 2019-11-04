@@ -40,7 +40,7 @@ module.exports = {
             // Do not transfer if Terminal has enough energy, 
             // Do not transfer if Storage is too low on energy
             // ********************************************************************************//;
-            if (termEnergyAvailable > 100000 || StorageEnergyAvailable < 100000) {
+            if (termEnergyAvailable > 300000 || StorageEnergyAvailable < 100000) {
                 return;
             }
 

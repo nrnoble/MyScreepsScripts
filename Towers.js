@@ -63,18 +63,17 @@ module.exports =
              console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!! evilCreep.getActiveBodyparts(HEAL) status  is ' + status);
 
             if (evilCreepHeal.getActiveBodyparts(HEAL) > 0){
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTACK HEAL ATTACK firing on evil creep status  is ' + status);
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTACK HEAL ATTACK firing on evil creep status  is ' + status);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + tower.room.name + ' HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
               
-               tower.attack(evilCreepHeal);
-              
+               tower.attack(evilCreepHeal); 
                 continue;
             }
           
         }
         else
         {
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
-
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + tower.room.name + ' HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
             tower.attack(evilCreep);
         }
 

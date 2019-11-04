@@ -24,7 +24,7 @@ module.exports = {
 
 
         if (creep.room.name == "E44S3") {
-            triggerTime = 60; 
+            triggerTime = 160; 
         }
 
         if (creep.room.name == "E44S2") {
@@ -36,9 +36,7 @@ module.exports = {
             var thisCreepDeathTime = 11694700;
 
             triggerTime = 65;
-            
 
-        
         }
 
         if (creep.room.name == "E45S3") {
@@ -110,12 +108,20 @@ module.exports = {
         let source = Game.getObjectById(creep.memory.sourceId);
         // find container next to source
         let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-            filter: s => s.structureType == STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < 2000
+            filter: s => s.structureType == STRUCTURE_CONTAINER 
+            && s.store[RESOURCE_ENERGY] < 2000
         })[0];
 
-       // console.log("Role.miner Unable to find a container " + container);
-        if(container == null || container == undefined)
+        
+        if (container == null || container == undefined) {
+            let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+                filter: s => s.structureType == STRUCTURE_CONTAINER 
+        //        && s.store[RESOURCE_ENERGY] < 2000
+            })[0];
+        } 
+        else if(container == null || container == undefined)
         {
+           // console.log("Role.miner Unable to find a container " + container);
             console.log('[' + fileName + 'line:' + util.LineNumber() + ']  '+ creep.name + ', '+ creep.room.name + ', Unable to find a container. Container is ' + container  );
             return;
         }
