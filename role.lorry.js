@@ -54,7 +54,7 @@ module.exports = {
             
                 });
 
-                if (creep.room.name == "E44S2") {
+                if (creep.room.name == "E44S2" && creep.room.terminal != undefined)  {
                     
                     var terminalE44S2 = creep.room.terminal
                   // var terminalEnergy = _.sum(terminalE44S2.store);

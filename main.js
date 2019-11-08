@@ -66,9 +66,9 @@ console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
 
 
 let consoleDelay = 5;
-let unitsToTransfer = 50000;
+let unitsToTransfer = 51000;
 
- //term.transferEnergy("E44S3","E45S3",unitsToTransfer); 
+ //term.transferEnergy("E45S2","E44S2",unitsToTransfer); 
  // term.transferEnergy("E44S3","E44S2",unitsToTransfer);  //
 //// test
 //let sp1 = Memory.spawns.Spawn1;
@@ -639,9 +639,9 @@ module.exports.loop = function () {
 
     
 
-
-        if (spawnName == "Spawn1") {
-           //  term.throttledTransfer("E44S3","E44S2",500, 60000,15600, true);
+      // #Term trottle
+        if (spawn.room.name == "E44S3") {
+          // term.throttledTransfer("E44S3","E44S2",500, 200000,58600, debug=false);
            // term.throttledTransfer("E44S3","E45S3",500, 60000 ,50500, false);
            // link next to storage 5d46b9cad16c4b73af5c1269
            // link next to controller 5d9fd0108fad390001e30945
@@ -748,12 +748,42 @@ module.exports.loop = function () {
             var status2 = link.transferEnergy("5d92bc8e0232ef0001c8b5ba","5d4f7683b5e0621e0bbb07b6");
 
            // 5d836db1128ef459c47e20af -->5d4f7683b5e0621e0bbb07b6
+
+            // # construction sites
            var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+           
            if (constructionSites == 0) {
             // var havesterCreepsInRoom  = spawn.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'builder')});  
            spawn.memory.minBuilders = 0;
            
+          }else{
+
+            var numberOfHarvestersInRoom = _.sum(creepsInRoom, (c) => c.memory.role == 'harvester');
+
+            switch (constructionSites.length) {
+                case 1:
+                    spawn.memory.minBuilders = 2;
+                    break;
+                case 2:
+                    spawn.memory.minBuilders = 2;
+                    break;
+                case 3:
+                    spawn.memory.minBuilders = 2;
+                    break;
+                case 4:
+                    spawn.memory.minBuilders = 3;
+                    break;
+            
+                default:
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] constructionSites is ' + constructionSites +'</>');
+                    spawn.memory.minBuilders = 2;
+                    break;
+            }
+
           }
+
+
+
           
         }
 
@@ -870,7 +900,7 @@ module.exports.loop = function () {
         var numberOfTerminalLorries =_.sum(creepsInRoom, (c) => c.memory.role == 'terminalLorry');
         var numberOfStorageToLink =_.sum(creepsInRoom, (c) => c.memory.role == 'storageToLink');
         var numberOfLinkToTerminals =_.sum(creepsInRoom, (c) => c.memory.role == 'linkToTerminal');
-         var numberOfFlagToFlagHarvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'flagToFlagHarvester');
+        var numberOfFlagToFlagHarvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'flagToFlagHarvester');
         var numberOfFlagToFlagHarvesters2 =_.sum(creepsInRoom, (c) => c.memory.role == 'flagToFlagHarvester2');
         var numberOfStorageToExtMinis =_.sum(creepsInRoom, (c) => c.memory.role == 'storageToExtMini');//  
         var numberOfLink1Harvesters =_.sum(creepsInRoom, (c) => c.memory.role == 'link1Harvester');//
@@ -908,16 +938,18 @@ module.exports.loop = function () {
         if (Game.time %5 == 0) {
             
             var roomEnergy = spawn.room.energyCapacityAvailable;
-            
+            var d = new Date();
+            var t = d.getTime();
+
             console.log('[' + fileName + 'line:' + 
                                util.LineNumber() + 
                                '] ' + spawn.name +  
                                // ',  Current number of LDH: ' + numberOfLongDistanceHarvestersroom3 + 
-                                ", Reservers: " + numberOfReservers + 
+                              //  ", Reservers: " + numberOfReservers + 
                                 ', Harvesters: ' + numberOfHarvesters + 
                                 ', Builders: ' + numberOfBuilders + 
                                 ', Upgraders: ' + numberOfUpgraders +
-                                ', Repairers: ' +  numberOfRepairers + 
+                              //  ', Repairers: ' +  numberOfRepairers + 
                                 ', WallRepairers: ' + numberOfWallRepairers + 
                                 ', Miners: ' + numberOfMiners + 
                                 ', Lorries: ' + numberOfLorries + 
@@ -925,6 +957,7 @@ module.exports.loop = function () {
                                 ', cpu.bucket: ' + Game.cpu.bucket +
                                 ', roomEnergyCap: ' + spawn.room.energyCapacityAvailable +
                                 ', EnergyAvaiable: ' + spawn.room.energyAvailable +
+                                ', time: ' + t +
                                 ', Game.time: ' + util.numberWithCommas(Game.time));
 
         }
@@ -943,6 +976,7 @@ module.exports.loop = function () {
         var energy = spawn.room.energyCapacityAvailable;
 
         var energy = 1000;
+        var upgrader2xEnergy = 500;
 
 
       //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
@@ -982,6 +1016,7 @@ module.exports.loop = function () {
         if (spawn.room.name =='E43S3')
         {
             energy = 450;
+            upgrader2xEnergy = 800;
             if (spawn.room.energyCapacityAvailable < energy){
                 energy = spawn.room.energyCapacityAvailable;
             }
@@ -1351,7 +1386,9 @@ module.exports.loop = function () {
             }
 
             else if (numberOfUpgrader2xs < spawn.memory.minUpgrader2xs) {
-                // try to spawn one
+                if (spawn.room.name == "E43S3") {
+                    energy = upgrader2xEnergy;
+                }
                 name = spawn.createCustomCreep(energy *2, 'upgrader2x');
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' creating upgader2x  name: ' + name);
 

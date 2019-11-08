@@ -6,7 +6,7 @@ var roleRepairer = require('role.repairer');
 var roleBuilder = require('role.builder');
  
  
-var fileName = 'E43S3   ';
+
 var fileName = 'up2x    ';
  
  
@@ -72,7 +72,7 @@ module.exports = {
              travelTime = 35;
             // only upgrade controller while Storage is above 670K energy units
             storageEnergy = creep.room.storage.store.energy;
-            if (storageEnergy < 600600) {
+            if (storageEnergy < 500600) {
                 return;
             }
 
@@ -127,19 +127,28 @@ module.exports = {
          //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  creep.room.spawn is ' +  creep.room.spawn +'</>');
          //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.ticksToLive  is ' + creep.ticksToLive  +'</>');
           //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] energy is ' + energy+'</>');
-            if (creep.ticksToLive < triggerTime  + timeToDie - travelTime) {
+        
+      //    var spawn = creep.room.find(FIND_MY_SPAWNS)[0];                              
+       //   var minUpgrader2xs = spawn.memory.minUpgrader2xs;
+         // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] minUpgrader2xs is ' + minUpgrader2xs +'</>');
+
+        
+        
+          if (creep.ticksToLive < triggerTime  + timeToDie - travelTime) {
             
             
                 var spawn = creep.room.find(FIND_MY_SPAWNS)[0];      
                 var respawnStatus = creep.memory.respawn;
             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
-                if (respawnStatus == undefined) {
+                var minUpgrader2xs = spawn.memory.minUpgrader2xs;
+               
+                if (respawnStatus == undefined && minUpgrader2xs > 0 ) {
                     var name;
                     var status; 
                     
                 //  name = spawn.createUpgrade2x(spawn, creep.memory.sourceId);
-                name = spawn.createCustomCreep(energy , 'upgrader2x');  
-                var spawnStats = false;
+                    name = spawn.createCustomCreep(energy , 'upgrader2x');  
+                    var spawnStats = false;
                     if (spawn.spawning != null) {
                         spawnStatus =  spawn.spawning.name.includes("upgrader2x");
                     }
@@ -196,11 +205,11 @@ module.exports = {
             //     }
             // }
 
-            if (upgradeThrottle(creep,"E43S3",100500) == true)
+            if (upgradeStorageThrottle(creep,"E43S3",100500) == true)
             {
                 return;
             }
-            if (upgradeThrottle(creep,"E44S2",310500) == true) {
+            if (upgradeStorageThrottle(creep,"E44S2",110500) == true) {
                 return;
             }
             
@@ -372,7 +381,7 @@ function respawn(creep, status) {
     return status;
 }
 
-function upgradeThrottle(creep,room,storageMin)
+function upgradeStorageThrottle(creep,room,storageMin)
 {
     if (creep.room.name == room) {
         
