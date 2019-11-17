@@ -86,9 +86,9 @@ module.exports = {
             var travelTime = 25;
             // only upgrade controller while Storage is above 125K energy units
             var storageEnergy = creep.room.storage.store.energy;
-            if (storageEnergy < 125500) {
-                return;
-            }
+            // if (storageEnergy < 125500) {
+            //     return;
+            // }
 
             // backup original role
             if (creep.memory.orginalRole == undefined) {
@@ -111,7 +111,7 @@ module.exports = {
             // only upgrade controller while Storage is above 450K energy units
             var storageEnergy = creep.room.storage.store.energy;
             if (storageEnergy < 350600) {
-                return;
+              //  return;
             }
         }
 
@@ -209,9 +209,9 @@ module.exports = {
             {
                 return;
             }
-            if (upgradeStorageThrottle(creep,"E44S2",110500) == true) {
-                return;
-            }
+            // if (upgradeStorageThrottle(creep,"E44S2",110500) == true) {
+            //     return;
+            // }
             
 
             // if (creep.room.name == "E44S2") {

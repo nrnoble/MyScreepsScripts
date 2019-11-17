@@ -117,18 +117,31 @@ module.exports = {
         //         }
         //     }
             else{
+                let container
+                if (util.isRoom(creep,"E44S2")) {
+                    
+                    container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: s =>( (
+                                //s.structureType == STRUCTURE_CONTAINER 
+                                // s.structureType == STRUCTURE_TERMINAL
+                                //|| s.structureType == STRUCTURE_STORAGE) 
+                                //&& s.store[RESOURCE_ENERGY] > 0 ) 
+                                 (s.structureType == STRUCTURE_LINK)
+                        ))
+                            });
+                }
+                else
+                {
+                    container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                                || s.structureType == STRUCTURE_TERMINAL
+                                || s.structureType == STRUCTURE_STORAGE) 
+                                && s.store[RESOURCE_ENERGY] > 0 ) 
+                                || (s.structureType == STRUCTURE_LINK)
 
-
-
-                let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-                            || s.structureType == STRUCTURE_TERMINAL
-                            || s.structureType == STRUCTURE_STORAGE) 
-                            && s.store[RESOURCE_ENERGY] > 0 ) 
-                             || (s.structureType == STRUCTURE_LINK)
-
-                           
-                });
+                            
+                    });
+                }
                 // if one was found
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range

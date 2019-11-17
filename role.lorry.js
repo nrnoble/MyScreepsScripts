@@ -54,7 +54,7 @@ module.exports = {
             
                 });
 
-                if (creep.room.name == "E44S2" && creep.room.terminal != undefined)  {
+                if (creep.room.name == "E44S2x" && creep.room.terminal != undefined)  {
                     
                     var terminalE44S2 = creep.room.terminal
                   // var terminalEnergy = _.sum(terminalE44S2.store);
@@ -90,14 +90,22 @@ module.exports = {
 
         else {
            
-           
-            var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
-                   s.structureType == STRUCTURE_SPAWN 
-                   || s.structureType == STRUCTURE_EXTENSION
-                   && s.energy < s.energyCapacity)
+            if (creep.room.name =="E44S2") {
+                var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
+                    s.structureType == STRUCTURE_SPAWN 
+                    || s.structureType == STRUCTURE_EXTENSION
+                    && s.energy < s.energyCapacity)
+             
+                 });
+            }
+            else{      
+                var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
+                s.structureType == STRUCTURE_SPAWN 
+                || s.structureType == STRUCTURE_EXTENSION
+                && s.energy < s.energyCapacity)
             
                 });
-
+            }
             // find closest container
 
             // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {

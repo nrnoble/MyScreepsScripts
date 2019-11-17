@@ -34,7 +34,7 @@ module.exports = {
             // energy in room is too low, only supple spawn and extentions. 
             // Skip towers while rooom energy is low.
             if (creep.memory.spawnSourcesOnly == true) {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
+         //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
                 // find closest spawn, extension or tower which is not full
                 var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
@@ -128,8 +128,8 @@ module.exports = {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
-                 filter: s => s.structureType == STRUCTURE_STORAGE &&
-              //  filter: s => s.structureType == STRUCTURE_CONTAINER &&
+                // filter: s => s.structureType == STRUCTURE_STORAGE &&
+                filter: s => s.structureType == STRUCTURE_CONTAINER &&
                 s.store[RESOURCE_ENERGY] > 75
             });
 

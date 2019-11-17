@@ -121,15 +121,29 @@ module.exports = {
             
          //   var terminalCount = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (s.structureType == STRUCTURE_TERMINAL)}).length;  
             
-         container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-                    || s.structureType == STRUCTURE_TERMINAL
-                    || s.structureType == STRUCTURE_STORAGE) 
-                  //  && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
-                   && s.store[RESOURCE_ENERGY] > 0 )
 
-        });
+            if (creep.room.name =="E44S2") {
+                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s =>(
+                      //  s.structureType == STRUCTURE_CONTAINER 
+                         // s.structureType == STRUCTURE_TERMINAL
+                         s.structureType == STRUCTURE_STORAGE
+                          //  && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
+                           && s.store[RESOURCE_ENERGY] > 0 )
+        
+                });
+            }
+            else{
 
+            container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                        || s.structureType == STRUCTURE_TERMINAL
+                        || s.structureType == STRUCTURE_STORAGE) 
+                    //  && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK)
+                    && s.store[RESOURCE_ENERGY] > 0 )
+
+                });
+            }
         }
         // if one was found
         if (container != undefined) {

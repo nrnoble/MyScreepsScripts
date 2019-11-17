@@ -40,7 +40,7 @@ module.exports = {
             //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalTermainalEnergy);
 
             if (util.isRoom(creep,"E45S3")) {
-                if (totalTermainalEnergy > 100000) {
+                if (totalTermainalEnergy > 50000) {
                     return;
                 }  
             }

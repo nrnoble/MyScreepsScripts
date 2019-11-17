@@ -13,10 +13,10 @@ module.exports = {
   
         // TODO this code maybe redunant
         var observer = Game.getObjectById("5d724309f146cf075e07c966");
-        var status = observer.observeRoom("E45S3");
+        var status = observer.observeRoom("E46S3");
         //var status = observer.observeRoom("E43S3");
-        var room = Game.rooms['E43S3']
-        var roomTarget = new RoomPosition(25, 3, 'E45S3');
+        var room = Game.rooms['E46S3'];
+        var roomTarget = new RoomPosition(11, 27, 'E46S3');
         // if in target room
         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', looking for creeps to destroy ');
 
@@ -71,10 +71,12 @@ module.exports = {
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', controller.room is ' + creep.room.controller);
 
             var invaders = controller.room.find(FIND_HOSTILE_CREEPS);
+
             var LDHs = controller.room.find(FIND_MY_CREEPS, {filter: s=> s.memory.role == "longDistanceHarvester"});
             var invaderCount =  invaders.length;
             var LDHsCount = LDHs.length;
-    
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] invaderCount is ' + invaderCount +'</>');
+            
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] *************** LDHsCount is ' + LDHsCount);
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] *************** invaderCount is ' + invaderCount);
             
@@ -83,10 +85,12 @@ module.exports = {
            // var invader = invaders[0];
          //   creep.attack(invader);
                  
-            if (invaderCount > 0){
+            if (invaderCount < 0){
                 var invader = invaders[0];
               //  var attackStatus = creep.attack(invader);
-                var attackStatus = creep.rangedAttack(invader);
+          //    var invader = Game.getObjectById("5bbcafc09099fc012e63b1d2");  
+              var attackStatus = creep.attack(invader);
+              var attackStatus = creep.rangedAttack(invader);
 
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!! attackStatus ' + attackStatus );
 

@@ -577,6 +577,13 @@ module.exports =
 
         false;
 
+    },
+
+    getSpawn: function (room){
+        var spawns = room.find(FIND_MY_STRUCTURES,{filter: {structureType: StructureSpawn}});
+            var spawn = spawns[0];
+            return spawn;
+
     }
 
 

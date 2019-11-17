@@ -13,7 +13,7 @@ var fileName = "test   ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-  //      return;
+    //   return;
     
 
     
@@ -41,7 +41,8 @@ module.exports = {
             // Do not transfer if Storage is too low on energy
             // ********************************************************************************//;
             if (termEnergyAvailable > 300000 || StorageEnergyAvailable < 100000) {
-                return;
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Energy is full' + '/ +>');
+                    return;
             }
 
         }
@@ -87,12 +88,15 @@ module.exports = {
             // room energy is OK, so supple towers.
         else{
         // find closest spawn, extension or tower which is not full
+     
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] test ' + '</>');
         var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
             // the second argument for findClosestByPath is an object which takes
             // a property called filter which can be a function
             // we use the arrow operator to define it
             // filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL || s.structureType == STRUCTURE_CONTAINER  || s.structureType == STRUCTURE_EXTENSION) 
             //     && s.store < s.storeCapacity
+           // filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
             filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
             
         });
@@ -110,11 +114,17 @@ module.exports = {
 
         if (structure == undefined) {
             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
+            
+
+            if (util.isRoom(creep,"E45S2")) {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room:' + creep.room.name + ' structure is ' + structure +'</>');
+            }
+    
             structure = creep.room.storage;
             if (structure == undefined)
             {
                 // TODO: Hack
-                if( creep.room.name == "E44S2"){    
+                if( creep.room.name == "E45S2"){    
                     //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
                     console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
                     
@@ -124,7 +134,12 @@ module.exports = {
         
         }
 
+            // if (util.isRoom(creep,"E45S2")) {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + creep.room.name + ' structure is ' + structure +'</>');
+            // }
+ 
             // if we found have a structure that needs energy
+
             if (structure != undefined) {
                 // try to transfer energy, if it is not in range
                 // console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");
@@ -137,12 +152,29 @@ module.exports = {
 
 
             //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' transfer energy.......... ');
-               
-               
-                if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+               var creepEnergy = creep.carry.energy;
+
+            //    if (util.isRoom(creep,"E45S2")) {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' +creep.room.name +' creepEnergy is '+ creepEnergy +'</>');
+            // }
+
+               var status = creep.transfer(structure, RESOURCE_ENERGY);
+
+            //    if (util.isRoom(creep,"E45S2")) {
+            //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' +creep.room.name +' creepEnergy after transfer is '+ creepEnergy +'</>');
+            //     }
+                if (status  == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                      util.repairRoad(creep);
+                }
+                else
+                {
+                  return; // does this cause any problems by blocking executing of any code below
+              
+                    // if (util.isRoom(creep,"E45S2")) {
+                    //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' +creep.room.name +' Else Transfer status is '+ status +'</>');
+                    // }
                 }
             }
         }
@@ -163,7 +195,11 @@ module.exports = {
             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Test ClosestContainer is ' + ClosestContainer);
   
             // }
+            // if (util.isRoom(creep,"E45S2")) {
+            // //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' +creep.room.name +' Else look for storage' +'</>');
 
+            // }
             let ClosestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
@@ -174,7 +210,11 @@ module.exports = {
             
             });
 
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
+
+            // if (util.isRoom(creep,"E45S2")) {
+            //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer structureType is ' + ClosestContainer.structureType);
+
+            // }
 
             if (ClosestContainer != undefined) {
                 // try to withdraw energy, if the container is not in range
@@ -185,9 +225,9 @@ module.exports = {
                     util.repairRoad(creep);
 
                 } else{
-                   // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
-                     roleUpgrader.run(creep);
-                     return;
+                   // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " SSSSSSSSSSSSSSSSSSSSSSSSS running as a upgrader ");
+                   //  roleUpgrader.run(creep);
+                   //  return;
                 }   
 
             }

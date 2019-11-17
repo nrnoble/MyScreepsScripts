@@ -589,8 +589,8 @@ module.exports = function () {
              
             
             return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
-                role: 'roleTestCreep',
-                orginalRole: 'roleTestCreep',
+                role: roleName,
+                orginalRole: roleName,
                 home: SpawnObj.room.name,
                 target: SpawnObj.room.name,
                 creator: 'Neal R. Noble 2019',
@@ -1131,8 +1131,11 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createAttackScout = function (spawn, target) {
            // console.log("Creating a attack Scout");
-            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,RANGED_ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
-    };
+            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,RANGED_ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
+        // return this.createCreep([TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
+    
+    
+        };
 
         
     // create a new function for StructureSpawn

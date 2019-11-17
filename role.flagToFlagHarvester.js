@@ -14,7 +14,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-
+//return;
 
 
        
@@ -105,8 +105,9 @@ module.exports = {
 
             
             var structure = flagContainer.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                filter: (s) => (s.structureType == STRUCTURE_STORAGE
-                         || s.structureType == STRUCTURE_TERMINAL
+                filter: (s) => (
+                        s.structureType == STRUCTURE_STORAGE
+                        ||  s.structureType == STRUCTURE_TERMINAL
                          || s.structureType == STRUCTURE_CONTAINER)
                 //   //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
                 //     || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
@@ -189,6 +190,7 @@ module.exports = {
             let ClosestContainer = undefined;
             flagSource = Game.flags[creep.memory.flagSource.name];    
             if (creep.room.name == "E43S3") {
+               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.room.name is ' + creep.room.name +'</>');
                     var ClosestContainers = flagSource.room.find(FIND_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
                     // a property called filter which can be a function
@@ -219,16 +221,16 @@ module.exports = {
 
             if (ClosestContainer != undefined) {
                 // try to withdraw energy, if the container is not in range
-                
-                if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                var status = creep.withdraw(ClosestContainer, RESOURCE_ENERGY);
+                if ( status == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
 
                 } else{
                    // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
-                     roleUpgrader.run(creep);
-                     return;
+                  //   roleUpgrader.run(creep);
+                   //  return;
                 }   
 
             }
@@ -260,7 +262,7 @@ module.exports = {
                 if (source == undefined || source == null ) {
                     //console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " Source is set to creep.room.storage;");
 
-                    source = creep.room.storage;
+                 //   source = creep.room.storage;
 
                     if (source == undefined || source == null ) {
                        // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
