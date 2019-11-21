@@ -328,7 +328,7 @@ module.exports = function () {
 
              var allMyCreepsInRoom = spawn.room.find(FIND_MY_CREEPS);
             // array.forEach(element => {
-              //  energy = 400;
+                //energy = 300;
             // });
             var names;
             for (let name in allMyCreepsInRoom ){

@@ -584,7 +584,27 @@ module.exports =
             var spawn = spawns[0];
             return spawn;
 
+    },
+
+    mySign: function(creep,roomName, signText){
+
+
+        if (creep.room.name == roomName) {
+            var roomController = creep.room.controller;
+            if (roomController.sign == signText) {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room['+ creep.room.name +'] Controller has the correct signature: ' + signText +' </>');
+            }
+            
+
+           var signStatus = creep.signController(roomController,signText);
+           if (signStatus == ERR_NOT_IN_RANGE) {
+             creep.moveTo(roomController)
+           }
+           console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] signStatus is ' + signStatus +'</>');
+        }
+
     }
+
 
 
     };

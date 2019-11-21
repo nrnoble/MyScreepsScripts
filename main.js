@@ -625,8 +625,8 @@ module.exports.loop = function () {
 
       // #Term trottle
         if (spawn.room.name == "E44S3") {
-          // term.throttledTransfer("E44S3","E44S2",500, 200000,58600, debug=false);
-           // term.throttledTransfer("E44S3","E45S3",500, 60000 ,50500, false);
+           term.throttledTransfer("E44S3","E45S3",500, 200000,88500, debug=false);
+           term.throttledTransfer("E45S2","E45S3",500, 200000,89000, false);
            // link next to storage 5d46b9cad16c4b73af5c1269
            // link next to controller 5d9fd0108fad390001e30945
            var storageLinkObj = "5d46b9cad16c4b73af5c1269";
@@ -652,14 +652,14 @@ module.exports.loop = function () {
 
           //  console.log('<font color ="yellow" >[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxstorageEnergy is ' + storageEnergy+ '</>');
            
-            var storageLink = Game.getObjectById(storageLinkObj);
+            var storageLinkObjId = Game.getObjectById(storageLinkObj);
             var controllerLink = Game.getObjectById(controllerLinkObj);
             var source1Link = Game.getObjectById(source1LinkObj);
             var source2Link = Game.getObjectById(source2LinkObj);
 
 
             var controllerLinkEngery = controllerLink.energy;
-            var storageLinkEngery = storageLink.energy;
+            var storageLinkEngery = storageLinkObjId.energy;
 
             var TargetLinkobj = storageLinkObj;
             var backupTargetLinkObj = controllerLinkObj;
@@ -802,10 +802,10 @@ module.exports.loop = function () {
             var controllerLink = Game.getObjectById(controllerLinkObj);
             var source1Link = Game.getObjectById(source1LinkObj);
             var source2Link = Game.getObjectById(source2LinkObj);
-            var storageLink = Game.getObjectById(storageLinkObj);
+            var storageLinkObjId = Game.getObjectById(storageLinkObj);
 
             var controllerLinkEngery = controllerLink.energy;
-            var storageLinkEngery = storageLink.energy;
+            var storageLinkEngery = storageLinkObjId.energy;
             
             var TargetLinkobj = storageLinkObj;
 
@@ -892,11 +892,28 @@ module.exports.loop = function () {
 
         if (spawnName == "Spawn5")
         {
-            var storageLink = "5da30daa2f9e9b0001a77901";
-            var controlLink = "5da33a7b86db5e00019fe09c";
-            var transferStatus =link.transferEnergy(storageLink,controlLink);
+            var storageLinkObjId = "5da30daa2f9e9b0001a77901";
+            var controlLinkObjId = "5da33a7b86db5e00019fe09c";
+            var transferStatus =link.transferEnergy(storageLinkObjId,controlLinkObjId);
            // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] transferStatus is '  + transferStatus + '</>');
             var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+            //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  constructionSites.length is ' + constructionSites.length +  '</>');
+            if (constructionSites == 0) {
+                  // var havesterCreepsInRoom  = spawn.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'builder')});  
+                 spawn.memory.minBuilders = 0;
+                 
+                }
+        }
+
+        if (spawnName == "Spawn7")
+        {
+            var storageLinkObjId = "5dd200fdb15610ec59943842";
+            var controlLinkObjId = "5dd1d69ea3d7f3742e5b782d";
+            var transferStatus =link.transferEnergy(storageLinkObjId,controlLinkObjId);
+           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] transferStatus is '  + transferStatus + '</>');
+           
+           //#builders in room reset
+           var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
             //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  constructionSites.length is ' + constructionSites.length +  '</>');
             if (constructionSites == 0) {
                   // var havesterCreepsInRoom  = spawn.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'builder')});  
@@ -1018,7 +1035,8 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E46S3") {
             energy = spawn.room.energyCapacityAvailable;
-            energy = 750
+            energy = 750;
+          //  energy = 300;
 
         }
 
@@ -1112,9 +1130,12 @@ module.exports.loop = function () {
         // This code only gets triggered when there no miner creep in room
        // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] spawnName2 is ' + spawnName +'</>');
 
-        //#miners
-        if (numberOfMiners == 1 || numberOfMiners == 0)
-   //     if (false)
+        //#miners 
+
+        var totalHarvesters  = numberOfHarvesters + numberOfStorageToExt + numberOfStorageToExtMinis;
+
+        if (numberOfMiners == 1 || numberOfMiners == 0 && totalHarvesters > 0)
+      //  if (false)
         {
             {
                 // if (spawn.name == "Spawn3_2") {
@@ -1317,8 +1338,56 @@ module.exports.loop = function () {
             
             
             //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfFlagToFlagHarvesters  is ' + numberOfFlagToFlagHarvesters);
-            
+            //#createStorageToExt
                 name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                
+
+                if (name == -6) {
+                    energy = energy - 100;
+                    if (energy < 300) {
+                        energy = 300;
+                    }
+                    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
+                }
+
+                if (name == -6) {
+                    energy = energy - 100;
+                    if (energy < 300) {
+                        energy = 300;
+                    }
+                    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
+
+                }
+                
+                if (name == -6) {
+                    energy = energy - 100;
+                    if (energy < 300) {
+                        energy = 300;
+                    }
+                    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
+
+                }
+                
+                if (name == -6) {
+                    energy = energy - 100;
+                    if (energy < 300) {
+                        energy = 300;
+                    }
+                    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
+
+                }
+                else
+                {
+                    energy = 300;
+                    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] StorageToExt2x energy is ' + energy +'</>');
+
+                }
+
                
                if (Game.time % consoleDelay == 0) {
                     console.log('[' + fileName + 'line:' + util.LineNumber() + "]" + spawnName +  "  is creating a storageToExt  creep: " + name);
@@ -2057,4 +2126,22 @@ function clearMemory() {
             delete Memory.creeps[name];
         }
     }
+}
+
+function myCreateStorageToExt(spawn,energy)
+{
+   var createStatus = spawn.createStorageToExt (spawn,"storageToExt", energy);
+    if (createStatus == -6) {
+        energy = energy - 100;
+        if (energy < 300) {
+            energy = 300;
+        }
+      createStatus =  myCreateStorageToExt (spawn,energy);
+    }
+
+    return createStatus
+    //    createStorageToExt(energy);
+    //    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
+    //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
+
 }

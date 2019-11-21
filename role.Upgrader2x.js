@@ -13,7 +13,14 @@ var fileName = 'up2x    ';
 module.exports = {
     run: function (creep) {
  
- 
+        // if (creep.room.name == "E44S3") {
+        //     var roomController = creep.room.controller;
+        //    var signStatus = creep.signController(roomController,"Last of the Mochicans");
+        //    if (signStatus == ERR_NOT_IN_RANGE) {
+        //      creep.moveTo(roomController)
+        //    }
+        //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] signStatus is ' + signStatus +'</>');
+        // }
     //    creep.say ("up: " + + creep.ticksToLive);
 
         // if resouces are nearby, attempt to pickup.
@@ -25,9 +32,23 @@ module.exports = {
 
        var timeToDie = 53;
        var travelTime = 25;
+
+       var workBodyParts =  creep.getActiveBodyparts(WORK);
+       //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] workBodyParts * 50/5 is ' + workBodyParts * 50 /5 +'</>');
+
+
+       timeToDie = (workBodyParts * 50/5) + 5;
+
        util.TimeToDie2(creep,"E43S3",timeToDie,0); // die before getting more energy
        util.TimeToDie2(creep,"E44S3",timeToDie,0); // die before getting more energy
        util.TimeToDie2(creep,"E45S2",timeToDie,0); // die before getting more energy
+       util.TimeToDie2(creep,"E46S3",timeToDie,0); // die before getting more energy
+       
+              
+       //util.TimeToDie2(creep,"W14S18",(workBodyParts * 50/5) + 5,0); // die before getting more energy
+
+      //  var workparts = creep.getBodyParts
+
 
        // HACK: calucate how much total energy is required to build creep.
        // TODO: This should be done when created. This is reduntant
@@ -51,7 +72,7 @@ module.exports = {
             //     return;
             // }
 
-            
+            //respawnStatus == undefined && minUpgrader2xs >0 && numberOfUpgrader2xs <=  minUpgrader2xs 
 
         }
 
@@ -73,7 +94,7 @@ module.exports = {
             // only upgrade controller while Storage is above 670K energy units
             storageEnergy = creep.room.storage.store.energy;
             if (storageEnergy < 500600) {
-                return;
+              //  return;
             }
 
             
@@ -115,6 +136,18 @@ module.exports = {
             }
         }
 
+
+
+        if (creep.room.name == "E46S3") {
+            travelTime = 20;
+           // only upgrade controller while Storage is above 450K energy units
+        //    var storageEnergy = creep.room.storage.store.energy;
+        //    if (storageEnergy < 350600) {
+        //      //  return;
+        //    }
+       }
+
+
         
     //    if (creep.room.name == "E44S2") {
             energy = creep.memory.energy;
@@ -132,20 +165,25 @@ module.exports = {
        //   var minUpgrader2xs = spawn.memory.minUpgrader2xs;
          // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] minUpgrader2xs is ' + minUpgrader2xs +'</>');
 
-        
+        if (creep.room.name == "E43S3" && creep.name == "upgrader2x _12858070") {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] receached here1 ' + '</>');
+        }
         
           if (creep.ticksToLive < triggerTime  + timeToDie - travelTime) {
+            var spawn = creep.room.find(FIND_MY_SPAWNS)[0];     
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name +'] trying to create a new Upgrader2x is </>');
             
             
-                var spawn = creep.room.find(FIND_MY_SPAWNS)[0];      
+             
                 var respawnStatus = creep.memory.respawn;
             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
                 var minUpgrader2xs = spawn.memory.minUpgrader2xs;
-               
-                if (respawnStatus == undefined && minUpgrader2xs > 0 ) {
+                let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
+                var numberOfUpgrader2xs = _.sum(creepsInRoom, (c) => c.memory.role == 'upgrader2x');
+                if (respawnStatus == undefined && minUpgrader2xs >0 && numberOfUpgrader2xs <=  minUpgrader2xs ) {
                     var name;
                     var status; 
-                    
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name +'] minUpgrader2xs is ' + minUpgrader2xs +'</>');
                 //  name = spawn.createUpgrade2x(spawn, creep.memory.sourceId);
                     name = spawn.createCustomCreep(energy , 'upgrader2x');  
                     var spawnStats = false;
@@ -172,7 +210,9 @@ module.exports = {
       //  }
 
 
-
+      if (creep.room.name == "E43S3" && creep.name == "upgrader2x _12858070") {
+        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] receached here2 ' + '</>');
+    }
 
         // if creep is bringing energy to the controller but has no energy left
         var workStatus = workCheck(creep);
@@ -183,7 +223,11 @@ module.exports = {
         //         transfer energy to the controller
         // ********************************************************************************//;
         if (creep.memory.working == true) {
-           // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
+       
+            if (creep.room.name == "E43S3" && creep.name == "upgrader2x _12858070") {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] working is true' + '</>');
+            }
+            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
             
             // instead of upgraderController we could also use:
@@ -207,7 +251,7 @@ module.exports = {
 
             if (upgradeStorageThrottle(creep,"E43S3",100500) == true)
             {
-                return;
+              //  return;
             }
             // if (upgradeStorageThrottle(creep,"E44S2",110500) == true) {
             //     return;
@@ -250,7 +294,7 @@ module.exports = {
         // ********************************************************************************//;
             else{
                 let container = undefined;
-                if (creep.room.name == "E44S3" || creep.room.name == "E43S3"  || creep.room.name == "E45S2") {
+                if (creep.room.name == "E44S3" || creep.room.name == "E43S3"  || creep.room.name == "E45S2"  || creep.room.name == "E46S3") {
                     
                 
                 container = creep.pos.findClosestByPath(FIND_STRUCTURES, {

@@ -109,7 +109,7 @@ module.exports = {
         // find container next to source
         let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
             filter: s => s.structureType == STRUCTURE_CONTAINER 
-            && s.store[RESOURCE_ENERGY] < 2001
+            && s.store[RESOURCE_ENERGY] < 2000
         })[0];
 
         

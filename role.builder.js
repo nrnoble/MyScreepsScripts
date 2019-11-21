@@ -31,6 +31,12 @@ module.exports = {
             return;
         }
 
+
+        if (creep.room.name == "E46S3") {
+            return
+        }
+
+
     if (creep.room.name=="E45S3" || creep.room.name == "E43S3") {
         var havesterCreepsInRoom  = creep.room.find(FIND_MY_CREEPS, {filter: s =>( s.memory.role == 'harvester')});  
         if (havesterCreepsInRoom.length == 0) {

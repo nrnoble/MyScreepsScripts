@@ -6,6 +6,10 @@ module.exports = {
 
     //    creep.say ("up: " + + creep.ticksToLive);
 
+        //util.mySign(creep,"E44S2","Last of the Mohicans");
+       // util.mySign(creep,"E45S2","Last of the Mohicans");
+
+
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
         var status = util.stayInTargetRoom(creep); 

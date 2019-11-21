@@ -49,21 +49,21 @@ module.exports =
             //var spawns = tower.room.find(FIND_MY_STRUCTURES,{filter: {structureType: StructureSpawn}});
             //var spawn = spawns[0];
             var spawn = util.getSpawn(tower.room);
-            if (spawn.memory.safeModeCountDown == undefined) {
-                spawn.memory.safeModeCountDown = 0;
-            }
-            spawn.memory.safeModeCountDown = spawn.memory.safeModeCountDown + 1;
-            if (spawn.memory.safeModeCountDown > 90) {
-                //activate safe mode
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
-                // sent email
-                spawn.memory.safeModeCountDown = 0;
-            }
-            else{
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] spawn.memory.safeModeCountDown  is ' + spawn.memory.safeModeCountDown  +'</>');
-            }
+            // if (spawn.memory.safeModeCountDown == undefined) {
+            //     spawn.memory.safeModeCountDown = 0;
+            // }
+          //  spawn.memory.safeModeCountDown = spawn.memory.safeModeCountDown + 1;
+            // if (spawn.memory.safeModeCountDown > 90) {
+            //     //activate safe mode
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room: ' + tower.room.name + ' Activating Safemode</>');
+            //     // sent email
+            //     spawn.memory.safeModeCountDown = 0;
+            // }
+            // else{
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] spawn.memory.safeModeCountDown  is ' + spawn.memory.safeModeCountDown  +'</>');
+            // }
 
 
                     //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
