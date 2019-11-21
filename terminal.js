@@ -1,6 +1,6 @@
 //terminal.js
 var util = require('Util'); 
-var fileName = "terminal    ";
+var fileName = "terminal.js   ";
 // 5d44be6bea104379d906cbaf
 module.exports = {
 
@@ -55,20 +55,12 @@ module.exports = {
                 const sourceTerminalEnergy = _.sum(sourceTerminal.store);
                 const destinationTerminalEnergy = _.sum(destinationTerminal.store);
                
-                // if (debug == true)  {
-                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] destinationTerminalEnergy is ' + destinationTerminalEnergy + ", minDestination is " + minDestination);     
-                // }
-
-                if (destinationTerminalEnergy < minDestination && sourceTerminalEnergy > minSource) {
-                    console.log('<font color = "<b>green</B>">[' + fileName + 'line:' + util.LineNumber() + '] Transfering Energy from [' + sourceRoom + '] to ['+ destinationRoom + '] amount: '+ transferQuantity + '</>');
-                  return  this.transferEnergy(sourceRoom,destinationRoom,transferQuantity);     
+                if (debug == true)  {
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] destinationTerminalEnergy is ' + destinationTerminalEnergy + ", minDestination is " + minDestination);     
                 }
-                else{
-                    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] sourceTerminalEnergy is ' + sourceTerminalEnergy +'</>');
-                    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] minSource is ' + minSource +'</>');
-                    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] (sourceTerminal > minSource) is ' + (sourceTerminalEnergy > minSource) +'</>');
-                    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] destinationTerminalEnergy < minDestination is ' + (destinationTerminalEnergy < minDestination) +'</>');
-                    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] not transfering energy is ' + (destinationTerminalEnergy < minDestination && sourceTerminalEnergy > minSource) +'</>');
+
+                if (destinationTerminalEnergy < minDestination && sourceTerminal > minSource) {
+                  return  this.transferEnergy(sourceRoom,destinationRoom,transferQuantity);     
                 }
         },
 

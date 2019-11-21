@@ -14,7 +14,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-//return;
+
 
 
        
@@ -47,7 +47,9 @@ module.exports = {
 
         // if (creep.ticksToLive == 50) {
            
-        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {filter: { structureType: STRUCTURE_SPAWN}});
+        //     var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
+        //          filter: { structureType: STRUCTURE_SPAWN}
+        //      });
              
         //      var Spawn1 = spawns[0];
         //      Spawn1.memory.qHarvester = Spawn1.memory.qHarvester + 1;
@@ -71,13 +73,14 @@ module.exports = {
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
             // switch state
             creep.memory.working = true;
-         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working  ' + creep.memory.working);
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working  ' + creep.memory.working);
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  creep.memory.working is ' + creep.memory.working);
         }
         
 
         // if creep is supposed to transfer energy to a structure
         if (creep.memory.working == true) {
-        //    console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
+       //     console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ") creep.engery is " + creep.store.energy );
             var flagContainer = Game.flags["Container_" + creep.room.name];
             // energy in room is too low, only supple spawn and extentions. 
             // Skip towers while rooom energy is low.
@@ -101,24 +104,24 @@ module.exports = {
             else{
 
                 var flagContainer = Game.flags["Container_" + creep.room.name];
-            //    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  XXXX flagContainer is ' + flagContainer);
+             //  console.log('[' + fileName + 'line:' + util.LineNumber() + ']  XXXX flagContainer is ' + flagContainer);
+            //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] flagContainer is ' + flagContainer + ' creep.store.energy is ' + creep.store.energy +'</>');    
 
             
             var structure = flagContainer.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                filter: (s) => (
-                        s.structureType == STRUCTURE_STORAGE
-                        ||  s.structureType == STRUCTURE_TERMINAL
-                         || s.structureType == STRUCTURE_CONTAINER)
+                filter: (s) => (s.structureType == STRUCTURE_STORAGE)
+                      //   || s.structureType == STRUCTURE_TERMINAL
+                    // /     || s.structureType == STRUCTURE_CONTAINER)
                 //   //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
                 //     || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
-                //     && s.energy < s.energyCapacity
+                ///    && s.energy < s.energyCapacity
             });
 
-            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
-
+         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] structure is ' + structure +'</>');
             if (structure !=  null) {
                 
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
+          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
         }
         }
 
@@ -126,7 +129,7 @@ module.exports = {
 
         if (structure == undefined) {
             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
-            structure = creep.room.storage;
+         //   structure = creep.room.storage;
             if (structure == undefined)
             {
                 // TODO: Hack
@@ -150,18 +153,23 @@ module.exports = {
                 // try to transfer energy, if it is not in range
                 // console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");
                 
-                
+             
                 if (creep.lockedTargetId == undefined ) {
                     
                     creep.lockedTargetId = structure.id;
                 }
 
 
-
-                if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                transferStatus = creep.transfer(structure, RESOURCE_ENERGY)
+                if (transferStatus == ERR_NOT_IN_RANGE) {
                     // move towards it
+                  //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] why is code reaching this point? not good. Investigate </>');
                     creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                      util.repairRoad(creep);
+                }
+                else{
+              //      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Successfully transfer energy to '+ structure.structureType + '</>');
+
                 }
             }
         }
@@ -169,7 +177,7 @@ module.exports = {
         
         
         // ********************************************************************************//;
-        //                if creep is supposed to harvest energy from source
+        //                if creep is  to harvest energy from source
         // ********************************************************************************//;       
         else {
 
@@ -189,8 +197,7 @@ module.exports = {
 //            var flagSource = Game.flags["Source_" + creep.room.name];
             let ClosestContainer = undefined;
             flagSource = Game.flags[creep.memory.flagSource.name];    
-            if (creep.room.name == "E43S3") {
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.room.name is ' + creep.room.name +'</>');
+            if (creep.room.name == "W14S18x") {
                     var ClosestContainers = flagSource.room.find(FIND_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
                     // a property called filter which can be a function
@@ -214,23 +221,25 @@ module.exports = {
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
                 filter: s => s.structureType == STRUCTURE_CONTAINER &&
-                s.store[RESOURCE_ENERGY] > 0
+                s.store[RESOURCE_ENERGY] > 000
             });
         }
         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
 
-            if (ClosestContainer != undefined) {
-                // try to withdraw energy, if the container is not in range
-                var status = creep.withdraw(ClosestContainer, RESOURCE_ENERGY);
-                if ( status == ERR_NOT_IN_RANGE) {
+        if (ClosestContainer != undefined) {
+            // try to withdraw energy, if the container is not in range
+             //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainer.structureType is ' + ClosestContainer.structureType +'</>');
+                if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
 
                 } else{
-                   // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
-                  //   roleUpgrader.run(creep);
-                   //  return;
+                  //  console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");
+                    
+                //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainer is ' + ClosestContainer +'</>');
+                  // roleUpgrader.run(creep);
+                  //   return;
                 }   
 
             }
@@ -240,8 +249,8 @@ module.exports = {
 
 
             var status = creep.harvest(ClosestContainer);
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] '  + creep.room.name + " " +  creep.name + ' current harvest status is ' + status );
-            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainer is  ' + ClosestContainer);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXXXXXXXXXXXXXXXXX'  + creep.room.name + " " +  creep.name + ' current harvest status is ' + status );
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] XXXXXXXXXXXXXXXXXXXX ClosestContainer is  ' + ClosestContainer);
             if (ClosestContainer != undefined || ClosestContainer != null && (creep.harvest(ClosestContainer) == ERR_NOT_IN_RANGE) && (creep.harvest(ClosestContainer) == -7))
             {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a container ');    
@@ -262,7 +271,7 @@ module.exports = {
                 if (source == undefined || source == null ) {
                     //console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " Source is set to creep.room.storage;");
 
-                 //   source = creep.room.storage;
+                   // source = creep.room.storage;
 
                     if (source == undefined || source == null ) {
                        // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
@@ -279,7 +288,7 @@ module.exports = {
                     // move towards the source
 
                     // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
-
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] '+ creep.name + " moveTo (" + source + ")" + ' </>');
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
                 }

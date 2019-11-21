@@ -439,7 +439,7 @@ module.exports =
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }, 
 
-    pad: function (num, size) {
+     pad: function (num, size) {
         var s = "000000000" + num;
         return s.substr(s.length-size);
     },
@@ -519,89 +519,12 @@ module.exports =
 
     },
 
-    convertPartsToEnergy: function (creep)
-    {
-   
-
-
-//      [4:06:44 AM][shard3][Util        line:0528] key is 28
- //     [4:06:44 AM][shard3][Util        line:0533] bodyPart is {"type":"move","hits":100}
-
-        var body = creep.body;
-        var energy = 0;
-        for (const key in body) {
-          //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] key is ' + key +'</>');
-                
-
-            if (body.hasOwnProperty(key)) {
-                const bodyPart = body[key];
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] bodyPart is ' + JSON.stringify(bodyPart) +'</>');   
-              //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] bodyPart.type is ' +JSON.stringify(bodyPart.type) +'</>');
-                if (bodyPart.type == "work") {
-                    energy = energy + 100;
-                }
-                else if (bodyPart.type == "carry" || bodyPart.type == "move") { 
-                    energy = energy + 50; 
-                }
-                else if(bodyPart.type == "attack"){
-                    energy= energy + 80; 
-                }
-                else if(bodyPart.type == "ranged_attack"){
-                    energy = energy + 150; 
-                }
-                else if(bodyPart.type == "heal"){
-                    energy = energy + 250; 
-                }
-                else if(bodyPart.type == "claim"){
-                    energy  = energy+ 600; 
-                }
-                else if(bodyPart.type == "tough"){
-                    energy = energy + 10; 
-                }
-                else{
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] bodyPart.type is ' +JSON.stringify(bodyPart.type) +'</>');                
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] WARNING Caculatin error in function "convertPartsToEnergy" unknow part'  + '</>');
-                }
-
-
-            }
-        }
-
-        return energy;
-    },
-
     isRoom: function(creep,roomName){
         if (creep.room.name == roomName) {
             return true;
         }
 
         false;
-
-    },
-
-    getSpawn: function (room){
-        var spawns = room.find(FIND_MY_STRUCTURES,{filter: {structureType: StructureSpawn}});
-            var spawn = spawns[0];
-            return spawn;
-
-    },
-
-    mySign: function(creep,roomName, signText){
-
-
-        if (creep.room.name == roomName) {
-            var roomController = creep.room.controller;
-            if (roomController.sign == signText) {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room['+ creep.room.name +'] Controller has the correct signature: ' + signText +' </>');
-            }
-            
-
-           var signStatus = creep.signController(roomController,signText);
-           if (signStatus == ERR_NOT_IN_RANGE) {
-             creep.moveTo(roomController)
-           }
-           console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] signStatus is ' + signStatus +'</>');
-        }
 
     }
 

@@ -42,7 +42,7 @@ module.exports = {
 
 
             // loop with increasing percentages
-            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.00001) {
                 // find a wall with less than percentage hits
                 for (let wall of walls) {
                     if (wall.hits / wall.hitsMax < percentage) {
@@ -70,7 +70,6 @@ module.exports = {
             // if we can't fine one
             else {
                 // look for construction sites
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
                 roleBuilder.run(creep);
                 util.repairRoad(creep);
             }

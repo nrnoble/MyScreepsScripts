@@ -1,6 +1,5 @@
 var util = require('Util'); 
-//var fileName = "Lorry       ";
-var fileName = "Store2Link  ";
+var fileName = "Lorry       ";
 
 
 module.exports = {
@@ -8,7 +7,7 @@ module.exports = {
     /** @param {Creep} creep */
     run: function (creep) {
         
-        creep.say ("S2L2!");
+        creep.say ("S2L2");
 
 
 
@@ -36,25 +35,21 @@ module.exports = {
    
        var terminal = creep.room.terminal;
        if (terminal != undefined) {
-            const totalTermainalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store);
-            //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalTermainalEnergy);
-
-            if (util.isRoom(creep,"E45S3")) {
-                if (totalTermainalEnergy > 50000) {
-                    return;
-                }  
-            }
+            const totalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store);
+            //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxAAAA totalEnergy is ' + totalEnergy);
+            if (totalEnergy > 70000) {
+                  return;
+            }  
        }  
 
        
-       
 
         workCheck(creep);
-     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working is ' + creep.memory.working +'</>');
+
         // if creep is supposed to transfer energy to a structure
         if (creep.memory.working == true) {
             // find closest spawn, extension or tower which is not full
-  //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  is supposed to transfer energy to a structure');
+        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  is supposed to transfer energy to a structure');
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
@@ -86,7 +81,7 @@ module.exports = {
         // if creep is supposed to get energy
         else {
            
-        // //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] getting energy is ' +'</>');
+           
 
             // find closest container
 

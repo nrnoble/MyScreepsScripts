@@ -24,11 +24,11 @@ module.exports = {
 
 
         if (creep.room.name == "E44S3") {
-            triggerTime = 160; 
+            triggerTime = 60; 
         }
 
         if (creep.room.name == "E44S2") {
-            triggerTime = 45;
+            triggerTime = 80;
         }
 
         if (creep.room.name == "E45S2") {
@@ -36,7 +36,9 @@ module.exports = {
             var thisCreepDeathTime = 11694700;
 
             triggerTime = 65;
+            
 
+        
         }
 
         if (creep.room.name == "E45S3") {
@@ -116,7 +118,7 @@ module.exports = {
         if (container == null || container == undefined) {
             let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: s => s.structureType == STRUCTURE_CONTAINER 
-        //        && s.store[RESOURCE_ENERGY] < 2001
+                && s.store[RESOURCE_ENERGY] < 2000
             })[0];
         } 
         else if(container == null || container == undefined)
@@ -136,9 +138,10 @@ module.exports = {
             }
             else
             {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] room ['+ creep.room.name +'] ****** Containter is full! Game.Time: ' + Game.time );
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****** Containter is full! Game.Time: ' + Game.time );
                 let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-                    filter: s => s.structureType == STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < 2000
+                    filter: s => s.structureType == STRUCTURE_CONTAINER 
+                    // && s.store[RESOURCE_ENERGY] < 2000
                 })[1];
 
 
@@ -149,10 +152,6 @@ module.exports = {
                     if(currentStoredEngery <= 1999){
                         creep.harvest(source);
                     }
-                    else {
-                        // move towards it
-                        creep.moveTo(container);
-                    }    
 
                 }
                 // if creep is not on top of the container
@@ -174,6 +173,5 @@ module.exports = {
             // move towards it
             creep.moveTo(container);
         }
-        creep.moveTo(container);
     }
 };

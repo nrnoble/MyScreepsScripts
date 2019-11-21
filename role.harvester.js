@@ -34,7 +34,7 @@ module.exports = {
             // energy in room is too low, only supple spawn and extentions. 
             // Skip towers while rooom energy is low.
             if (creep.memory.spawnSourcesOnly == true) {
-         //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  creep.memory.spawnSourcesOnly is set to ' + creep.memory.spawnSourcesOnly);
                 // find closest spawn, extension or tower which is not full
                 var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
@@ -57,16 +57,16 @@ module.exports = {
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
                     || s.structureType == STRUCTURE_EXTENSION
                   //  || s.structureType == STRUCTURE_STORAGE
-                  //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
-                    || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
-                    && s.energy < s.energyCapacity
+                    || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 200 ) ) 
+                  //  || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry))  
+                     && s.energy < s.energyCapacity
             });
 
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 
             if (structure !=  null) {
                 
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
+     //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
         }
         }
 
@@ -82,7 +82,7 @@ module.exports = {
                 // TODO: Hack
                 if( creep.room.name == "E44S2"){    
                     //  console.log("Harvesterstructure is undefined, run as upgrader " + creep.name + " (" + creep.memory.role + ")");
-                    console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
+               //     console.log('[' + fileName +  util.LineNumber() + '] ' +  creep.name + '  structure is undefined, run as builder. Creep role: ' + creep.memory.role);
                     
                     roleBuilder.run(creep);
                 }
@@ -98,7 +98,7 @@ module.exports = {
             // if we found have a structure that needs energy
             if (structure != undefined) {
                 // try to transfer energy, if it is not in range
-                // console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");
+                ////  console.log("roleHarverster.js [line " + util.LineNumber() + "] " + creep.name + " (" + creep.memory.role + ")");
 
 
                 if (creep.lockedTargetId == undefined ) {
@@ -182,7 +182,7 @@ module.exports = {
 
                     if (source == undefined || source == null ) {
                        // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
-                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
+                    //    console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
         
                       roleUpgrader.run(creep);
                         return;

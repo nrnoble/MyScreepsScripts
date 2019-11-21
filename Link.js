@@ -48,10 +48,7 @@ module.exports = {
                     transferUnits = linkSource.energy;
                 }
                 
-                // don't bother to transfer less than 125, otherwise transfer will continue to waste energy sending needlessly.
-                if (linkDestination.energy > 774) {
-                    return -1;
-                }
+        
 
                 var status = linkSource.transferEnergy(linkDestination, transferUnits);
                 if (status == -8) {

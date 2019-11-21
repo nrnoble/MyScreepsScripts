@@ -321,6 +321,12 @@ module.exports = function () {
           //  var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
             var energy = spawn.room.energyCapacityAvailable;
 
+            //energy = 500;
+            if (spawn.room.name == "W1517") {
+                energy = 300;
+            }
+
+
             if (spawn.room.name == "E43S3") {
                 energy = energy - 100;
             }
@@ -328,7 +334,7 @@ module.exports = function () {
 
              var allMyCreepsInRoom = spawn.room.find(FIND_MY_CREEPS);
             // array.forEach(element => {
-                //energy = 300;
+              //  energy = 400;
             // });
             var names;
             for (let name in allMyCreepsInRoom ){
@@ -589,8 +595,8 @@ module.exports = function () {
              
             
             return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
-                role: roleName,
-                orginalRole: roleName,
+                role: 'roleTestCreep',
+                orginalRole: 'roleTestCreep',
                 home: SpawnObj.room.name,
                 target: SpawnObj.room.name,
                 creator: 'Neal R. Noble 2019',
@@ -969,6 +975,7 @@ module.exports = function () {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
 
+
         var numberOfParts = Math.floor(energy / 50);
         for (let i = 0; i < numberOfParts; i++) {
             body.push(CARRY);
@@ -1131,17 +1138,14 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createAttackScout = function (spawn, target) {
            // console.log("Creating a attack Scout");
-            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,RANGED_ATTACK,RANGED_ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
-        // return this.createCreep([TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
-    
-    
-        };
+            return this.createCreep([TOUGH,TOUGH,TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, TOUGH, MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,ATTACK,RANGED_ATTACK], undefined, { role: 'attackScout', spawn: spawn, target: target });
+    };
 
         
     // create a new function for StructureSpawn
-    StructureSpawn.prototype.scout = function (energy, numberOfWorkParts, home, target, sourceIndex) {
+    StructureSpawn.prototype.scout = function (energy, body, home, target, sourceIndex) {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
-        var body = [];
+      //  var body = [];
         // for (let i = 0; i < numberOfWorkParts; i++) {
         //     body.push(WORK);
         // }
@@ -1158,107 +1162,36 @@ module.exports = function () {
         // }
 
 
-        if (energy < 350 )
-        {
-            console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
-        }
-        energy = energy - 350;
+        // if (energy < 350 )
+        // {
+        //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
+        // }
+        // energy = energy - 350;
 
-        body.push(WORK);
-        body.push(WORK);
-        body.push(MOVE);
-        body.push(CARRY);
-        body.push(MOVE);
+        // body.push(WORK);
+        // body.push(WORK);
+        // body.push(MOVE);
+        // body.push(CARRY);
+        //body.push(MOVE);
 
-         var numberOfParts = Math.floor(energy / 100);
-        for (let i = 0; i < numberOfParts; i++) {
-            body.push(CARRY);
-        }
-        for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-            body.push(MOVE);
-        }
+        //  var numberOfParts = Math.floor(energy / 100);
+        // for (let i = 0; i < numberOfParts; i++) {
+        //     body.push(CARRY);
+        // }
+        // for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
+        //     body.push(MOVE);
+        // }
 
         // create creep with the created body
-        return this.createCreep(body, "LDH_" +Game.time, {
+        return this.createCreep(body, "Scout_" + Game.time, {
             role: 'scout',
-            retreat: false,
-            pause: false,
-            group1: 'longDistanceHarvester',
-            group2: 'builder',
-            group3: 'repairer',
-            group4: 'updater',
+            retreat: false,       
             changeRole: false,
             home: home,
             target: target,
             sourceIndex: sourceIndex,
+            creator: 'Neal R. Noble 2019',
             working: false
         });
     };
-
-
-    StructureSpawn.prototype.createRecycler = function (SpawnObj, roleName, energy){
-
-          // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
-          var body = [];
-          // for (let i = 0; i < numberOfWorkParts; i++) {
-          //     body.push(WORK);
-          // }
-  
-          // // 150 = 100 (cost of WORK) + 50 (cost of MOVE)
-          // energy -= 150 * numberOfWorkParts;
-  
-          // var numberOfParts = Math.floor(energy / 100);
-          // for (let i = 0; i < numberOfParts; i++) {
-          //     body.push(CARRY);
-          // }
-          // for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-          //     body.push(MOVE);
-          // }
-  
-  
-        //   if (energy < 350 )
-        //   {
-        //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] unable to create a long distance harvester because energy is less than 350. Energy level is ' + energy);
-        //   }
-
-        body.push(WORK);
-        body.push(MOVE);
-        body.push(CARRY);
-        
-        
-        // var workCost = BODYPART_COST[WORK];
-        // var carryCost = BODYPART_COST[CARRY];
-        // var moveCost = BODYPART_COST[MOVE];
-        
-        energy = energy - BODYPART_COST[WORK] + BODYPART_COST[CARRY];
-        if (energy >= 50) {
-            var numberOfParts = Math.floor(energy / (BODYPART_COST[WORK] + BODYPART_COST[CARRY]));
-            for (let i = 0; i < numberOfParts; i++) {
-                body.push(CARRY);
-                body.push(MOVE);
-    
-            } 
-        }
-
-
-  
-        //    var numberOfParts = Math.floor(energy / 100);
-        //   for (let i = 0; i < numberOfParts; i++) {
-        //       body.push(CARRY);
-        //   }
-        //   for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-        //       body.push(MOVE);
-        //   }
-  
-          // create creep with the created body
-          return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
-            role: roleName,
-            orginalRole: roleName,
-            working: true,
-            home: SpawnObj.room.name,
-            target: SpawnObj.room.name,
-            creator: 'Neal R. Noble 2019',
-            cachedSource: null
-        });
-    }
 };
