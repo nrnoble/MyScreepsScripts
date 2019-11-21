@@ -160,14 +160,14 @@ module.exports.loop = function () {
     
       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] iiiiiiiiiiiiiiiiiiiii invaderCount count is ' + invaderCount);
         if (invaderCount > 0 ) {
-             console.log('[' + fileName + 'line:' + util.LineNumber() + '] iiiiiiiiiiiiiiiiiiiii invaderCount count is ' + invaderCount);
+             console.log('[' + fileName + 'line:' + util.LineNumber() + '] room' + room.name +'] iiiiiiiiiiiiiiiiiiiii invaderCount count is ' + invaderCount);
            // Spawn3.minLDHroom3 = 0;
             if (Spawn3.minLDHroom3Restore == undefined )
             {
                 Spawn3.minLDHroom3Restore = Spawn3.minLDHroom3; 
             } 
           //  Spawn3.minLDHroom3 = 0;
-            Game.notify("invader in the room");
+            Game.notify("invader in the room: " + room.name);
 
             // create an attack invader that targets each invader    
             // Spawn3.attackScout = "E45S3";
