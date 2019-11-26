@@ -1,6 +1,6 @@
 module.exports =
 {
-        function ln() 
+       test: function ln() 
         {
         var e = new Error();
         if (!e.stack)
@@ -12,7 +12,7 @@ module.exports =
                 if (!e.stack) {
                     return 0; // IE < 10, likely
                 }
-            }
+            }asdaaaa
         var stack = e.stack.toString().split(/\r\n|\n/);
         // We want our caller's frame. It's index into |stack| depends on the
         // browser and browser version, so we need to search for the second frame:
@@ -21,5 +21,5 @@ module.exports =
             var frame = stack.shift();
         } while (!frameRE.exec(frame) && stack.length);
         return frameRE.exec(stack.shift())[1];
-    };
+    }
 }

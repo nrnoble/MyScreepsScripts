@@ -1,4 +1,3 @@
-var roleWallRepairer = require('role.wallRepairer');
 var util = require('Util'); 
 var fileName = "LD Harvester ";
 module.exports = {
@@ -7,7 +6,7 @@ module.exports = {
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
-        util.say(creep,"LDH ", 300);
+
         if (creep.ticksToLive == 50) {
            
             var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
@@ -19,27 +18,48 @@ module.exports = {
      
             }
 
-            // check for creeps in room. If any, run wall Repairer
-              // var controller = creep.room.find (FIND_STRUCTURES, {filter: s=> s.structureType == STRUCTURE_CONTROLLER })
-              var controller = creep.room.controller;
-            //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', controller.room is ' + creep.room.controller);
-  
+
+            // if (creep.memory.retreat == true) {
+                
+            //     var spawn = Game.getObjectById (creep.memory.spawnId)
+            //     var status = moveTo(creep.memory.spawn);
+
+            //     // var exit = creep.room.findExitTo(creep.memory.home);
+            //     // // and move to exit
+            //     // creep.moveTo(creep.pos.findClosestByRange(exit));
+            //     // var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+            //     //     // the second argument for findClosestByPath is an object which takes
+            //     //     // a property called filter which can be a function
+            //     //     // we use the arrow operator to define it
+            //     //     filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL,ignoreCreeps: true
+            //     // });
 
 
 
+            // }
 
-              var invaders = controller.room.find(FIND_HOSTILE_CREEPS).length;
-       //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', invaders is  ' + invaders);
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.x is ' + creep.pos.x);
+        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' +  creep.name + ' pos.y is ' + creep.pos.y);
 
-              if (invaders > 0) {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ', ******* WARNING Creep in room. Running LDH as Wall Repairer ');
+        // var structures = null;
+        // try{
+        //     structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+        //     structures.forEach(function(element) {
+        //     console.log(++count + ". " +JSON.stringify (element))});
+        //     console.log();
 
-                    roleWallRepairer.run(creep);
-                    return;
-              }  
+        // }
 
+        // catch(e)
+        // {
 
- 
+        // }
+
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + JSON.stringify(structures));
+        // var count = 0;
+        // structures.forEach(function(element) {
+        // console.log(++count +". " +JSON.stringify (element))});
+        // console.log();
 
         //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);   
         if(creep.memory.pause == true){ return}
@@ -47,20 +67,23 @@ module.exports = {
         // var ttl = creep.ticksToLive;
         // var energyRemaining = creep.carry.energy;
 
+        // if(creep.ticksToLive < 85 && creep.room.name == "E44S3" && creep.carry.energy == 0)
+        // {
+        //     console.log("Time to die: " + creep.name + "(Long Distantance Harvester)");
+        //     creep.suicide();
+        // }
 
         // can't make a full round trip if less than 160 ticks. 35 travel to souce, + 75 mining + 40 travel to link. + 10 ticks padding
-        if(creep.ticksToLive < 225 && creep.room.name == "E43S3" && creep.carry.energy == 0)
+        if(creep.ticksToLive < 160 && creep.room.name == "E44S3" && creep.carry.energy == 0)
         {
-          //  creep.memory.target = "E43S3"
-            creep.memory.role = "builder";
+            creep.memory.target = "E44S3"
+           // creep.memory.role = "harvester";
           
           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + "Switching from LD harvester to upgrader");
             return;
         }
 
 
-
- 
 
         // if ((creep.ticksToLive < 110) && (creep.carry.energy == 0)) {
 
@@ -95,27 +118,18 @@ module.exports = {
                         || s.structureType == STRUCTURE_EXTENSION
                         || s.structureType == STRUCTURE_LINK
                         || s.structureType == STRUCTURE_CONTAINER
-                        || s.structureType == STRUCTURE_STORAGE
                         || s.structureType == STRUCTURE_TOWER)
                         && s.energy < s.energyCapacity
                 });
 
                 
  
-                // if (structure == undefined) {
-                //     structure = creep.room.storage;
-                // }
-
-                // if(structure.structureType == STRUCTURE_STORAGE)
-                // {
-                //     if (creep.store(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
-                //     {
-                //         creep.moveTo(structure);
-                //     }
-                // }
+                if (structure == undefined) {
+                    structure = creep.room.storage;
+                }
 
                 // if we found one
-                 if (structure != undefined) {
+                if (structure != undefined) {
                     // try to transfer energy, if it is not in range
                     if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         // move towards it
@@ -190,7 +204,7 @@ module.exports = {
                 } catch (e) {
                 
                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
-               }
+                }
 
 
 

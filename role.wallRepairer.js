@@ -1,18 +1,12 @@
 var roleBuilder = require('role.builder');
 var util = require('Util'); 
-var fileName = "WallerRepair";
+var fileName = "WallRepair  ";
 
 
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-        if (Game.time % 4 !== 0){
-           //console.log('[' + fileName + 'line:' + util.LineNumber() + '] test ');
-          //do nothing
-            return;
-        }
-        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] test2 ');
 
 
         // if resouces are nearby, attempt to pickup.
@@ -20,6 +14,8 @@ module.exports = {
 
         // check to see if engery == 0 and ttl < 75
         var status = util.SelfSecide(creep);
+
+        var status = util.stayInTargetRoom(creep); 
 
 
         // if creep is trying to repair something but has no energy left
@@ -42,8 +38,13 @@ module.exports = {
 
             var target = undefined;
 
+            
+
+
             // loop with increasing percentages
-            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+            // for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+       
+            for (let percentage = 0.00001; percentage <= 1; percentage = percentage + 0.0001) {
                 // find a wall with less than percentage hits
                 for (let wall of walls) {
                     if (wall.hits / wall.hitsMax < percentage) {
@@ -65,21 +66,31 @@ module.exports = {
                 if (creep.repair(target) == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.moveTo(target, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
                 }
             }
             // if we can't fine one
             else {
                 // look for construction sites
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
                 roleBuilder.run(creep);
+                util.repairRoad(creep);
             }
         }
         // if creep is supposed to get energy
         else {
             // find closest container //s.structureType == STRUCTURE_CONTAINER || 
-            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                    s.store[RESOURCE_ENERGY] > 0
-            });
+            let container = undefined;
+            if (creep.room.name =="E46S1") {
+                container = Game.getObjectById ("5dd7de292ec20e5002db0690");
+            }
+            else{
+
+                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
+                        s.store[RESOURCE_ENERGY] > 0
+                });
+            }
             // if one was found
             if (container != undefined) {
                 // try to withdraw energy, if the container is not in range
@@ -91,8 +102,9 @@ module.exports = {
             else {
                 // find closest source
                 var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+            //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] FIND_SOURCES_ACTIVE is ' + source);
                 // try to harvest energy, if the source is not in range
-                if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                if (creep.harvest(source) != 0) {
                     // move towards it
                     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }

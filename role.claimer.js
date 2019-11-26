@@ -26,14 +26,16 @@ module.exports = {
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.room is '+ creep.room);
             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.room.controller is '+ creep.room.controller);
             if (creep.claimController(creep.room.controller) == ERR_NOT_IN_RANGE) {
+        //    if (creep.attackController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(creep.room.controller)');
                 creep.moveTo(creep.room.controller);
-                myTestPos = new RoomPosition(42, 7, 'E45S2');
-                
+             //   myTestPos = new RoomPosition(42, 7, 'E45S2');
+                var foo = 1;
                 // move towards the controller
                // creep.moveTo(creep.room.controller);
-                creep.moveTo(myTestPos);
-                var claimstatus = creep.reserveController(creep.room.controller);
+            //   creep.moveTo(myTestPos);
+              //  var claimstatus = creep.reserveController(creep.room.controller);
+                var claimstatus = creep.attackController(creep.room.controller);
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' claimstatus is ' + claimstatus );
 
                 //myTestPos = new RoomPosition(42, 8, 'E45S2');
@@ -44,6 +46,10 @@ module.exports = {
             {
 
                 var claimstatus = creep.claimController(creep.room.controller);
+               // var claimstatus = creep.reserveController(creep.room.controller);
+             //   var claimstatus = creep.attackController(creep.room.controller);
+
+
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' claimstatus is ' + claimstatus );
               //  myTestPos = new RoomPosition(42, 8, 'E45S2');
               //  creep.moveTo(myTestPos);

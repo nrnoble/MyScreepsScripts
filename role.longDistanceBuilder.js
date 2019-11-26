@@ -44,9 +44,9 @@ module.exports = {
  
  
                  
-         if (creep.carry.energy == creep.carryCapacity && creep.memory.target != "E44S2")
+         if (creep.carry.energy == creep.carryCapacity && creep.memory.target != "E45S2")
          {
-             creep.memory.target = "E44S2";
+             creep.memory.target = "E45S2";
              console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' Switching target to ' + creep.memory.target);
  
          }
@@ -58,7 +58,9 @@ module.exports = {
             let creepsInRoom = creep.room.find(FIND_MY_CREEPS);
             var numberOfBuilders = _.sum(creepsInRoom, (c) => c.memory.role == 'builder');    
             var numberOfHarvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'harvester');    
-            var numberOfRepairers = _.sum(creepsInRoom, (c) => c.memory.role == 'repairer');    
+            var numberOfRepairers = _.sum(creepsInRoom, (c) => c.memory.role == 'repairer');  
+            var numberOfMiners = _.sum(creepsInRoom, (c) => c.memory.role == 'miner');    
+
          //  console.log("[line " + util.LineNumber() + "] " + ' number of builders in room ' + numberOfRepairers);
           // console.log("[line " + util.LineNumber() + "] " + ' creep.memory.role  is ' + creep.memory.role);
 
@@ -69,16 +71,10 @@ module.exports = {
               Game.creeps[creep.name].memory.role = 'harvester';
               Game.creeps[creep.name].memory.target = "E44S2";
 
-              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' role is now ' + creep.memory.role );
-              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now ' + creep.memory.target );
+              console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' + creep.memory.target );
              
               roleHarvester.run(creep);
-          }
-
-
-
-            if (numberOfRepairers < 1)
-            {
+          } else if (numberOfRepairers < 1){
                 console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' changing role to repairer');
                 Game.creeps[creep.name].memory.role = 'repairer';
                 Game.creeps[creep.name].memory.target = "E44S2";
@@ -86,10 +82,7 @@ module.exports = {
                 console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' role is now ' + creep.memory.role );
                 console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now ' + creep.memory.target );
                // roleRepairer.run(creep);
-            }
-
-
-            if (numberOfBuilders < 1)
+            } else if (numberOfBuilders < 1)
             {
                 console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' changing role to builder');
                 Game.creeps[creep.name].memory.role = 'builder';
@@ -99,6 +92,18 @@ module.exports = {
                 console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now ' + creep.memory.target );
                
                // roleHarvester.run(creep);
+            } else if (numberOfMiners < 1)
+            {
+
+
+            //     console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' changing role to builder');
+            //     Game.creeps[creep.name].memory.role = 'miner';
+            //     Game.creeps[creep.name].memory.target = "E44S2";
+
+            //     console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' role is now ' + creep.memory.role );
+            //     console.log("[line " + util.LineNumber() + "] " +  creep.name  + ' target is now ' + creep.memory.target );
+               
+            //    // roleHarvester.run(creep);
             }
 
 
