@@ -159,19 +159,63 @@ module.exports =
         // if (creep != null && tower.energy > 300)
         if (tower.energy > 699)
         {
-            var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
+
+            // if (tower.room.name == "E46S1") {
+            //     if (structure.structureType == STRUCTURE_ROAD) {
+            //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] structure is ' + structure +'</>');
+            //     }
+            // }
+            var structure
+            if (tower.room.name == "E46S1") {
+                structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
+                    // the second argument for findClosestByPath is an object which takes
+                    // a property called filter which can be a function
+                    // we use the arrow operator to define it
+    //                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL &&   s.structureType != STRUCTURE_RAMPART});
+                    //filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL });
+                    filter: (s) =>  
+                    (s.hits < s.hitsMax && s.structureType == STRUCTURE_ROAD) 
+                  ||(s.hits < s.hitsMax && s.structureType == STRUCTURE_CONTAINER)
+                    //|| s.hits < 350000 && s.structureType == STRUCTURE_WALL
+                 // || (s.hits < s.hitsMax && s.structureType == STRUCTURE_RAMPART)
+                });
+                
+                if (structure == undefined) {
+                    var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
+                        // the second argument for findClosestByPath is an object which takes
+                        // a property called filter which can be a function
+                        // we use the arrow operator to define it
+        //                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL &&   s.structureType != STRUCTURE_RAMPART});
+                        //filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL });
+                        filter: (s) =>  
+                        (s.hits < s.hitsMax && s.structureType == STRUCTURE_ROAD) 
+                     ||(s.hits < s.hitsMax && s.structureType == STRUCTURE_CONTAINER)
+                        //|| s.hits < 350000 && s.structureType == STRUCTURE_WALL
+                        || (s.hits < 1005000 && s.structureType == STRUCTURE_RAMPART)
+                    });
+                }
+
+            }else{
+
+
+            structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
 //                filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL &&   s.structureType != STRUCTURE_RAMPART});
                 //filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL });
                 filter: (s) =>  
-                s.hits < s.hitsMax && s.structureType == STRUCTURE_ROAD 
-                || s.hits < s.hitsMax && s.structureType == STRUCTURE_CONTAINER
+                (s.hits < s.hitsMax && s.structureType == STRUCTURE_ROAD) 
+                || (s.hits < s.hitsMax && s.structureType == STRUCTURE_CONTAINER)
                 //|| s.hits < 350000 && s.structureType == STRUCTURE_WALL
-                || s.hits < 1005000 && s.structureType == STRUCTURE_RAMPART
+                || (s.hits < 1005000 && s.structureType == STRUCTURE_RAMPART)
             });
-
+         }
+            // if (tower.room.name == "E46S1") {
+            //     if (structure.structureType == STRUCTURE_ROAD) {
+            //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] structure is ' + structure +'</>');
+            //     }
+            // }
 //             var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
 //                 // the second argument for findClosestByPath is an object which takes
 //                 // a property called filter which can be a function
@@ -214,12 +258,21 @@ module.exports =
                         if (structure.pos.isEqualTo(reserveredLocation)) {
                             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] rampart found is ' +'</>');
                         }
+
+
+                        var maxRampartHits = 1005000;
+                        if (tower.room.name == "E46S1") {
+                        //    maxRampartHits =  tower.room.spawn.maxRampartHits; 
+                            maxRampartHits = 117000;
+                           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] maxRampartHits is ' + maxRampartHits +'</>');
+                        }
+
                         
-                        if (structure.hits < 1005000) {
+                        if (structure.hits < maxRampartHits) {
                              
                          
                         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is '+ structure.hits + " type  is " + structure.structureType);
-                            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is '+ structure.hits + " type  is " + structure.structureType +'</>');
+                           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is '+ structure.hits + " type  is " + structure.structureType +'</>');
                             var status = tower.repair(structure);
                         }
                     }
@@ -244,7 +297,8 @@ module.exports =
                        // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Else Repairing structure is '+ structure.hits + " type  is " + structure.structureType + '</>');
                         var status = tower.repair(structure);
                         if(status != 0){
-                         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tower is repairing ' + structure.structureType + '". Repair Status is ' + status);      
+                        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] tower is repairing status is ' + status +'</>');
+                        //    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  tower is repairing ' + structure.structureType + '". Repair Status is ' + status);      
                         }
 
                      }

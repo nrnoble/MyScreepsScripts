@@ -117,21 +117,40 @@ module.exports = {
         }
 
 
+
        // ********************************************************************************//;
        //  // else creep is supposed to harvest energy from source
        // ********************************************************************************//;
         else {
 
           //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is " + creep.memory.working + ", " + creep.name + ", (" + creep.memory.role + ")");
-            
-            let ClosestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                // the second argument for findClosestByPath is an object which takes
-                // a property called filter which can be a function
-                // we use the arrow operator to define it
-                // filter: s => s.structureType == STRUCTURE_STORAGE &&
-                filter: s => s.structureType == STRUCTURE_CONTAINER &&
-                s.store[RESOURCE_ENERGY] > 75
-            });
+          let ClosestContainer = undefined;
+
+          if (creep.room.name == "E46S1" && creep.memory.primarySource != undefined) {
+ 
+            var target = creep.memory.primarySource;
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
+            var primarySource = Game.flags[target];
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
+         //   ClosestContainer = creep.pos.findClosestByPath(primarySource)
+             ClosestContainer = primarySource.pos.findClosestByPath(FIND_STRUCTURES, {
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                });
+           
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer +'</>');
+    }
+    
+            else{
+
+                ClosestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    // the second argument for findClosestByPath is an object which takes
+                    // a property called filter which can be a function
+                    // we use the arrow operator to define it
+                    // filter: s => s.structureType == STRUCTURE_STORAGE &&
+                    filter: s => s.structureType == STRUCTURE_CONTAINER &&
+                    s.store[RESOURCE_ENERGY] > 75
+                });
+            }
 
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
 

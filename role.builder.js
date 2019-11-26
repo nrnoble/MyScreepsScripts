@@ -33,7 +33,7 @@ module.exports = {
 
 
         if (creep.room.name == "E46S3") {
-            return
+           // return
         }
 
 
@@ -139,6 +139,21 @@ module.exports = {
         
                 });
             }
+           // else if (creep.room.name == "E46S1" && creep.memory.primarySource != undefined) {
+            else if (creep.memory.primarySource != undefined) {
+ 
+                    var target = creep.memory.primarySource;
+                 //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
+                    var primarySource = Game.flags[target];
+                  //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
+                 //   ClosestContainer = creep.pos.findClosestByPath(primarySource)
+                      ClosestContainer = primarySource.pos.findClosestByPath(FIND_STRUCTURES, {
+                        filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                        });
+                   
+                 //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer +'</>');
+            }
+            
             else{
 
             container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -150,6 +165,10 @@ module.exports = {
 
                 });
             }
+            var source1 = Game.getObjectById("5bbcafc09099fc012e63b1c8");
+           // container = creep.pos.findClosestByPath(source1);
+            container = creep.room.storage;
+
         }
         // if one was found
         if (container != undefined) {
@@ -160,6 +179,7 @@ module.exports = {
                 // move towards it
                 creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
+
         }
         else {
             // find closest source

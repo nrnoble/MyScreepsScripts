@@ -42,7 +42,9 @@ module.exports = {
 
 
             // loop with increasing percentages
-            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+            // for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+       
+            for (let percentage = 0.00001; percentage <= 1; percentage = percentage + 0.0001) {
                 // find a wall with less than percentage hits
                 for (let wall of walls) {
                     if (wall.hits / wall.hitsMax < percentage) {
@@ -78,10 +80,17 @@ module.exports = {
         // if creep is supposed to get energy
         else {
             // find closest container //s.structureType == STRUCTURE_CONTAINER || 
-            let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                    s.store[RESOURCE_ENERGY] > 0
-            });
+            let container = undefined;
+            if (creep.room.name =="E46S1") {
+                container = Game.getObjectById ("5dd7de292ec20e5002db0690");
+            }
+            else{
+
+                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
+                        s.store[RESOURCE_ENERGY] > 0
+                });
+            }
             // if one was found
             if (container != undefined) {
                 // try to withdraw energy, if the container is not in range

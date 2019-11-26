@@ -8,7 +8,7 @@ module.exports = {
     /** @param {Creep} creep */
     run: function (creep) {
         
-        creep.say ("S2L2!");
+     //   creep.say ("S2L2!");
 
 
 
@@ -41,7 +41,7 @@ module.exports = {
 
             if (util.isRoom(creep,"E45S3")) {
                 if (totalTermainalEnergy > 50000) {
-                    return;
+                  //  return;
                 }  
             }
        }  

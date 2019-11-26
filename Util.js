@@ -415,6 +415,11 @@ module.exports =
             var structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
          //   console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);
            
+            var workParts = creep.getActiveBodyparts(WORK);
+            if (workParts == 0) {
+                return -1;
+            }
+
             if (structures == undefined || structures == [])
             {
                 return;
@@ -424,8 +429,12 @@ module.exports =
 
                 if (road.hits < road.hitsMax) {
                     var repairStatus = creep.repair(road);
-                   // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
-                  break;
+                   if (creep.room.name == "E46S1") {
+                //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
+                    // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                   }                   
+
+                    break;
                 }
                  
               }

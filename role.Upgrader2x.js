@@ -171,7 +171,7 @@ module.exports = {
         
           if (creep.ticksToLive < triggerTime  + timeToDie - travelTime) {
             var spawn = creep.room.find(FIND_MY_SPAWNS)[0];     
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name +'] trying to create a new Upgrader2x is </>');
+        //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name +'] trying to create a new Upgrader2x is </>');
             
             
              

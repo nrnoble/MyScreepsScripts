@@ -146,6 +146,7 @@ module.exports = {
 
         else {
 
+
             var ClosestContainer
             if (util.isRoom(creep,"E44S2")) {
                  ClosestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
@@ -172,6 +173,9 @@ module.exports = {
                //filter: s => s.structureType == STRUCTURE_TERMINAL
             
             });
+
+       //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room [' + creep.room.name + '] ClosestContainer is ' + ClosestContainer +'</>');
+
         }
 
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);

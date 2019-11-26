@@ -1,20 +1,21 @@
 var util = require('Util'); 
-var fileName = "Upgrader    ";
+var fileName = "UpgraderTS  ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-
-    //    creep.say ("up: " + + creep.ticksToLive);
+//return;
+    //    creep.say ("UpgraderTS: " + + creep.ticksToLive);
 
         //util.mySign(creep,"E44S2","Last of the Mohicans");
-        //util.mySign(creep,"E46S1","Last of the Mohicans");
+       // util.mySign(creep,"E45S2","Last of the Mohicans");
 
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
         var status = util.stayInTargetRoom(creep); 
+        util.TimeToDie(creep,55,0);
 
-       util.say(creep,"up ",300);
+       util.say(creep,"upTS ",300);
        util.stayInTargetRoom(creep);
 
        // if (creep.ticksToLive == 50) {
@@ -73,9 +74,17 @@ module.exports = {
         // if creep is bringing energy to the controller but has no energy left
         var workStatus = workCheck(creep);
 
-        // if creep is supposed to transfer energy to the controller
+
+        // ********************************************************************************//;
+        // // if creep is supposed to transfer energy to the controller
+        // ********************************************************************************//;
+      
         if (creep.memory.working == true) {
-           // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
+          
+            // var siteObjId = "5dda8c5998e0dc34905dcd2f";
+            // var site = Game.getObjectById(siteObjId);
+
+            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
             
             // instead of upgraderController we could also use:
@@ -93,33 +102,18 @@ module.exports = {
               //  console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading controller");
                 // find closest container //s.structureType == STRUCTURE_CONTAINER || 
                var status = creep.upgradeController(creep.room.controller);
-               // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading status " + status);
-
+            //    console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading status " + status);
+              
+              if (creep.room.name == "E46S1") {
+                
+              
+                //  creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+              }
                 
 
             }
         }
-        // if creep is supposed to get energy
-        // else{ 
-        //     // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working != true)");
-        //     // find closest container //s.structureType == STRUCTURE_CONTAINER || 
-        //     let link = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        //         filter: s => (s.structureType == STRUCTURE_LINK) && s.energy > 0});
-        //         if (creep.room.name == "E44S3" && link != null && link != undefined){
-        //            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' link engery is ' + link);
-        //           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' link engery is ' + link.energy);
-        
-        //         }
-        //     if (link != undefined)
-        //     {
-        //         console.log('[' + fileName + 'line:' + util.LineNumber() + '] Link found ');
-        //         // try to withdraw energy, if the container is not in range
-        //         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        //             // move towards it
-        //             // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
-        //             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
-        //         }
-        //     }
+
             else{
                 let container
                 if (util.isRoom(creep,"E44S2")) {
@@ -147,6 +141,13 @@ module.exports = {
                     });
                 }
                 // if one was found
+
+
+                // hack
+
+                container = Game.getObjectById(creep.memory.SourceObjId);
+      //          console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] HACK HACK HACK container is ' + container +'</>');
+
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
                     if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {

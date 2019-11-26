@@ -12,12 +12,17 @@ module.exports = {
      util.say(creep,"mine ",300);
     util.stayInTargetRoom(creep);
     util.pickupResources(creep,2);
+    util.repairRoad(creep);
 //
  //   if (creep.room.name == "E45S2") {
       
      //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
         var triggerTime = 100;
      
+        if (creep.room.name == "E46S1") {
+            triggerTime = 100;
+        }
+
         if (creep.room.name == "E43S3") {
             triggerTime = 65;
         }

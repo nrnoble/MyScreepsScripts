@@ -989,7 +989,35 @@ module.exports = function () {
         });
     }; 
 
+    StructureSpawn.prototype.createUpgraderTargetedSource = function (SpawnObj, roleName, energy, SourceObjectId) {
+        // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
+        var body = [];
+        var hackSource = "5dd744506630d0129c98220d" // room E46S1 ruin object of a storage with over 500K energy
+        //energy= energy *2;
+        var numberOfParts = Math.floor(energy / 200);
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] energy is ' + energy +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] numberOfParts is ' + numberOfParts +'</>');
+        for (let i = 0; i < numberOfParts; i++) {
+            body.push(WORK);
+            body.push(CARRY);
+            body.push(MOVE);
+
+        }
+
+            
         
+        return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
+            role: roleName,
+            orginalRole: roleName,
+            working: true,
+            home: SpawnObj.room.name,
+            target: SpawnObj.room.name,
+            SourceObjId: SourceObjectId,
+            creator: 'Neal R. Noble 2019',
+            cachedSource: null
+        });
+    }; 
+
     StructureSpawn.prototype.createCustomeBuilder = function (SpawnObj, roleName, energySource, targetStructure) {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
