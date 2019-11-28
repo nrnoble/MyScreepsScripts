@@ -13,7 +13,7 @@ var fileName = "test   ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-    //   return;
+      return;
     
 
     
@@ -40,10 +40,10 @@ module.exports = {
             // Do not transfer if Terminal has enough energy, 
             // Do not transfer if Storage is too low on energy
             // ********************************************************************************//;
-            if (termEnergyAvailable > 300000 || StorageEnergyAvailable < 100000) {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Energy is full' + '/ +>');
-                    return;
-            }
+            // if (termEnergyAvailable > 300000 || StorageEnergyAvailable < 100000) {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Energy is full' + '/ +>');
+            //     //    return;
+            // }
 
         }
 

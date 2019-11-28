@@ -30,7 +30,7 @@ module.exports = {
         // }
 
         //return;
-    //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running flag to flag harvester ');
+     // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running flag to flag harvester ');
 
         // var spawn = creep.room.spawn.name;
         // var flagSource = creep.memory.flagSource;
@@ -105,17 +105,25 @@ module.exports = {
                 //     && s.energy >= creep.carryCapacity /2
             });
 
+            if (creep.room.name == "E45S2") {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Container is ' + structure +'</>');
+                if (structure !=  null) {
+                
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
+                }
+            }
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 
-            if (structure !=  null) {
-                
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
-        }
+
         }
 
 
 
         if (structure == undefined) {
+           
+
+           
+           
             //  console.log("structure structure is undefined " + creep.name + " (" + creep.memory.role + ")");
             structure = creep.room.storage;
             if (structure == undefined)
@@ -165,8 +173,14 @@ module.exports = {
         // ********************************************************************************//;
         
         else {
+            // if (creep.room.name == "E45S2") {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxContainer is ' + structure +'</>');
+    
+            // }
+            // if (creep.room.name == "E45S2") {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxContainer is ' + structure +'</>');
 
-
+            // }
 //            var flagSource = Game.flags["Source_" + creep.room.name];    
             var flagSource = Game.flags[creep.memory.flagSource.name];    
 
@@ -179,6 +193,11 @@ module.exports = {
                 filter: s => s.structureType == STRUCTURE_CONTAINER
                  && s.store[RESOURCE_ENERGY] > 0
             });
+
+            // if (creep.room.name == "E45S2") {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] ClosestContainer is ' + ClosestContainer +'</>');
+            // }
+
 
             let containers = flagSource.pos.findInRange(FIND_STRUCTURES, 2, {
                 filter: s => s.structureType == STRUCTURE_CONTAINER

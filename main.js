@@ -447,7 +447,7 @@ module.exports.loop = function () {
                
            
            // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  WARNING WARNING WARNING Room E43S3 as been disabled </>');
-            continue;
+         //   continue;
              }
         }
 
@@ -459,7 +459,7 @@ module.exports.loop = function () {
                
             if (Game.time % 2 == 0) {
                 // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  WARNING WARNING WARNING Room E43S3 as been disabled </>');
-                 continue;
+         //        continue;
                   }
                
                 }
@@ -754,15 +754,15 @@ module.exports.loop = function () {
             var storageEnergy = spawn.room.storage.store.energy;
             var terminalEnergy = spawn.room.terminal.store.energy;
          
-            // disable the spawning of Tester spawn when Terminal is almost full
-            if (terminalEnergy > 290000) {
-                spawn.memory.minTesters = 0;
-            }
+            // // disable the spawning of Tester spawn when Terminal is almost full
+            // if (terminalEnergy > 290000) {
+            //     spawn.memory.minTesters = 0;
+            // }
 
-            // enable the spawning of Tester spawn when terminal energy falls below a specified value 
-            if (terminalEnergy < 250000) {
-                spawn.memory.minTesters = 1;                
-            }
+            // // enable the spawning of Tester spawn when terminal energy falls below a specified value 
+            // if (terminalEnergy < 250000) {
+            //     spawn.memory.minTesters = 1;                
+            // }
 
 
           //  console.log('<font color ="yellow" >[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxstorageEnergy is ' + storageEnergy+ '</>');
@@ -779,7 +779,7 @@ module.exports.loop = function () {
             var TargetLinkobj = storageLinkObj;
             var backupTargetLinkObj = controllerLinkObj;
             if (controllerLinkEngery < 600) {
-                TargetLinkobj = controllerLinkObj;
+            //    TargetLinkobj = controllerLinkObj;
                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
             }
 
@@ -807,7 +807,12 @@ module.exports.loop = function () {
             }
             else{
                 var status3 = link.transferEnergy(source2LinkObj,TargetLinkobj);
-                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+
+                var status1 = link.transferEnergy(source1LinkObj,storageLinkObj);              
+                var status4 = link.transferEnergy(source2LinkObj,storageLinkObj);
+
+                var status2 = link.transferEnergy(source1LinkObj,backupTargetLinkObj);
+                //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
 
             }
 
@@ -935,22 +940,26 @@ module.exports.loop = function () {
             if (storageEnergy > 76000) {
                 var status1 = link.transferEnergy(source1LinkObj,TargetLinkobj);
                 if (status1 == -7 || status1 == -8 || status1 == -11) { 
-                  //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
+                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status1 is ' + status1 + '</>');
                      var status2 = link.transferEnergy(source1LinkObj,backupTargetLinkObj);
-                 //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
+                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status2 is ' + status2 + '</>');
                 }
      
                 var status4 = link.transferEnergy(source2LinkObj,TargetLinkobj);
                 if (status4 == -7 || status4 == -8 || status4 == -11 ) { 
-                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
+                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status4 is ' + status4 + '</>');  
                      var status3 = link.transferEnergy(source2LinkObj,backupTargetLinkObj);
-                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
                 }
            
             }
             else{
                 var status3 = link.transferEnergy(source2LinkObj,storageLinkObj);
-                   //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] status3 is ' + status3 + '</>');
+
+                //TODO: Are these lines needed?
+                var status2 = link.transferEnergy(source1LinkObj,backupTargetLinkObj);
+                var status1 = link.transferEnergy(source1LinkObj,TargetLinkobj);
 
             }
 

@@ -29,7 +29,7 @@ module.exports = {
 
 
         if (creep.room.name == "E44S3") {
-            triggerTime = 160; 
+            triggerTime = 60; 
         }
 
         if (creep.room.name == "E44S2") {
@@ -40,7 +40,7 @@ module.exports = {
             var creep2xDeathTime = 11694653;
             var thisCreepDeathTime = 11694700;
 
-            triggerTime = 65;
+            triggerTime = 75;
 
         }
 
