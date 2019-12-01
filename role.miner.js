@@ -1,24 +1,25 @@
-var util = require('Util'); 
+var util = require('Util');
 var fileName = "Miner       ";
 
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
         // get source
-    
-     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
-     
-     // death warning
-     util.say(creep,"mine ",300);
-    util.stayInTargetRoom(creep);
-    util.pickupResources(creep,2);
-    util.repairRoad(creep);
-//
- //   if (creep.room.name == "E45S2") {
-      
-     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+
+        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] the creep name is ' +  creep.name + '  ');
+
+        // death warning
+        util.say(creep, "mine ", 300);
+        util.stayInTargetRoom(creep);
+        util.pickupResources(creep, 2);
+        util.repairRoad(creep);
+        //
+        //   if (creep.room.name == "E45S2") {
+
+
+        /* #region  Respawn before death */
         var triggerTime = 100;
-     
+
         if (creep.room.name == "E46S1") {
             triggerTime = 100;
         }
@@ -29,7 +30,7 @@ module.exports = {
 
 
         if (creep.room.name == "E44S3") {
-            triggerTime = 60; 
+            triggerTime = 160;
         }
 
         if (creep.room.name == "E44S2") {
@@ -45,89 +46,96 @@ module.exports = {
         }
 
         if (creep.room.name == "E45S3") {
-            triggerTime = 35;
+            triggerTime = 60;
         }
 
 
-      
+
+
+        /* #region  Call Respawn XX ticks before death. Don't randomally mess with logic.  */
         if (creep.ticksToLive < triggerTime) {
-          
+
             //5bbcaf979099fc012e63ad55 is room source ID
-            var spawn = creep.room.find(FIND_MY_SPAWNS)[0];      
+            var spawn = creep.room.find(FIND_MY_SPAWNS)[0];
             var respawnStatus = creep.memory.respawn;
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+            // respawnStatus = undefined;
+            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
             if (respawnStatus == undefined) {
                 var name;
-                var status 
-                
-                
+                var status
+
+                //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
+
+
 
 
                 name = spawn.createMiner(spawn, creep.memory.sourceId);
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creating miner is ' + name + ' </>');
                 var spawnStats = false;
                 if (spawn.spawning != null) {
-                    spawnStatus =  spawn.spawning.name.includes("mine");
+                    spawnStatus = spawn.spawning.name.includes("mine");
                 }
-             
-               
+
+
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name);
 
 
                 if (name == -4 && spawnStatus == true) {
-                   creep.memory.respawn = false;
-                
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! spawn.name ' + spawn.name +",   spawn.spawning.name.includes('mine') is "+ status);
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');                
-                   
-                 
-                 
-                   console.log('[' + fileName + 'line:' + util.LineNumber() + '] X!C!CC!C!!!CC!C! creep.memory.respawn is ' + creep.memory.respawn);
+                    creep.memory.respawn = false;
+
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  spawn.name ' + spawn.name + ",   spawn.spawning.name.includes('mine') is " + status);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ********************************************************************************');
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
+
+
+
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.respawn is ' + creep.memory.respawn);
 
                 }
             }
         }
 
+        /* #endregion */
 
- //   }
+        //   }
 
-     if (creep.ticksToLive == 75) {
-           
-        var spawns =  creep.room.find(FIND_MY_STRUCTURES, {
-             filter: { structureType: STRUCTURE_SPAWN}
-         });
-         
-         var Spawn1 = spawns[0];
-         spawns[0].memory.spawnMiner = false;
- 
+        if (creep.ticksToLive == 75) {
+
+            var spawns = creep.room.find(FIND_MY_STRUCTURES, {
+                filter: { structureType: STRUCTURE_SPAWN }
+            });
+
+            var Spawn1 = spawns[0];
+            spawns[0].memory.spawnMiner = false;
+
         }
 
-//#Miner
+        /* #endregion */
 
-        util.pickupResources(creep,0); //5bbcafa89099fc012e63af90
 
-        util.repairRoad(creep);
-        //let source = Game.getObjectById(creep.memory.sourceId); 5bbcaf979099fc012e63ad59
+
+
+
+
         let source = Game.getObjectById(creep.memory.sourceId);
         // find container next to source
         let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-            filter: s => s.structureType == STRUCTURE_CONTAINER 
-            && s.store[RESOURCE_ENERGY] < 2000
+            filter: s => s.structureType == STRUCTURE_CONTAINER
+                && s.store[RESOURCE_ENERGY] < 2001
         })[0];
 
-        
+
         if (container == null || container == undefined) {
             let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-                filter: s => s.structureType == STRUCTURE_CONTAINER 
-        //        && s.store[RESOURCE_ENERGY] < 2001
+                filter: s => s.structureType == STRUCTURE_CONTAINER
+                //        && s.store[RESOURCE_ENERGY] < 2001
             })[0];
-        } 
-        else if(container == null || container == undefined)
-        {
-           // console.log("Role.miner Unable to find a container " + container);
-            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  '+ creep.name + ', '+ creep.room.name + ', Unable to find a container. Container is ' + container  );
+        }
+        else if (container == null || container == undefined) {
+            // console.log("Role.miner Unable to find a container " + container);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ' + creep.name + ', ' + creep.room.name + ', Unable to find a container. Container is ' + container);
             return;
         }
 
@@ -135,13 +143,12 @@ module.exports = {
         if (container != null && creep.pos.isEqualTo(container.pos)) {
             // harvest source
             const currentStoredEngery = _.sum(container.store);
-          
-            if(currentStoredEngery <= 1999){
+
+            if (currentStoredEngery <= 1999) {
                 creep.harvest(source);
             }
-            else
-            {
-                console.log('[' + fileName + 'line:' + util.LineNumber() + '] room ['+ creep.room.name +'] ****** Containter is full! Game.Time: ' + Game.time );
+            else {
+                console.log('[' + fileName + 'line:' + util.LineNumber() + '] room [' + creep.room.name + '] ****** Containter is full! Game.Time: ' + Game.time);
                 let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
                     filter: s => s.structureType == STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < 2000
                 })[1];
@@ -150,28 +157,28 @@ module.exports = {
                 if (container != null && creep.pos.isEqualTo(container.pos)) {
                     // harvest source
                     const currentStoredEngery = _.sum(container.store);
-                  
-                    if(currentStoredEngery <= 1999){
+
+                    if (currentStoredEngery <= 1999) {
                         creep.harvest(source);
                     }
                     else {
                         // move towards it
                         creep.moveTo(container);
-                    }    
+                    }
 
                 }
                 // if creep is not on top of the container
                 else {
                     // move towards it
                     creep.moveTo(container);
-                }      
+                }
 
 
 
 
 
 
-                
+
             }
         }
         // if creep is not on top of the container

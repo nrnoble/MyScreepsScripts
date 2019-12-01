@@ -13,7 +13,7 @@ var fileName = "test   ";
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
-      return;
+    //  return;
     
 
     
