@@ -1,11 +1,11 @@
 var util = require('Util'); 
-var fileName = "memory";
+var fileName = "memory    ";
 
 module.exports = {
     // a function to run the logic for this role
     init: function (spawnObj) {
     
-    Game.spawns['Spawn1'].memory.foo = test    
+   
     
     if (spawnObj.memory == undefined)
     {

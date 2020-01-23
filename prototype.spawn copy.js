@@ -7,9 +7,6 @@ module.exports = function () {
     StructureSpawn.prototype.createCustomCreep =
         function(energy, roleName) {
             // create a balanced body as big as possible with the given energy
-           
-           
-           
             var numberOfParts = Math.floor(energy / 200);//
           //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] Role is ' + roleName + ', energy is ' + energy  );
             var body = [];
@@ -772,8 +769,8 @@ module.exports = function () {
         // body.push(WORK);
         body.push(CARRY);
         body.push(CARRY);
-        // body.push(CARRY);
-        // body.push(CARRY);
+        body.push(CARRY);
+        body.push(CARRY);
       //  body.push(CARRY);
      //   body.push(CARRY);
         // body.push(CARRY);
@@ -1024,7 +1021,7 @@ module.exports = function () {
 
         var numberOfParts = undefined;
 
-        if (SpawnObj.room.name == "E43S3" || SpawnObj.room.name == "E45S3" || SpawnObj.room.name == "E46S3") {
+        if (SpawnObj.room.name == "E45S3" || SpawnObj.room.name == "E46S3") {
             body.push(WORK);
             body.push(WORK);
             body.push(WORK);
@@ -1042,25 +1039,12 @@ module.exports = function () {
 
         }
         else{
-            // numberOfParts = Math.floor(energy / 50);
-            // for (let i = 0; i < numberOfParts; i++) {
-            //     body.push(CARRY);
-            //     body.push(MOVE);
-
-            // }
-             numberOfParts = Math.floor(energy / 200);//
-            
-            
-            for (let i = 0; i < numberOfParts; i++) {
-                body.push(WORK);
-            }
+            numberOfParts = Math.floor(energy / 50);
             for (let i = 0; i < numberOfParts; i++) {
                 body.push(CARRY);
-            }
-            for (let i = 0; i < numberOfParts; i++) {
                 body.push(MOVE);
-            }
 
+            }
 
 
     }
@@ -1385,26 +1369,4 @@ module.exports = function () {
             cachedSource: null
         });
     }
-
-
-    Room.prototype.getSpawns = function(){
-        var spawns = this.find(FIND_MY_SPAWNS);
-        this.getFirstSpawn  = this.find(FIND_MY_SPAWNS)[0];
-        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] this.getFirstSpawn is ' + this.getFirstSpawn +'</>');
-        return spawns;
-    };
-
-    Room.prototype.Test = functionTest();
-
-    // Room.prototype.getFirstSpawn = function(){
-    //     return this.getSpawns()[0];
-    // };
-
-   //Room.prototype.getFirstSpawn =  Room.getFirstSpawn();
-
 };
-
-function functionTest() {
-    
-    return "FooBarTest";
-}

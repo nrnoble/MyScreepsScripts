@@ -4,7 +4,6 @@
 // import modules
 require('prototype.spawn')();
 //var events = require('events');
-require('traveler');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -42,7 +41,17 @@ var roleTerminalToStorage = require("role.terminalToStorage");
 
 var fileName = "Main        ";
 
- 
+
+// var allRoomsRun = true;
+// var runRoomE44S3 = true;
+// var runRoomE44S2 = true;
+// var runRoomE43S3 = true;
+
+
+// var runRoomE45S3 = true;
+// var runRoomE45S2 = true;
+
+// var runRoomE46S3 = true;
 
 
 
@@ -78,20 +87,16 @@ console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
 
 let consoleDelay = 5;
 let unitsToTransfer = 51000;
-unitsToTransfer = 200000; //test
+//unitsToTransfer = 100000;
 
-  
-//term.transferEnergy("E44S2","E46S3",100000);  //test
 
-//term.transferEnergy("E45S2","E46S3",unitsToTransfer); 
+//term.transferEnergy("E45S2","E45S3",310); 
 
 //term.transferEnergy("E45S2","E43S3",unitsToTransfer); 
 
 // term.transferEnergy("E43S3","E45S3",unitsToTransfer); 
 
-//var Memory.
-
-//term.transferEnergy("E44S3","E45S3",unitsToTransfer);  
+//term.transferEnergy("E44S3","E43S3",unitsToTransfer);  
 //term.transferEnergy("E44S3","W15S17",1000);  
 
 //term.transferEnergy("E46S3","E45S3",unitsToTransfer);  //
@@ -132,15 +137,15 @@ module.exports.loop = function () {
     var energyRemainging;
 
     if (Memory.halt == true) {
-        console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] WARNING! All scripts have been suspended. Memory.halt is ' + Memory.halt + '</>');
-        new RoomVisual(sp1.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
+        console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] WARNING! All scripts have been suspended. Memory.halt is ' + Memory.halt +'</>');
+        new RoomVisual(sp1.name).text(Game.cpu.bucket, 1, 1, {color: 'green', font: 0.8}); 
         return;
     }
 
     // *************************************************************************************************************************
     // check for invaders in reserved room E45S3
     // *************************************************************************************************************************
-
+    
     /* #region Invader handling Dead code */
 
     // // try {
@@ -444,21 +449,21 @@ module.exports.loop = function () {
 
 
         var creep = Game.creeps[name];
-        var cpuThrottle = Memory.cpuThrottle; // 2 is 50% 4= is 25% 
-        if (Game.time % cpuThrottle == 0) {
-            sameSpawn = true
-            if (Game.time % 100 == 0) {
-                if (sameSpawn) {
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
+            var cpuThrottle =  Memory.cpuThrottle; // 2 is 50% 4= is 25% 
+            if (Game.time % cpuThrottle == 0) {
+                sameSpawn = true
+                if (Game.time % 100 == 0) {
+                    if (sameSpawn) {
+                        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
 
+                    }
                 }
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time +'</>');
+                continue;
             }
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time + '</>');
-            continue;
-        }
-
 
         
+
 
 
 
@@ -656,7 +661,7 @@ module.exports.loop = function () {
     /* #region Loop through Spawns */
     for (let spawnName in Game.spawns) {
 
-
+        
 
 
 
@@ -672,7 +677,7 @@ module.exports.loop = function () {
         let spawn = Game.spawns[spawnName];
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
-        new RoomVisual(spawn.room.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
+        new RoomVisual(spawn.room.name).text(Game.cpu.bucket, 1, 1, {color: 'green', font: 0.8}); 
         if (spawn.room.name == "E46S1") {
 
             var currentRoom = spawn.room;
@@ -736,10 +741,7 @@ module.exports.loop = function () {
 
         // #Term trottle
         if (spawn.room.name == "E44S3") {
-            term.throttledTransfer("E44S3", "E46S1", 400, 150500, 295500, debug = false);
-           // term.throttledTransfer("E44S2", "E46S3", 400, 150500, 295500, debug = false);
-            //term.throttledTransfer("E45S2", "E46S3", 400, 150500, 295500, debug = false);
-           
+            term.throttledTransfer("E44S3", "E43S3", 400, 200500, 295500, debug = false);
 
             // link next to storage 5d46b9cad16c4b73af5c1269
             // link next to controller 5d9fd0108fad390001e30945
@@ -909,7 +911,7 @@ module.exports.loop = function () {
         if (spawnName == "Spawn3") {
 
 
-            //   term.throttledTransfer("E45S2", "E45S3", 500, 200000, 46000, false);
+         //   term.throttledTransfer("E45S2", "E45S3", 500, 200000, 46000, false);
 
             const terminalEnergyE45S2 = spawn.room.terminal.store.energy;
             var storageEnergyE45S2 = spawn.room.storage.store.energy;
@@ -973,7 +975,7 @@ module.exports.loop = function () {
             }
 
             // enable the spawning of Tester spawn when terminal energy falls below a specified value 
-            if (terminalEnergyE45S2 < 250000 && storageEnergyE45S2 > 500000) {
+            if (terminalEnergyE45S2 < 250000 && storageEnergyE45S2 > 500000 ) {
                 spawn.memory.minTesters = 1;
             }
 
@@ -1101,9 +1103,9 @@ module.exports.loop = function () {
         var numberOfLink2Harvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'link2Harvester');//  
         var numberOfRepairRamparts = _.sum(creepsInRoom, (c) => c.memory.role == 'repairRampart');//  
         var numberOfRecyclers = _.sum(creepsInRoom, (c) => c.memory.role == 'recycler');//  
-        var numberOfUpgraderTargetedSource = _.sum(creepsInRoom, (c) => c.memory.role == 'upgraderTargetedSource');
+        var numberOfUpgraderTargetedSource = _.sum(creepsInRoom, (c) => c.memory.role == 'upgraderTargetedSource'); 
         var numberOfTerminalToStorage = _.sum(creepsInRoom, (c) => c.memory.role == 'terminalToStorage');// roleTerminalToStorage 
-
+       
 
         var numberOfStorageToExt = _.sum(creepsInRoom, (c) => c.memory.role == 'storageToExt');// 
 
@@ -1128,23 +1130,24 @@ module.exports.loop = function () {
 
 
         var numberOfLDBuilders = _.sum(creepsInRoom, (c) => c.memory.role == 'LDBuilder');
-
-
-
+        
+     
+        
 
         var unitRemainingToNextLevel;
 
         if (spawn.room.controller.progress == 0) {
             unitRemainingToNextLevel = 0;
         }
-        else {
-            unitRemainingToNextLevel = spawn.room.controller.progressTotal - spawn.room.controller.progress;
+        else
+        {
+            unitRemainingToNextLevel = spawn.room.controller.progressTotal -  spawn.room.controller.progress;
         }
 
-        //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] spawn.room.controller.progressTotal is ' + spawn.room.controller.progressTotal +'</>');
-        //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] spawn.room.controller.progress is ' + spawn.room.controller.progress +'</>');
+     //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] spawn.room.controller.progressTotal is ' + spawn.room.controller.progressTotal +'</>');
+     //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] spawn.room.controller.progress is ' + spawn.room.controller.progress +'</>');
         /* #endregion */
-
+ 
 
         /* #region  Display stats in console */
         if (Game.time % 5 == 0) {
@@ -1166,10 +1169,10 @@ module.exports.loop = function () {
                 ', Miners: ' + numberOfMiners +
                 ', Lorries: ' + numberOfLorries +
                 ', TestScreeps: ' + numberOfTestScreeps +
-                ', cpu.bucket: ' + util.pad(Game.cpu.bucket, 5) +
-                ', roomEnergyCap: ' + util.pad(spawn.room.energyCapacityAvailable, 5) +
-                ', EnergyAvaiable: ' + util.pad(spawn.room.energyAvailable, 5) +
-                ', Level Progress: ' + util.pad(unitRemainingToNextLevel, 10) +
+                ', cpu.bucket: ' + util.pad(Game.cpu.bucket,5) +
+                ', roomEnergyCap: ' + util.pad(spawn.room.energyCapacityAvailable,5) +
+                ', EnergyAvaiable: ' + util.pad(spawn.room.energyAvailable,5) +
+                ', Level Progress: ' + util.pad(unitRemainingToNextLevel,10) +
                 ', Game.time: ' + util.numberWithCommas(Game.time));
 
         }
@@ -1197,7 +1200,7 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E46S3") {
             energy = spawn.room.energyCapacityAvailable;
-            energy = 1200;
+            energy = 1000;
             //upgrader2xEnergy = 800;
             //  energy = 300;
 
@@ -1215,7 +1218,7 @@ module.exports.loop = function () {
             //     energy = 300;
             // }
 
-            energy = 1200;
+            energy = 1000;
         }
 
 
@@ -1278,7 +1281,7 @@ module.exports.loop = function () {
 
         if (spawn.room.name == 'E46S1') {
             energy = spawn.room.energyCapacityAvailable;;
-            energy = 1200;
+            energy = 800;
             //        console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.room.name is ' + spawn.room.name);
             //       console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' numberOfTargetedReparier is ' + numberOfTargetedReparier);
             //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
@@ -1305,8 +1308,8 @@ module.exports.loop = function () {
 
         var totalHarvesters = numberOfHarvesters + numberOfStorageToExt + numberOfStorageToExtMinis;
 
-        if ((numberOfMiners == 1 || numberOfMiners == 0 && totalHarvesters > 0) || spawn.memory.spawnMiner1 == true)
-        //    if (false)
+        if ((numberOfMiners == 1 || numberOfMiners == 0 && totalHarvesters > 0) || spawn.memory.spawnMiner1 == true )
+      //    if (false)
         {
             {
                 // if (spawn.name == "Spawn3_2") {
@@ -1474,7 +1477,7 @@ module.exports.loop = function () {
 
             }
 
-            else if (numberOfStorageToExt < spawn.memory.minStorageToExt) {
+            else if (numberOfStorageToExt  < spawn.memory.minStorageToExt) {
                 var flagSource = Game.flags["Source_" + spawn.room.name];
                 var flagContainer = Game.flags["Container_" + spawn.room.name];
 
@@ -1510,26 +1513,26 @@ module.exports.loop = function () {
                 //#createStorageToExt
 
                 if (energy > spawn.room.energyAvailable) {
-
+                    
                     energy = spawn.room.energyAvailable;
-
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being lowered to ' + energy + '</>');
-
+    
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being lowered to ' + energy +'</>');
+    
                     if (spawn.room.energyAvailable <= 300) {
                         energy = 300;
-                        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being set to the very minium: ' + energy + '</>');
-
+                        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being set to the very minium: ' + energy +'</>');
+    
                     }
                 }
                 else if (spawn.room.controller.level >= 7) {
-                    energy = 800;
+                    energy = 400;
                 }
 
                 name = spawn.createStorageToExt(spawn, "storageToExt", energy);
-
+             
                 // if (name = -6) {
                 //     console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Investigate. This message not ever appear ' + energy +'</>');
-
+                    
                 // }
 
                 // if (name == -6) {
@@ -1696,17 +1699,12 @@ module.exports.loop = function () {
 
 
             }
-            /* #region  Create upgrader2x */
 
             else if (numberOfUpgrader2xs < spawn.memory.minUpgrader2xs) {
 
 
-                //StructureSpawn.prototype.createUpgrader2x = function (SpawnObj, roleName, energy) {
 
-                // name = spawn.createCustomCreep(energy * 2, 'upgrader2x');
-
-                name = spawn.createUpgrader2x(spawn, 'upgrader2x', energy);
-
+                name = spawn.createCustomCreep(energy * 2, 'upgrader2x');
                 //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' creating upgader2x  name: ' + name);
 
                 if ((typeof name) == "string") {
@@ -1722,7 +1720,6 @@ module.exports.loop = function () {
 
             }
 
-            /* #endregion */
 
 
             // if not enough repairers
@@ -1756,8 +1753,8 @@ module.exports.loop = function () {
 
 
 
-            /* #region  Create Builder */
 
+            //    if not enough builders
             else if (numberOfBuilders < spawn.memory.minBuilders || (spawn.memory.qBuilder > 0 && (numberOfBuilders < spawn.memory.minBuilders + spawn.memory.qBuilder))) {
                 // try to spawn one
                 // "[line " + util.LineNumber() + "]
@@ -1778,11 +1775,7 @@ module.exports.loop = function () {
                     //  spawn.memory.qBuilder = spawn.memory.qBuilder -1;
                 }
             }
-
-            /* #endregion */
-          
-            /* #region  Create Wallrepairer */
-
+            //  if not enough wallRepairers
             else if (numberOfWallRepairers < spawn.memory.minWallRepairers) {
 
                 name = spawn.createCustomCreep(energy, 'wallRepairer');
@@ -1800,7 +1793,6 @@ module.exports.loop = function () {
                 }
             }
 
-            /* #endregion */
 
             else if (numberOfUpgraderTargetedSource < spawn.memory.minUpgraderTargetedSource) {
                 //   StructureSpawn.prototype.createUpgraderTargetedSource = function (SpawnObj, roleName, energy, SourceObjectId)
@@ -2001,12 +1993,6 @@ module.exports.loop = function () {
                     // the creep is just a few ticks between source and storage. No need to create a large create.
                     energy = 300;
                 }
-
-                if (spawn.room.controller.level >= 7) {
-                    energy = 300;
-                }
-
-
                 name = spawn.createFlagToFlagHarvester(spawn, "flagToFlagHarvester", energy, flagSource, flagContainer);
 
                 if (Game.time % consoleDelay == 0) {
@@ -2052,15 +2038,6 @@ module.exports.loop = function () {
 
 
                 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfFlagToFlagHarvesters  is ' + numberOfFlagToFlagHarvesters);
-
-                if (spawn.room.name == "E45S3" || spawn.room.name == "E44S2") {
-                    // the creep is just a few ticks between source and storage. No need to create a large create.
-                    energy = 300;
-                }
-
-                if (spawn.room.controller.level >= 7) {
-                    energy = 300;
-                }
 
                 name = spawn.createFlagToFlagHarvester(spawn, "flagToFlagHarvester2", energy, flagSource, flagContainer);
 
@@ -2287,7 +2264,7 @@ module.exports.loop = function () {
         }
 
         /* #endregion */
-
+        
 
         if (typeof (name) == "string") {
             console.log("[line " + util.LineNumber() + "] Name Check: " + name);
@@ -2307,7 +2284,7 @@ module.exports.loop = function () {
 
         //   console.log('end loop1');
     }
-
+   
     /* #endregion Loop through Spawns */
 
     //console.trace();

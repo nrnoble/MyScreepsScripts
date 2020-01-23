@@ -22,31 +22,93 @@ module.exports = {
 
         if (creep.room.name == "E46S1") {
             triggerTime = 100;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
+         //   triggerTime = 200;
+        }
+
+
+
+        if (creep.room.name == "E46S3") {
+            triggerTime = 100;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
         }
 
         if (creep.room.name == "E43S3") {
             triggerTime = 65;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
         }
 
 
         if (creep.room.name == "E44S3") {
-            triggerTime = 160;
+            triggerTime = 60;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
         }
 
         if (creep.room.name == "E44S2") {
             triggerTime = 45;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
         }
 
         if (creep.room.name == "E45S2") {
             var creep2xDeathTime = 11694653;
             var thisCreepDeathTime = 11694700;
 
-            triggerTime = 75;
+          //  var myCreep = creep.room.find (FIND_MY_CONSTRUCTION_SITES);
+
+
+            triggerTime = 115;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
+
+            // function calcTiggerTime(creep, triggerTime) {
+            //     if (creep.ticksToLive < 500 && creep.memory.triggerTime == undefined) {
+            //         var spawns = creep.room.find(FIND_MY_SPAWNS);
+            //         var spawn = spawns[0];
+            //         var startPos = new RoomPosition(spawn.pos.x, spawn.pos.y, creep.room.name);
+            //         var endPos = new RoomPosition(creep.pos.x, creep.pos.y, creep.room.name);
+            //         var path = PathFinder.search(startPos, endPos);
+            //         var Distance = path.path.length;
+            //         triggerTime = Distance * 2.25 + (creep.body.length * 3);
+            //         creep.memory.triggerTime = triggerTime;
+            //     }
+            //     return { spawns, spawn, startPos, endPos, path, Distance, triggerTime };
+            // }
+
+            
+           // creep.memory.respawn = false;
 
         }
 
         if (creep.room.name == "E45S3") {
             triggerTime = 60;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
         }
 
 
@@ -70,7 +132,7 @@ module.exports = {
 
 
                 name = spawn.createMiner(spawn, creep.memory.sourceId);
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creating miner is ' + name + ' </>');
+              //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creating miner is ' + name + ' </>');
                 var spawnStats = false;
                 if (spawn.spawning != null) {
                     spawnStatus = spawn.spawning.name.includes("mine");
@@ -189,3 +251,20 @@ module.exports = {
         creep.moveTo(container);
     }
 };
+
+
+function calcTiggerTime(creep, triggerTime) {
+    if (creep.ticksToLive < 500 && creep.memory.triggerTime == undefined) {
+        var spawns = creep.room.find(FIND_MY_SPAWNS);
+        var spawn = spawns[0];
+        var startPos = new RoomPosition(spawn.pos.x, spawn.pos.y, creep.room.name);
+        var endPos = new RoomPosition(creep.pos.x, creep.pos.y, creep.room.name);
+        var path = PathFinder.search(startPos, endPos);
+        new RoomVisual(creep.room).poly(path, {stroke: '#fff', strokeWidth: .15,
+        opacity: .2, lineStyle: 'dashed'}); 
+        var Distance = path.path.length;
+        triggerTime = Distance * 2.5 + (creep.body.length * 3);
+        creep.memory.triggerTime = triggerTime;
+    }
+    return { spawns, spawn, startPos, endPos, path, Distance, triggerTime };
+}

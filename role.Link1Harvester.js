@@ -106,10 +106,10 @@ module.exports = {
             });
 
             if (creep.room.name == "E45S2") {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Container is ' + structure +'</>');
+         //       console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Container is ' + structure +'</>');
                 if (structure !=  null) {
                 
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
+         //           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
                 }
             }
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
