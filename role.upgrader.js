@@ -58,7 +58,7 @@ module.exports = {
           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!      pos is ' + pos);
             if (creep.pos.isEqualTo (45,8)) {
                 
-                creep.moveTo (pos);
+                creep.travelTo (pos);
                // console.log('[' + fileName + 'line:' + util.LineNumber() + ']XXXXXXXXXXXXXXXXXXXXXXX the spot has been taken ' + creep.name);
             }
 
@@ -85,7 +85,7 @@ module.exports = {
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 // if not in range, move towards the controller
                // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
-                creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
                 util.repairRoad(creep);
             }
             else
@@ -117,7 +117,7 @@ module.exports = {
         //         if (creep.withdraw(link, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
         //             // move towards it
         //             // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
-        //             creep.moveTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
+        //             creep.travelTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         //         }
         //     }
             else{
@@ -152,7 +152,7 @@ module.exports = {
                     if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
-                        creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
                 else {
@@ -162,7 +162,7 @@ module.exports = {
                     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                         // move towards it
                     // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
-                        creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 } // else
             }

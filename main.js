@@ -4,7 +4,7 @@
 // import modules
 require('prototype.spawn')();
 //var events = require('events');
-require('traveler');
+require('Traveler');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
@@ -81,7 +81,7 @@ let unitsToTransfer = 51000;
 unitsToTransfer = 200000; //test
 
   
-//term.transferEnergy("E44S2","E46S3",100000);  //test
+//term.transferEnergy("E44S2","E46S3",150000);  //test
 
 //term.transferEnergy("E45S2","E46S3",unitsToTransfer); 
 
@@ -472,19 +472,19 @@ module.exports.loop = function () {
 
             if ((creep.pos.y < 3 || creep.pos > 35) && creep.memory.role == "minor" && creep.memory.role == "link1Harvester") {
 
-                creep.moveTo(pos);
+                creep.travelTo(pos);
                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] Reservered location. Most move somewhere else '  + creep.name);
             }
 
             if (creep.pos.isEqualTo(reserveredLocation) && creep.memory.role != "link1Harvester") {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxx need to move. Room is ' + creep.room.name + " creep.pos is " + creep.pos + " Creep name is " + creep.name);
-                creep.moveTo(pos);
+                creep.travelTo(pos);
                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxx Reservered location. Most move somewhere else '  + creep.name);
             }
 
             if (creep.pos.isEqualTo(reserveredLocation && creep.memory.role == "miner")) {
                 const minerLocation = new RoomPosition(34, 2, 'E45S2');
-                creep.moveTo(minerLocation);
+                creep.travelTo(minerLocation);
                 //      console.log('[' + fileName + 'line:' + util.LineNumber() + '] Reservered location. Most move somewhere else ' + creep.name);
             }
 
@@ -1029,12 +1029,30 @@ module.exports.loop = function () {
         }
 
         if (spawnName == "Spawn7") {
-            var storageLinkObjId = "5dd200fdb15610ec59943842";
-            var storageLinkObjId2 = "5dea45a14919cef4e466ed04";
-
+            var source1LinkObjId = "5dd200fdb15610ec59943842";
+            var storageLinkObjId = "5dea45a14919cef4e466ed04";
+            
             var controlLinkObjId = "5dd1d69ea3d7f3742e5b782d";
-            var transferStatus = link.transferEnergy(storageLinkObjId, controlLinkObjId);
-            var transferStatus = link.transferEnergy(storageLinkObjId2, controlLinkObjId);
+           // var transferStatus = link.transferEnergy(source1LinkObjId, controlLinkObjId);
+           // var transferStatus = link.transferEnergy(storageLinkObjId, controlLinkObjId);
+
+            var source1Link = Game.getObjectById(source1LinkObjId);
+            var storageLink = Game.getObjectById(storageLinkObjId);
+            var controllerLink = Game.getObjectById(controlLinkObjId);
+
+            
+            var controllerLinkEnergy = controllerLink.store[RESOURCE_ENERGY];
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] controllerLinkEnergy is ' + controllerLinkEnergy +'</>');
+            if (controllerLinkEnergy < 700) {
+                var transferStatus = link.transferEnergy(source1LinkObjId, controlLinkObjId);
+                
+            }
+
+            var  storageLinkEnergy = storageLink.store[RESOURCE_ENERGY];
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] storageLinkEnergy is ' + storageLinkEnergy +'</>');
+            if (storageLinkEnergy < 400 && controllerLinkEnergy > 700) {
+                var transferStatus = link.transferEnergy(source1LinkObjId, storageLinkObjId);
+            }
 
             // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] transferStatus is '  + transferStatus + '</>');
 

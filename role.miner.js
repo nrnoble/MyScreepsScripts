@@ -83,23 +83,7 @@ module.exports = {
                 triggerTime = creep.memory.triggerTime;
             }
 
-            // function calcTiggerTime(creep, triggerTime) {
-            //     if (creep.ticksToLive < 500 && creep.memory.triggerTime == undefined) {
-            //         var spawns = creep.room.find(FIND_MY_SPAWNS);
-            //         var spawn = spawns[0];
-            //         var startPos = new RoomPosition(spawn.pos.x, spawn.pos.y, creep.room.name);
-            //         var endPos = new RoomPosition(creep.pos.x, creep.pos.y, creep.room.name);
-            //         var path = PathFinder.search(startPos, endPos);
-            //         var Distance = path.path.length;
-            //         triggerTime = Distance * 2.25 + (creep.body.length * 3);
-            //         creep.memory.triggerTime = triggerTime;
-            //     }
-            //     return { spawns, spawn, startPos, endPos, path, Distance, triggerTime };
-            // }
-
-            
-           // creep.memory.respawn = false;
-
+          // triggerTime = 200;
         }
 
         if (creep.room.name == "E45S3") {
@@ -225,14 +209,14 @@ module.exports = {
                     }
                     else {
                         // move towards it
-                        creep.moveTo(container);
+                        creep.travelTo(container);
                     }
 
                 }
                 // if creep is not on top of the container
                 else {
                     // move towards it
-                    creep.moveTo(container);
+                    creep.travelTo(container);
                 }
 
 
@@ -246,9 +230,9 @@ module.exports = {
         // if creep is not on top of the container
         else {
             // move towards it
-            creep.moveTo(container);
+            creep.travelTo(container);
         }
-        creep.moveTo(container);
+        creep.travelTo(container);
     }
 };
 

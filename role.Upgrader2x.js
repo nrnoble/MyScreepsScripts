@@ -17,7 +17,7 @@ module.exports = {
         //     var roomController = creep.room.controller;
         //    var signStatus = creep.signController(roomController,"Last of the Mochicans");
         //    if (signStatus == ERR_NOT_IN_RANGE) {
-        //      creep.moveTo(roomController)
+        //      creep.travelTo(roomController)
         //    }
         //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] signStatus is ' + signStatus +'</>');
         // }
@@ -120,7 +120,7 @@ module.exports = {
           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!!!!!!!!!!!!!      pos is ' + pos);
             if (creep.pos.isEqualTo (45,8)) {
                 
-                creep.moveTo (pos);
+                creep.travelTo (pos);
                // console.log('[' + fileName + 'line:' + util.LineNumber() + ']XXXXXXXXXXXXXXXXXXXXXXX the spot has been taken ' + creep.name);
             }
 
@@ -243,7 +243,7 @@ module.exports = {
             //     // only upgrade controller while Storage is above 100K energy units
             //    var storageEnergy = creep.room.storage.store.energy;
             //     if (storageEnergy < 100500) {
-            //         creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+            //         creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
             //         util.repairRoad(creep);
             //         return;
             //     }
@@ -263,7 +263,7 @@ module.exports = {
             //     // only upgrade controller while Storage is above 310K energy units
             //     var storageEnergy = creep.room.storage.store.energy;
             //     if (storageEnergy < 310500) {
-            //         creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+            //         creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
             //         util.repairRoad(creep);
             //         return;
             //     }
@@ -274,7 +274,7 @@ module.exports = {
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                 // if not in range, move towards the controller
                // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
-                creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
                 util.repairRoad(creep);
             }
             else
@@ -373,7 +373,7 @@ module.exports = {
                     if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
-                        creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
                 else {
@@ -383,7 +383,7 @@ module.exports = {
                     // if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     //     // move towards it
                     // // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
-                    //     creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    //     creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     // }
                 } // else
             }
@@ -452,7 +452,7 @@ function upgradeStorageThrottle(creep,room,storageMin)
         // only upgrade controller while Storage is above 100K energy units
        var storageEnergy = creep.room.storage.store.energy;
         if (storageEnergy < storageMin) {
-            creep.moveTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
             util.repairRoad(creep);
             return true;
         }
