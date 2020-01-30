@@ -45,6 +45,20 @@ module.exports = {
        util.TimeToDie2(creep,"E46S3",timeToDie,0); // die before getting more energy
        
               
+
+                // if target is defined and creep is not in target room
+                if (creep.memory.target != undefined && creep.room.name != creep.memory.target) {
+                    // find exit to target room\\
+                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
+                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
+        
+                    var exit = creep.room.findExitTo(creep.memory.target);
+                    // move to exit
+                    creep.travelTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
+                    // return the function to not do anything else
+                return;
+                }
+
        //util.TimeToDie2(creep,"W14S18",(workBodyParts * 50/5) + 5,0); // die before getting more energy
 
       //  var workparts = creep.getBodyParts
@@ -224,9 +238,7 @@ module.exports = {
         // ********************************************************************************//;
         if (creep.memory.working == true) {
        
-            if (creep.room.name == "E43S3" && creep.name == "upgrader2x _12858070") {
-        //        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] working is true' + '</>');
-            }
+
             // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
             
@@ -249,10 +261,10 @@ module.exports = {
             //     }
             // }
 
-            if (upgradeStorageThrottle(creep,"E43S3",100500) == true)
-            {
-              //  return;
-            }
+            // if (upgradeStorageThrottle(creep,"E43S3",100500) == true)
+            // {
+            //     return;
+            // }
             // if (upgradeStorageThrottle(creep,"E44S2",110500) == true) {
             //     return;
             // }
@@ -270,10 +282,32 @@ module.exports = {
             // }
     
 
-            // try to upgrade the controller
+       
+
+            // fill nearby spawn with energy
+            if (creep.room.name =="E44S2") {
+                
+
+                var spawn2 = Game.getObjectById("5e2ed0ae35612847b2a97c9a");
+                
+                var sp2 = spawn2;
+               //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] sp2 is ' + sp2 +'</>');
+
+                if (spawn2.store[RESOURCE_ENERGY] < 300) {
+                    
+                    var transferStatus = creep.transfer(spawn2, RESOURCE_ENERGY)
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxxxxx transferStatus is ' + transferStatus +'</>');
+                    if (transferStatus == ERR_NOT_IN_RANGE) {
+                        creep.travelTo(spawn2, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    }
+                    return;
+                }
+                
+
+            }
+
+
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                // if not in range, move towards the controller
-               // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " is moving closer to constroler");
                 creep.travelTo(creep.room.controller, { visualizePathStyle: { stroke: '#ffaa00' } });
                 util.repairRoad(creep);
             }

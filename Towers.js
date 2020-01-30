@@ -138,7 +138,10 @@ module.exports =
                                 // //     continue;
                                 // // }
 
-                                tower.attack(evilCreepHeal);
+                                if (evilCreep.owner.username != "Sky-Net") {
+                                    tower.attack(evilCreep);
+                                }
+                               // tower.attack(evilCreepHeal);
                             }
 
                         }
@@ -146,7 +149,12 @@ module.exports =
                             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] evilCreepHeal is ' + evilCreepHeal + '</>');
 
                             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + tower.room.name + ' HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
-                            tower.attack(evilCreep);
+                           
+                            if (evilCreep.owner.name != "Sky-Net") {
+                                tower.attack(evilCreep);
+                            }
+                            //tower.attack(evilCreep);
+                           
                             continue;
                         }
 
@@ -233,11 +241,11 @@ module.exports =
                             var status = tower.repair(structure);
                         }
                         else if (structure.structureType == STRUCTURE_RAMPART && structure.hits < 100000) {
-                            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
+                          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
                             var status = tower.repair(structure);
                         }
                         else if (structure.structureType == STRUCTURE_WALL && structure.hits < maxWallHits) {
-                            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
+                         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
                             var status = tower.repair(structure);
                         }
                         else {
