@@ -115,7 +115,7 @@ module.exports = {
                
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                      util.repairRoad(creep);
                 }
             }
@@ -155,7 +155,7 @@ module.exports = {
                 
                 if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
 
                 } else{
@@ -176,7 +176,7 @@ module.exports = {
             if (ClosestContainer != undefined || ClosestContainer != null && (creep.harvest(ClosestContainer) == ERR_NOT_IN_RANGE) && (creep.harvest(ClosestContainer) == -7))
             {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a container ');    
-                creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.travelTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                 util.repairRoad(creep);
                 return;
             }else{
@@ -209,9 +209,9 @@ module.exports = {
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     // move towards the source
 
-                    // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
+                    // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " travelTo (" + source + ")");
 
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
                 }
             }

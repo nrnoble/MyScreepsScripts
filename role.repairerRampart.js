@@ -64,7 +64,7 @@ util.say(creep,"ram",300);
                     if (repairStatus == ERR_NOT_IN_RANGE) {
                         // move towards structure
                        //console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
             }
 
@@ -98,7 +98,7 @@ util.say(creep,"ram",300);
                     if (repairStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
 
@@ -111,7 +111,7 @@ util.say(creep,"ram",300);
                 //     if (repairStatus == ERR_NOT_IN_RANGE) {
                 //         // move towards it
                 //         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                //         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                //         creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                 //     }
                 // }
                 
@@ -120,7 +120,7 @@ util.say(creep,"ram",300);
                  //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' structure type is ' + structure.structureType);
                     if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
                         // move towards it
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
                 // can't fine one
@@ -149,7 +149,7 @@ util.say(creep,"ram",300);
                 // try to withdraw energy, if the container is not in range
                 if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
             }
             else {
@@ -158,7 +158,7 @@ util.say(creep,"ram",300);
                 // try to harvest energy, if the source is not in range
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
             }
         }

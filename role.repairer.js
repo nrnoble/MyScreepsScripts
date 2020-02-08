@@ -6,7 +6,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
         util.say(creep,"rpr");
-//return;
+return;
 
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
@@ -29,15 +29,16 @@ module.exports = {
 
 
         // 5d4f2eb0ac2d2d20dcee9a27
-        creep.memory.targetStructureId = "5d4f2eb0ac2d2d20dcee9a27";
-        var localTargetStructure = null; //5d1dde21b6fe552a9e36646c
-        if(creep.memory.targetStructureId == undefined)
-        {
+     //   creep.memory.targetStructureId = "5d4f2eb0ac2d2d20dcee9a27";
+    //    var localTargetStructure = null; //5d1dde21b6fe552a9e36646c
+    //    if(creep.memory.targetStructureId == undefined)
+   //     {
          //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' setting creep.memory.targetStructure null ' );
           //  creep.memory.targetStructureId = null; 
          //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.targetStructure is ' + creep.memory.targetStructureId );
-        }
+   //     }
 
+        //targetStructureId == undefined;
         // if (creep.memory.targetStructureId != null)
         // {
         //     localTargetStructure = creep.memory.targetStructureId;
@@ -61,32 +62,33 @@ module.exports = {
         if (creep.memory.working == true) {
 
             // check for a specific structure
-           // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' asdfasdfsafdsafasdfds creep.memory.targetStructure is ' + creep.memory.targetStructureId);
             
-            if(creep.memory.targetStructureId != undefined){
-               //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
-                structure = Game.getObjectById(creep.memory.targetStructureId);
-                // if (structure.hits == structure.hitsMax) {
+            // if(creep.memory.targetStructureId != undefined){
+            //    //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+            //     structure = Game.getObjectById(creep.memory.targetStructureId);
+            //     // if (structure.hits == structure.hitsMax) {
                 
-                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
-                //     creep.memory.targetStructureId = undefined;
-                // }
-               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
-                var repairStatus = creep.repair(structure);
-                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
-                    if (repairStatus == ERR_NOT_IN_RANGE) {
-                        // move towards structure
-                       //console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
-                    }
-            }
+            //     //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
+            //     //     creep.memory.targetStructureId = undefined;
+            //     // }
+            //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
+            //     var repairStatus = creep.repair(structure);
+            //        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+            //         if (repairStatus == ERR_NOT_IN_RANGE) {
+            //             // move towards structure
+            //            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
+            //             creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+            //         }
+            // }
 
             // find closest structure with less than max hits
             // Exclude walls because they have way too many max hits and would keep
             // our repairers busy forever. We have to find a solution for that later.
             
-            else      
-           {    
+            //else      
+          // {    
+        //    var structure = undefined;
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
@@ -109,23 +111,28 @@ module.exports = {
             // }
 
 
+           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] structure is ' + structure +'</>');
 
                 var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
                     // a property called filter which can be a function
                     // we use the arrow operator to define it
-                    filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL,ignoreCreeps: true
+                    filter:  (s) =>  structure.structureType == STRUCTURE_ROAD && s.hits  < 5000,ignoreCreeps: true
                 });
 
                 // if we find one
+
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  structure is ' +  structure +'</>');
+
+
                 if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {
                     // try to repair it, if it is out of range
                     var repairStatus = creep.repair(structure);
-                  //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ddddddddddddddddddddddddddddddddddd repair status is ' + repairStatus);
                     if (repairStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
 
@@ -138,7 +145,7 @@ module.exports = {
                 //     if (repairStatus == ERR_NOT_IN_RANGE) {
                 //         // move towards it
                 //         // /console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-                //         creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                //         creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                 //     }
                 // }
                 
@@ -147,7 +154,7 @@ module.exports = {
                  //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' structure type is ' + structure.structureType);
                     if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
                         // move towards it
-                        creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                 }
                 // can't fine one
@@ -162,7 +169,7 @@ module.exports = {
                     
                     roleBuilder.run(creep);
                 }
-            } // end if
+           // } // end if
 
         }
         // if creep is supposed to get energy
@@ -177,7 +184,7 @@ module.exports = {
                 // try to withdraw energy, if the container is not in range
                 if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
             }
             else {
@@ -186,7 +193,7 @@ module.exports = {
                 // try to harvest energy, if the source is not in range
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
             }
         }

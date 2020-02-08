@@ -612,7 +612,457 @@ module.exports =
            console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] signStatus is ' + signStatus +'</>');
         }
 
+    },
+    
+    clearAllFlagsInRoom: function (spawn){
+        var sources = spawn.room.find(FIND_SOURCES);
+        var allFlags = spawn.room.find(FIND_FLAGS);
+
+        for (const key in allFlags) {
+            if (allFlags.hasOwnProperty(key)) {
+                const element = allFlags[key];
+                element.remove();         
+            }
+        }
+    },
+
+    initFirstRoomBak: function(creep){
+                     
+        if (creep.memory.roomInit == undefined) {
+
+
+            var sources = creep.room.find(FIND_SOURCES);
+            //var room_1 = Object.keys(Game.rooms)[0].name;
+            //var source1 = Object.keys(sources)[0];
+            //var source3 = Object.keys(sources);
+            // var source2;    
+
+            if (sources.length == 2) {
+                
+                var Source1 = sources[1].pos;
+                creep.room.createFlag(Source1,"Source_" + creep.room.name);    
+                var Source2 = sources[0].pos;
+                creep.room.createFlag(Source2,"Source2_" + creep.room.name);
+            }
+            else
+            {
+                var Source1 = sources[0].pos;
+                creep.room.createFlag(Source1,"Source_" + creep.room.name);   
+            }
+          
+            creep.memory.roomInit = "completed";
+        }
+    },
+
+    flagContainer: function(spawn){
+        if (spawn.room.storage != undefined) {
+            spawn.room.createFlag(spawn.room.storage.pos,"Container_" + spawn.room.name)
+        }
+    },
+
+
+
+    initFirstRoom: function(spawn){
+                 
+   
+        this.spawnReset(spawn);
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] spawn.room.name is ' + spawn.room.name +'</>');
+        
+        if (spawn.memory.RoomBuilder == undefined) {
+            RoomBuilder = new Object();
+            spawn.memory.RoomBuilder = RoomBuilder;
+        }
+
+        if (spawn.memory.initRoom == undefined) {
+            initRoom = new Object();
+            spawn.memory.initRoom = initRoom;
+        }
+
+        if (spawn.memory.creepSettings == undefined) {
+            creepSettings = new Object();
+            spawn.memory.creepSettings = creepSettings;
+        }
+
+
+        var  roomInit = spawn.memory.roomInit;
+        // try {
+        //     roomInit = spawn.memory.roomInit;
+  
+        // } catch (e) {
+        //     spawn.memory.roomInit = roomInit;
+        // }
+        
+        if (roomInit == undefined) {
+            
+            var sources = spawn.room.find(FIND_SOURCES);
+     
+
+            if (sources.length == 2) {
+                
+                var Source1 = sources[1].pos;
+                spawn.room.createFlag(Source1,"Source_" + spawn.room.name);    
+                var Source2 = sources[0].pos;
+                spawn.room.createFlag(Source2,"Source2_" + spawn.room.name);
+            }
+            else
+            {
+                var Source1 = sources[0].pos;
+                spawn.room.createFlag(Source1,"Source_" + spawn.room.name);   
+            }
+  
+            spawn.memory.energyLevel = 300;
+            spawn.memory.storageToExtEnergy = 500;
+            spawn.memory.energyFlagToFlagHarvester = 200;
+            spawn.memory.energyFlagToFlagHarvester2 = 200;
+
+            spawn.memory.minflagToFlagHarvester = 0;
+            spawn.memory.minflagToFlagHarvester2 = 0;
+            spawn.memory.minUpgrader2xs = 0;
+            spawn.memory.minStorageToExt = 0;
+            spawn.memory.minHarvesters	= 3;
+            spawn.memory.minUpgraders = 3;
+            spawn.memory.minBuilders = 3;
+            spawn.memory.minLorries = 0;
+            spawn.memory.minWallRepairers = 0;
+            spawn.memory.minRepairers = 0;
+            spawn.memory.maxWallHits = 5000;
+            spawn.memory.maxRampartsHits = 16000;
+            spawn.memory.spawnRampartHits = 25000;
+            spawn.memory.extensionHits = 10000;
+
+            spawn.memory.roomInit = "completed";
+
+          
+          
+          
+          
+            flagContainer(spawn);
+        }
+    },
+
+    flagContainer: function(spawn){
+        if (spawn.room.storage != undefined) {
+            spawn.room.createFlag(spawn.room.storage.pos,"Container_" + spawn.room.name)
+        }
+    },
+
+    placeSourceContainers: function(spawn){
+        if(spawn.room.controller.level >= 3 && spawn.memory.placeSourceContiners == undefined){
+
+             var sources = spawn.room.find(FIND_SOURCES);
+            // const terrain = new Room.Terrain(spawn.room.name);
+            // var terrainType = undefined;
+             if (sources.length == 2) {
+                
+                 var source1 = sources[1];
+              
+                 var source2 = sources[0];
+
+           
+                 //     getTerrian: {
+            //     for (let y = -1; index <= 1; y++) {
+            //         for (let x = -1; x <=2; x++) {
+            //             if (x==0 && y == 0) {
+            //                 continue;
+            //             }
+            //             terrainType = terrain.get(Source1.pos.x,Source1.pos.y)
+            //             if (terrainType == 0 || terrainType == 2 ) {
+            //               break  getTerrian;
+            //             }
+            //         }
+            //     }
+            // }
+            var containerConstructionSite1 = this.getNearestConstructionSiteLocation(spawn,source1);
+            var containerConstructionSite2 = this.getNearestConstructionSiteLocation(spawn,source2);
+                
+            var placementStatus1 = spawn.room.createConstructionSite(containerConstructionSite1, STRUCTURE_CONTAINER) ;
+            console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus1 is ' + placementStatus1 +'</>');
+           
+            var placementStatus2 = spawn.room.createConstructionSite(containerConstructionSite2, STRUCTURE_CONTAINER) ;
+            console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus1 is ' + placementStatus1 +'</>');
+
+            spawn.memory.placeSourceContiners = "done";
+            
+
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] containerConstructionSite1 is ' + containerConstructionSite1 +'</>');
+       //     console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] containerConstructionSite2 is ' + containerConstructionSite2 +'</>');
+
+             }
+             else{
+              //  var source2 = sources[0];
+            //    var containerConstructionSite2 = getNearestConstructionSiteLocation(spawn,source2)
+
+               
+             }
+            }
+          
+
+            // find source 1
+            // find the locations next to source 1 that is not terrian
+            // place a contruction site
+
+            // find source 2
+            // find the locations next to source 1 that is not terrian
+            // place a contruction site
+
+        
+
+
+    },
+
+    getNearestConstructionSiteLocation: function(spawn,source){
+        //var sources = spawn.room.find(FIND_SOURCES);
+        const terrain = new Room.Terrain(spawn.room.name);
+        var terrainType = undefined;
+   
+            for (let y = -1; y <= 1; y++) {
+                for (let x = -1; x <=2; x++) {
+                    if (x==0 && y == 0) {
+                        continue;
+                    }
+                  // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] JSON.stringify(source.pos.x) is ' + JSON.stringify(source.pos.x) +'</>');
+                  var x1 = source.pos.x+x; 
+                  var y1 = source.pos.y+y; 
+
+                  terrainType = terrain.get(x1,y1);
+                    
+                    if (terrainType == 0 || terrainType == 2 ) {
+                     //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] terrainType is ' + terrainType +'('+ x1 +','+ y1 +')</>');
+                    
+                     pos = new RoomPosition(x1,y1,spawn.room.name);
+                        return  pos;
+                    }
+                }
+            }
+        
+    },
+
+
+
+    placeStorageConstructionSite: function(spawn){
+        if (spawn.room.controller.level >= 4 && spawn.room.storage == undefined && spawn.memory.placeStorageConstructionSite == undefined) {
+            
+        var storageFlag = this.findStorageFlag(spawn);
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.name is ' + storageFlag.name + 'x='+ storageFlag.x + ' y='+ storageFlag.y +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.pos is ' + storageFlag.pos +'</>');
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag ' + JSON.stringify(storageFlag) +'</>');
+
+    
+
+        var placementStatus1 = spawn.room.createConstructionSite(storageFlag, STRUCTURE_STORAGE) ;
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus1 is ' + placementStatus1 +'</>');
+        spawn.memory.placeSourceContiners = "done";
     }
+
+
+
+    },
+
+
+    findStorageFlag: function(spawn){
+        var allFlagsInRoom = spawn.room.find(FIND_FLAGS);
+
+
+      
+
+        for (let index = 0; index < allFlagsInRoom.length; index++) {
+            const flag = allFlagsInRoom[index];
+            if (flag.name == "Container_" + spawn.room.name){
+                // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + xxxxxx flag.name is ' + flag.name +'</>');
+            // console.log('<font color = "green">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + flag ' + JSON.stringify(flag) +'</>');
+                
+                return flag;
+            
+            }
+
+    //   for (const x in allFlagsInRoom) {
+          
+    //           const flag = allFlagsInRoom[x];
+    //        //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + yyyyy flag.name is ' + flag.name +'</>');
+    //             if (flag.name = "Container_" + spawn.room.name){
+    //                // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + xxxxxx flag.name is ' + flag.name +'</>');
+    //             console.log('<font color = "green">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + flag ' + JSON.stringify(flag) +'</>');
+                   
+    //                return flag;
+    //          }
+           
+      } 
+
+
+        // allFlagsInRoom.forEach(flag => {
+           
+        //     if (flag.name = "Container_" + spawn.room.name){
+        //         console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + xxxxxx flag.name is ' + flag.name +'</>');
+        //         return flag;
+        //     }
+        // });
+
+        return ;
+    },
+  
+
+    // wipes out all of the spawns memory
+    spawnReset: function(spawn){
+
+        for (var key in spawn) {
+            if (spawn.hasOwnProperty(key)) {
+                var element = spawn[key];
+                element = undefined;
+                
+            }
+        }
+    },
+
+
+    placeTowerConstructionSite: function(spawn){
+       
+        if (spawn.memory.RoomBuilder == undefined) {
+            RoomBuilder = new Object();
+            spawn.memory.RoomBuilder = RoomBuilder;
+        }
+
+        if (spawn.memory.RoomBuilder.nextTowerLevel == undefined) {
+            spawn.memory.RoomBuilder.nextTowerLevel = spawn.room.controller.level;
+        }
+
+        if (spawn.room.controller.level >= spawn.memory.RoomBuilder.nextTowerLevel) {
+            var towerFlag = this.findFlagByName(spawn,"Tower");
+            var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+            
+            if (towerFlag == undefined || constructionSites.length > 0) {
+              //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] constructionSites.length is ' + constructionSites.length +'</>');
+              //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] towerFlag is ' + towerFlag +'</>');
+             
+                return;
+            }
+        
+
+
+        //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.name is ' + storageFlag.name + 'x='+ storageFlag.x + ' y='+ storageFlag.y +'</>');
+        // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.pos is ' + storageFlag.pos +'</>');
+        //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag ' + JSON.stringify(storageFlag) +'</>');
+
+    
+
+        var placementStatus1 = spawn.room.createConstructionSite(towerFlag, STRUCTURE_TOWER) ;
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + ']  placementStatus1 is ' + placementStatus1 +'</>');
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + ']  towerFlag.pos.x=' + towerFlag.pos.x + ', towerFlag.pos.y='+ towerFlag.pos.y +'(' + towerFlag.name +')</>');
+        if (placementStatus1 == -14) {
+            spawn.memory.RoomBuilder.nextTowerLevel = spawn.room.controller.level + 1;
+        }    
+
+        if (placementStatus1 == 0) {
+            towerFlag.remove();
+        }
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus1 is ' + placementStatus1 +'</>');
+      // spawn.memory.placeSourceContiners = "done";
+    }
+
+
+
+    },
+
+   
+    findTowerFlag: function(spawn){
+
+        var allFlagsInRoom = spawn.room.find(FIND_FLAGS);
+      
+
+        for (let index = 0; index < allFlagsInRoom.length; index++) {
+            const flag = allFlagsInRoom[index];
+            if (flag.name.includes ("Tower")){
+                // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + xxxxxx flag.name is ' + flag.name +'</>');
+                // console.log('<font color = "green">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + flag ' + JSON.stringify(flag) +'</>');
+                
+                return flag;
+            
+            }
+
+        }
+        return undefined;
+    },
+
+
+    setupflagToFlagHarvesters: function(spawn){
+
+        if (spawn.room.storage == undefined) {
+            return;
+        }
+
+        spawn.memory.minflagToFlagHarvester = 1;
+        spawn.memory.minflagToFlagHarvester2 = 1;
+
+        if (spawn.memory.minflagToFlagHarvester == undefined) {
+            spawn.memory.minflagToFlagHarvester = 1;
+        }
+
+        if (spawn.memory.minflagToFlagHarvester == undefined) {
+            spawn.memory.minflagToFlagHarvester2 = 1;
+        }
+        spawn.memory.minflagToFlagHarvester = 1;
+        spawn.memory.minflagToFlagHarvester2 = 1;
+        
+    },    
+    
+ 
+    placeExtensionConstructionSite: function(spawn){
+       
+        var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+        
+        if (spawn.room.controller.level >=3) {
+           
+            var constructionSites = spawn.room.find(FIND_MY_CONSTRUCTION_SITES);
+            console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] constructionSites.length is ' + constructionSites.length +'</>');
+           
+            var extensionFlag = this.findFlagByName(spawn,"Extension");
+            console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] towerFlag is ' + extensionFlag +'</>');
+            if (extensionFlag == undefined || constructionSites.length > 0) {
+                return;
+            }
+        
+
+
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.name is ' + storageFlag.name + 'x='+ storageFlag.x + ' y='+ storageFlag.y +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag.pos is ' + storageFlag.pos +'</>');
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + storageFlag ' + JSON.stringify(storageFlag) +'</>');
+
+    
+
+        var placementStatus1 = spawn.room.createConstructionSite(extensionFlag, STRUCTURE_EXTENSION) ;
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + ']  placementStatus1 is ' + placementStatus1 +'</>');
+        if (placementStatus1 == 0) {
+            extensionFlag.remove();
+        }
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus1 is ' + placementStatus1 +'</>');
+      // spawn.memory.placeSourceContiners = "done";
+    }
+
+
+
+    },
+
+   
+    findFlagByName: function(spawn,flagName){
+
+        var allFlagsInRoom = spawn.room.find(FIND_FLAGS);
+      
+
+        for (let index = 0; index < allFlagsInRoom.length; index++) {
+            const flag = allFlagsInRoom[index];
+            if (flag.name.includes (flagName)){
+                // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + xxxxxx flag.name is ' + flag.name +'</>');
+                // console.log('<font color = "green">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + flag ' + JSON.stringify(flag) +'</>');
+                
+                return flag;
+            
+            }
+
+        }
+        return undefined;
+    },
+
+
+
 
 
 

@@ -59,7 +59,7 @@ module.exports = {
 
             var exit = creep.room.findExitTo(creep.memory.target);
             // move to exit
-            creep.moveTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
+            creep.travelTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
             // return the function to not do anything else
         //   /  return;
         }
@@ -91,14 +91,19 @@ module.exports = {
         //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working == true ');
 
             // find closest constructionSite
-            var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
-          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] constructionSite.length is ' + constructionSite.length);
+            var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES,{filter: s => s.progress > 0 && s.progress < s.progressTotal});
+    
+            if (constructionSite == undefined)
+            {
+                var constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES);
+            }  
+            
             // if one is found
             if (constructionSite != undefined) {
                 // try to build, if the constructionSite is not in range
                 if (creep.build(constructionSite) == ERR_NOT_IN_RANGE) {
                     // move towards the constructionSite
-                    creep.moveTo(constructionSite, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(constructionSite, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
                    
 
@@ -254,7 +259,7 @@ module.exports = {
                 // move towards it
            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] moving towards container: ' + container +'</>');
 
-                creep.moveTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
             }
 
         }
@@ -269,11 +274,11 @@ module.exports = {
             }
 
                 // try to harvest energy, if the source is not in range
-                // console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
+                // console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " travelTo (" + source + ")");
                 var status = creep.harvest(source)
                 if (status == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                 }
                 else{
         //            console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.harvest(source) status is '  + creep.harvest(source));

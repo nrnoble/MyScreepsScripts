@@ -48,19 +48,74 @@ module.exports = {
 
             }
             // room energy is OK, so supple towers.
-            else{
+            if(structure == undefined){
             // find closest spawn, extension or tower which is not full
             var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN
-                    || s.structureType == STRUCTURE_EXTENSION
+                //    || s.structureType == STRUCTURE_EXTENSION
                   //  || s.structureType == STRUCTURE_STORAGE
                   //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
-                    || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
-                    && s.energy < s.energyCapacity
+                  //  || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
+                    && s.energy < s.energyCapacity)
             });
+        }
+
+        if(structure == undefined){
+            // find closest spawn, extension or tower which is not full
+            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                // the second argument for findClosestByPath is an object which takes
+                // a property called filter which can be a function
+                // we use the arrow operator to define it
+                filter: (s) => ( s.structureType == STRUCTURE_EXTENSION
+                  //  || s.structureType == STRUCTURE_STORAGE
+                  //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
+                   // || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
+                    && s.energy < s.energyCapacity)
+            });
+        }
+
+        if(structure == undefined){
+            // find closest spawn, extension or tower which is not full
+            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                // the second argument for findClosestByPath is an object which takes
+                // a property called filter which can be a function
+                // we use the arrow operator to define it
+                filter: (s) => ( 
+                    //s.structureType == STRUCTURE_EXTENSION
+                  //  || s.structureType == STRUCTURE_STORAGE
+                  //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
+                   s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)  
+                    && s.energy < s.energyCapacity)
+            });
+        }
+
+
+        if(structure == undefined){
+
+            if (creep.room.storage != undefined) {
+                if (creep.room.storage.store[RESOURCE_ENERGY] <  1000000) {
+                    structure = creep.room.storage;
+                }
+            }
+
+        }
+        //     // // find closest spawn, extension or tower which is not full
+        //     // var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //     //     // the second argument for findClosestByPath is an object which takes
+        //     //     // a property called filter which can be a function
+        //     //     // we use the arrow operator to define it
+        //     //     filter: (s) => ( 
+        //     //         //s.structureType == STRUCTURE_EXTENSION
+        //     //          s.structureType == STRUCTURE_STORAGE
+        //     //       //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
+        //     //       // s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)  
+        //     //         && s.energy < s.energyCapacity)
+        //     // });
+        // }
+
 
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 
@@ -68,7 +123,7 @@ module.exports = {
                 
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Supple Target is ' + structure.structureType);
         }
-        }
+
 
 
 
@@ -110,7 +165,7 @@ module.exports = {
 
                 if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                      util.repairRoad(creep);
                 }
             }
@@ -123,10 +178,10 @@ module.exports = {
        // ********************************************************************************//;
         else {
 
-          //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is " + creep.memory.working + ", " + creep.name + ", (" + creep.memory.role + ")");
-          let ClosestContainer = undefined;
+            //  console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is " + creep.memory.working + ", " + creep.name + ", (" + creep.memory.role + ")");
+            let ClosestContainer = undefined;
 
-          if (creep.room.name == "E46S1" && creep.memory.primarySource != undefined) {
+            if (creep.room.name == "E46S1" && creep.memory.primarySource != undefined) {
  
             var target = creep.memory.primarySource;
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
@@ -140,12 +195,9 @@ module.exports = {
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer +'</>');
     }
     
-            else{
+            if(ClosestContainer == undefined){
 
                 ClosestContainer = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
                     // filter: s => s.structureType == STRUCTURE_STORAGE &&
                     filter: s => s.structureType == STRUCTURE_CONTAINER &&
                     s.store[RESOURCE_ENERGY] > 75
@@ -159,7 +211,7 @@ module.exports = {
                 
                 if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
 
                 } else{
@@ -180,7 +232,7 @@ module.exports = {
             if (ClosestContainer != undefined || ClosestContainer != null && (creep.harvest(ClosestContainer) == ERR_NOT_IN_RANGE) && (creep.harvest(ClosestContainer) == -7))
             {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a container ');    
-                creep.moveTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                creep.travelTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
                 util.repairRoad(creep);
                 return;
             }else{
@@ -201,7 +253,7 @@ module.exports = {
 
                     if (source == undefined || source == null ) {
                        // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + "creep.room.storage is " + source);
-                        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
+                //        console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a builder ");
         
                       roleUpgrader.run(creep);
                         return;
@@ -213,9 +265,9 @@ module.exports = {
                 if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                     // move towards the source
 
-                    // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " moveTo (" + source + ")");
+                    // console.log("roleHarvester [line " + util.LineNumber() + "]  " + creep.name + " travelTo (" + source + ")");
 
-                    creep.moveTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
                     util.repairRoad(creep);
                 }
                 

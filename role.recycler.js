@@ -17,8 +17,14 @@ module.exports = {
         }
 
         var mode = creep.memory.mode;
-        var flagTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
+        var recycleTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
         
+        if (recycleTarget == undefined) {
+            recycleTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
+            
+
+        }
+
         // ********************************************************************************//;
         //          search for a "dismantle_X"
         // ********************************************************************************//;
@@ -34,16 +40,16 @@ module.exports = {
             //     filter: (s) => (s.name.includes ("dismantle"))
             // });
 
-            if (flagTarget != undefined) {
+            if (recycleTarget != undefined) {
                 
                 
-                var moveStatus = creep.moveTo(flagTarget);
+                var moveStatus = creep.travelTo(recycleTarget);
                 
-                if(creep.pos.isNearTo(flagTarget))
+                if(creep.pos.isNearTo(recycleTarget))
                 {
                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] moveStatus is ' + moveStatus +'</>');
                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.pos is ' + creep.pos +'</>');
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] flagTarget.pos is ' + flagTarget.pos +'</>');
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] flagTarget.pos is ' + recycleTarget.pos +'</>');
                     creep.memory.mode = "dismantle";
                 }
 
@@ -72,7 +78,7 @@ module.exports = {
                 // var status = creep.dismantle(target);
                 
                 // if (status == ERR_NOT_IN_RANGE) {
-                //     creep.moveTo(flagTarget,{ visualizePathStyle: { stroke: '#ffaa00' } });
+                //     creep.travelTo(flagTarget,{ visualizePathStyle: { stroke: '#ffaa00' } });
                 //     util.repairRoad(creep);
                 //     return;    
                 // }
@@ -84,7 +90,7 @@ module.exports = {
 
         if (mode == "dismantle") {
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] mode is ' + mode +'</>');
-            var structures = flagTarget.room.lookAt(flagTarget); 
+            var structures = recycleTarget.room.lookAt(recycleTarget); 
 
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] structures.length is ' + structures.length +'</>');
                 for (const key in structures) {

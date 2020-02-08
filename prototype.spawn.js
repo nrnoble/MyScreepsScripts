@@ -603,6 +603,14 @@ module.exports = function () {
 
 // /minflagToFlagHarvester
     StructureSpawn.prototype.createFlagToFlagHarvester =  function (SpawnObj, roleName, energy, _flagSource,_flagContainer) {
+     
+        if (SpawnObj.memory.energyFlagToFlagHarvester == undefined) {
+            SpawnObj.memory.energyFlagToFlagHarvester = energy;
+        }
+        else{
+            energy = SpawnObj.memory.energyFlagToFlagHarvester;
+        }
+     
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
     
         //for (let i = 0; i < numberOfWorkParts; i++) {
@@ -676,6 +684,14 @@ module.exports = function () {
 
 
     StructureSpawn.prototype.createFlagToFlagHarvester2 = function (SpawnObj, roleName, energy, _flagSource,_flagContainer) {
+        
+        if (SpawnObj.memory.energyFlagToFlagHarvester2 == undefined) {
+            SpawnObj.memory.energyFlagToFlagHarvester2 = energy;
+        }
+        else{
+            energy = SpawnObj.memory.energyFlagToFlagHarvester2;
+        }
+        
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
     
         //for (let i = 0; i < numberOfWorkParts; i++) {

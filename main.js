@@ -1,4 +1,4 @@
- return;
+//return;
 
 /* #region required files*/
 // import modules
@@ -42,7 +42,7 @@ var roleTerminalToStorage = require("role.terminalToStorage");
 
 var fileName = "Main        ";
 
- 
+
 
 
 
@@ -80,8 +80,8 @@ let consoleDelay = 5;
 let unitsToTransfer = 51000;
 unitsToTransfer = 200000; //test
 
-  
-//term.transferEnergy("E44S2","E46S3",150000);  //test
+
+//term.transferEnergy("E44S2","E43S3",150000);  //test
 
 //term.transferEnergy("E45S2","E46S3",unitsToTransfer); 
 
@@ -117,7 +117,19 @@ unitsToTransfer = 200000; //test
 
 // global.forceInjectNAME = ()=>{global.NAMEInjected = false; injectNAME();}
 
+for (let spawnName in Game.spawns) {
+    let spawn = Game.spawns[spawnName];
+    if (spawn.memory.roomInit == undefined) {
+       // util.flagContainer(spawn); 
+       // util.initFirstRoom(spawn);     
+    }
+      
+    
+//test
+}
 
+//var sp1 = Memory.spawns.Spawn1;
+//util.initFirstRoom(sp1);
 
 //***************************************** */
 //                 GAME LOOP
@@ -125,12 +137,14 @@ unitsToTransfer = 200000; //test
 
 module.exports.loop = function () {
     var sp1 = Memory.spawns.Spawn1;
+   // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] sp1.room.name is ' + sp1.room.name +'</>');
+   //  util.initFirstRoom("W2N5");
     //  var workCost = BODYPART_COST[WORK];
     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] workCost is ' + workCost +'</>');
     //var energyRemainging = Game.rooms["E45S2"].terminal.energy
     // const energyRemainging = _.sum(Game.rooms['E45S2'].terminal.store);
     var energyRemainging;
-
+    
     if (Memory.halt == true) {
         console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] WARNING! All scripts have been suspended. Memory.halt is ' + Memory.halt + '</>');
         new RoomVisual(sp1.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
@@ -184,26 +198,33 @@ module.exports.loop = function () {
         // }
 
 
+        // ********************************************************************************//;
+        // Throttle CPU
+        // ********************************************************************************//;
+        /* #region  Throttle CPU */
         var creep = Game.creeps[name];
         var cpuThrottle = Memory.cpuThrottle; // 2 is 50% 4= is 25% 
-        if (Game.time % cpuThrottle == 0) {
+        if (Game.time % cpuThrottle == 0 && (creep.memory.role != "miner" || creep.memory.role != "storageToExt")) {
             sameSpawn = true
             if (Game.time % 100 == 0) {
                 if (sameSpawn) {
-           //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
+                    //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
 
                 }
             }
-         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time + '</>');
+            //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time + '</>');
             continue;
         }
 
-
-        
-
+        /* #endregion */
 
 
 
+
+
+        // ********************************************************************************//;
+        //  Room E44S2 prevent all creeps from parking on specific locations
+        // ********************************************************************************//;
         /* #region  Room E44S2 prevent all creeps from parking on specific locations */
         if (creep.room.name == "E44S2") {
 
@@ -234,7 +255,9 @@ module.exports.loop = function () {
 
 
 
-
+        // ********************************************************************************//;
+        // run creep by role 
+        // ********************************************************************************//;
         /* #region  run creep by role */
         if (creep.memory.role == 'harvester') {
             roleHarvester.run(creep);
@@ -423,6 +446,13 @@ module.exports.loop = function () {
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
+
+            // util.placeSourceContainers(spawn);
+            //util.placeStorageConstructionSite(spawn);
+            util.placeTowerConstructionSite(spawn);
+           // util.setupflagToFlagHarvesters(spawn);
+           // util.placeExtensionConstructionSite(spawn);
+
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
         new RoomVisual(spawn.room.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
@@ -489,10 +519,10 @@ module.exports.loop = function () {
 
         // #Term trottle
         if (spawn.room.name == "E44S3") {
-        //    term.throttledTransfer("E44S3", "E46S1", 400, 150500, 295500, debug = false);
-           // term.throttledTransfer("E44S2", "E46S3", 400, 150500, 295500, debug = false);
+            //    term.throttledTransfer("E44S3", "E46S1", 400, 150500, 295500, debug = false);
+            // term.throttledTransfer("E44S2", "E46S3", 400, 150500, 295500, debug = false);
             //term.throttledTransfer("E45S2", "E46S3", 400, 150500, 295500, debug = false);
-           
+
 
             // link next to storage 5d46b9cad16c4b73af5c1269
             // link next to controller 5d9fd0108fad390001e30945
@@ -784,25 +814,25 @@ module.exports.loop = function () {
         if (spawnName == "Spawn7") {
             var source1LinkObjId = "5dd200fdb15610ec59943842";
             var storageLinkObjId = "5dea45a14919cef4e466ed04";
-            
+
             var controlLinkObjId = "5dd1d69ea3d7f3742e5b782d";
-           // var transferStatus = link.transferEnergy(source1LinkObjId, controlLinkObjId);
-           // var transferStatus = link.transferEnergy(storageLinkObjId, controlLinkObjId);
+            // var transferStatus = link.transferEnergy(source1LinkObjId, controlLinkObjId);
+            // var transferStatus = link.transferEnergy(storageLinkObjId, controlLinkObjId);
 
             var source1Link = Game.getObjectById(source1LinkObjId);
             var storageLink = Game.getObjectById(storageLinkObjId);
             var controllerLink = Game.getObjectById(controlLinkObjId);
 
-            
+
             var controllerLinkEnergy = controllerLink.store[RESOURCE_ENERGY];
-           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] controllerLinkEnergy is ' + controllerLinkEnergy +'</>');
+            // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] controllerLinkEnergy is ' + controllerLinkEnergy +'</>');
             if (controllerLinkEnergy < 700) {
                 var transferStatus = link.transferEnergy(source1LinkObjId, controlLinkObjId);
-                
+
             }
 
-            var  storageLinkEnergy = storageLink.store[RESOURCE_ENERGY];
-           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] storageLinkEnergy is ' + storageLinkEnergy +'</>');
+            var storageLinkEnergy = storageLink.store[RESOURCE_ENERGY];
+            // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] storageLinkEnergy is ' + storageLinkEnergy +'</>');
             if (storageLinkEnergy < 400 && controllerLinkEnergy > 700) {
                 var transferStatus = link.transferEnergy(source1LinkObjId, storageLinkObjId);
             }
@@ -959,7 +989,7 @@ module.exports.loop = function () {
         //#energy management
         var energy = spawn.room.energyCapacityAvailable;
 
-        var energy = 700;
+        var energy = 750;
         var upgrader2xEnergy = 500;
 
 
@@ -1359,7 +1389,8 @@ module.exports.loop = function () {
                 //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  numberOfHarvesters is ' + numberOfHarvesters);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + ' ' +  creep.name + '  spawn.memory.minHarvesters is ' + spawn.memory.minHarvesters);
                 if (Game.time % consoleDelay == 0) {
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + name);
+                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + " is creating harvester: " + name);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + ']  is creating Harvester ' + name +'</>');
                 }
             }
             // if not enough lorries
@@ -1538,7 +1569,7 @@ module.exports.loop = function () {
             }
 
             /* #endregion */
-          
+
             /* #region  Create Wallrepairer */
 
             else if (numberOfWallRepairers < spawn.memory.minWallRepairers) {

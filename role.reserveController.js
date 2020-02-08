@@ -90,27 +90,27 @@ module.exports = {
             // find exit to target room
             var exit = creep.room.findExitTo(creep.memory.target);
             // move to exit
-            creep.moveTo(creep.pos.findClosestByRange(exit));
+            creep.travelTo(creep.pos.findClosestByRange(exit));
         }
         else {
 
 
 
             if (creep.reserveController(controller) == ERR_NOT_IN_RANGE) {
-                //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.moveTo(controller)');
-                // creep.moveTo(creep.room.controller);
+                //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.travelTo(controller)');
+                // creep.travelTo(creep.room.controller);
                 // myTestPos = new RoomPosition(42, 7, 'E45S2');
                 // myTestPos = new RoomPosition(17, 27, 'E43S3');
 
                     
                 // move towards the controller
-                creep.moveTo(controller);
-                // creep.moveTo(myTestPos);
+                creep.travelTo(controller);
+                // creep.travelTo(myTestPos);
                 var reserveStatus = creep.reserveController(controller);
                 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserve status is ' + reserveStatus );
 
                 //myTestPos = new RoomPosition(42, 8, 'E45S2');
-                //creep.moveTo(myTestPos);
+                //creep.travelTo(myTestPos);
                 //creep.upgradeController(creep.room.controller);
             }
             else
@@ -119,7 +119,7 @@ module.exports = {
                 var claimstatus = creep.reserveController(controller);
                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' reserve controller status is ' + claimstatus );
               //  myTestPos = new RoomPosition(42, 8, 'E45S2');
-              //  creep.moveTo(myTestPos);
+              //  creep.travelTo(myTestPos);
                 //upgradeStatus =  creep.upgradeController(creep.room.controller);
               //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' upgradeStatus  is ' + upgradeStatus);
                 // if (upgradeStatus != 0)
