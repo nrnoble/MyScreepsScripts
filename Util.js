@@ -678,10 +678,16 @@ module.exports =
             spawn.memory.initRoom = initRoom;
         }
 
-        if (spawn.memory.creepSettings == undefined) {
-            creepSettings = new Object();
-            spawn.memory.creepSettings = creepSettings;
+        if (spawn.memory.CreepSettings == undefined) {
+            CreepSettings = new Object();
+            spawn.memory.CreepSettings = CreepSettings;
         }
+
+        if (spawn.memory.EnergyManagement == undefined) {
+            EnergyManagement = new Object();
+            spawn.memory.EnergyManagement = EnergyManagement;
+        }
+
 
 
         var  roomInit = spawn.memory.roomInit;
@@ -913,7 +919,9 @@ module.exports =
         }
     },
 
-
+    // ********************************************************************************************//;
+    // place a construction site at location of a flag with the name "Tower" in the flag name
+    // ********************************************************************************************//;
     placeTowerConstructionSite: function(spawn){
        
         if (spawn.memory.RoomBuilder == undefined) {

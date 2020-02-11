@@ -17,12 +17,12 @@ module.exports = {
         }
 
         var mode = creep.memory.mode;
-        var recycleTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
+ //       var recycleTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
+        var recycleTarget = creep.pos.findClosestByPath(FIND_RUINS);
+
         
         if (recycleTarget == undefined) {
             recycleTarget = creep.pos.findClosestByPath(FIND_FLAGS,{filter: s=> s.name.includes("dismantle")});
-            
-
         }
 
         // ********************************************************************************//;

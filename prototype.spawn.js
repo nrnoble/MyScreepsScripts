@@ -992,6 +992,10 @@ module.exports = function () {
         //    body.push(MOVE);
         //}
 
+        energy = creep.memory.storageToExtEnergy;
+        
+        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] energy is ' + energy +'</>');
+        
         var numberOfParts = Math.floor(energy / 100);
         for (let i = 0; i < numberOfParts; i++) {
             body.push(CARRY);

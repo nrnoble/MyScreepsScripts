@@ -987,11 +987,32 @@ module.exports.loop = function () {
         //        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  testController: ' + testController);
 
         //#energy management
-        var energy = spawn.room.energyCapacityAvailable;
+        if (spawn.room.controller.level <= 3 ) {
+            var energy = spawn.room.energyAvailable;   
+        }
+        else{
+            var energy = spawn.memory.EnergyManagement.throttleRoomEngeryLevel;
+        }
+        //var totlCreepsInRoom = spawn.room.find(FIND_MY_CREEPS).length
 
-        var energy = 750;
-        var upgrader2xEnergy = 500;
+        if (spawn.room.find(FIND_MY_CREEPS).length <= 2) {
+            energy = 300;
+            minHarvesters = 1;
+        }
 
+        // if (spawn.room.controller.level <= 2) {
+            
+        //     energy = spawn.room.energyCapacityAvailable;
+            
+        // }
+        // else{
+
+        //     energy = spawn.room.memory.energyLevel;
+        //     upgrader2xEnergy = 800;
+        //     storageToExtEnergy = 900 // spawn.room.memory.EnergyManagement.storageToExtEnergy;
+        // }
+
+       
 
         //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
         //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] spawn.room.energyCapacityAvailable is ' + spawn.room.energyCapacityAvailable);
@@ -1297,24 +1318,10 @@ module.exports.loop = function () {
                 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfFlagToFlagHarvesters  is ' + numberOfFlagToFlagHarvesters);
                 //#createStorageToExt
 
-                if (energy > spawn.room.energyAvailable) {
-
-                    energy = spawn.room.energyAvailable;
-
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being lowered to ' + energy + '</>');
-
-                    if (spawn.room.energyAvailable <= 300) {
-                        energy = 300;
-                        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Spawn energy is being set to the very minium: ' + energy + '</>');
-
-                    }
-                }
-                else if (spawn.room.controller.level >= 7) {
-                    energy = 800;
-                }
-
-                name = spawn.createStorageToExt(spawn, "storageToExt", energy);
-
+   
+              
+               // name = spawn.createStorageToExt(spawn, "storageToExt", energy);
+                name = myCreateStorageToExt(spawn, energy);
                 // if (name = -6) {
                 //     console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING!!!! Investigate. This message not ever appear ' + energy +'</>');
 
@@ -1325,7 +1332,7 @@ module.exports.loop = function () {
                 //     if (energy < 300) {
                 //         energy = 300;
                 //     }
-                //     name = spawn.createStorageToExt(spawn, "storageToExt", energy);
+                // name = spawn.createStorageToExt(spawn, "storageToExt", energy);
                 //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] StorageToExt2x energy is ' + energy + '</>');
                 // }
 
@@ -1949,7 +1956,7 @@ module.exports.loop = function () {
 
 
 
-            //createStorageToExt
+        
 
             else if (numberOfStorageToExt < spawn.memory.minStorageToExt) {
                 var flagSource = Game.flags["Source_" + spawn.room.name];
@@ -1985,7 +1992,7 @@ module.exports.loop = function () {
 
                 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfFlagToFlagHarvesters  is ' + numberOfFlagToFlagHarvesters);
 
-                name = spawn.createStorageToExt(spawn, "storageToExt", energy);
+             //  name = spawn.createStorageToExt(spawn, "storageToExt", storageToExtEnergy);
 
                 if (Game.time % consoleDelay == 0) {
                     console.log('[' + fileName + 'line:' + util.LineNumber() + "]" + spawnName + "  is creating a LinkToTerminal creep: " + name);
@@ -2034,7 +2041,7 @@ module.exports.loop = function () {
 
                 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] numberOfFlagToFlagHarvesters  is ' + numberOfFlagToFlagHarvesters);
 
-                name = spawn.createStorageToExt(spawn, "storageToExtMini", energy / 2);
+                name = spawn.createStorageToExt(spawn, "storageToExtMini", storageToExtEnergy / 2);
 
                 if (Game.time % consoleDelay == 0) {
 
@@ -2135,14 +2142,15 @@ function clearMemory() {
 function myCreateStorageToExt(spawn, energy) {
     var createStatus = spawn.createStorageToExt(spawn, "storageToExt", energy);
     if (createStatus == -6) {
-        energy = energy - 100;
-        if (energy < 300) {
+        energy = energy - 50;
+        if (energy <= 300) {
             energy = 300;
         }
         createStatus = myCreateStorageToExt(spawn, energy);
     }
 
     return createStatus
+
     //    createStorageToExt(energy);
     //    name = spawn.createStorageToExt (spawn,"storageToExt", energy);
     //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
