@@ -184,6 +184,8 @@ module.exports = {
             if (creep.room.name == "E46S1" && creep.memory.primarySource != undefined) {
  
             var target = creep.memory.primarySource;
+            var primarySource = Game.flags[target + "_" + creep.room.name];
+
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] target is ' + target +'</>');
             var primarySource = Game.flags[target];
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
@@ -237,7 +239,12 @@ module.exports = {
                 return;
             }else{
                 // find closest source
-                var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+
+             //   var target = creep.room.memory.primarySource;
+               // var primarySource = Game.flags[target + "_" + creep.room.name];
+
+                var flagSource2 = Game.flags["Source_" + creep.room.name];
+                var source = flagSource2.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if (source == null) {
                 // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
                 // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " running as a upgrader ");

@@ -7,7 +7,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-
+   // return;
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
@@ -15,7 +15,7 @@ module.exports = {
         // check to see if engery == 0 and ttl < 75
         var status = util.SelfSecide(creep);
 
-        var status = util.stayInTargetRoom(creep); 
+       // var status = util.stayInTargetRoom(creep); 
 
 
         // if creep is trying to repair something but has no energy left
@@ -61,6 +61,11 @@ module.exports = {
             }
 
             // if we find a wall that has to be repaired
+
+
+           // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] target is ' + target +'</>');
+          //  console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] target.pos.x  is ' + target.pos.x + ', target.pos.y '+target.pos.y  +' Room:'+ target.room.name +'</>');
+
             if (target != undefined) {
                 // try to repair it, if not in range
                 if (creep.repair(target) == ERR_NOT_IN_RANGE) {

@@ -115,16 +115,16 @@ module.exports =
 
                             //   var badguycreep = Game.getObjectById("5d6b2c15a15b166db2e08304");
                             var status = evilCreepHeal.getActiveBodyparts(HEAL);
-                            console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!! evilCreep.getActiveBodyparts(HEAL) status  is ' + status);
+                            console.log('[' + fileName + 'line:' + util.LineNumber() + '] !!!!!sss  evilCreep.getActiveBodyparts(HEAL) status  is ' + status);
 
                             if (evilCreepHeal.getActiveBodyparts(HEAL) > 0) {
                                 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] HEAL ATTACK HEAL ATTACK HEAL ATTACK firing on evil creep status  is ' + status);
                                 // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + tower.room.name + ' HEAL ATTACK HEAL ATTAC ATTACK firing on evil creep status  is ' + status);
 
-                                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] creep has heal parts is ' + +'</>');
+                                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] XXXXXXX creep has heal parts is ' + status +'</>');
                                 // // if (tower.room.name == "W14S18") {
                                 // //     if (evilCreepHeal.pos.y > 9 && evilCreepHeal.pos.y < 46) {
-                                // //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] attack1 is ' + '</>');
+                                // //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.n ame + '] attack1 is ' + '</>');
                                 // //          tower.attack(evilCreepHeal);
                                 // //         continue;
                                 // //     }
@@ -139,9 +139,12 @@ module.exports =
                                 // // }
 
                                 if (evilCreep.owner.username != "Sky-Net") {
-                                    tower.attack(evilCreep);
+                                  
+                                  var attackStatus =  tower.attack(evilCreepHeal);
+                                  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] attackStatus is ' + attackStatus +'</>');
                                 }
                                // tower.attack(evilCreepHeal);
+                               continue;
                             }
 
                         }

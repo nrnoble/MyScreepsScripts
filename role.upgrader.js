@@ -73,7 +73,11 @@ module.exports = {
         // if creep is bringing energy to the controller but has no energy left
         var workStatus = workCheck(creep);
 
-        // if creep is supposed to transfer energy to the controller
+        // ********************************************************************************//;
+        //          if creep is supposed to transfer energy to the controller
+        // ********************************************************************************//;
+
+
         if (creep.memory.working == true) {
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
@@ -99,7 +103,7 @@ module.exports = {
 
             }
         }
-        // if creep is supposed to get energy
+        
         // else{ 
         //     // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working != true)");
         //     // find closest container //s.structureType == STRUCTURE_CONTAINER || 
@@ -120,6 +124,10 @@ module.exports = {
         //             creep.travelTo(link, { visualizePathStyle: { stroke: '#ffaa00' } });
         //         }
         //     }
+
+        // ********************************************************************************//;
+        //         // if creep is supposed to get energy
+        // ********************************************************************************//;
             else{
                 let container
                 if (util.isRoom(creep,"E44S2")) {
@@ -136,15 +144,28 @@ module.exports = {
                 }
                 else
                 {
-                    container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+
+                var flagSource2 = Game.flags["Source2_" + creep.room.name];
+            
+                if (container == undefined) {
+                    var roomStorage = creep.room.storage;
+                    if (roomStorage != undefined) {
+                        if (roomStorage.store[RESOURCE_ENERGY] >1000) {
+                            container = roomStorage;
+                        }
+                    }     
+                }     
+
+                if (container == undefined) {
+                    container = flagSource2.pos.findClosestByPath(FIND_STRUCTURES, {
                         filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
                                 || s.structureType == STRUCTURE_TERMINAL
                                 || s.structureType == STRUCTURE_STORAGE) 
                                 && s.store[RESOURCE_ENERGY] > 0 ) 
-                                || (s.structureType == STRUCTURE_LINK)
-
-                            
+                                || (s.structureType == STRUCTURE_LINK)                  
                     });
+                }    
+
                 }
                 // if one was found
                 if (container != undefined) {

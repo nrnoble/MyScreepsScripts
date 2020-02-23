@@ -249,7 +249,7 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createClaimer =   function (target) {
            // console.log("Creating a claimer");
-            return this.createCreep([CLAIM, MOVE], undefined, { role: 'claimer', target: target });
+            return this.createCreep([CLAIM, MOVE, WORK, CARRY, MOVE, WORK, CARRY, MOVE], undefined, { role: 'claimer', target: target });
         };
 
 
@@ -977,6 +977,7 @@ module.exports = function () {
     StructureSpawn.prototype.createStorageToExt = function (SpawnObj, roleName, energy) {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
+     
         //for (let i = 0; i < numberOfWorkParts; i++) {
         //    body.push(WORK);
         //}
@@ -992,9 +993,9 @@ module.exports = function () {
         //    body.push(MOVE);
         //}
 
-        energy = creep.memory.storageToExtEnergy;
+       // energy = SpawnObj.memory.EnergyManagement.storageToExtEnergy;
         
-        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] energy is ' + energy +'</>');
+   //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] energy is ' + energy +'</>');
         
         var numberOfParts = Math.floor(energy / 100);
         for (let i = 0; i < numberOfParts; i++) {

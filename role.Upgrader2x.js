@@ -369,14 +369,15 @@ module.exports = {
               
                 }
 
-
+                // Storage
                 if (container == undefined) {
                     
                
                         container = creep.room.controller.pos.findClosestByPath(FIND_STRUCTURES, {
-                        filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-                                || s.structureType == STRUCTURE_TERMINAL
-                                || s.structureType == STRUCTURE_STORAGE) 
+                        filter: s =>( 
+                               (//s.structureType == STRUCTURE_CONTAINER 
+                              //  || s.structureType == STRUCTURE_TERMINAL
+                                 s.structureType == STRUCTURE_STORAGE) 
                                 && s.store[RESOURCE_ENERGY] > 0 ) 
                                // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
     
@@ -384,6 +385,37 @@ module.exports = {
                     });
                 
                 }
+               
+                // terminal
+                if (container == undefined) {
+                    
+               
+                    container = creep.room.controller.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s =>( 
+                           (//s.structureType == STRUCTURE_CONTAINER 
+                             s.structureType == STRUCTURE_TERMINAL)
+                            // s.structureType == STRUCTURE_STORAGE) 
+                            && s.store[RESOURCE_ENERGY] > 0 ) 
+                           // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+
+                           
+                });
+            }
+
+
+                // container
+            if (container == undefined) {
+                    container = creep.room.controller.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s =>( 
+                            (s.structureType == STRUCTURE_CONTAINER )
+                            //    s.structureType == STRUCTURE_TERMINAL)
+                            // s.structureType == STRUCTURE_STORAGE) 
+                            && s.store[RESOURCE_ENERGY] > 0 ) 
+                            // && s.store[RESOURCE_ENERGY] > 0 ) || (s.structureType == STRUCTURE_LINK
+                        });
+            }
+
+
                 // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 //     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
                 //             || s.structureType == STRUCTURE_TERMINAL

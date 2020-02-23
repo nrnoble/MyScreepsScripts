@@ -1,4 +1,8 @@
 //return;
+//test asdfdsfsdafsdf
+
+
+
 
 /* #region required files*/
 // import modules
@@ -41,7 +45,6 @@ var roleTerminalToStorage = require("role.terminalToStorage");
 /* #endregion */
 
 var fileName = "Main        ";
-
 
 
 
@@ -119,11 +122,14 @@ unitsToTransfer = 200000; //test
 
 for (let spawnName in Game.spawns) {
     let spawn = Game.spawns[spawnName];
-    if (spawn.memory.roomInit == undefined) {
-       // util.flagContainer(spawn); 
-       // util.initFirstRoom(spawn);     
-    }
+
+    if (spawn.memory.roomInit != true) {
+      //  util.spawnReset(spawn);
       
+        util.flagContainer(spawn); 
+        util.initFirstRoom(spawn);     
+    }
+    util.placeSourceContainers(spawn);
     
 //test
 }
@@ -446,9 +452,9 @@ module.exports.loop = function () {
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
-
-            // util.placeSourceContainers(spawn);
-            //util.placeStorageConstructionSite(spawn);
+  
+         //   util.placeSourceContainers(spawn);
+            util.placeStorageConstructionSite(spawn);
             util.placeTowerConstructionSite(spawn);
            // util.setupflagToFlagHarvesters(spawn);
            // util.placeExtensionConstructionSite(spawn);
@@ -987,13 +993,8 @@ module.exports.loop = function () {
         //        console.log('[' + fileName + 'line:' + util.LineNumber() + ']  testController: ' + testController);
 
         //#energy management
-        if (spawn.room.controller.level <= 3 ) {
-            var energy = spawn.room.energyAvailable;   
-        }
-        else{
-            var energy = spawn.memory.EnergyManagement.throttleRoomEngeryLevel;
-        }
-        //var totlCreepsInRoom = spawn.room.find(FIND_MY_CREEPS).length
+
+        var energy = getRoomEnergy(spawn);
 
         if (spawn.room.find(FIND_MY_CREEPS).length <= 2) {
             energy = 300;
@@ -1093,6 +1094,9 @@ module.exports.loop = function () {
             //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' spawn.memory.foo is ' + spawn.memory.foo);
 
         }
+
+
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energy is ' + energy +'</>');
 
 
         var name = undefined;
@@ -2115,6 +2119,23 @@ module.exports.loop = function () {
 
 
 };
+
+/**
+ * Get the energy level for the current room. Levels 1-3 is spawn.room.energyAvailable
+ */
+function getRoomEnergy(spawn) {
+    if (spawn.room.controller.level <= 3) {
+        var energy = spawn.room.energyCapacityAvailable;
+       // var energy = spawn.room.energyAvailable;
+    }
+    else {
+      //  var energy = spawn.memory.EnergyManagement.throttleRoomEngeryLevel;
+        //var energy = spawn.room.energyCapacityAvailable;
+        var energy  = 800 + (spawn.room.energyCapacityAvailable - 800) /2;
+
+    }
+    return energy;
+}
 
 /* #region local functions*/
 
