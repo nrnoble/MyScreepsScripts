@@ -147,7 +147,7 @@ module.exports = {
                 {
 
 
-                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
 
                 var flagSource2 = Game.flags["Source2_" + creep.room.name];
@@ -160,7 +160,7 @@ module.exports = {
                         }
                     }     
                 }     
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
                 
                 container = util.findNearestLinkToController(creep, 4);
@@ -168,7 +168,7 @@ module.exports = {
 
 
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+             //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
                 if (container == undefined) {
                     container = flagSource2.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -215,12 +215,12 @@ module.exports = {
                  }
 
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container is ' + container +'</>');
+           //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container is ' + container +'</>');
 
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
                     var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
+           //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
                     if (withdrawStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");

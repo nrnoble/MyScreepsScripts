@@ -806,9 +806,9 @@ placeFlagsOnLinks: function(spawn)
             }
            
             var placementStatus2 = spawn.room.createConstructionSite(containerConstructionSite2, STRUCTURE_CONTAINER) ;
-            if (placementStatus1 != 0) {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus2 is ' + placementStatus2 +'</>');
-            }
+            // if (placementStatus1 != 0) {
+            //     console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] + placementStatus2 is ' + placementStatus2 +'</>');
+            // }
 
             spawn.memory.RoomBuilder.placeSourceContiners = "done";
             
@@ -1125,11 +1125,11 @@ placeFlagsOnLinks: function(spawn)
         links = roomController.pos.findInRange(FIND_STRUCTURES, range, {
             filter: s => (s.structureType == STRUCTURE_LINK)
         });
-        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
+    //    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
         if (links.length > 0) {
             container = links[0];
         }
-        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] xcontainer is ' + container +'</>');
+    //    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] xcontainer is ' + container +'</>');
 
         return container ;
     },
@@ -1141,17 +1141,17 @@ placeFlagsOnLinks: function(spawn)
         if (roomStorage == undefined) {
             return undefined
         }
-        
+
         //    const targets = creep.pos.findInRange(FIND_STRUCTURES, range);
         //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
         links = roomStorage.pos.findInRange(FIND_STRUCTURES, range, {
             filter: s => (s.structureType == STRUCTURE_LINK)
         });
-        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
         if (links.length > 0) {
             link = links[0];
         }
-        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] storagre is ' + link +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] storagre is ' + link +'</>');
 
         return link ;
     }

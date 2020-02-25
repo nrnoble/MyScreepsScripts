@@ -440,11 +440,11 @@ module.exports = {
                 // if one was found
 
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] container is ' + container +'</>');
+          //      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] container is ' + container +'</>');
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
                    var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
-                   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
+              //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
                     if (withdrawStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");

@@ -190,7 +190,7 @@ module.exports = {
 
             if (structure == undefined) {     
                 var structure = util.findNearestLinkToStorage(creep,4);
-                console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] findNearestLinkToStorage  is ' + structure +'</>');
+            //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] findNearestLinkToStorage  is ' + structure +'</>');
                
                 // structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 //     filter: (s) => (s.structureType == STRUCTURE_LINK && s.store[RESOURCE_ENERGY] < 750)                      
