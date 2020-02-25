@@ -257,11 +257,6 @@ module.exports = {
             }
         }
 
-      //  console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] yyyyyyy container is ' + container +'</>');
-
-       //     var source1 = Game.getObjectById("5bbcafc09099fc012e63b1c8");
-           // container = creep.pos.findClosestByPath(source1);
-        //    container = creep.room.storage;
 
 
             if (creep.room.name =="E44S2") {
@@ -321,6 +316,9 @@ module.exports = {
 
                 // try to harvest energy, if the source is not in range
                 // console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " travelTo (" + source + ")");
+                
+                
+                
                 var status = creep.harvest(source)
                 if (status == ERR_NOT_IN_RANGE) {
                     // move towards it

@@ -527,8 +527,10 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E21S55") {
           
-            var controllerLinkObjId = "5e52663c1f34ba74d3b69c61";
-            var storageLinkObjId = "5e533960c750f25ea3df3d4f";
+            var controllerLinkObjId = "5e533960c750f25ea3df3d4f";
+            var storageLinkObjId = "5e52663c1f34ba74d3b69c61";
+
+            
 
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
             var controllerLinkObj = Game.getObjectById(controllerLinkObjId);

@@ -762,7 +762,7 @@ placeFlagsOnLinks: function(spawn)
     // place flag link name: StorageLink_%RoomName%
 
 
-    
+
     
 
 },
@@ -1114,6 +1114,47 @@ placeFlagsOnLinks: function(spawn)
         }
         return undefined;
     },
+
+    
+    findNearestLinkToController: function (creep,range) {
+   
+        var container;
+        var roomController = creep.room.controller;
+        //    const targets = creep.pos.findInRange(FIND_STRUCTURES, range);
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
+        links = roomController.pos.findInRange(FIND_STRUCTURES, range, {
+            filter: s => (s.structureType == STRUCTURE_LINK)
+        });
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
+        if (links.length > 0) {
+            container = links[0];
+        }
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] xcontainer is ' + container +'</>');
+
+        return container ;
+    },
+
+    findNearestLinkToStorage: function (creep, range) {
+   
+        var link;
+        var roomStorage = creep.room.storage;
+        if (roomStorage == undefined) {
+            return undefined
+        }
+        
+        //    const targets = creep.pos.findInRange(FIND_STRUCTURES, range);
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
+        links = roomStorage.pos.findInRange(FIND_STRUCTURES, range, {
+            filter: s => (s.structureType == STRUCTURE_LINK)
+        });
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
+        if (links.length > 0) {
+            link = links[0];
+        }
+        console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] storagre is ' + link +'</>');
+
+        return link ;
+    }
 
 
 

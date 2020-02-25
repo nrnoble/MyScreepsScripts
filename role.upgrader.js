@@ -146,28 +146,8 @@ module.exports = {
                 else
                 {
 
-                    // if (container == undefined) {
-                    //    var roomController = creep.room.controller;
-                    //     var ctr = creep.pos.findClosestByRange(FIND_STRUCTURES, 4, {
-                    //     filter: s =>( s.structureType == STRUCTURE_CONTROLLER)                  
-                    //     });
-                     
-                    //     if (condition) {
-                            
-                    //     }  
-                     
-                      
-                    //    links = creep.pos.findClosestByRange(FIND_STRUCTURES, 4, {
-                    //     filter: s =>( s.structureType == STRUCTURE_LINK)                  
-                    //     });
 
-                    //     var link;
-                    //     if (links.length > 0) {
-                    //         link = links[0];
-                    //     }
-                    
-                    // }
-                
+                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
 
                 var flagSource2 = Game.flags["Source2_" + creep.room.name];
@@ -180,6 +160,15 @@ module.exports = {
                         }
                     }     
                 }     
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+
+                
+                container = util.findNearestLinkToController(creep, 4);
+
+
+
+
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
                 if (container == undefined) {
                     container = flagSource2.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -193,9 +182,46 @@ module.exports = {
 
                 }
                 // if one was found
+
+
+                if (container == undefined) {
+                    var roomController = creep.room.controller;
+                     // var ctr = creep.pos.findClosestByRange(FIND_STRUCTURES, 4, {
+                     // filter: s =>( s.structureType == STRUCTURE_LINK)                  
+                     // });
+                  
+                     // if (condition) {
+                         
+                     // }  
+                  
+                 //    const targets = creep.pos.findInRange(FIND_STRUCTURES, 4);
+                 //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
+               
+                     links = roomController.pos.findInRange(FIND_STRUCTURES, 4, {
+                         filter: s =>( s.structureType == STRUCTURE_LINK)                  
+                     });
+
+                     if (links.structureType == STRUCTURE_LINK) {
+                         container = links;
+                     }
+
+                     // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] links is ' + links +'</>');
+                     // var link;
+                     // if (links.length > 0) {
+                     //     link = links[0];
+                     //     console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] links.length is ' + link.length +'</>');
+                     // }
+                 
+                 }
+
+
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container is ' + container +'</>');
+
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
-                    if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
+                    if (withdrawStatus == ERR_NOT_IN_RANGE) {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
                         creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
@@ -215,6 +241,21 @@ module.exports = {
         }
     
 };
+
+function findNearestLinkToController(container, creep) {
+    if (container == undefined) {
+        var roomController = creep.room.controller;
+        //    const targets = creep.pos.findInRange(FIND_STRUCTURES, 4);
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
+        links = roomController.pos.findInRange(FIND_STRUCTURES, 4, {
+            filter: s => (s.structureType == STRUCTURE_LINK)
+        });
+        if (links.structureType == STRUCTURE_LINK) {
+            container = links;
+        }
+    }
+    return container ;
+}
 
 function workCheck(creep) {
     if (creep.memory.working == true && creep.carry.energy == 0) {
