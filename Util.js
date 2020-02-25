@@ -753,6 +753,21 @@ module.exports =
         }
     },
 
+placeFlagsOnLinks: function(spawn)
+{
+
+    // find nearest link to controller within 5 spaces
+    // place flag link name: ControllerLink_%RoomName%
+    // find nearest link to storage within 5 spaces   
+    // place flag link name: StorageLink_%RoomName%
+
+
+    
+    
+
+},
+
+
     placeSourceContainers: function(spawn){
         if(spawn.room.controller.level >= 2 && spawn.memory.RoomBuilder.placeSourceContiners != undefined){
 
@@ -916,6 +931,7 @@ module.exports =
   
 
     // wipes out all of the spawns memory
+    // BUG Does not seem to be working
     spawnReset: function(spawn){
       //  console.log('<font color = "red">[' + fileName + 'line:' + this.LineNumber() + '] room[' + spawn.room.name + '] spawn.memory is ' + JSON.stringify (spawn.memory) +'</>');
         var memory = spawn.memory;

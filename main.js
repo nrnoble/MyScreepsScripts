@@ -524,6 +524,25 @@ module.exports.loop = function () {
         /* #region  Room Specific code per tick */
 
         // #Term trottle
+
+        if (spawn.room.name == "E21S55") {
+          
+            var controllerLinkObjId = "5e52663c1f34ba74d3b69c61";
+            var storageLinkObjId = "5e533960c750f25ea3df3d4f";
+
+            var storageLinkObj = Game.getObjectById(storageLinkObjId);
+            var controllerLinkObj = Game.getObjectById(controllerLinkObjId);
+
+            if (storageLinkObj.store[RESOURCE_ENERGY] >=200 && controllerLinkObj.store[RESOURCE_ENERGY] <=600) {
+                var status1 = link.transferEnergy(storageLinkObjId, controllerLinkObjId);
+            }
+            
+
+        }
+
+
+
+
         if (spawn.room.name == "E44S3") {
             //    term.throttledTransfer("E44S3", "E46S1", 400, 150500, 295500, debug = false);
             // term.throttledTransfer("E44S2", "E46S3", 400, 150500, 295500, debug = false);
@@ -536,7 +555,7 @@ module.exports.loop = function () {
             var controllerLinkObj = "5d9fd0108fad390001e30945";
             var source1LinkObj = "5da2f14886db5e00019fbf17";
             var source2LinkObj = "5da2f8adb541ee0001bf98ab";
-
+ //
 
             // var storageEnergy = spawn.room.storage.store[RESOURCE_ENERGY];
             var storageEnergy = spawn.room.storage.store.energy;

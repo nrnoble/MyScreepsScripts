@@ -142,8 +142,33 @@ module.exports = {
                         ))
                             });
                 }
+                
                 else
                 {
+
+                    // if (container == undefined) {
+                    //    var roomController = creep.room.controller;
+                    //     var ctr = creep.pos.findClosestByRange(FIND_STRUCTURES, 4, {
+                    //     filter: s =>( s.structureType == STRUCTURE_CONTROLLER)                  
+                    //     });
+                     
+                    //     if (condition) {
+                            
+                    //     }  
+                     
+                      
+                    //    links = creep.pos.findClosestByRange(FIND_STRUCTURES, 4, {
+                    //     filter: s =>( s.structureType == STRUCTURE_LINK)                  
+                    //     });
+
+                    //     var link;
+                    //     if (links.length > 0) {
+                    //         link = links[0];
+                    //     }
+                    
+                    // }
+                
+
 
                 var flagSource2 = Game.flags["Source2_" + creep.room.name];
             

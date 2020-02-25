@@ -297,7 +297,7 @@ module.exports = {
             //     container = Game.getObjectById ("5d4dd12e31f4ac407ed9c69b");
             // }
           
-            if (creep.withdraw(container, RESOURCES_ALL) == ERR_NOT_IN_RANGE) {
+            if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 // move towards it
            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] moving towards container: ' + container +'</>');
 
