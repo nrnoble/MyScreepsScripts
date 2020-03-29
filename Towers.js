@@ -55,7 +55,18 @@ module.exports =
                     firstSpawn.memory.maxRampartsHits = maxRampartsHits;
                 }
                 else{
+                    if (Game.time % 100 == 0) {
+                            firstSpawn.memory.spawnRampartHits = firstSpawn.memory.spawnRampartHits + 1000;
+                        }
+                        
+                        spawnRampartHits = firstSpawn.memory.spawnRampartHits;
+
+                    if (Game.time % 200 == 0) {
+                        firstSpawn.memory.maxRampartsHits = firstSpawn.memory.maxRampartsHits + 250;
+                    }
+                    
                     maxRampartsHits = firstSpawn.memory.maxRampartsHits;
+
                 }
              
 

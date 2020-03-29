@@ -1,6 +1,8 @@
 //return;
 //test asdfdsfsdafsdf
 
+//test 2
+
 
 
 
@@ -122,14 +124,21 @@ unitsToTransfer = 200000; //test
 
 for (let spawnName in Game.spawns) {
     let spawn = Game.spawns[spawnName];
-
+    var placeRoomSourceContainers = spawn.room.controller.level >= 3 && 
+        (spawn.memory.RoomBuilder.placeSourceContiners == false || 
+            spawn.memory.RoomBuilder.placeSourceContiners == undefined);
+    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] placeRoomSourceContainers is ' + placeRoomSourceContainers +'</>');
+    if (placeRoomSourceContainers) {
+     //   util.placeSourceContainers(spawn);
+    }
+   
     if (spawn.memory.roomInit != true) {
       //  util.spawnReset(spawn);
       
         util.flagContainer(spawn); 
         util.initFirstRoom(spawn);     
     }
-    util.placeSourceContainers(spawn);
+  //  util.placeSourceContainers(spawn);
     
 //test
 }
@@ -150,6 +159,7 @@ module.exports.loop = function () {
     //var energyRemainging = Game.rooms["E45S2"].terminal.energy
     // const energyRemainging = _.sum(Game.rooms['E45S2'].terminal.store);
     var energyRemainging;
+    
     
     if (Memory.halt == true) {
         console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] WARNING! All scripts have been suspended. Memory.halt is ' + Memory.halt + '</>');
@@ -210,17 +220,17 @@ module.exports.loop = function () {
         /* #region  Throttle CPU */
         var creep = Game.creeps[name];
         var cpuThrottle = Memory.cpuThrottle; // 2 is 50% 4= is 25% 
-        if (Game.time % cpuThrottle == 0 && (creep.memory.role != "miner" || creep.memory.role != "storageToExt")) {
-            sameSpawn = true
-            if (Game.time % 100 == 0) {
-                if (sameSpawn) {
-                    //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
+        // if (Game.time % cpuThrottle == 0 && (creep.memory.role != "miner" || creep.memory.role != "storageToExt")) {
+        //     sameSpawn = true
+        //     if (Game.time % 100 == 0) {
+        //         if (sameSpawn) {
+        //             //         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] WARNING WARNING WARNING all creeps are running at half speed . Game Time:' + Game.time + '</>');
 
-                }
-            }
-            //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time + '</>');
-            continue;
-        }
+        //         }
+        //     }
+        //     //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] skipping Tick is ' + Game.time + '</>');
+        //     continue;
+        // }
 
         /* #endregion */
 
@@ -429,39 +439,73 @@ module.exports.loop = function () {
 
 
 
+        // if (spawnName == "Spawn2" && Game.time % 2 == 0) {
+        //     ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
+        //     continue;
+        // }
+        // else {
+        //     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
 
-        if (spawnName == "Spawn2" && Game.time % 2 == 0) {
-            ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
-            continue;
-        }
-        else {
-            //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
-
-        }
+        // }
 
 
-        if (spawnName == "Spawn6" && Game.time % 2 != 0) {
-            ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
-            continue;
-        }
-        else {
-            //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
+        // if (spawnName == "Spawn6" && Game.time % 2 != 0) {
+        //     ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
+        //     continue;
+        // }
+        // else {
+        //     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
 
-        }
+        // }
 
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
   
-         //   util.placeSourceContainers(spawn);
+           
+
+        //Memory.flags[flag.name]
+        //var testFlag = Game.flags["Rampart_E21S52"];
+        //             Game.flags.Flag1
+        if (spawn.room.name== "E21S52") {
+            var testFlag = Game.flags.Rampart_E21S52;
+            var flag1 =  Game.flags.Flag1;
+           // flag1.memory.foo = 1;
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] xxxtestFlag is ' + testFlag +'</>');
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] flag1 is ' + flag1 +'</>');
+          //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] flag1.memory.foo is ' + flag1.memory.foo +'</>');
+    
+        }
+
+
+
+        try {
+
+            if (spawnName == "Spawn2") {
+                var storage = spawn.room.storage;
+                if (storage.store[RESOURCE_ENERGY] > 3000 ) {
+                 //   spawn.memory.minStorageToExt = 1;
+                }
+            }
+
+        }
+        catch (e) {
+            console.log('[' + fileName + 'line:' + util.LineNumber() + ']  trapped error ' + e );
+        }
+
+
+
             util.placeStorageConstructionSite(spawn);
             util.placeTowerConstructionSite(spawn);
+            //util.placeSourceContainers(spawn);
            // util.setupflagToFlagHarvesters(spawn);
            // util.placeExtensionConstructionSite(spawn);
 
         let creepsInRoom = spawn.room.find(FIND_MY_CREEPS);
 
-        new RoomVisual(spawn.room.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
+        util.overlayInfo(spawn);
+
+
         if (spawn.room.name == "E46S1") {
 
             var currentRoom = spawn.room;
@@ -527,23 +571,37 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E21S55") {
           
-            var controllerLinkObjId = "5e533960c750f25ea3df3d4f";
+            var source2LinkObjId = "5e533960c750f25ea3df3d4f";
             var storageLinkObjId = "5e52663c1f34ba74d3b69c61";
 
             
 
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
-            var controllerLinkObj = Game.getObjectById(controllerLinkObjId);
+            var sourceLink2Obj = Game.getObjectById(source2LinkObjId);
 
-            if (storageLinkObj.store[RESOURCE_ENERGY] >=200 && controllerLinkObj.store[RESOURCE_ENERGY] <=600) {
-                var status1 = link.transferEnergy(storageLinkObjId, controllerLinkObjId);
+            if (storageLinkObj.store[RESOURCE_ENERGY] >=200 && sourceLink2Obj.store[RESOURCE_ENERGY] <=600) {
+                var status1 = link.transferEnergy(storageLinkObjId, source2LinkObjId);
             }
             
 
         }
 
 
+        if (spawn.room.name == "E21S52") {
+          
+            var source2LinkObjId = "5e6418abf7aea39a48a365ed";
+            var storageLinkObjId = "5e63fdf6a36376b7a1f7f293";
 
+            
+            var sourceLink2Obj = Game.getObjectById(source2LinkObjId);
+            var storageLinkObj = Game.getObjectById(storageLinkObjId);
+
+            if (sourceLink2Obj.store[RESOURCE_ENERGY] >=200 && storageLinkObj.store[RESOURCE_ENERGY] <=600) {
+                var status1 = link.transferEnergy(source2LinkObjId, storageLinkObjId);
+            }
+            
+
+        }
 
         if (spawn.room.name == "E44S3") {
             //    term.throttledTransfer("E44S3", "E46S1", 400, 150500, 295500, debug = false);
@@ -554,7 +612,7 @@ module.exports.loop = function () {
             // link next to storage 5d46b9cad16c4b73af5c1269
             // link next to controller 5d9fd0108fad390001e30945
             var storageLinkObj = "5d46b9cad16c4b73af5c1269";
-            var controllerLinkObj = "5d9fd0108fad390001e30945";
+            var sourceLink2Obj = "5d9fd0108fad390001e30945";
             var source1LinkObj = "5da2f14886db5e00019fbf17";
             var source2LinkObj = "5da2f8adb541ee0001bf98ab";
  //
@@ -577,7 +635,7 @@ module.exports.loop = function () {
             //  console.log('<font color ="yellow" >[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxxxxxxxxxxxxstorageEnergy is ' + storageEnergy+ '</>');
 
             var storageLinkObjId = Game.getObjectById(storageLinkObj);
-            var controllerLink = Game.getObjectById(controllerLinkObj);
+            var controllerLink = Game.getObjectById(sourceLink2Obj);
             var source1Link = Game.getObjectById(source1LinkObj);
             var source2Link = Game.getObjectById(source2LinkObj);
 
@@ -586,9 +644,9 @@ module.exports.loop = function () {
             var storageLinkEngery = storageLinkObjId.energy;
 
             var TargetLinkobj = storageLinkObj;
-            var backupTargetLinkObj = controllerLinkObj;
+            var backupTargetLinkObj = sourceLink2Obj;
             if (controllerLinkEngery < 600) {
-                TargetLinkobj = controllerLinkObj;
+                TargetLinkobj = sourceLink2Obj;
                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
             }
 
@@ -724,13 +782,13 @@ module.exports.loop = function () {
             const terminalEnergyE45S2 = spawn.room.terminal.store.energy;
             var storageEnergyE45S2 = spawn.room.storage.store.energy;
 
-            var controllerLinkObj = "5d5542d8f0e41373bf60b75e";
+            var sourceLink2Obj = "5d5542d8f0e41373bf60b75e";
             var source1LinkObj = "5d88c2f732a61a437872fb20";
             var source2LinkObj = "5d99e0fba33c040001cfced0";
             var storageLinkObj = "5d6b7e3252d12c73f0332b33";
-            var backupTargetLinkObj = controllerLinkObj;
+            var backupTargetLinkObj = sourceLink2Obj;
 
-            var controllerLink = Game.getObjectById(controllerLinkObj);
+            var controllerLink = Game.getObjectById(sourceLink2Obj);
             var source1Link = Game.getObjectById(source1LinkObj);
             var source2Link = Game.getObjectById(source2LinkObj);
             var storageLinkObjId = Game.getObjectById(storageLinkObj);
@@ -741,7 +799,7 @@ module.exports.loop = function () {
             var TargetLinkobj = storageLinkObj;
 
             if (controllerLinkEngery < 601) {
-                TargetLinkobj = controllerLinkObj;
+                TargetLinkobj = sourceLink2Obj;
                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxx setting taget to ControllerLink </>');
             }
 
@@ -1017,9 +1075,23 @@ module.exports.loop = function () {
 
         var energy = getRoomEnergy(spawn);
 
-        if (spawn.room.find(FIND_MY_CREEPS).length <= 2) {
+
+        if (spawn.room.name == "E21S55") {
+            energy = 500;
+        //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energy is ' + energy +'</>');
+        //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] spawn.room.find(FIND_MY_CREEPS).length is ' + spawn.room.find(FIND_MY_CREEPS).length +'</>');
+        }
+
+        var numberOfCreepsInRoom = spawn.room.find(FIND_MY_CREEPS).length;
+        if ( numberOfCreepsInRoom <= 3) {
+           
+            console.log('<font color = "blue">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING: setting energy level to 300 </>');
             energy = 300;
-            minHarvesters = 1;
+
+            if(spawn.memory.minHarvesters <= 1){
+                spawn.memory.minHarvesters  = spawn.memory.minHarvesters + 1;
+            }
+            
         }
 
         // if (spawn.room.controller.level <= 2) {
@@ -1034,6 +1106,10 @@ module.exports.loop = function () {
         //     storageToExtEnergy = 900 // spawn.room.memory.EnergyManagement.storageToExtEnergy;
         // }
 
+        if (spawn.room.name =="E21S55") {
+//console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energy is ' + energy +'</>');
+            
+        }
        
 
         //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] room name is ' + room);
@@ -1117,7 +1193,7 @@ module.exports.loop = function () {
         }
 
 
-      //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energy is ' + energy +'</>');
+     //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energy is ' + energy +'</>');
 
 
         var name = undefined;
@@ -1178,9 +1254,9 @@ module.exports.loop = function () {
 
                             //#createMiner
                             //#cm
-                            if (spawn.name != "Spawn2") {
+                          //  if (spawn.name != "Spawn2") {
                                 name = spawn.createMiner(spawn, source.id);
-                            }
+                            //}
                             //  console.log("[Main line " + util.LineNumber() + "] " + spawnName +" is try to create create miner with the name of " + name);
                             console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + " is try to create create miner with the name of " + name);
                             if (name == -4 || name == -6) {
@@ -1862,11 +1938,11 @@ module.exports.loop = function () {
 
                 if (flagSource == undefined || flagContainer == undefined) {
                     spawn.memory.minflagToFlagHarvester2 = 0;
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting minflagToFlagHarvester to ' + spawn.memory.minflagToFlagHarvester);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']                       flagSource is ' + flagSource);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']                    flagContainer is ' + flagContainer);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Resetting minflagToFlagHarvester to ' + spawn.memory.minflagToFlagHarvester);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']                       flagSource is ' + flagSource);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']                    flagContainer is ' + flagContainer);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
 
                     return;
                 }
@@ -1883,7 +1959,7 @@ module.exports.loop = function () {
                     energy = 300;
                 }
 
-                name = spawn.createFlagToFlagHarvester(spawn, "flagToFlagHarvester2", energy, flagSource, flagContainer);
+                name = spawn.createFlagToFlagHarvester2(spawn, "flagToFlagHarvester2", energy, flagSource, flagContainer);
 
                 if (Game.time % consoleDelay == 0) {
                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + "  is creating a LinkToTerminal creep: " + name);
@@ -1903,11 +1979,11 @@ module.exports.loop = function () {
 
                 if (flagSource == undefined || flagContainer == undefined) {
                     spawn.memory.minLink1Harvesters = 0;
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']    Resetting minLink1Harvesters to ' + spawn.memory.minLink1Harvesters);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']                       flagSource is ' + flagSource);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + ']                    flagContainer is ' + flagContainer);
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']    Resetting minLink1Harvesters to ' + spawn.memory.minLink1Harvesters);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']                       flagSource is ' + flagSource);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + ']                    flagContainer is ' + flagContainer);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ****************************************************************************');
 
                     return;
                 }

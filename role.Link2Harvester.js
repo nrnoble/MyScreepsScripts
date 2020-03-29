@@ -106,15 +106,24 @@ module.exports = {
                 var flagContainer = Game.flags["Link2_" + creep.room.name];
        //         console.log('[' + fileName + 'line:' + util.LineNumber() + ']  XXXX flagContainer is ' + flagContainer);
 
-            
-            var structure = flagContainer.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+
+                var structure = undefined;
+                // if (structure == undefined) {
+                //     structure =  setToTerminal (creep);
+                // }
+
+                if (structure == undefined) {
+                                
+                var structure = flagContainer.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 filter: (s) => (s.structureType == STRUCTURE_LINK)
                         // || s.structureType == STRUCTURE_TERMINAL
                         // || s.structureType == STRUCTURE_CONTAINER)
-                //   //  || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
-                //     || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
-                //     && s.energy >= creep.carryCapacity /2
-            });
+                        // || (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 50 ) ) 
+                        // || (s.structureType == STRUCTURE_TOWER && s.energy <= s.energyCapacity - _.sum(creep.carry)) ) 
+                        //  && s.energy >= creep.carryCapacity /2
+                     });
+
+                }
 
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 
@@ -171,7 +180,9 @@ module.exports = {
         
         
         
-        // if creep is supposed to harvest energy from source
+       // ********************************************************************************//;
+       //   if creep is supposed to harvest energy from source
+       // ********************************************************************************//;
         
         else {
 
@@ -198,7 +209,7 @@ module.exports = {
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
                 filter: s => s.structureType == STRUCTURE_CONTAINER
-                 && s.store[RESOURCE_ENERGY] > 0
+                // && s.store[RESOURCE_ENERGY] > 0
             });
 
         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
@@ -273,3 +284,20 @@ module.exports = {
         }
     }
 };
+
+
+function setToTerminal(creep) {
+    var roomStorage = creep.room.storage;
+    var roomTerminal = creep.room.terminal;
+    var structure = undefined;
+    if (roomStorage != undefined && roomTerminal != undefined) {
+        if (roomStorage.store[RESOURCE_ENERGY] >= 1000000) {
+            //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] roomStorage is ' + roomStorage +'</>');
+            //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] roomTerminal is ' + roomTerminal +'</>');
+            if (roomTerminal.store[RESOURCE_ENERGY] <= 300000) {
+                structure = roomTerminal;
+            }
+        }
+    }
+    return structure;
+}

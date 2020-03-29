@@ -108,7 +108,7 @@ module.exports = {
             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
             if (respawnStatus == undefined) {
                 var name;
-                var status
+                var status;
 
                 //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] !O!O!O!O!O!O! creep.memory.respawn is ' + creep.memory.respawn);
 

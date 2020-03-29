@@ -249,7 +249,7 @@ module.exports = function () {
     // create a new function for StructureSpawn
     StructureSpawn.prototype.createClaimer =   function (target) {
            // console.log("Creating a claimer");
-            return this.createCreep([CLAIM, MOVE, WORK, CARRY, MOVE, WORK, CARRY, MOVE], undefined, { role: 'claimer', target: target });
+            return this.createCreep([CLAIM, MOVE, MOVE, WORK, CARRY, MOVE, WORK, CARRY], undefined, { role: 'claimer', target: target });
         };
 
 
@@ -337,7 +337,8 @@ module.exports = function () {
             for (let name in allMyCreepsInRoom ){
                 
             }
-      
+           // energy = 500;
+           // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + this.room.name + '] energy is ' + energy +'</>');
             if(energy <= 300)
             {
                 var body = [WORK, WORK, MOVE];
@@ -612,21 +613,6 @@ module.exports = function () {
         }
      
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
-    
-        //for (let i = 0; i < numberOfWorkParts; i++) {
-        //    body.push(WORK);
-        //}
-
-        //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
-        //energy -= 150 * numberOfWorkParts;
-
-        //var numberOfParts = Math.floor(energy / 100);
-        //for (let i = 0; i < numberOfParts; i++) {
-        //    body.push(CARRY);
-        //}
-        //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-        //    body.push(MOVE);
-        //}
 
         var body = [];
         var numberOfParts = Math.floor(energy / 100);
@@ -692,52 +678,37 @@ module.exports = function () {
             energy = SpawnObj.memory.energyFlagToFlagHarvester2;
         }
         
-        // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
-    
-        //for (let i = 0; i < numberOfWorkParts; i++) {
-        //    body.push(WORK);
-        //}
-
-        //// 150 = 100 (cost of WORK) + 50 (cost of MOVE)
-        //energy -= 150 * numberOfWorkParts;
-
-        //var numberOfParts = Math.floor(energy / 100);
-        //for (let i = 0; i < numberOfParts; i++) {
-        //    body.push(CARRY);
-        //}
-        //for (let i = 0; i < numberOfParts + numberOfWorkParts; i++) {
-        //    body.push(MOVE);
-        //}
-
+  
         var body = [];
-        // var numberOfParts = Math.floor(energy / 100);
-        // for (let index = 0; index < numberOfParts; index++) {
-        //   //  const element = array[index];
-        //     body.push(CARRY);
-        //     body.push(MOVE);
-        // }
+        var body = [];
+        var numberOfParts = Math.floor(energy / 100);
+        for (let index = 0; index < numberOfParts; index++) {
+            //  const element = array[index];
+            body.push(CARRY);
+            body.push(MOVE);
+        }
 
-        //body.push(WORK);
-        // body.push(WORK);
-        // body.push(WORK);
-        body.push(CARRY);
-        body.push(CARRY);
-        body.push(CARRY);
-        body.push(CARRY);
-        body.push(CARRY);
-        body.push(CARRY);
+        // //body.push(WORK);
+        // // body.push(WORK);
+        // // body.push(WORK);
         // body.push(CARRY);
         // body.push(CARRY);
-        //  body.push(CARRY);
+        // body.push(CARRY);
+        // body.push(CARRY);
+        // body.push(CARRY);
+        // body.push(CARRY);
+        // // body.push(CARRY);
+        // // body.push(CARRY);
+        // //  body.push(CARRY);
 
+        // // body.push(MOVE);
+        // // body.push(MOVE);
+        // // body.push(MOVE);
         // body.push(MOVE);
         // body.push(MOVE);
         // body.push(MOVE);
-        body.push(MOVE);
-        body.push(MOVE);
-        body.push(MOVE);
-        body.push(MOVE);
-        body.push(MOVE);
+        // body.push(MOVE);
+        // body.push(MOVE);
 
 
         // create creep with the created body

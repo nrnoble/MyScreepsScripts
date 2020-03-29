@@ -147,7 +147,7 @@ module.exports = {
                 {
 
 
-                 //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
 
                 var flagSource2 = Game.flags["Source2_" + creep.room.name];
@@ -160,10 +160,14 @@ module.exports = {
                         }
                     }     
                 }     
-               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
+                console.log('<font color = "orange">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxxcontainer is ' + container +'</>');
 
-                
-                container = util.findNearestLinkToController(creep, 4);
+                if (container == undefined) {
+                    var nearlinktoController = util.findNearestLinkToController(creep, 4);
+                    if (nearlinktoController.store[RESOURCE_ENERGY] > 0) {
+                        container =  nearlinktoController;
+                    }
+                }
 
 
 
@@ -176,13 +180,14 @@ module.exports = {
                                 || s.structureType == STRUCTURE_TERMINAL
                                 || s.structureType == STRUCTURE_STORAGE) 
                                 && s.store[RESOURCE_ENERGY] > 0 ) 
-                                || (s.structureType == STRUCTURE_LINK)                  
+                               // || (s.structureType == STRUCTURE_LINK)                  
                     });
                 }    
 
                 }
                 // if one was found
 
+                console.log('<font color = "orange">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxx xx container is ' + container +'</>');
 
                 if (container == undefined) {
                     var roomController = creep.room.controller;
@@ -229,7 +234,7 @@ module.exports = {
                 }
                 else {
                     // find closest source
-                    var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+                    var source = flagSource2.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                     // try to harvest energy, if the source is not in range
                     if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
                         // move towards it

@@ -94,7 +94,7 @@ module.exports = {
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN)
                     && s.energy < s.energyCapacity
-                    && s.name != "Spawn2"
+                  //  && s.name != "Spawn2"
 
                 //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
 
@@ -229,6 +229,10 @@ module.exports = {
                     && s.id != "5d99b0a69c30e60001320810" // E45S3 
                     && s.id != "5dd200fdb15610ec59943842" // E45S3 
                     && s.id != "5dd1d69ea3d7f3742e5b782d" // E45S3 
+                    && s.id != "5e63fdf6a36376b7a1f7f293" // E45S3 
+                    && s.id != "5e63fdf6a36376b7a1f7f293" // E45S3 
+
+                    
 
                     && s.room.name != "E46S1" // E46S1
                     && s.room.name != "E45S2") // E46S1
