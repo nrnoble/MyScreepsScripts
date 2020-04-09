@@ -242,6 +242,9 @@ module.exports =
                             || s.structureType == STRUCTURE_RAMPART && s.hits < maxRampartsHits 
                             || s.structureType == STRUCTURE_CONTAINER && s.hits < s.hitsMax
 
+                            || s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(firstSpawn) && s.hits < spawnRampartHits
+                            || s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(firstSpawn.room.storage) && s.hits < spawnRampartHits    
+
                     });
                     //  filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL});
 

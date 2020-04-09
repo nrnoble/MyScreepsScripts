@@ -1,5 +1,7 @@
 //return;
 //test asdfdsfsdafsdf
+// room E21S52 level 6, 2.28 million, Apr 2nd 2020
+// room E21S55 Level 7 739km Apr 6th, 2020
 
 //test 2
 
@@ -774,7 +776,7 @@ module.exports.loop = function () {
         }
 
 
-        if (spawnName == "Spawn3") {
+        if (spawnName == "Spawn3x") {
 
 
             //   term.throttledTransfer("E45S2", "E45S3", 500, 200000, 46000, false);
@@ -1083,13 +1085,13 @@ module.exports.loop = function () {
         }
 
         var numberOfCreepsInRoom = spawn.room.find(FIND_MY_CREEPS).length;
-        if ( numberOfCreepsInRoom <= 3) {
+        if ( numberOfCreepsInRoom == 0) {
            
             console.log('<font color = "blue">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] WARNING: setting energy level to 300 </>');
             energy = 300;
 
-            if(spawn.memory.minHarvesters <= 1){
-                spawn.memory.minHarvesters  = spawn.memory.minHarvesters + 1;
+            if(spawn.memory.minHarvesters == 0){
+                 spawn.memory.minHarvesters = 1;
             }
             
         }

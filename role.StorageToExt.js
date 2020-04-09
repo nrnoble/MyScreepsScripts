@@ -52,6 +52,7 @@ module.exports = {
         if (creep.memory.working == true) {
             
         
+            
             // console.log("roleHarverster.js [line " + util.LineNumber() + "] Working is true: " + creep.name + " (" + creep.memory.role + ")");
 
             // energy in room is too low, only supple spawn and extentions. 
@@ -72,7 +73,8 @@ module.exports = {
             // room energy is OK, so supple towers.
             //  else {
             // find closest spawn, extension or tower which is not full
-            var structure
+            var structure = undefined;
+
             if (creep.room.name == "W46S3") {
                 structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                     // the second argument for findClosestByPath is an object which takes
@@ -94,12 +96,32 @@ module.exports = {
                 // we use the arrow operator to define it
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN)
                     && s.energy < s.energyCapacity
-                  //  && s.name != "Spawn2"
-
+                    && s.name != "Spawn3"
+                    && s.id != "5e87d19155f68952705de66a" // spawn3 in room E21S55 near controller
                 //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
 
             });
 
+            if (structure == undefined) {
+            
+                var storageLink = util.findNearestLinkToStorage(creep,10);
+
+                if (creep.room.name == "E21S55") {
+                    if (storageLink.store[RESOURCE_ENERGY] < 600) {
+                        structure = storageLink;
+                    }
+      
+                }
+
+                // structure = creep.room.storage.findClosestByPath(FIND_MY_STRUCTURES, {
+                //     // the second argument for findClosestByPath is an object which takes
+                //     // a property called filter which can be a function
+                //     // we use the arrow operator to define it
+                //     filter: (s) => (s.structureType == STRUCTURE_LINK
+                //         && s.energy < 600)
+                //});
+
+            }
 
             if (structure == undefined) {
             structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {

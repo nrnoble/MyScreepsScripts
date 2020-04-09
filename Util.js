@@ -446,7 +446,7 @@ module.exports =
               }
         } catch (e) {
         
-            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error while repairing roads is ' + e);
         }
     },
 

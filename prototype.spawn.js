@@ -948,7 +948,11 @@ module.exports = function () {
     StructureSpawn.prototype.createStorageToExt = function (SpawnObj, roleName, energy) {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
-     
+        
+        // if (SpawnObj.memory.storageToExtEnergy != undefined) {
+        //     energy = SpawnObj.memory.storageToExtEnergy;
+        // }
+        
         //for (let i = 0; i < numberOfWorkParts; i++) {
         //    body.push(WORK);
         //}
@@ -1034,16 +1038,37 @@ module.exports = function () {
 
         }
         else{
-            // numberOfParts = Math.floor(energy / 50);
-            // for (let i = 0; i < numberOfParts; i++) {
-            //     body.push(CARRY);
-            //     body.push(MOVE);
 
+
+            energy = SpawnObj.room.energyCapacityAvailable /2;
+ 
+            if(SpawnObj.memory.energyUpgrader2x != undefined){
+                
+               var  energyUpgrader2x = SpawnObj.memory.energyUpgrader2x;
+
+                if (energyUpgrader2x > 0) {
+                    energy = energyUpgrader2x;
+                }
+              
+            }
+        
+            // numberOfParts x 300
+
+
+             numberOfParts = Math.floor(energy / 300);//
+        
+            //  if (energy >= 1900) {
+            //     numberOfParts = 3;
             // }
-             numberOfParts = Math.floor(energy / 200);//
-            
+
+
+            // if (energy >= 2300) {
+            //     numberOfParts = 4;
+            // }
+
             
             for (let i = 0; i < numberOfParts; i++) {
+                body.push(WORK);
                 body.push(WORK);
             }
             for (let i = 0; i < numberOfParts; i++) {
