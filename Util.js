@@ -1141,6 +1141,24 @@ placeFlagsOnLinks: function(spawn)
         return undefined;
     },
 
+        
+    findNearestSpawnToController: function (roomObj,range) {
+   
+        var container;
+        var roomController = roomObj.controller;
+        //    const targets = creep.pos.findInRange(FIND_STRUCTURES, range);
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targets is ' + targets +'</>');
+        var spawns = roomController.pos.findInRange(FIND_STRUCTURES, range, {
+            filter: s => (s.structureType == STRUCTURE_SPAWN)
+        });
+    //    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] links.length is ' + links.length +'</>');
+        if (spawns.length > 0) {
+            container = spawns[0];
+        }
+    //    console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] xcontainer is ' + container +'</>');
+
+        return container ;
+    },
     
     findNearestLinkToController: function (creep,range) {
    

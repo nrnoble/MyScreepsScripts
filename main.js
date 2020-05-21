@@ -80,7 +80,25 @@ console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
 //
 /* #endregion */
 
+var currentTime = Date.now();
+var currentTick = Game.time;
+var currentProgress = Game.spawns.Spawn1.room.controller.progress;
 
+// const startObj = [];
+// startObj.push(currentTime);
+// startObj.push(currentTick);
+// startObj.push(currentProgress);
+
+//  Game.spawns.Spawn1.memory.startObj = startObj;
+
+
+//  Game.spawns.Spawn2.memory.startTime = startTime;
+//  Game.spawns.Spawn3.memory.startTime = startTime;
+//     // Game.spawns.Spawn4.memory.startTime = startTime;
+//     // Game.spawns.Spawn5.memory.startTime = startTime;
+//     // Game.spawns.Spawn6.memory.startTime = startTime;
+//     // Game.spawns.Spawn7.memory.startTime = startTime;
+// Memory.startTime = startTime;
 
 
 let consoleDelay = 5;
@@ -153,6 +171,101 @@ for (let spawnName in Game.spawns) {
 //***************************************** */
 
 module.exports.loop = function () {
+  
+    statOverlay(Game.spawns.Spawn1,15,5,"yellow");
+    statOverlay(Game.spawns.Spawn2,15,15,"yellow");
+
+
+// //    let myDate = new Date(1589134000166);
+//     var startObj = Game.spawns.Spawn1.memory.startObj
+//     var startTime = startObj[0];
+//     var startTick = startObj[1];
+//     var startProgress = startObj[2];
+
+//     currentTime = Date.now();
+//     currentTick = Game.time;
+//     currentProgress = Game.spawns.Spawn1.room.controller.progress;
+
+//   //  currentProgress = Game.spawns.Spawn1.room.controller.progress;
+//     currentProgress = Game.spawns.Spawn1.room.controller.progress;
+//     const level8energy = Game.spawns.Spawn1.room.controller.progressTotal; // 10935000;
+//   //  currentProgress = level8energy - currentProgress
+
+
+    
+//     const iProgress = currentProgress - startProgress;
+//     const iRemainingProgress =  level8energy - currentProgress;
+//     const iTime = currentTime - startTime;
+//     const iSeconds = iTime / 1000;
+//     const iMinutes = iSeconds / 60;
+//     const iHours = iMinutes / 60;
+
+//     const iTicks = currentTick - startTick; 
+
+
+
+//     let myOffSet = new Date(3600000 * 7);
+//     // start time in milliseconds = 1589134000166
+//     let UTC = new Date();
+//     let now = new Date() - UTC;
+
+//     let myDate = new Date (startTime - myOffSet); 
+// //    let myDate = new Date (startTime);
+
+//     let iDate = new Date (iTime);
+
+//     let month = iDate.getMonth() + 1;
+//     // let year = myDate.getFullYear();
+//     let day = iDate.getDate()-1;
+//     let hours = iDate.getHours();
+//     let minutes = iDate.getMinutes();
+//     let seconds = iDate.getSeconds();
+
+
+//     seconds = formatNumber(seconds);
+//     minutes = formatNumber(minutes);
+//     hours = formatNumber(hours);
+//     day = formatNumber(day);
+
+
+
+
+//     // let offSet = myDate.getTimezoneOffset();
+
+
+//    // formatDate =  myDate.toLocaleString();
+
+//  //   var iformatDate = month + "." + day + ":" + year + " " + hours + ":" + minutes + ":" + seconds + " (" + offSet + ")"; 
+//     var iformatDate = day + "." + hours + ":" + minutes + ":" + seconds
+//     var formatDate =  myDate.toLocaleString();
+//     //var iformatDate =  iDate.toLocaleString();
+
+
+
+
+
+//    // new RoomVisual(Game.spawns.Spawn1.room.name).text(formatDate,                                                                          15, 5, { color: 'green', font: 0.8, align: "right"  });
+//     new RoomVisual(Game.spawns.Spawn1.room.name).text(iformatDate              + " (" + util.numberWithCommas(iTime) + ")",                15, 6, { color: 'green', font: 0.8, align: "right"  });
+//     new RoomVisual(Game.spawns.Spawn1.room.name).text("Energy Per Hour: "       + util.numberWithCommas(Math.trunc(iProgress / iHours)),  15, 7, { color: 'green', font: 0.8, align: "right"  });
+//     new RoomVisual(Game.spawns.Spawn1.room.name).text("Ticks Per Min: "        + util.numberWithCommas(Math.trunc(iTicks /  iMinutes )),       15, 8, { color: 'green', font: 0.8, align: "right"  });
+//     new RoomVisual(Game.spawns.Spawn1.room.name).text("iMinutes: "             + Math.trunc(iMinutes),                                     15, 9, { color: 'green', font: 0.8, align: "right"  });
+
+
+//      new RoomVisual(Game.spawns.Spawn2.room.name).text(formatDate, 5, 5, { color: 'green', font: 0.8 });
+
+
+
+
+
+
+    //currentTime = Date.now();
+    //currentTick = Game.time;
+    // var mostRecentTimeTick = [];
+    // mostRecentTimeTick.push(Date.now());
+    // mostRecentTimeTick.push(Game.time);
+    // Memory.mostRecentTimeTick = mostRecentTimeTick;
+    
+
     var sp1 = Memory.spawns.Spawn1;
    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] sp1.room.name is ' + sp1.room.name +'</>');
    //  util.initFirstRoom("W2N5");
@@ -439,7 +552,7 @@ module.exports.loop = function () {
     for (let spawnName in Game.spawns) {
 
 
-
+        
 
         // if (spawnName == "Spawn2" && Game.time % 2 == 0) {
         //     ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
@@ -465,7 +578,7 @@ module.exports.loop = function () {
         let spawn = Game.spawns[spawnName];
   
            
-
+        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] Date.now() is ' + Date.now() +'</>');
         //Memory.flags[flag.name]
         //var testFlag = Game.flags["Rampart_E21S52"];
         //             Game.flags.Flag1
@@ -2219,6 +2332,15 @@ module.exports.loop = function () {
 
 };
 
+function formatNumber(number) {
+    // if (number < 10) {
+    //     number = "0" + number;
+    // }
+    // return number;
+
+   return number.toString().padStart(2,'0');
+}
+
 /**
  * Get the energy level for the current room. Levels 1-3 is spawn.room.energyAvailable
  */
@@ -2276,4 +2398,92 @@ function myCreateStorageToExt(spawn, energy) {
     //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room['+ spawn.room.name +'] StorageToExt2x energy is ' + energy +'</>');
 
     /* #endregion */
+}
+
+function statOverlay(spawn,x,y,displayColor){
+    var startObj = spawn.memory.startObj
+    var startTime = startObj[0];
+    var startTick = startObj[1];
+    var startProgress = startObj[2];
+
+    currentTime = Date.now();
+    currentTick = Game.time;
+    currentProgress = spawn.room.controller.progress;
+
+  //  currentProgress = Game.spawns.Spawn1.room.controller.progress;
+  //  currentProgress = spawn.room.controller.progress;
+    const level8energy = spawn.room.controller.progressTotal; // 10935000;
+  //  currentProgress = level8energy - currentProgress
+
+
+    
+    const iProgress = currentProgress - startProgress;
+    const iRemainingProgress =  level8energy - currentProgress;
+    const iTime = currentTime - startTime;
+    const iSeconds = iTime / 1000;
+    const iMinutes = iSeconds / 60;
+    const iHours = iMinutes / 60;
+    const iTicks = currentTick - startTick; 
+    const remainTicksToCompleteLevel = iRemainingProgress / (iProgress / iTicks)
+    const remainingMinutesToCompleteLevel = remainTicksToCompleteLevel / (iTicks /  iMinutes )
+    const remainingMilsecToCompleteLevel = remainingMinutesToCompleteLevel * 60 * 1000
+
+
+    let myOffSet = new Date(3600000 * 7);
+    // start time in milliseconds = 1589134000166
+    let UTC = new Date();
+    let now = new Date() - UTC;
+
+    let myDate = new Date (startTime - myOffSet);
+  //  let myDate = new Date (startTime);
+
+    let iDate = new Date (remainingMilsecToCompleteLevel);
+//    let iDate = new Date (iTime);
+
+    let month = iDate.getMonth();
+    // let year = myDate.getFullYear();
+    let day = iDate.getDate()-1;
+    let hours = iDate.getHours();
+    let minutes = iDate.getMinutes();
+    let seconds = iDate.getSeconds();
+
+
+    seconds = formatNumber(seconds);
+    minutes = formatNumber(minutes);
+    hours = formatNumber(hours);
+    day = formatNumber(day);
+
+
+
+
+    // let offSet = myDate.getTimezoneOffset();
+
+
+   // formatDate =  myDate.toLocaleString();
+
+ //   var iformatDate = month + "." + day + ":" + year + " " + hours + ":" + minutes + ":" + seconds + " (" + offSet + ")"; 
+    var iformatDate = month +"m :" + day + "d :" + hours + "h :" + minutes + "m"; // + seconds +"s"
+    var formatDate =  myDate.toLocaleString();
+    var xnow = Date.now();
+    var estCompleteDate = new Date (Date.now() + remainingMilsecToCompleteLevel);
+
+    //var iformatDate =  iDate.toLocaleString();
+
+
+
+    iRemainingProgress
+
+    //new RoomVisual(Game.spawns.Spawn1.room.name).text(formatDate,                                                                                       x, y++, { color: 'green', font: 0.8, align: "right"  });
+    new RoomVisual(spawn.room.name).text(formatDate,                                                                                                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+    new RoomVisual(spawn.room.name).text("Energy Per Hour: "                + util.numberWithCommas(Math.trunc(iProgress / iHours)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+    new RoomVisual(spawn.room.name).text("Energy Per Tick: "                + util.numberWithCommas((iProgress / iTicks).toFixed(2)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+    new RoomVisual(spawn.room.name).text("Ticks Per Min: "                  + util.numberWithCommas((iTicks /  iMinutes ).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("iMinutes: "                       + util.numberWithCommas(Math.trunc(iMinutes)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("TicksToCompleteLevel: "           + util.numberWithCommas(Math.trunc(remainTicksToCompleteLevel)),            x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("MinutesToCompleteLevel: "         + util.numberWithCommas(Math.trunc(remainingMinutesToCompleteLevel)),       x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("MilsecToCompleteLevel: "          + util.numberWithCommas(Math.trunc(remainingMilsecToCompleteLevel)),        x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("iRemainingProgress: "             + util.numberWithCommas(Math.trunc(iRemainingProgress)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   new RoomVisual(spawn.room.name).text(iformatDate                        + " (" + util.numberWithCommas(iRemainingProgress) + ")",                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   new RoomVisual(spawn.room.name).text(estCompleteDate.toLocaleString(),                                                                                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
+
 }

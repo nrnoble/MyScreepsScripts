@@ -949,9 +949,9 @@ module.exports = function () {
         // create a body with the specified number of WORK parts and one MOVE part per non-MOVE part
         var body = [];
         
-        // if (SpawnObj.memory.storageToExtEnergy != undefined) {
-        //     energy = SpawnObj.memory.storageToExtEnergy;
-        // }
+        if (SpawnObj.memory.storageToExtEnergy != undefined) {
+            energy = SpawnObj.memory.storageToExtEnergy;
+        }
         
         //for (let i = 0; i < numberOfWorkParts; i++) {
         //    body.push(WORK);
@@ -1040,11 +1040,11 @@ module.exports = function () {
         else{
 
 
-            energy = SpawnObj.room.energyCapacityAvailable /2;
+            energy = SpawnObj.room.energyCapacityAvailable /3;
  
-            if(SpawnObj.memory.energyUpgrader2x != undefined){
+            if(SpawnObj.memory.EnergyManagement.upgrader2x != undefined){
                 
-               var  energyUpgrader2x = SpawnObj.memory.energyUpgrader2x;
+               var  energyUpgrader2x = SpawnObj.memory.EnergyManagement.upgrader2x;
 
                 if (energyUpgrader2x > 0) {
                     energy = energyUpgrader2x;

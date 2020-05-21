@@ -238,7 +238,7 @@ module.exports = {
 
                 if (creep.room.storage != undefined) {
                     storage = creep.room.storage;
-                    if (storage.store[RESOURCE_ENERGY] > 100) {
+                    if (storage.store[RESOURCE_ENERGY] > 1000) {
                         container = creep.room.storage;
                     }
                     else{

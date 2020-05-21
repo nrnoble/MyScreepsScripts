@@ -238,8 +238,7 @@ module.exports = {
         // ********************************************************************************//;
         if (creep.memory.working == true) {
        
-
-            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
+           // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " creep.memory.working == true)");
            // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " The room constroller is )" + creep.room.controller);
             
             // instead of upgraderController we could also use:
@@ -285,26 +284,29 @@ module.exports = {
        
 
             // fill nearby spawn with energy
-            if (creep.room.name =="E44S2") {
+
+            var targetSpawn = util.findNearestSpawnToController(creep.room,5);
+          //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targetDeposit is ' + targetDeposit +'</>');
+      
+            if (targetSpawn != undefined) {
                 
 
-                var spawn2 = Game.getObjectById("5e2ed0ae35612847b2a97c9a");
-                
-                var sp2 = spawn2;
-               //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] sp2 is ' + sp2 +'</>');
-
-                if (spawn2.store[RESOURCE_ENERGY] < 300) {
+           //     var spawn2 = targetSpawn;
+            
+                if (targetSpawn.store[RESOURCE_ENERGY] < 300) {
                     
-                    var transferStatus = creep.transfer(spawn2, RESOURCE_ENERGY)
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxxxxx transferStatus is ' + transferStatus +'</>');
+                    var transferStatus = creep.transfer(targetSpawn, RESOURCE_ENERGY)
+                 //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxxxxx transferStatus is ' + transferStatus +'</>');
                     if (transferStatus == ERR_NOT_IN_RANGE) {
-                        creep.travelTo(spawn2, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        creep.travelTo(targetSpawn, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }
                     return;
                 }
                 
 
             }
+
+
 
 
             if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
