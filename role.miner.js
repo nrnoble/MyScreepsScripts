@@ -31,6 +31,15 @@ module.exports = {
         }
 
 
+        if (creep.room.name == "E25S52") {
+            triggerTime = 100;
+            triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
+        }
+
 
         if (creep.room.name == "E46S3") {
             triggerTime = 100;

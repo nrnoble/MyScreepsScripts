@@ -18,7 +18,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-       
+            
         util.say(creep,"lk2 ", 300);
        
         // if resouces are nearby, attempt to pickup.
@@ -28,8 +28,10 @@ module.exports = {
         // if (status == 0) {
         //     return;
         // }
-
-        //return;
+        if (creep.room.name == "E25S52") {
+            //return;
+        }
+       
     //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running flag to flag harvester ');
 
         // var spawn = creep.room.spawn.name;
@@ -168,7 +170,11 @@ module.exports = {
                     creep.lockedTargetId = structure.id;
                 }
                     status = creep.transfer(structure, RESOURCE_ENERGY);
-      //              console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.transfer(structure, RESOURCE_ENERGY) status is ' + status );
+      
+                if (creep.room.name == "E25S25") {
+                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.transfer(structure, RESOURCE_ENERGY) status is ' + status );
+                    
+                }
 
                 if (status) {
                     // move towards it

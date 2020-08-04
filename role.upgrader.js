@@ -150,7 +150,7 @@ module.exports = {
                  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxcontainer is ' + container +'</>');
 
 
-                var flagSource2 = Game.flags["Source2_" + creep.room.name];
+                var flagSource2 = Game.flags["Source_" + creep.room.name];
             
                 if (container == undefined) {
                     var roomStorage = creep.room.storage;
@@ -164,9 +164,12 @@ module.exports = {
 
                 if (container == undefined) {
                     var nearlinktoController = util.findNearestLinkToController(creep, 4);
-                    if (nearlinktoController.store[RESOURCE_ENERGY] > 0) {
-                        container =  nearlinktoController;
+                    if (nearlinktoController !=  undefined) {
+                        if (nearlinktoController.store[RESOURCE_ENERGY] > 0) {
+                            container =  nearlinktoController;
+                        }
                     }
+
                 }
 
 

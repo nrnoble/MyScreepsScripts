@@ -79,7 +79,7 @@ module.exports = {
 
 
         var  terminalSource = Game.rooms[sourceRoom].terminal;
-     //   var  terminalDestination = Game.rooms[destinationRoom].terminal;
+       // var  terminalDestination = Game.rooms[destinationRoom].terminal;
          // console.log('[' + fileName + 'line:' + util.LineNumber() + ']  linkSource.cooldown  is '+ linkSource.cooldown );
   //       if(linkSource.energy >= 400 && linkSource.cooldown == 0){
         

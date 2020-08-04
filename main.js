@@ -3,6 +3,9 @@
 // room E21S52 level 6, 2.28 million, Apr 2nd 2020
 // room E21S55 Level 7 739km Apr 6th, 2020
 
+// room E25S55 Level 5 June 9th, 2020
+// room E25S55 Level 6 June 15th, 2020 6:00pm
+
 //test 2
 
 
@@ -82,14 +85,17 @@ console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
 
 var currentTime = Date.now();
 var currentTick = Game.time;
-var currentProgress = Game.spawns.Spawn1.room.controller.progress;
+var currentProgress = Game.spawns.Spawn4.room.controller.progress;
 
 // const startObj = [];
 // startObj.push(currentTime);
 // startObj.push(currentTick);
 // startObj.push(currentProgress);
 
-//  Game.spawns.Spawn1.memory.startObj = startObj;
+// Game.spawns.Spawn2.memory.startObj = startObj;
+
+// Game.spawns.Spawn4.memory.startObj = startObj;
+
 
 
 //  Game.spawns.Spawn2.memory.startTime = startTime;
@@ -99,6 +105,11 @@ var currentProgress = Game.spawns.Spawn1.room.controller.progress;
 //     // Game.spawns.Spawn6.memory.startTime = startTime;
 //     // Game.spawns.Spawn7.memory.startTime = startTime;
 // Memory.startTime = startTime;
+
+    // transferEnergyFromRoom = "E21S55";
+    // transferEnergyToRoom = "E25S52";
+    // transferEnergyAmount = 150000;  
+    // var transferStats = term.transferEnergy(transferEnergyFromRoom, transferEnergyToRoom, transferEnergyAmount);
 
 
 let consoleDelay = 5;
@@ -149,7 +160,7 @@ for (let spawnName in Game.spawns) {
             spawn.memory.RoomBuilder.placeSourceContiners == undefined);
     // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] placeRoomSourceContainers is ' + placeRoomSourceContainers +'</>');
     if (placeRoomSourceContainers) {
-     //   util.placeSourceContainers(spawn);
+        util.placeSourceContainers(spawn);
     }
    
     if (spawn.memory.roomInit != true) {
@@ -174,6 +185,9 @@ module.exports.loop = function () {
   
     statOverlay(Game.spawns.Spawn1,15,5,"yellow");
     statOverlay(Game.spawns.Spawn2,15,15,"yellow");
+    statOverlay(Game.spawns.Spawn4,15,15,"yellow");
+
+
 
 
 // //    let myDate = new Date(1589134000166);
@@ -334,7 +348,7 @@ module.exports.loop = function () {
         // ********************************************************************************//;
         /* #region  Throttle CPU */
         var creep = Game.creeps[name];
-        var cpuThrottle = Memory.cpuThrottle; // 2 is 50% 4= is 25% 
+     //   var cpuThrottle = Memory.cpuThrottle; // 2 is 50% 4= is 25% 
         // if (Game.time % cpuThrottle == 0 && (creep.memory.role != "miner" || creep.memory.role != "storageToExt")) {
         //     sameSpawn = true
         //     if (Game.time % 100 == 0) {
@@ -578,7 +592,7 @@ module.exports.loop = function () {
         let spawn = Game.spawns[spawnName];
   
            
-        console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] Date.now() is ' + Date.now() +'</>');
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] Date.now() is ' + Date.now() +'</>');
         //Memory.flags[flag.name]
         //var testFlag = Game.flags["Rampart_E21S52"];
         //             Game.flags.Flag1
@@ -684,21 +698,44 @@ module.exports.loop = function () {
 
         // #Term trottle
 
+
+        if (spawn.room.name == "E25S52") {
+          
+            var sourceLinkObjId     = "5ee06dba136e4d69b39e87f7";
+            var storageLinkObjId    = "5ee0844891989bfb4d891ee0";
+
+            var storageLinkObj = Game.getObjectById(storageLinkObjId);
+            var sourceLinkObj = Game.getObjectById(sourceLinkObjId);
+
+            if (storageLinkObj.store[RESOURCE_ENERGY] <=600 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
+                var status1 = link.transferEnergy(sourceLinkObjId,storageLinkObjId);
+            }
+        }
+
+
         if (spawn.room.name == "E21S55") {
           
             var source2LinkObjId = "5e533960c750f25ea3df3d4f";
-            var storageLinkObjId = "5e52663c1f34ba74d3b69c61";
-
+            var storageLinkObjId = "5e52663c1f34ba74d3b69c61"; //
+            var minMineralLinkObjId = "5f0d8f074c057f31bc84ec1b"; //
+            
             
 
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
             var sourceLink2Obj = Game.getObjectById(source2LinkObjId);
+            var mineralLinkObj = Game.getObjectById(minMineralLinkObjId);
+
+            if (storageLinkObj.store[RESOURCE_ENERGY] >=200 && mineralLinkObj.store[RESOURCE_ENERGY] <=600) {
+                var status2 = link.transferEnergy(storageLinkObjId, minMineralLinkObjId);
+            }
+
 
             if (storageLinkObj.store[RESOURCE_ENERGY] >=200 && sourceLink2Obj.store[RESOURCE_ENERGY] <=600) {
                 var status1 = link.transferEnergy(storageLinkObjId, source2LinkObjId);
             }
-            
 
+            
+          //  term.transferEnergy(transferEnergyFromRoom, transferEnergyToRoom, transferEnergyAmount);
         }
 
 
@@ -1011,6 +1048,7 @@ module.exports.loop = function () {
             }
         }
 
+
         if (spawnName == "Spawn7") {
             var source1LinkObjId = "5dd200fdb15610ec59943842";
             var storageLinkObjId = "5dea45a14919cef4e466ed04";
@@ -1100,6 +1138,13 @@ module.exports.loop = function () {
         var numberOfStorageToExtMinis = _.sum(creepsInRoom, (c) => c.memory.role == 'storageToExtMini');//  
         var numberOfLink1Harvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'link1Harvester');//
         var numberOfLink2Harvesters = _.sum(creepsInRoom, (c) => c.memory.role == 'link2Harvester');//  
+     //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] numberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+
+        // if (spawn.room.name == "E21S52") {
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] numberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+        // }
+
+
         var numberOfRepairRamparts = _.sum(creepsInRoom, (c) => c.memory.role == 'repairRampart');//  
         var numberOfRecyclers = _.sum(creepsInRoom, (c) => c.memory.role == 'recycler');//  
         var numberOfUpgraderTargetedSource = _.sum(creepsInRoom, (c) => c.memory.role == 'upgraderTargetedSource');
@@ -1603,6 +1648,7 @@ module.exports.loop = function () {
             }
 
 
+
             // if not enough harvesters
             else if (numberOfHarvesters < spawn.memory.minHarvesters) {
                 // try to spawn one
@@ -1685,7 +1731,7 @@ module.exports.loop = function () {
             //     /// console.log("line 177");
             // }
 
-
+// gets past here
 
             // // if not enough upgraders
             // //console.log("line 180 spawn.memory.minUpgraders: " + spawn.memory.minUpgraders);
@@ -1709,36 +1755,22 @@ module.exports.loop = function () {
 
             }
             /* #region  Create upgrader2x */
+            // else if (spawn.room.name == "E21S52") {
+            //     console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] xxxxxnumberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+            // }
 
-            else if (numberOfUpgrader2xs < spawn.memory.minUpgrader2xs) {
-
-
-                //StructureSpawn.prototype.createUpgrader2x = function (SpawnObj, roleName, energy) {
-
-                // name = spawn.createCustomCreep(energy * 2, 'upgrader2x');
-
-                name = spawn.createUpgrader2x(spawn, 'upgrader2x', energy);
-
-                //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' creating upgader2x  name: ' + name);
-
-                if ((typeof name) == "string") {
-                    // console.log("[line " + util.LineNumber() + "] create upgrader: " + name);
-                }
-
-                if (!(name < 0)) {
-
-                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qUpgrader = spawn.memory.qUpgrader -1');
-                    // spawn.memory.qUpgrader = spawn.memory.qUpgrader -1;
-                }
-
-
-            }
+// reaches here
 
             /* #endregion */
 
 
             // if not enough repairers
             else if (numberOfRepairers < spawn.memory.minRepairers || (spawn.memory.qRepairer > 0 && (numberOfRepairers < spawn.memory.minRepairers + spawn.memory.qRepairer))) {
+                
+                if (spawn.room.name == "E21S52") {
+                    console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] xxxxxnumberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+                }
+    
                 // try to spawn one
                 name = spawn.createCustomCreep(energy, 'repairer');
                 // console.log("[Main line " + util.LineNumber() + "] create repairer: " + name );
@@ -1751,6 +1783,7 @@ module.exports.loop = function () {
                     spawn.memory.qRepairer = spawn.memory.qRepairer - 1;
                 }
             }
+
 
             else if (numberOfRepairRamparts < spawn.memory.minRepairerRamparts) {
                 // try to spawn one
@@ -1767,6 +1800,7 @@ module.exports.loop = function () {
             }
 
 
+            // reaches here
 
             /* #region  Create Builder */
 
@@ -1775,6 +1809,17 @@ module.exports.loop = function () {
                 // "[line " + util.LineNumber() + "]
                 // console.log("[Main line " + util.LineNumber() + "] create builder: " + name);
 
+                // if (spawn.room.name == "E21S52") {
+                //     console.log('<font color = "greed">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] YOxxxxxnumberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+                // }
+        
+                                
+                if (spawn.room.name == "E21S52" || spawn.room.name == "E21S55") {
+                    energy = 1200;
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] energy is ' + energy +'</>');
+                }
+
+                
                 name = spawn.createCustomCreep(energy, 'builder');
                 if (Game.time % consoleDelay == 0) {
                     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawnName + " is try to create create builder. Status is " + name);
@@ -1790,6 +1835,7 @@ module.exports.loop = function () {
                     //  spawn.memory.qBuilder = spawn.memory.qBuilder -1;
                 }
             }
+
 
             /* #endregion */
 
@@ -1821,7 +1867,12 @@ module.exports.loop = function () {
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creating a UpgraderTargetedSource  is ' + name + '</>');
             }
 
-
+        //    else if (spawn.room.name == "E21S55") {
+        //         console.log('<font color = "greed">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] 1 numberOfUpgrader2xs is ' + numberOfUpgrader2xs +'</>');
+        //     }
+        // else if (spawn.room.name == "E21S55" && spawn.name == "Spawn3") {
+        //     console.log('<font color = "greed">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] xx3 numberOfUpgrader2xs is ' + numberOfUpgrader2xs +'</>');
+        // }
 
 
             else if (numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1) {
@@ -1859,6 +1910,9 @@ module.exports.loop = function () {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + spawn.name + '  Create createTestCreep ' + name);
 
             }
+
+// reaches here xxx
+
 
             //numberOfTerminalToStorage
 
@@ -1928,6 +1982,11 @@ module.exports.loop = function () {
                 }
 
             }
+
+
+            
+// reaches here xxx
+
             else if (numberOfLDBuilders < spawn.memory.minLDBuilder) {
                 // try to spawn
                 name = spawn.createLDBuilder(energy, 1, spawn.room.name, room3, 0);
@@ -2031,6 +2090,8 @@ module.exports.loop = function () {
                 }
             }
 
+// reaches here xx
+
             else if (numberOfFlagToFlagHarvesters2 < spawn.memory.minflagToFlagHarvester2) {
                 var flagSource = Game.flags["Source2_" + spawn.room.name];
                 var flagContainer = Game.flags["Container_" + spawn.room.name];
@@ -2118,6 +2179,12 @@ module.exports.loop = function () {
                 }
             }
             else if (numberOfLink2Harvesters < spawn.memory.minLink2Harvesters) {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] numberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+              
+              if (spawn.room.name == "E21S53") {
+                  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] numberOfLink2Harvesters is ' + numberOfLink2Harvesters +'</>');
+              }
+              
                 var flagSource = Game.flags["Source2_" + spawn.room.name];
                 var flagContainer = Game.flags["Link2_" + spawn.room.name];
 
@@ -2172,7 +2239,8 @@ module.exports.loop = function () {
 
 
 
-        
+// reaches here xxx
+
 
             else if (numberOfStorageToExt < spawn.memory.minStorageToExt) {
                 var flagSource = Game.flags["Source_" + spawn.room.name];
@@ -2270,6 +2338,33 @@ module.exports.loop = function () {
                 }
             }
 
+            else if (numberOfUpgrader2xs < spawn.memory.minUpgrader2xs) {
+                // try to spawn one
+
+                // if(creep.room.name == "W8N35"){
+                //     energy = 1000;
+                // }
+               // name = spawn.createCustomCreep(energy * 2, 'upgrader2x');
+             //  name = spawn.createRecycler(spawn, "recycler", 200);
+
+              name = spawn.createUpgrader2x (spawn, 'upgrader2x' , energy); 
+                
+                if (Game.time % 5 == 0) {
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' creating upgader2x  name: ' + name);             
+                }
+
+                if ((typeof name) == "string") {
+                    // console.log("[line " + util.LineNumber() + "] create upgrader: " + name);
+                }
+
+                if (!(name < 0)) {
+
+                    console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  spawn.memory.qUpgrader = spawn.memory.qUpgrader -1');
+                    // spawn.memory.qUpgrader = spawn.memory.qUpgrader -1;
+                }
+
+
+            }
             else {
 
                 // else try to spawn a builder
@@ -2292,7 +2387,7 @@ module.exports.loop = function () {
                 //numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1
                 /// console.log("Main [line " + util.LineNumber() + "] numberOflongDistanceBuildersroom1 < spawn.memory.minLongDistanceBuildersroom1 " + spawn.memory.minLongDistanceBuildersroom1);
 
-                //   console.log("[" + fileName + "Line " + util.LineNumber() + "] " + spawn.name + " is idle. Game Time: " + util.numberWithCommas(Game.time));
+                   console.log("[" + fileName + "Line " + util.LineNumber() + "] " + spawn.name + " is idle. Game Time: " + util.numberWithCommas(Game.time));
                 //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+ spawn.name + ' spawn.memory.minLinkToTerminal is ' + spawn.memory.minLinkToTerminal);
                 //    console.log('[' + fileName + 'line:' + util.LineNumber() + ']'+ spawn.name + ' numberOfLinkToTerminals is ' + numberOfLinkToTerminals);
             }
@@ -2405,11 +2500,14 @@ function statOverlay(spawn,x,y,displayColor){
     var startTime = startObj[0];
     var startTick = startObj[1];
     var startProgress = startObj[2];
+    //console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] 1 startProgress is ' + startProgress +'</>');
+    startProgress = startProgress >>>0;
+   // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] 2 startProgress is ' + startProgress +'</>');
 
-    currentTime = Date.now();
-    currentTick = Game.time;
-    currentProgress = spawn.room.controller.progress;
-
+    var currentTime = Date.now();
+    var currentTick = Game.time;
+    var currentProgress = spawn.room.controller.progress;
+        currentProgress = currentProgress >>>0;
   //  currentProgress = Game.spawns.Spawn1.room.controller.progress;
   //  currentProgress = spawn.room.controller.progress;
     const level8energy = spawn.room.controller.progressTotal; // 10935000;
@@ -2417,16 +2515,20 @@ function statOverlay(spawn,x,y,displayColor){
 
 
     
-    const iProgress = currentProgress - startProgress;
-    const iRemainingProgress =  level8energy - currentProgress;
-    const iTime = currentTime - startTime;
+//    const iProgress = currentProgress - startProgress;
+    var iProgress = currentProgress - startProgress;  iProgress = iProgress >>>0;
+    var iRemainingProgress =  level8energy - currentProgress; iRemainingProgress >>>0;
+    var iTime = currentTime - startTime; iTime = iTime >>>0; 
+
+
     const iSeconds = iTime / 1000;
     const iMinutes = iSeconds / 60;
     const iHours = iMinutes / 60;
     const iTicks = currentTick - startTick; 
     const remainTicksToCompleteLevel = iRemainingProgress / (iProgress / iTicks)
     const remainingMinutesToCompleteLevel = remainTicksToCompleteLevel / (iTicks /  iMinutes )
-    const remainingMilsecToCompleteLevel = remainingMinutesToCompleteLevel * 60 * 1000
+    var remainingMilsecToCompleteLevel = remainingMinutesToCompleteLevel * 60 * 1000;
+    remainingMilsecToCompleteLevel = remainingMilsecToCompleteLevel >>>0;
 
 
     let myOffSet = new Date(3600000 * 7);
@@ -2462,28 +2564,60 @@ function statOverlay(spawn,x,y,displayColor){
    // formatDate =  myDate.toLocaleString();
 
  //   var iformatDate = month + "." + day + ":" + year + " " + hours + ":" + minutes + ":" + seconds + " (" + offSet + ")"; 
-    var iformatDate = month +"m :" + day + "d :" + hours + "h :" + minutes + "m"; // + seconds +"s"
+    var iformatDate = month +"m :" + day + "d :" + hours + "h :" + minutes + "m :" +seconds +"s"; // + seconds +"s"
     var formatDate =  myDate.toLocaleString();
     var xnow = Date.now();
-    var estCompleteDate = new Date (Date.now() + remainingMilsecToCompleteLevel);
+    var estCompleteDate = new Date (Date.now() + (remainingMilsecToCompleteLevel - (3600000 * 7)));
 
     //var iformatDate =  iDate.toLocaleString();
 
 
+    // var storageRampart = spawn.pos.findClosestByPath(FIND_STRUCTURES, {
+    //     filter:
+    //     (s) => s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(spawn.room.storage)
+    // });
 
-    iRemainingProgress
+
+   var storageRampart = getRampartAt(spawn.room.storage);
+   var terminalRampart = getRampartAt(spawn.room.terminal);
+
+ //iiProgress   iRemainingProgress level8energy currentProgress
 
     //new RoomVisual(Game.spawns.Spawn1.room.name).text(formatDate,                                                                                       x, y++, { color: 'green', font: 0.8, align: "right"  });
     new RoomVisual(spawn.room.name).text(formatDate,                                                                                                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
     new RoomVisual(spawn.room.name).text("Energy Per Hour: "                + util.numberWithCommas(Math.trunc(iProgress / iHours)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
     new RoomVisual(spawn.room.name).text("Energy Per Tick: "                + util.numberWithCommas((iProgress / iTicks).toFixed(2)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
     new RoomVisual(spawn.room.name).text("Ticks Per Min: "                  + util.numberWithCommas((iTicks /  iMinutes ).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
-   // new RoomVisual(spawn.room.name).text("iMinutes: "                       + util.numberWithCommas(Math.trunc(iMinutes)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
-   // new RoomVisual(spawn.room.name).text("TicksToCompleteLevel: "           + util.numberWithCommas(Math.trunc(remainTicksToCompleteLevel)),            x, y++, { color: displayColor, font: 0.8, align: "right"  });
+  //  new RoomVisual(spawn.room.name).text("iProgress: "                      + util.numberWithCommas(Math.trunc(iProgress)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("iHours: "                         + util.numberWithCommas(Math.trunc(iHours)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("Current Progress: "                   + util.numberWithCommas(Math.trunc(level8energy)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   // new RoomVisual(spawn.room.name).text("iHours: "                         + util.numberWithCommas(Math.trunc(currentProgress)),                              x, y++, { color: displayColor, font: 0.8, align: "right"  });
+
+    // new RoomVisual(spawn.room.name).text("TicksToCompleteLevel: "           + util.numberWithCommas(Math.trunc(remainTicksToCompleteLevel)),            x, y++, { color: displayColor, font: 0.8, align: "right"  });
    // new RoomVisual(spawn.room.name).text("MinutesToCompleteLevel: "         + util.numberWithCommas(Math.trunc(remainingMinutesToCompleteLevel)),       x, y++, { color: displayColor, font: 0.8, align: "right"  });
    // new RoomVisual(spawn.room.name).text("MilsecToCompleteLevel: "          + util.numberWithCommas(Math.trunc(remainingMilsecToCompleteLevel)),        x, y++, { color: displayColor, font: 0.8, align: "right"  });
-   // new RoomVisual(spawn.room.name).text("iRemainingProgress: "             + util.numberWithCommas(Math.trunc(iRemainingProgress)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
-   new RoomVisual(spawn.room.name).text(iformatDate                        + " (" + util.numberWithCommas(iRemainingProgress) + ")",                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   //new RoomVisual(spawn.room.name).text("iRemainingProgress: "             + util.numberWithCommas(Math.trunc(iRemainingProgress)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   //new RoomVisual(spawn.room.name).text(iformatDate                        + " (" + util.numberWithCommas(iRemainingProgress) + ")",                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   new RoomVisual(spawn.room.name).text(iformatDate                        + " (" + util.numberWithCommas(remainingMilsecToCompleteLevel) + ")",                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
    new RoomVisual(spawn.room.name).text(estCompleteDate.toLocaleString(),                                                                                                x, y++, { color: displayColor, font: 0.8, align: "right"  });
+  if (storageRampart != undefined) {
+   new RoomVisual(spawn.room.name).text("Storage Rampart: "                  + util.numberWithCommas((storageRampart.hits).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
+  }
+  if (terminalRampart != undefined) {
+    new RoomVisual(spawn.room.name).text("terminal Rampart: "                  + util.numberWithCommas((terminalRampart.hits).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
+   }
 
+};
+
+function getRampartAt(someStructure){
+   if (someStructure ==  undefined) {
+       return someStructure;
+   }
+   
+    var rampart = someStructure.pos.findClosestByPath(FIND_STRUCTURES, {
+        filter:
+        (s) => s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(someStructure)
+    });
+
+    return rampart;
 }

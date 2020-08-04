@@ -106,7 +106,7 @@ module.exports = {
             
                 var storageLink = util.findNearestLinkToStorage(creep,10);
 
-                if (creep.room.name == "E21S55") {
+                if (creep.room.name == "E21S55" ) {
                     if (storageLink.store[RESOURCE_ENERGY] < 600) {
                         structure = storageLink;
                     }

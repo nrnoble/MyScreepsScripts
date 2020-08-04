@@ -6,7 +6,7 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
         util.say(creep,"rpr");
-return;
+//return;
 
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
@@ -58,7 +58,11 @@ return;
             creep.memory.working = true;
         }
 
+
+        // **********************************************************************
         // if creep is supposed to repair something
+        // **********************************************************************
+
         if (creep.memory.working == true) {
 
             // check for a specific structure
@@ -90,11 +94,11 @@ return;
           // {    
         //    var structure = undefined;
             var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                // the second argument for findClosestByPath is an object which takes
-                // a property called filter which can be a function
-                // we use the arrow operator to define it
-             //   filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
-                filter: (s) => s.hits  < (s.hitsMax ) && s.structureType == STRUCTURE_ROAD
+            // the second argument for findClosestByPath is an object which takes
+            // a property called filter which can be a function
+            // we use the arrow operator to define it
+            //   filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
+                filter: (s) => s.hits  < (s.hitsMax ) && s.structureType == STRUCTURE_CONTAINER
             });
 
 
@@ -112,15 +116,18 @@ return;
             // }
 
 
-           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] structure is ' + structure +'</>');
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] structure is ' + structure +'</>');
 
-                var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
-                    filter:  (s) =>  structure.structureType == STRUCTURE_ROAD && s.hits  < 5000,ignoreCreeps: true
-                });
-
+                if (structure == undefined) {
+                    var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                        // the second argument for findClosestByPath is an object which takes
+                        // a property called filter which can be a function
+                        // we use the arrow operator to define it
+                    // filter:  (s) =>  structure.structureType == STRUCTURE_ROAD && s.hits  < 5000, ignoreCreeps: true
+                    filter:  (s) =>  s.structureType == STRUCTURE_ROAD && s.hits  < 5000, ignoreCreeps: true
+                    
+                    });
+            }
                 // if we find one
 
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  structure is ' +  structure +'</>');
@@ -173,7 +180,10 @@ return;
            // } // end if
 
         }
+
+        // **********************************************************************
         // if creep is supposed to get energy
+        // **********************************************************************
         else {
             // find closest container // s.structureType == STRUCTURE_CONTAINER || 
             let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {

@@ -56,7 +56,7 @@ module.exports =
                 }
                 else{
                     if (Game.time % 100 == 0) {
-                            firstSpawn.memory.spawnRampartHits = firstSpawn.memory.spawnRampartHits// + 500;
+                            firstSpawn.memory.spawnRampartHits = firstSpawn.memory.spawnRampartHits// + 1250;
                         }
                         
                         spawnRampartHits = firstSpawn.memory.spawnRampartHits;
@@ -152,7 +152,7 @@ module.exports =
                                 if (evilCreep.owner.username != "Sky-Net") {
                                   
                                   var attackStatus =  tower.attack(evilCreepHeal);
-                                  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] attackStatus is ' + attackStatus +'</>');
+                     //             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] attackStatus is ' + attackStatus +'</>');
                                 }
                                // tower.attack(evilCreepHeal);
                                continue;

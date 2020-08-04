@@ -31,7 +31,7 @@ module.exports = function () {
             var creepNewName = "";
 
             var newCreep = util.CreateNewScreep(this, roleName, body);
-
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] body is ' + body +'</>');
             return newCreep;
 
 
@@ -1020,24 +1020,24 @@ module.exports = function () {
 
         var numberOfParts = undefined;
 
-        if (SpawnObj.room.name == "E43S3" || SpawnObj.room.name == "E45S3" || SpawnObj.room.name == "E46S3") {
-            body.push(WORK);
-            body.push(WORK);
-            body.push(WORK);
-            body.push(WORK);
-            body.push(WORK);
-            body.push(WORK);
-            body.push(CARRY);
-            body.push(CARRY);
-            body.push(CARRY);            
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
-            body.push(MOVE);
+        // if (SpawnObj.room.name == "E43S3" || SpawnObj.room.name == "E45S3" || SpawnObj.room.name == "E46S3") {
+        //     body.push(WORK);
+        //     body.push(WORK);
+        //     body.push(WORK);
+        //     body.push(WORK);
+        //     body.push(WORK);
+        //     body.push(WORK);
+        //     body.push(CARRY);
+        //     body.push(CARRY);
+        //     body.push(CARRY);            
+        //     body.push(MOVE);
+        //     body.push(MOVE);
+        //     body.push(MOVE);
+        //     body.push(MOVE);
 
 
-        }
-        else{
+        // }
+        // else{
 
 
             energy = SpawnObj.room.energyCapacityAvailable /3;
@@ -1066,21 +1066,61 @@ module.exports = function () {
             //     numberOfParts = 4;
             // }
 
+            console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 1 trying to create a upgrader2xs </>');
+        
+            if (SpawnObj.room.name == "E21S55") {
+                                       
+                console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 2 trying to create a upgrader2xs </>');
+                
+                    body.push(WORK);
+                    body.push(CARRY);
+                    body.push(MOVE);
+
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+                
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+                // body.push(WORK);
+
+                // body.push(MOVE);
+                // body.push(MOVE);
+                // body.push(MOVE);
+
+                // body.push(CARRY);
+                // body.push(CARRY);
+                // body.push(CARRY);
+
+            }
+            else {
+                console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 3 trying to create a upgrader2xs </>');
+                
+
+                for (let i = 0; i < numberOfParts; i++) {
+                    body.push(WORK);
+                    body.push(WORK);
+                }
+                for (let i = 0; i < numberOfParts; i++) {
+                    body.push(CARRY);
+                }
+                for (let i = 0; i < numberOfParts; i++) {
+                    body.push(MOVE);
+                }
             
-            for (let i = 0; i < numberOfParts; i++) {
-                body.push(WORK);
-                body.push(WORK);
-            }
-            for (let i = 0; i < numberOfParts; i++) {
-                body.push(CARRY);
-            }
-            for (let i = 0; i < numberOfParts; i++) {
-                body.push(MOVE);
+                
             }
 
 
 
-    }
+    //}
 
         // var numberOfParts = Math.floor(energy / 50);
         // for (let i = 0; i < numberOfParts; i++) {

@@ -759,19 +759,19 @@ module.exports =
         }
     },
 
-placeFlagsOnLinks: function(spawn)
-{
+    placeFlagsOnLinks: function(spawn)
+    {
 
-    // find nearest link to controller within 5 spaces
-    // place flag link name: ControllerLink_%RoomName%
-    // find nearest link to storage within 5 spaces   
-    // place flag link name: StorageLink_%RoomName%
+        // find nearest link to controller within 5 spaces
+        // place flag link name: ControllerLink_%RoomName%
+        // find nearest link to storage within 5 spaces   
+        // place flag link name: StorageLink_%RoomName%
 
 
 
-    
+        
 
-},
+    },
 
 
     placeSourceContainers: function(spawn){
@@ -1219,14 +1219,41 @@ placeFlagsOnLinks: function(spawn)
 
 
     overlayInfo: function(spawn){
-        new RoomVisual(spawn.room.name).text(this.numberWithCommas(spawn.room.storage.store[RESOURCE_ENERGY]), 3, 48, { align: 'right', color: 'green', font: 0.8 });
+    //    new RoomVisual(spawn.room.name).text(this.numberWithCommas(spawn.room.storage.store[RESOURCE_ENERGY]), 3, 48, { align: 'right', color: 'green', font: 0.8 });
         new RoomVisual(spawn.room.name).text(this.numberWithCommas(Game.cpu.bucket), 3, 49, { align: 'right', color: 'green', font: 0.8 });
 
-        new RoomVisual(spawn.room.name).text(this.numberWithCommas(spawn.room.storage.store[RESOURCE_ENERGY]), 3, 1, { align: 'right', color: 'green', font: 0.8 });
+    //    new RoomVisual(spawn.room.name).text(this.numberWithCommas(spawn.room.storage.store[RESOURCE_ENERGY]), 3, 1, { align: 'right', color: 'green', font: 0.8 });
         new RoomVisual(spawn.room.name).text(this.numberWithCommas(Game.cpu.bucket), 3, 2, { align: 'right', color: 'green', font: 0.8 });
 
-    }
+    },
 
+
+    initFirstRoom: function(spawnx){
+                     
+        if (spawnx.memory.roomInit == undefined) {
+
+            var sources = spawnx.room.find(FIND_SOURCES);
+            //var room_1 = Object.keys(Game.rooms)[0].name;
+            //var source1 = Object.keys(sources)[0];
+            //var source3 = Object.keys(sources);
+            // var source2;    
+
+            if (sources.length == 2) {
+                
+                var Source1 = sources[1].pos;
+                spawnx.room.createFlag(Source1,"Source_" + spawnx.room.name);    
+                var Source2 = sources[0].pos;
+                spawnx.room.createFlag(Source2,"Source2_" + spawnx.room.name);
+            }
+            else
+            {
+                var Source1 = sources[0].pos;
+                spawnx.room.createFlag(Source1,"Source_" + spawnx.room.name);   
+            }
+          
+            spawnx.memory.roomInit = "completed";
+        }
+    },
 
 
     };
