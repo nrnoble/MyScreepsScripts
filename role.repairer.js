@@ -66,7 +66,7 @@ module.exports = {
         if (creep.memory.working == true) {
 
             // check for a specific structure
-           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' asdfasdfsafdsafasdfds creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+         //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' asdfasdfsafdsafasdfds creep.memory.targetStructure is ' + creep.memory.targetStructureId);
             
             // if(creep.memory.targetStructureId != undefined){
             //    //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
@@ -116,7 +116,7 @@ module.exports = {
             // }
 
 
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] structure is ' + structure +'</>');
+           // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] structure is ' + structure +'</>');
 
                 if (structure == undefined) {
                     var structure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -130,7 +130,7 @@ module.exports = {
             }
                 // if we find one
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  structure is ' +  structure +'</>');
+            //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  structure is ' +  structure +'</>');
 
 
                 if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {

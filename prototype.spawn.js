@@ -31,7 +31,7 @@ module.exports = function () {
             var creepNewName = "";
 
             var newCreep = util.CreateNewScreep(this, roleName, body);
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] body is ' + body +'</>');
+         //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] body is ' + body +'</>');
             return newCreep;
 
 
@@ -1042,6 +1042,12 @@ module.exports = function () {
 
             energy = SpawnObj.room.energyCapacityAvailable /3;
  
+
+            if(SpawnObj.memory.EnergyManagement != undefined)
+            {
+                SpawnObj.memory.EnergyManagement = new Object();
+            }
+
             if(SpawnObj.memory.EnergyManagement.upgrader2x != undefined){
                 
                var  energyUpgrader2x = SpawnObj.memory.EnergyManagement.upgrader2x;
@@ -1066,7 +1072,7 @@ module.exports = function () {
             //     numberOfParts = 4;
             // }
 
-            console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 1 trying to create a upgrader2xs </>');
+            // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 1 trying to create a upgrader2xs </>');
         
             if (SpawnObj.room.name == "E21S55") {
                                        
@@ -1101,7 +1107,7 @@ module.exports = function () {
 
             }
             else {
-                console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 3 trying to create a upgrader2xs </>');
+             //   console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 3 trying to create a upgrader2xs </>');
                 
 
                 for (let i = 0; i < numberOfParts; i++) {

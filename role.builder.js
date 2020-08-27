@@ -4,11 +4,18 @@ var roleUpgrader = require('role.upgrader');
 
 var util = require('Util'); 
 var fileName = "Builder     ";
-var debugRoom = "E25S52";
+//var debugRoom = "E25S52";
+var debugRoom = "E21S52";
+
 
 module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
+
+        var debugRoomName = ""
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = "pink">[' + fileName + 'line:' + util.LineNumber() + '] creep.name is ' + creep.name +'</>');
+        }
 
         if (creep.room.name == "E21S55") {
             
@@ -18,6 +25,23 @@ module.exports = {
            // creep.memory.primarySource = "hydrogen";
         }    
 
+
+        if (creep.room.name == "E21S52") {
+            
+            console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ' WARNING HACK: Creep.memory.primarySource = "ControllerLink"</>');    
+            creep.memory.primarySource = "Container";
+           // creep.memory.primarySource = "ControllerLink";
+           // creep.memory.primarySource = "hydrogen";
+        }    
+
+
+        if (creep.room.name == "E25S51") {
+            
+            console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ' WARNING HACK: Creep.memory.primarySource = "ControllerLink"</>');    
+            creep.memory.primarySource = "Container";
+           // creep.memory.primarySource = "ControllerLink";
+           // creep.memory.primarySource = "hydrogen";
+        }   
 
         
 
@@ -90,14 +114,19 @@ module.exports = {
     //     creep.memory.home   = "E25S52";
     //   }
 
-
+    if (creep.room.name == "E25S52") {
+        creep.memory.target ="E25S51";
+    }
 
         // if target is defined and creep is not in target room
         if (creep.memory.target != undefined && creep.room.name != creep.memory.target) {
           
         // find exit to target room
-           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
-           console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
+        if (creep.room.name == debugRoomName) {
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
+            console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
+ 
+        }
 
             var exit = creep.room.findExitTo(creep.memory.target);
             // move to exit
@@ -131,8 +160,11 @@ module.exports = {
 
         if (creep.memory.working == true) {
         //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.working == true ');
+       if (creep.room.name == debugRoomName) {
         console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.memory.working is ' + creep.memory.working +'</>');
-        // /creep.memory.primarySource
+        
+        }
+        // /cree p.memory.primarySource
             // find closest constructionSite
             var constructionSite;
             creep.memory.primarySource = constructionSite = creep.pos.findClosestByPath(FIND_CONSTRUCTION_SITES,{filter: s => s.progress > 0 && s.progress < s.progressTotal});
@@ -174,62 +206,62 @@ module.exports = {
         // ********************************************************************************//
         
         else {
-            
-
-
-         if (creep.room.name =="E44S2") {
-            // container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-            //             || s.structureType == STRUCTURE_TERMINAL
-            //             || s.structureType == STRUCTURE_STORAGE) 
-            //           && s.store[RESOURCES_ALL] > 0  
-            //         || (s.structureType == STRUCTURE_LINK))
+            if (creep.room.name == debugRoomName) {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] ' + creep.name + ' is getting energy </>');
+            }
+    //      if (creep.room.name =="E44S2") {
+    //         // container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    //         //     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+    //         //             || s.structureType == STRUCTURE_TERMINAL
+    //         //             || s.structureType == STRUCTURE_STORAGE) 
+    //         //           && s.store[RESOURCES_ALL] > 0  
+    //         //         || (s.structureType == STRUCTURE_LINK))
                     
 
-            //     });
+    //         //     });
         
             
-            container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s =>( s.structureType == STRUCTURE_LINK)
+    //         container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    //             filter: s =>( s.structureType == STRUCTURE_LINK)
                     
 
-                });
-    //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container.pos is ' + container.pos +'</>');
+    //             });
+    // //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container.pos is ' + container.pos +'</>');
 
-        }
+    //     }
 
-         if (creep.room.name =="E45S2") {
-            // container = creep.room.storage.pos.findClosestByPath(FIND_STRUCTURES, {
-            //     filter: (s) =>(
-            //       //  s.structureType == STRUCTURE_CONTAINER 
-            //          // s.structureType == STRUCTURE_TERMINAL
-            //         // s.structureType == STRUCTURE_STORAGE
-            //           //  && s.store[RESOURCES_ALL] > 0 ) || (s.structureType == STRUCTURE_LINK)
-            //          // s.structureType == STRUCTURE_LINK 
-            //           s.id == "5d6b40742f60936360c7d0cc"
-            //           && s.store[RESOURCES_ALL] > 0 )
+    //      if (creep.room.name =="E45S2") {
+    //         // container = creep.room.storage.pos.findClosestByPath(FIND_STRUCTURES, {
+    //         //     filter: (s) =>(
+    //         //       //  s.structureType == STRUCTURE_CONTAINER 
+    //         //          // s.structureType == STRUCTURE_TERMINAL
+    //         //         // s.structureType == STRUCTURE_STORAGE
+    //         //           //  && s.store[RESOURCES_ALL] > 0 ) || (s.structureType == STRUCTURE_LINK)
+    //         //          // s.structureType == STRUCTURE_LINK 
+    //         //           s.id == "5d6b40742f60936360c7d0cc"
+    //         //           && s.store[RESOURCES_ALL] > 0 )
 
     
-            // });
+    //         // });
 
-            // if (container == undefined) {
-            //     container = creep.room.storage;
-            // }
+    //         // if (container == undefined) {
+    //         //     container = creep.room.storage;
+    //         // }
 
-            container = creep.room.storage;
-          //  container = Game.getObjectById ("5d6b40742f60936360c7d0cc");
-        }
-            else if  (creep.room.name =="E45S2" && creep.room.name =="E43S3") {
-                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                    filter: s =>(
-                      //  s.structureType == STRUCTURE_CONTAINER 
-                         // s.structureType == STRUCTURE_TERMINAL
-                         s.structureType == STRUCTURE_STORAGE
-                          //  && s.store[RESOURCES_ALL] > 0 ) || (s.structureType == STRUCTURE_LINK)
-                           && s.store[RESOURCES_ALL] > 0 )
+    //         container = creep.room.storage;
+    //       //  container = Game.getObjectById ("5d6b40742f60936360c7d0cc");
+    //     }
+    //         else if  (creep.room.name =="E45S2" && creep.room.name =="E43S3") {
+    //             container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+    //                 filter: s =>(
+    //                   //  s.structureType == STRUCTURE_CONTAINER 
+    //                      // s.structureType == STRUCTURE_TERMINAL
+    //                      s.structureType == STRUCTURE_STORAGE
+    //                       //  && s.store[RESOURCES_ALL] > 0 ) || (s.structureType == STRUCTURE_LINK)
+    //                        && s.store[RESOURCES_ALL] > 0 )
         
-                });
-        }
+    //             });
+    //     }
         
 
 
@@ -237,24 +269,31 @@ module.exports = {
         var ClosestContainer;
         if (creep.memory.primarySource == undefined)
         {
-            creep.memory.primarySource = "Source2x";
+            creep.memory.primarySource = "Source";
+        }
+
+
+//        if (creep.room.name == "E27S51" && creep.memory.primarySource == undefined )
+        if (creep.room.name == "E27S51")
+        {
+            creep.memory.primarySource = "Source2";
         }
         
         else if (creep.memory.primarySource != undefined) {
-            debugRoom = "E21S55"
+           // debugRoom = "E27S51"
             var target = creep.memory.primarySource;
-                   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.primarySource is ' + creep.memory.primarySource +'</>');
+                 //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] creep.memory.primarySource is ' + creep.memory.primarySource +'</>');
             var primarySource = Game.flags[creep.memory.primarySource + "_" + creep.room.name];
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
+                  //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
               ClosestContainer = creep.pos.findClosestByPath(primarySource)
-              console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
+             // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] primarySourceFlag is ' + primarySource +'</>');
               
-              if (creep.room.name == debugRoom) {
+              if (creep.room.name == debugRoomName) {
                      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');                
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer + '</>');
             }
             
-            if (creep.room.name == debugRoom) {
+            if (creep.room.name == debugRoomName) {
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');                
             }
                // ClosestContainer = creep.room.storage;
@@ -265,15 +304,18 @@ module.exports = {
                 }
 
                 if (ClosestContainer == undefined && primarySource != undefined) {
-                console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');
-                   
+
+                    if (creep.room.name == debugRoomName) {
+                        console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');
+                     }
+
                     ClosestContainer = primarySource.pos.findClosestByPath(FIND_STRUCTURES, 3, {
-                       // filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                        filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
                         });
                    
                 }
                // debug(creep, ClosestContainer);
-                if (creep.room.name == debugRoom) {
+                if (creep.room.name == debugRoomName) {
                     //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');                
                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer + '</>');
                 }
@@ -282,7 +324,7 @@ module.exports = {
             
         else{
 
-            if (creep.room.name == debugRoom) {
+            if (creep.room.name == debugRoomName) {
                      console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer +'</>');
                 
                  }
@@ -307,7 +349,7 @@ module.exports = {
             
             //console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] flagSource2 is ' + flagSource +'</>');
            
-            if (creep.room.name == debugRoom) {
+            if (creep.room.name == debugRoomName) {
                 //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');                
                      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer +'</>');
                 
@@ -329,7 +371,10 @@ module.exports = {
                 }
             }
 
+
+       //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] test '+'</>');
             if (container == undefined) {
+                console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] flagSource.name '+ flagSource.name +'</>');
 
                      container = flagSource.pos.findClosestByRange(FIND_STRUCTURES, {
                      filter: s =>s.structureType == STRUCTURE_CONTAINER 
@@ -338,7 +383,7 @@ module.exports = {
                 }); 
             }
 
-            if (creep.room.name == "E25S52") {
+            if (creep.room.name == debugRoomName) {
                  console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']zzzzzzz container is ' + container +'</>');
             }
            
@@ -353,51 +398,79 @@ module.exports = {
 
 
 
-        //     if (creep.room.name =="E44S2") {
-        //         // container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        //         //     filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
-        //         //             || s.structureType == STRUCTURE_TERMINAL
-        //         //             || s.structureType == STRUCTURE_STORAGE) 
-        //         //           && s.store[RESOURCES_ALL] > 0  
-        //         //         || (s.structureType == STRUCTURE_LINK))
+            if (creep.room.name =="E27S51" || creep.room.name =="E25S51") {
+                container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                    filter: s =>( (s.structureType == STRUCTURE_CONTAINER 
+                       //     || s.structureType == STRUCTURE_TERMINAL
+                            || s.structureType == STRUCTURE_STORAGE) 
+                          && s.store[RESOURCES_ALL] > 0  )
+                       // || (s.structureType == STRUCTURE_LINK))
                         
     
-        //         //     });
+                    }); 
             
                 
-        //         container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-        //             filter: s =>( s.structureType == STRUCTURE_LINK)
-        //             });
+                // container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
+                //     filter: s =>( s.structureType == STRUCTURE_LINK)
+                //     });
 
-        //  //           console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container.pos is ' + container.pos +'</>');
-    
-        //     }
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container.pos is ' + container +'</>');
+            }    
+        }
 
         }
         // if one was found
 
-        // ClosestContainer = primarySource.pos.findClosestByPath(FIND_STRUCTURES, 3, {
+     //   creep.memory.primarySource = "Source"
+     
+         var flagSource = Game.flags["Source2_" + creep.room.name];
+
+         if (creep.room.name == "E25S51") {
+            var flagSource = Game.flags["Source_" + creep.room.name]; 
+         }
+
+
+         if (creep.room.name == debugRoomName) {
+            var flagSource = Game.flags["Source_" + creep.room.name];
+
+         }
+
+         if (ClosestContainer == undefined) {
+            ClosestContainer = flagSource.pos.findClosestByPath(FIND_STRUCTURES, 10, {
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
+                }); 
+         }
+
+        // ClosestContainer = flagSource.pos.findClosestByPath(FIND_STRUCTURES, 10, {
         //     filter: (s) => (s.structureType == STRUCTURE_CONTAINER)
         //     });
 
        // debug(creep, ClosestContainer);
-        if (creep.room.name == debugRoom) {
+        if (creep.room.name == debugRoomName) {
             //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] primarySource is ' + primarySource +'</>');                
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ']  ClosestContainer is ' + ClosestContainer + '</>');
         }
 
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] ClosestContainer '+ClosestContainer+'</>');
+        }
+
         if (ClosestContainer != undefined) {
            
-            if (creep.room.name == debugRoom) {
-            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  u xxxxxxxxxxx container is ' + container +'</>');
+            if (creep.room.name == debugRoomName) {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  ClosestContainer is ' + ClosestContainer +'</>');
          //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] u container.pos.x: ' + container.pos.x +', container.pos.y:'+ container.pos.y +'</>');
             }
 
             if (creep.withdraw(ClosestContainer, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 // move towards it
-           //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] moving towards container: ' + container +'</>');
 
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] moving towards container: ' + container +'</>');
+                }
                 creep.travelTo(ClosestContainer, { visualizePathStyle: { stroke: '#ffaa00' } });
+                util.repairRoad(creep);
             }
 
         }
@@ -413,7 +486,7 @@ module.exports = {
           else{
             var flaggedSource = creep.memory.flaggedSource;
           }
-          var flaggedSource = "Source2_";
+          var flaggedSource = "Source_";
           var flagSource = Game.flags[flaggedSource + creep.room.name];
             
 
@@ -421,6 +494,8 @@ module.exports = {
 
 
           var source = flagSource.pos.findClosestByPath(FIND_SOURCES);
+          console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] source '+source+'</>');
+
             if(source == null ){
               //      console.log("[" +  fileName + " line " + util.LineNumber() + "]  " + creep.name + " source is null");
 
@@ -435,9 +510,11 @@ module.exports = {
                 if (status == ERR_NOT_IN_RANGE) {
                     // move towards it
                     creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } });
+                    util.repairRoad(creep);
                 }
                 else{
                      creep.travelTo(source, { visualizePathStyle: { stroke: '#ffaa00' } }); 
+                     util.repairRoad(creep);
                      console.log('[' + fileName + 'line:' + util.LineNumber() + '] creep.harvest(source) status is '  + creep.harvest(source));
                 }
 

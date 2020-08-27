@@ -13,6 +13,8 @@ var fileName = 'up2x    ';
 module.exports = {
     run: function (creep) {
  
+        var debugRoomName = "E25S51";    
+        var debugColor = "yellow";
         // if (creep.room.name == "E44S3") {
         //     var roomController = creep.room.controller;
         //    var signStatus = creep.signController(roomController,"Last of the Mochicans");
@@ -39,10 +41,10 @@ module.exports = {
 
        timeToDie = (workBodyParts * 50/5) + 5;
 
-       util.TimeToDie2(creep,"E43S3",timeToDie,0); // die before getting more energy
-       util.TimeToDie2(creep,"E44S3",timeToDie,0); // die before getting more energy
-       util.TimeToDie2(creep,"E45S2",timeToDie,0); // die before getting more energy
-       util.TimeToDie2(creep,"E46S3",timeToDie,0); // die before getting more energy
+    //    util.TimeToDie2(creep,"E43S3",timeToDie,0); // die before getting more energy
+    //    util.TimeToDie2(creep,"E44S3",timeToDie,0); // die before getting more energy
+    //    util.TimeToDie2(creep,"E45S2",timeToDie,0); // die before getting more energy
+    //    util.TimeToDie2(creep,"E46S3",timeToDie,0); // die before getting more energy
        
               
 
@@ -231,10 +233,13 @@ module.exports = {
         // if creep is bringing energy to the controller but has no energy left
         var workStatus = workCheck(creep);
 
+    if (creep.room.name == debugRoomName) {
+        console.log('<font color = "pink">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] workStatus is ' + workStatus +'</>');
+     }
 
 
         // ********************************************************************************//;
-        //         transfer energy to the controller
+        //         transfer energy to the controller (Working = true)
         // ********************************************************************************//;
         if (creep.memory.working == true) {
        
@@ -315,7 +320,11 @@ module.exports = {
             }
             else
             {
-              //  console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading controller");
+
+                if (creep.room.name == debugRoomName) {
+             //     console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " upgrading controller");
+                    console.log('<font color =' + debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] upgrading controller '   +'</>');
+                }
                 // find closest container //s.structureType == STRUCTURE_CONTAINER || 
                var status = creep.upgradeController(creep.room.controller);
 
@@ -326,9 +335,9 @@ module.exports = {
 
 
         // ********************************************************************************//;
-        //             creep gets energy
+        //             creep gets energy (work = false)
         // ********************************************************************************//;
-            else{
+        else{
                 let container = undefined;
                 if (creep.room.name == "E44S3" || creep.room.name == "E43S3"  || creep.room.name == "E45S2"  || creep.room.name == "E44S2") {
                     
@@ -371,14 +380,13 @@ module.exports = {
               
                 }
 
+                // link closest to room controller
                 if (container == undefined) {
                     container =  util.findNearestLinkToController(creep,4);
                 }
 
                 // Storage
                 if (container == undefined) {
-                    
-               
                         container = creep.room.controller.pos.findClosestByPath(FIND_STRUCTURES, {
                         filter: s =>( 
                                (//s.structureType == STRUCTURE_CONTAINER 
@@ -442,7 +450,10 @@ module.exports = {
                 // if one was found
 
 
-          //      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] container is ' + container +'</>');
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] container is ' + container +'</>');
+                 }     
+          
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
                    var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
@@ -451,6 +462,7 @@ module.exports = {
                         // move towards it
                         // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
                         creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                       // return;
                     }
                 }
                 else {
@@ -470,6 +482,11 @@ module.exports = {
 };
 
 function workCheck(creep) {
+    // if (creep.room.name == "E25S51") {
+    //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] workcheck is forcing true ' + true +'</>')
+    //     return true;
+    // }
+    
     if (creep.memory.working == true && creep.carry.energy == 0) {
         // switch state
         creep.memory.working = false;
@@ -481,6 +498,17 @@ function workCheck(creep) {
         creep.memory.working = true;
         return true;
     }
+
+    return creep.memory.working;
+    // if (creep.carry.energy >0 ) {
+    //     creep.memory.working = true;
+    //     return true;
+    // }
+    // else{
+    //     creep.memory.working = true;
+    //     return true; 
+    // }
+
 }
 
 function respawn(creep, status) {

@@ -428,7 +428,7 @@ module.exports =
 
                 var road =  structures[i].structure;
 
-                if (road.structureType != STRUCTURE_ROAD) {
+                if (road.structureType != STRUCTURE_ROAD || road.structureType != STRUCTURE_CONTAINER) {
                     continue;
                 }
                
@@ -916,9 +916,6 @@ module.exports =
 
     findStorageFlag: function(spawn){
         var allFlagsInRoom = spawn.room.find(FIND_FLAGS);
-
-
-      
 
         for (let index = 0; index < allFlagsInRoom.length; index++) {
             const flag = allFlagsInRoom[index];

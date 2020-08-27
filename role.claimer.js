@@ -10,12 +10,17 @@ var fileName = "Claimer     ";
 module.exports = {
     // a function to run the logic for this role
     run: function(creep) {
-      creep.move(TOP_RIGHT);// BOTTOM
+  //    return;
+
+     // creep.move(TOP_RIGHT);// BOTTOM
       // if in target room
+
+
         if (creep.room.name != creep.memory.target) {
             // find exit to target room
 //            var exit = creep.room.findExitTo(creep.memory.target);
-            var exit = creep.room.findExitTo("E2S52");
+//            var exit = creep.room.findExitTo("E27S51");
+            var exit = creep.room.findExitTo(creep.memory.target);
 
             // move to exit
             const path = creep.pos.findPathTo(Game.flags.Flag1x);

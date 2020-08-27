@@ -243,7 +243,16 @@ module.exports = {
              //   var target = creep.room.memory.primarySource;
                // var primarySource = Game.flags[target + "_" + creep.room.name];
 
-                var flagSource2 = Game.flags["Source2_" + creep.room.name];
+//                var flagSource2 = Game.flags["Source2_" + creep.room.name];
+                var flagSource2 = Game.flags["Source_" + creep.room.name];
+
+                if (creep.room.name == "E27S51") {
+                 flagSource2 = Game.flags["Source_" + creep.room.name];
+                    
+                }
+
+
+
                 var source = flagSource2.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
                 if (source == null) {
                 // console.log("[" + fileName + "line:" + util.LineNumber() + "]  "+ creep.name + " findClosestByPath(" + FIND_SOURCES_ACTIVE + ") is " + source);
