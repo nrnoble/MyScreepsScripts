@@ -324,9 +324,6 @@ module.exports = function () {
           //  var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
             var energy = spawn.room.energyCapacityAvailable;
 
-            if (spawn.room.name == "E43S3") {
-                energy = energy - 100;
-            }
 
 
              var allMyCreepsInRoom = spawn.room.find(FIND_MY_CREEPS);
@@ -371,6 +368,15 @@ module.exports = function () {
             else
             {
                 var body = [WORK, WORK, WORK, WORK, WORK,MOVE,MOVE];
+
+                
+                // #HACK WARNING 
+                if (spawn.room.name == "E25S51" 
+                || spawn.room.name == "E27S51"
+                || spawn.room.name == "E25S52") {
+                    body = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK,MOVE, CARRY,CARRY, MOVE,MOVE,MOVE];
+                }
+
 
                 return this.createCreep(body, 'miner_' + Game.time,
                                     { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
@@ -1043,9 +1049,11 @@ module.exports = function () {
             energy = SpawnObj.room.energyCapacityAvailable /3;
  
 
-            if(SpawnObj.memory.EnergyManagement != undefined)
+            if(SpawnObj.memory.EnergyManagement == undefined)
             {
                 SpawnObj.memory.EnergyManagement = new Object();
+                SpawnObj.memory.EnergyManagement.upgrader2x = 600
+
             }
 
             if(SpawnObj.memory.EnergyManagement.upgrader2x != undefined){

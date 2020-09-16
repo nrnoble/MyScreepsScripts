@@ -1,4 +1,5 @@
 var util = require('Util'); 
+const { overlayInfo } = require('Util');
 var fileName = "Lorry       ";
 
 
@@ -26,6 +27,14 @@ module.exports = {
 
        }
        
+
+       if (creep.room.name == "E25S51") {
+           if (!creep.pos.isEqualTo(26,35)) {
+                creep.moveTo(new RoomPosition(26,35,creep.room.name));
+           }
+       }
+
+
         workCheck(creep);
 
         // ********************************************************************************//;
@@ -70,7 +79,7 @@ module.exports = {
 
 
             if (structure == undefined) {
-                structure = creep.room.storage;
+                structure = creep.room.terminal;
             }
 
             // if we found one
@@ -124,6 +133,8 @@ module.exports = {
             // }   
 
                 
+
+
 
             let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
                 filter: s => s.structureType == STRUCTURE_LINK

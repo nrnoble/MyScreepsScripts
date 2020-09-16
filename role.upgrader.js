@@ -12,9 +12,17 @@ module.exports = {
         //util.mySign(creep,"E46S1","Last of the Mohicans");
 
 
-        if (creep.room.name == "E25S52") {
-            creep.memory.target ="E25S51";
-        }
+       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
+       // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
+
+        // if (creep.room.name == "E25S51") {
+        //     creep.memory.target = "E25S51"
+        // }
+
+        // if (creep.name == "upgrader _39368671" && creep.memory.target == "E25S51") {
+        //     creep.memory.target = "E25S52";
+        //     return;
+        // }
 
 
         // if target is defined and creep is not in target room
@@ -28,7 +36,9 @@ module.exports = {
                 // move to exit
                 creep.travelTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
                 // return the function to not do anything else
-                 return;
+                if (creep.room.name != creep.memory.target) {
+                    return;
+                 } 
             }
     
 
@@ -202,9 +212,6 @@ module.exports = {
      
 
 
-                    if (creep.room.name == "E27S51") {
-                           
-                    }
 
                 var flagSource2 = Game.flags["Source2_" + creep.room.name];
                 var flagSource = Game.flags["Source2_" + creep.room.name];

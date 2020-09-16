@@ -223,8 +223,7 @@ module.exports = {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
-                filter: s => s.structureType == STRUCTURE_CONTAINER &&
-                s.store[RESOURCE_ENERGY] > 0
+                filter: s => s.structureType == STRUCTURE_CONTAINER //&& s.store[RESOURCE_ENERGY] > 0
             });
         }
         //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);

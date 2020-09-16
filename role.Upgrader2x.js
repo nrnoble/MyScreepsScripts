@@ -13,8 +13,21 @@ var fileName = 'up2x    ';
 module.exports = {
     run: function (creep) {
  
-        var debugRoomName = "E25S51";    
-        var debugColor = "yellow";
+
+        //return;
+        var debugRoomName = "E25S51x";    
+        //var debugRoomName = "E21S55";    
+        var debugColor = "green";
+
+        
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']   </>');
+            console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  ****** Debuging: ' + creep.memory.role + ' </>');
+            //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
+         }
+
+
+
         // if (creep.room.name == "E44S3") {
         //     var roomController = creep.room.controller;
         //    var signStatus = creep.signController(roomController,"Last of the Mochicans");
@@ -48,18 +61,18 @@ module.exports = {
        
               
 
-                // if target is defined and creep is not in target room
-                if (creep.memory.target != undefined && creep.room.name != creep.memory.target) {
-                    // find exit to target room\\
-                 //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
-                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
-        
-                    var exit = creep.room.findExitTo(creep.memory.target);
-                    // move to exit
-                    creep.travelTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
-                    // return the function to not do anything else
-                return;
-                }
+    // if target is defined and creep is not in target room
+    if (creep.memory.target != undefined && creep.room.name != creep.memory.target) {
+        // find exit to target room\\
+        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' !!!!!!!!!!!!!!!!!!!!!!!!!!!!! creep.memory.target is ' + creep.memory.target);
+        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' creep.memory.target is ' + creep.memory.target);
+
+        var exit = creep.room.findExitTo(creep.memory.target);
+        // move to exit
+        creep.travelTo(creep.pos.findClosestByRange(exit), { visualizePathStyle: { stroke: '#ffaa00' } });
+        // return the function to not do anything else
+    return;
+    }
 
        //util.TimeToDie2(creep,"W14S18",(workBodyParts * 50/5) + 5,0); // die before getting more energy
 
@@ -231,10 +244,15 @@ module.exports = {
     }
 
         // if creep is bringing energy to the controller but has no energy left
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = "'+ debugColor +'">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] Before Workcheck Status is ' + creep.memory.working +'</>');
+         }
+    
+     
         var workStatus = workCheck(creep);
 
     if (creep.room.name == debugRoomName) {
-        console.log('<font color = "pink">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] workStatus is ' + workStatus +'</>');
+        console.log('<font color = "'+ debugColor +'">['  + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] After workcheck is ' + workStatus +'</>');
      }
 
 
@@ -380,6 +398,11 @@ module.exports = {
               
                 }
 
+
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container is ' + container +'</>'); 
+                }
+
                 // link closest to room controller
                 if (container == undefined) {
                     container =  util.findNearestLinkToController(creep,4);
@@ -450,18 +473,71 @@ module.exports = {
                 // if one was found
 
 
-                if (creep.room.name == debugRoomName) {
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] container is ' + container +'</>');
-                 }     
+
           
                 if (container != undefined) {
                     // try to withdraw energy, if the container is not in range
-                   var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
-              //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] withdrawStatus is ' + withdrawStatus +'</>');
+                  
+                  
+                    if (creep.room.name == debugRoomName) {
+                        console.log('<font color =  "'+ debugColor +'">[' + fileName + 'line:' + util.LineNumber() + '] container is defined going to withdraw from ' + container +'</>');
+                     } 
+                  
+                     if (creep.room.name == "E25S51x") {
+                        const x = 28;
+                        const y = 34;
+                        var targetPos = new RoomPosition(x,y,creep.room.name)
+                        if (creep.room.name == debugRoomName) {
+                            console.log('<font color =  "'+ debugColor +'">[' + fileName + 'line:' + util.LineNumber() + ']     creep.pos = ' + creep.pos +'</>');
+                            console.log('<font color =  "'+ debugColor +'">[' + fileName + 'line:' + util.LineNumber() + '] targetPos.pos = ' + targetPos +'</>');
+                         } 
+                        //if (creep.pos.x != targetPos.x && creep.pos.y != targetPos.y) {
+                        if (!creep.pos.isEqualTo(targetPos)) {
+                         
+                            if (creep.room.name == debugRoomName) {
+                                console.log('<font color =  "'+ debugColor +'">[' + fileName + 'line:' + util.LineNumber() + '] creep.pos.isEqualTo(targetPos): ' + creep.pos.isEqualTo(targetPos) +'</>');
+                             } 
+                         
+                            creep.travelTo(targetPos, { visualizePathStyle: { stroke: '#ffaa00' } });
+
+
+                            return;
+                        } 
+                        if (creep.room.name == debugRoomName) {
+                            console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.pos is ' + creep.pos +'</>');
+                         
+                         }
+                     }
+
+                  
+                    var withdrawStatus = creep.withdraw(container, RESOURCE_ENERGY);
+                   
+                    if (creep.room.name == debugRoomName) {
+                        console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] withdrawStatus is ' + withdrawStatus +'</>')
+                    }
+              
+              
                     if (withdrawStatus == ERR_NOT_IN_RANGE) {
-                        // move towards it
-                        // console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
+                      //  move towards it
+
+                      if (creep.room.name == debugRoomName) {
+                          console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  switching is moving closer to container </>');
+                          //console.log("[" + fileName + "Line " + util.LineNumber() + "]  " + creep.name + " switching is moving closer to container");
+                       }
+
+                       
+                        const x1 = 28;
+                        const y1 = 34;
+                        var targetPos2 = new RoomPosition(x1,y1,creep.room.name)
+                        if (creep.room.name == debugRoomName) {
+                            console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] container.pos is ' + container.pos +'</>');
+                         
+                         }
+
+
                         creep.travelTo(container, { visualizePathStyle: { stroke: '#ffaa00' } });
+                     //   creep.travelTo(targetPos2, { visualizePathStyle: { stroke: '#ffaa00' } });
+
                        // return;
                     }
                 }

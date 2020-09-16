@@ -1,5 +1,8 @@
 var util = require('Util');
 var fileName = "Miner       ";
+let debugRoomName = "E25S51";
+let debugColor = "yellow";
+
 
 module.exports = {
     // a function to run the logic for this role
@@ -13,6 +16,14 @@ module.exports = {
         util.stayInTargetRoom(creep);
         util.pickupResources(creep, 2);
         util.repairRoad(creep);
+
+
+        
+
+
+      //  creep.debug("yellow",fileName, util.LineNumber(), "creep.name:" +  creep.name);
+
+
         //
         //   if (creep.room.name == "E45S2") {
 
@@ -20,15 +31,7 @@ module.exports = {
         /* #region  Respawn before death */
         var triggerTime = 100;
 
-        if (creep.room.name == "E46S1") {
-            triggerTime = 100;
-            triggerTime =  calcTiggerTime(creep, triggerTime) 
 
-            if ( creep.memory.triggerTime != undefined) {
-                triggerTime = creep.memory.triggerTime;
-            }
-         //   triggerTime = 200;
-        }
 
 
         if (creep.room.name == "E25S52") {
@@ -40,8 +43,7 @@ module.exports = {
             }
         }
 
-
-        if (creep.room.name == "E46S3") {
+        if (creep.room.name == "E25S51") {
             triggerTime = 100;
             triggerTime =  calcTiggerTime(creep, triggerTime) 
 
@@ -50,60 +52,14 @@ module.exports = {
             }
         }
 
-        if (creep.room.name == "E43S3") {
-            triggerTime = 65;
+        if (creep.room.name == "E27S51") {
+            triggerTime = 100;
             triggerTime =  calcTiggerTime(creep, triggerTime) 
 
             if ( creep.memory.triggerTime != undefined) {
                 triggerTime = creep.memory.triggerTime;
             }
         }
-
-
-        if (creep.room.name == "E44S3") {
-            triggerTime = 60;
-            triggerTime =  calcTiggerTime(creep, triggerTime) 
-
-            if ( creep.memory.triggerTime != undefined) {
-                triggerTime = creep.memory.triggerTime;
-            }
-        }
-
-        if (creep.room.name == "E44S2") {
-            triggerTime = 45;
-            triggerTime =  calcTiggerTime(creep, triggerTime) 
-
-            if ( creep.memory.triggerTime != undefined) {
-                triggerTime = creep.memory.triggerTime;
-            }
-        }
-
-        if (creep.room.name == "E45S2") {
-            var creep2xDeathTime = 11694653;
-            var thisCreepDeathTime = 11694700;
-
-          //  var myCreep = creep.room.find (FIND_MY_CONSTRUCTION_SITES);
-
-
-            triggerTime = 115;
-            triggerTime =  calcTiggerTime(creep, triggerTime) 
-
-            if ( creep.memory.triggerTime != undefined) {
-                triggerTime = creep.memory.triggerTime;
-            }
-
-          // triggerTime = 200;
-        }
-
-        if (creep.room.name == "E45S3") {
-            triggerTime = 60;
-            triggerTime =  calcTiggerTime(creep, triggerTime) 
-
-            if ( creep.memory.triggerTime != undefined) {
-                triggerTime = creep.memory.triggerTime;
-            }
-        }
-
 
 
 
@@ -174,16 +130,16 @@ module.exports = {
 
 
 
-        let source = Game.getObjectById(creep.memory.sourceId);
+        let energySource = Game.getObjectById(creep.memory.sourceId);
         // find container next to source
-        let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+        let container = energySource.pos.findInRange(FIND_STRUCTURES, 1, {
             filter: s => s.structureType == STRUCTURE_CONTAINER
-                && s.store[RESOURCE_ENERGY] < 2001
+              //  && s.store[RESOURCE_ENERGY] < 2001
         })[0];
 
 
         if (container == null || container == undefined) {
-            let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
+            let container = energySource.pos.findInRange(FIND_STRUCTURES, 1, {
                 filter: s => s.structureType == STRUCTURE_CONTAINER
                 //        && s.store[RESOURCE_ENERGY] < 2001
             })[0];
@@ -194,18 +150,178 @@ module.exports = {
             return;
         }
 
+
+
+         if (creep.store.getFreeCapacity() <=4){
+            
+            debugColor = "green";
+            if (creep.room.name == debugRoomName) {
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.store.getFreeCapacity()  is ' +  creep.store.getFreeCapacity() +'</>');
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']     creep.store.getCapacity()  is ' +  creep.store.getCapacity() +'</>');
+             
+             }
+
+             var nearToterminalStatus = creep.pos.isNearTo(creep.room.terminal);
+             var nearToStorageStatus = creep.pos.isNearTo(creep.room.storage);
+             var storageFreeCapacity = creep.room.storage.store.getFreeCapacity();
+             
+             try {
+                var link2Flag = Game.flags["Link2_" + creep.room.name];
+               
+               if (link2Flag != undefined) {
+                var link2 = link2Flag.pos.findInRange(FIND_STRUCTURES, 1, {
+                    filter: s => (s.structureType == STRUCTURE_LINK)
+                    })[0];
+    
+                    var nearToLink2Status= creep.pos.isNearTo(link2);
+               }
+                // var link2 = link2Flag.pos.findInRange(FIND_STRUCTURES, 1, {
+                // filter: s => (s.structureType == STRUCTURE_LINK)
+                // })[0];
+
+                // var nearToLink2Status= creep.pos.isNearTo(link2);
+                // var link2Flag = Game.flags["Link2_" + creep.room.name];
+             }
+             catch (e) {
+                 console.log('[' + fileName + 'line:' + util.LineNumber() + ']  trapped error ' + e );
+                 console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] link2Flag is ' + link2Flag +'</>');
+                 console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  trapped error ' + e +'</>');
+
+             }
+
+             
+
+             if (creep.room.name == debugRoomName) {
+                 console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] link2Flag is ' + link2Flag +'</>');
+              
+              }
+
+
+
+
+        //      var link2 = link2Flag.pos.findInRange(FIND_STRUCTURES, 1, {
+        //         filter: s => (s.structureType == STRUCTURE_LINK)
+        //         })[0];
+
+        //    var nearToLink2Status= creep.pos.isNearTo(link2);
+
+             if (creep.room.name == debugRoomName) {
+               //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] nearToterminalStatus is ' + nearToterminalStatus +'</>');
+               //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  nearToStorageStatus is ' + nearToStorageStatus +'</>');
+              //   console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  storageFreeCapacity is ' + storageFreeCapacity +'</>');
+              }
+
+              
+              if (nearToStorageStatus == true && creep.room.storage.store.getFreeCapacity() >= 100 ) {
+                var storageTransferStatus = creep.transfer(creep.room.storage,RESOURCE_ENERGY);
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] storageTransferStatus is ' + storageTransferStatus +'</>');
+                 }  
+                 if (storageTransferStatus == 0) {
+                    return;
+                }  
+
+             }
+             else if (nearToterminalStatus == true) {
+                var transferStatus = creep.transfer(creep.room.terminal,RESOURCE_ENERGY);
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] transferStatus is ' + transferStatus +'</>');
+                 }
+                 if (transferStatus == 0) {
+                     return;
+                 }  
+             }
+
+             else if (nearToLink2Status == true) {
+                var transferStatus = creep.transfer(link2,RESOURCE_ENERGY);
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] transfer Status To Link2 is ' + transferStatus +'</>');
+                 }
+                 if (transferStatus == 0) {
+                     return;
+                 }  
+             }
+
+
+
+            // if (creep is next to storage and storage is not full) {
+                // creep.Transfer Energy to storage
+                // debug comment "Transfering energy to storage"
+            //}  
+
+            // else if (creep is next to terminal and terminal is not full) {
+                // creep.Transfer Energy to terminal
+                // debug comment "Transfering energy to terminal"
+            //}  
+
+
+            // else if (creep is next to container and container is not full) {
+                // creep.Transfer Energy to container
+                // debug comment "Transfering energy to container"
+            //}
+            
+            // else{
+                // drop energy on ground. Ideally this will only happen when all energy stores near energy source are full
+                // output warning to console that energy stores are full 
+            //}
+
+            // Should a 'return' be placed here?
+
+
+        } 
+
+        // if (creep energy is not full){
+
+            // if (!creep.pos.nearTo(energySource)){
+               // creep.travelTo(energySource);
+            //}
+            //else {
+
+                // harverest energy from source until creep is full
+
+            //}
+        //}
+
+
+
+
+
+
+
+        // *************************************************
         // if creep is on top of the container
+        // *************************************************
+
+        // if the source is at zero
+        if (energySource.energy == 0 && container.store.getFreeCapacity(RESOURCE_ENERGY) >0) {
+           
+           if (creep.room.name == debugRoomName) {
+               console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] energySource.energy is ' + energySource.energy +'</>');
+            
+            }
+           
+            var withDrawStatus = creep.withdraw (container,RESOURCE_ENERGY);
+            if (creep.room.name == debugRoomName) {
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] withDrawStatus is ' + withDrawStatus +'</>');
+             
+             }
+
+            return;
+        }
+
+
         if (container != null && creep.pos.isEqualTo(container.pos)) {
             // harvest source
             const currentStoredEngery = _.sum(container.store);
 
-            if (currentStoredEngery <= 1999) {
-                creep.harvest(source);
-            }
+            creep.harvest(energySource);
+             if (currentStoredEngery <= 1999) {
+            //     creep.harvest(energySource);
+             }
             else {
                 console.log('[' + fileName + 'line:' + util.LineNumber() + '] room [' + creep.room.name + '] ****** Containter is full! Game.Time: ' + Game.time);
-                let container = source.pos.findInRange(FIND_STRUCTURES, 1, {
-                    filter: s => s.structureType == STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < 2000
+                let container = energySource.pos.findInRange(FIND_STRUCTURES, 1, {
+                    filter: s => s.structureType == STRUCTURE_CONTAINER // && s.store[RESOURCE_ENERGY] < 2000
                 })[1];
 
 
@@ -214,7 +330,7 @@ module.exports = {
                     const currentStoredEngery = _.sum(container.store);
 
                     if (currentStoredEngery <= 1999) {
-                        creep.harvest(source);
+                        creep.harvest(energySource);
                     }
                     else {
                         // move towards it

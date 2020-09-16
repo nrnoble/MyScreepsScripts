@@ -60,7 +60,7 @@ module.exports = {
 
 
         // **********************************************************************
-        // if creep is supposed to repair something
+        // if creep is supposed to repair something (working == true)
         // **********************************************************************
 
         if (creep.memory.working == true) {
@@ -133,6 +133,7 @@ module.exports = {
             //    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  structure is ' +  structure +'</>');
 
 
+
                 if (structure != undefined && structure.structureType == STRUCTURE_ROAD &&  structure.hitsMax == 750000 && structure.hits < 725000) {
                     // try to repair it, if it is out of range
                     var repairStatus = creep.repair(structure);
@@ -160,7 +161,17 @@ module.exports = {
                 else  if (structure != undefined && structure.structureType != STRUCTURE_RAMPART) {
                     // try to repair it, if it is out of range
                  //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' structure type is ' + structure.structureType);
-                    if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
+
+                 
+                 // if repair target has been assigned in creep memory, then over-ride 
+
+                 var roomSpawn = util.getSpawn(creep.room);
+                 if (creep.memory.targetId != undefined) {
+                    structure = Game.getObjectById(creep.memory.targetId);
+                }
+
+                 
+                 if (creep.repair(structure) == ERR_NOT_IN_RANGE) {
                         // move towards it
                         creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
                     }

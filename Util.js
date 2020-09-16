@@ -424,18 +424,21 @@ module.exports =
             {
                 return;
             }
+
+
             for (let i = 0; i < structures.length; i++) {
 
-                var road =  structures[i].structure;
+                var targetRepairStructure =  structures[i].structure;
 
-                if (road.structureType != STRUCTURE_ROAD || road.structureType != STRUCTURE_CONTAINER) {
+                if (targetRepairStructure.structureType != STRUCTURE_ROAD || targetRepairStructure.structureType != STRUCTURE_CONTAINER) {
                     continue;
                 }
                
 
-                if (road.hits < road.hitsMax) {
-                    var repairStatus = creep.repair(road);
-                   if (creep.room.name == "E46S1") {
+                if (targetRepairStructure.hits < targetRepairStructure.hitsMax) {
+                    var repairStatus = creep.repair(targetRepairStructure);
+                    
+                    if (creep.room.name == "E46S1") {
                 //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
                     // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
                    }                   

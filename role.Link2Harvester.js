@@ -19,6 +19,8 @@ module.exports = {
     run: function (creep) {
 
             
+        //return;
+
         util.say(creep,"lk2 ", 300);
        
         // if resouces are nearby, attempt to pickup.
