@@ -342,29 +342,34 @@ module.exports = function () {
             if(energy <= 300)
             {
                 var body = [WORK, WORK, MOVE];
-                 return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                    memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+ 
             } else if(energy <= 400)
             {
                 var body =  [WORK, WORK, WORK, MOVE];
-                return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner', orginalRole: 'miner',sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                    memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+ 
             } else if(energy <= 500)
             {
                 var body =  [WORK, WORK, WORK, WORK, MOVE];
-                 return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                    memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+ 
             }
             else if(energy <= 600)
             {
                 var body =  [WORK, WORK, WORK, WORK, WORK, MOVE];
-                 return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner',orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3  });
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                    memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+ 
             }            else if(energy <= 700)
             {
                 var body = [WORK, WORK, WORK, WORK, WORK,MOVE,MOVE];
-                 return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner', orginalRole: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length * 3 });
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                    memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+ 
             }
            
            

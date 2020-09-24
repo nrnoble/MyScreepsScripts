@@ -289,25 +289,23 @@ module.exports = {
         //    var nearToLink2Status= creep.pos.isNearTo(link2);
 
              if (creep.room.name == debugRoomName) {
-               //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] nearToterminalStatus is ' + nearToterminalStatus +'</>');
-               //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  nearToStorageStatus is ' + nearToStorageStatus +'</>');
-              //   console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  storageFreeCapacity is ' + storageFreeCapacity +'</>');
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] nearToterminalStatus is ' + nearToterminalStatus +'</>');
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  nearToStorageStatus is ' + nearToStorageStatus +'</>');
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  storageFreeCapacity is ' + storageFreeCapacity +'</>');
               }
 
             // *******************************************************************************
             // If spawn is next to minor, make sure it full of energy
             // *******************************************************************************
-            // if ((nearestSpawn != undefined || nearestSpawn != null) && (nearestSpawn.store.getFreeCapacity() != 0)) {
-            //  if (creep.room.name == debugRoomName) {
-            //     debugColor = "red";
-            //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
-            //     }
-            //     debugColor = "green";
-
-
-            //         creep.transfer(nearestSpawn,RESOURCE_ENERGY);
-            //     return;
-            // }
+            if ((nearestSpawn != undefined || nearestSpawn != null) && (nearestSpawn.store.getFreeCapacity() > 0)) {
+             if (creep.room.name == debugRoomName) {
+                debugColor = "red";
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
+                }
+                debugColor = "green";
+                    creep.transfer(nearestSpawn,RESOURCE_ENERGY);
+                return;
+            }
             // *********************************************************************************
             // deposit energy into Storage when next to miner
             // *********************************************************************************
