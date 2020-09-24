@@ -190,9 +190,9 @@ for (let spawnName in Game.spawns) {
 module.exports.loop = function () {
   
     statOverlay(Game.spawns.Spawn1,15,5,"yellow");
-    statOverlay(Game.spawns.Spawn2,15,15,"yellow");
+    statOverlay(Game.spawns.Spawn2,45,15,"yellow");
     statOverlay(Game.spawns.Spawn4,15,15,"yellow");
-    statOverlay(Game.spawns.Spawn5,30,5,"yellow");
+    statOverlay(Game.spawns.Spawn5,32,15,"yellow");
     statOverlay(Game.spawns.Spawn6,15,5,"yellow");
 
 
@@ -728,19 +728,19 @@ module.exports.loop = function () {
    //         const link1Flag = Game.flags.Link1_E25S51;  
  
             var storageLinkObjId    = "5f5f2277099fd70709120d92";
-            var sourceLinkObjId     = "5f41860bd699f24fd8c2df3b";
+            var source2LinkObjId     = "5f41860bd699f24fd8c2df3b";
             var controllerLinkObjId = "5f55b0c5e18f3cb9a77022ab";
 
            var storageLinkObj = Game.getObjectById(storageLinkObjId);
-            var sourceLinkObj = Game.getObjectById(sourceLinkObjId);
+            var sourceLinkObj = Game.getObjectById(source2LinkObjId);
             var controllerLinkObj = Game.getObjectById(controllerLinkObjId);
 
             if (controllerLinkObj.store[RESOURCE_ENERGY] <=300 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
-                var status1 = link.transferEnergy(sourceLinkObjId,controllerLinkObjId);
+                var status1 = link.transferEnergy(source2LinkObjId,controllerLinkObjId);
             }
 
             else if (storageLinkObj.store[RESOURCE_ENERGY] <=600 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
-                var status1 = link.transferEnergy(sourceLinkObjId,storageLinkObjId);
+                var status1 = link.transferEnergy(source2LinkObjId,storageLinkObjId);
               //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ' LinkTransferStatus is ' + status1 +'</>');
             }
         }
@@ -752,21 +752,21 @@ module.exports.loop = function () {
             const link2Flag = Game.flags.Link2_E25S51;
             const link1Flag = Game.flags.Link1_E25S51;  
 
-            var sourceLinkObjId     = "5f425a5ddd7780b916b58555";
+            var source2LinkObjId     = "5f425a5ddd7780b916b58555";
             var storageLinkObjId    = "5f424954eba63bf56a2b148c";
             var controllerLinkObjId = "5f576dcab0f4143f794cae32";
 
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
-            var sourceLinkObj = Game.getObjectById(sourceLinkObjId);
+            var sourceLinkObj = Game.getObjectById(source2LinkObjId);
             var controllerLinkObj = Game.getObjectById(controllerLinkObjId);
 
 
             if (controllerLinkObj.store[RESOURCE_ENERGY] <=350 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
-                var status1 = link.transferEnergy(sourceLinkObjId,controllerLinkObjId);
+                var status1 = link.transferEnergy(source2LinkObjId,controllerLinkObjId);
               //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ' LinkTransferStatus is ' + status1 +'</>');
             }
              else if (storageLinkObj.store[RESOURCE_ENERGY] <=600 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
-                var status1 = link.transferEnergy(sourceLinkObjId,storageLinkObjId);
+                var status1 = link.transferEnergy(source2LinkObjId,storageLinkObjId);
               //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + ' LinkTransferStatus is ' + status1 +'</>');
             }
         }
@@ -774,14 +774,22 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E25S52") {
           
-            var sourceLinkObjId     = "5ee06dba136e4d69b39e87f7";
+            var source1LinkObjId    = "5f5f6b0a9abbdf393d46a509";
+            var source2LinkObjId    = "5ee06dba136e4d69b39e87f7";
             var storageLinkObjId    = "5ee0844891989bfb4d891ee0";
 
+            var source1LinkObj = Game.getObjectById(source1LinkObjId);
+            var source2LinkObj = Game.getObjectById(source2LinkObjId);
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
-            var sourceLinkObj = Game.getObjectById(sourceLinkObjId);
 
-            if (storageLinkObj.store[RESOURCE_ENERGY] <=600 && sourceLinkObj.store[RESOURCE_ENERGY] >=200) {
-                var status1 = link.transferEnergy(sourceLinkObjId,storageLinkObjId);
+
+
+            if (storageLinkObj.store[RESOURCE_ENERGY] <=100 && source2LinkObj.store[RESOURCE_ENERGY] >=700) {
+                var status1 = link.transferEnergy(source2LinkObjId,storageLinkObjId);
+            }
+
+            if (storageLinkObj.store[RESOURCE_ENERGY] <=100 && source1LinkObj.store[RESOURCE_ENERGY] >=700) {
+                var status2 = link.transferEnergy(source1LinkObjId,storageLinkObjId);
             }
         }
 
@@ -814,14 +822,22 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E21S52") {
           
-            var source2LinkObjId = "5e6418abf7aea39a48a365ed";
+            var source2LinkObjId2 = "5e6418abf7aea39a48a365ed";
+            var source2LinkObjId = "5f645b24c3531377e60ab590";
             var storageLinkObjId = "5e63fdf6a36376b7a1f7f293";
+            var Source1LinkObjId = "5f659486df431218b9afd2a9"; //5f659486df431218b9afd2a9
 
             
             var sourceLink2Obj = Game.getObjectById(source2LinkObjId);
+            var sourceLink1Obj = Game.getObjectById(Source1LinkObjId);
+            var sourceLink2Obj2 = Game.getObjectById(source2LinkObjId2);
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
 
-            if (sourceLink2Obj.store[RESOURCE_ENERGY] >=200 && storageLinkObj.store[RESOURCE_ENERGY] <=600) {
+            if (sourceLink1Obj.store[RESOURCE_ENERGY] >=200 && storageLinkObj.store[RESOURCE_ENERGY] <=100) {
+                var status1 = link.transferEnergy(Source1LinkObjId, storageLinkObjId);
+            }
+
+            if (sourceLink2Obj.store[RESOURCE_ENERGY] >=200 && storageLinkObj.store[RESOURCE_ENERGY] <=100) {
                 var status1 = link.transferEnergy(source2LinkObjId, storageLinkObjId);
             }
             

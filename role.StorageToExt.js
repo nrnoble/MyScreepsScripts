@@ -130,6 +130,8 @@ module.exports = {
                 filter: (s) => (s.structureType == STRUCTURE_SPAWN)
                     && s.energy < s.energyCapacity
                     && s.name != "Spawn3"
+                    //&& s.name != "Spawn7" //5f6480b16072c400c56227a9
+                    && s.id != "5f6480b16072c400c56227a9" //E21S53 spawn7 
                     && s.id != "5e87d19155f68952705de66a" // spawn3 in room E21S55 near controller
                 //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
 
@@ -242,10 +244,13 @@ module.exports = {
             if (structure == undefined) {     
              if (creep.room.name != "E25S51" || creep.room.name != "E27S51"  || creep.room.name != "E25S52") {
                  var bTest = creep.room.name != "E25S51";
-
+                // 5f645b24c3531377e60ab590 5f659486df431218b9afd2a9
                 var structure = util.findNearestLinkToStorage(creep,4);
-
-                if (structure !=null && (structure.id == "5f417aa3af7ac84d1ee8e936" || structure.id == "5ee0844891989bfb4d891ee0" || structure.id == "5f424954eba63bf56a2b148c"|| structure.id == "5f5f2277099fd70709120d92")) {
+                if (structure !=null && (structure.id == "5f417aa3af7ac84d1ee8e936" 
+                || structure.id == "5f659486df431218b9afd2a9"
+                || structure.id == "5f645b24c3531377e60ab590" 
+                || structure.id == "5f5f6b0a9abbdf393d46a509" 
+                || structure.id == "5e6418abf7aea39a48a365ed" || structure.id == "5e63fdf6a36376b7a1f7f293" || structure.id == "5ee0844891989bfb4d891ee0" || structure.id == "5f424954eba63bf56a2b148c"|| structure.id == "5f5f2277099fd70709120d92")) {
                     structure = undefined;
                
                     if (creep.room.name == debugRoomName) {
@@ -292,6 +297,13 @@ module.exports = {
                     && s.id != "5ee06dba136e4d69b39e87f7" // E25S52 shard 0 
                     && s.id != "5f424954eba63bf56a2b148c" // E25S51 shard 0 
                     && s.id != "5f5f2277099fd70709120d92" // E27S51 shard 0 
+                    && s.id != "5e63fdf6a36376b7a1f7f293" // E27S51 shard 0 
+                    && s.id != "5e6418abf7aea39a48a365ed" // E27S51 shard 0  
+                    && s.id != "5f645b24c3531377e60ab590" // E27S51 shard 0   
+                    && s.id != "5f659486df431218b9afd2a9" // E21S52 shard 0   
+                    && s.id != "5f5f6b0a9abbdf393d46a509" // E25S52 shard 0   
+                   
+
 
                     && s.id != "5dd200fdb15610ec59943842" 
                     && s.id != "5dd1d69ea3d7f3742e5b782d" 

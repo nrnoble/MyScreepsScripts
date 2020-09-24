@@ -5,8 +5,9 @@ var roleUpgrader = require('role.upgrader');
 var util = require('Util'); 
 var fileName = "Builder     ";
 //var debugRoom = "E25S52";
-var debugRoomName = "E25S52";
+var debugRoomName = "E21S52x";
 //var debugRoomName = "E25S52x";
+//5f645206f563d74b90cbb45b
 
 module.exports = {
     // a function to run the logic for this role
@@ -14,7 +15,7 @@ module.exports = {
 
 
         if (creep.room.name == debugRoomName) {
-            console.log('<font color = "pink">[' + fileName + 'line:' + util.LineNumber() + '] creep.name is ' + creep.name +'</>');
+            console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] creep.name is ' + creep.name +'</>');
         }
 
         if (creep.room.name == "E21S55") {
@@ -24,7 +25,6 @@ module.exports = {
            // creep.memory.primarySource = "ControllerLink";
            // creep.memory.primarySource = "hydrogen";
         }    
-
 
         if (creep.room.name == "E21S52") {
             
@@ -168,7 +168,7 @@ module.exports = {
             }  
 
             if (creep.room.name == debugRoomName) {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] constructionSite is ' + constructionSite +'</>');
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] constructionSite is ' + constructionSite + " pos: " + constructionSite.pos + '</>');
             }
 
             
@@ -403,6 +403,17 @@ module.exports = {
             console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] ClosestContainer '+ClosestContainer+'</>');
         }
 
+
+        // **********************************************************************************
+        // over-ride, and force builder to get energy from a specific structure.
+        // **********************************************************************************
+        if (creep.memory.sourceId != undefined) {
+            ClosestContainer = Game.getObjectById(creep.memory.sourceId);
+        }
+
+        // **********************************************************************************\
+        // Get energy from energy structure 
+        // **********************************************************************************
         if (ClosestContainer != undefined) {
            
             if (creep.room.name == debugRoomName) {
@@ -421,6 +432,9 @@ module.exports = {
             }
 
         }
+        // **********************************************************************************
+        // else get energy directly from Source 1 or source 2.
+        // **********************************************************************************
         else {
         
             // find closest source

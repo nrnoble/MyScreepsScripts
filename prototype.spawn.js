@@ -324,7 +324,10 @@ module.exports = function () {
           //  var energy = Game.spawns.Spawn1.room.energyCapacityAvailable;
             var energy = spawn.room.energyCapacityAvailable;
 
-
+            sourceObj = Game.getObjectById(sourceId);
+            
+            
+           const nearestSpawnToSource = sourceObj.pos.findClosestByRange(FIND_MY_SPAWNS);
 
              var allMyCreepsInRoom = spawn.room.find(FIND_MY_CREEPS);
             // array.forEach(element => {
@@ -333,7 +336,7 @@ module.exports = function () {
             var names;
             for (let name in allMyCreepsInRoom ){
                 
-            }
+            } 
            // energy = 500;
            // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + this.room.name + '] energy is ' + energy +'</>');
             if(energy <= 300)
@@ -373,13 +376,22 @@ module.exports = function () {
                 // #HACK WARNING 
                 if (spawn.room.name == "E25S51" 
                 || spawn.room.name == "E27S51"
+                || spawn.room.name == "E21S52"
                 || spawn.room.name == "E25S52") {
                     body = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, WORK,MOVE, CARRY,CARRY, MOVE,MOVE,MOVE];
                 }
 
 
-                return this.createCreep(body, 'miner_' + Game.time,
-                                    { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
+                //Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Worker1', {
+                //    memory: {role: 'harvester'}
+                //})
+
+
+                return nearestSpawnToSource.spawnCreep(body, 'miner_' + Game.time, {
+                   memory: { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 }});
+
+          //      return this.createCreep(body, 'miner_' + Game.time,
+          //                          { role: 'miner', sourceId: sourceId, home: spawn.room.name, target: spawn.room.name, gameStartTick: Game.time, respawnOffSet: body.length *3 });
             }
         };
      
@@ -1080,7 +1092,7 @@ module.exports = function () {
             //     numberOfParts = 4;
             // }
 
-            // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 1 trying to create a upgrader2xs </>');
+            // console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] ['+SpawnObj.name+'] 1 trying to create a upgrader2xs </>');
         
             if (SpawnObj.room.name == "E21S55") {
                                        
@@ -1117,6 +1129,7 @@ module.exports = function () {
             else {
              //   console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] 3 trying to create a upgrader2xs </>');
                 
+             console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] ['+SpawnObj.name+'] 1 trying to create a upgrader2xs </>');
 
                 for (let i = 0; i < numberOfParts; i++) {
                     body.push(WORK);
@@ -1144,7 +1157,9 @@ module.exports = function () {
         // }
 
             
-        
+        console.log('<font color = red >[' + fileName + 'line:' + util.LineNumber() + '] room[' + SpawnObj.room.name + '] body is ' + body +'</>');
+         
+  
         return this.createCreep(body, util.GetRoleName(SpawnObj, roleName), {
             role: roleName,
             orginalRole: roleName,

@@ -18,7 +18,14 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-            
+          
+        
+        if (creep.memory.pause != undefined) {
+            if (creep.memory.pause == true) {
+                return;
+            }
+        }
+
         //return;
 
         util.say(creep,"lk2 ", 300);
@@ -128,6 +135,13 @@ module.exports = {
                      });
 
                 }
+
+                // #Hack Forcing creep to deposit enery into second link next to Source#2
+                if (creep.room.name == "E21S52") {
+                    structure =  Game.getObjectById ("5e6418abf7aea39a48a365ed");
+                }
+
+
 
             //console.log('[' + fileName + 'line:' + util.LineNumber() + '] '+  creep.name +', !!!!!!!!!!!!!! creep._.sum(creep.carry) is ' + _.sum(creep.carry));
 

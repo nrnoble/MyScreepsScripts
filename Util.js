@@ -453,6 +453,55 @@ module.exports =
         }
     },
 
+    minorRepairer: function(creep){
+
+        try {
+            var structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+         //   console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);
+           
+            var workParts = creep.getActiveBodyparts(WORK);
+            if (workParts == 0) {
+                return -1;
+            }
+
+            if (structures == undefined || structures == [])
+            {
+                return;
+            }
+
+
+            for (let i = 0; i < structures.length; i++) {
+
+                var targetRepairStructure =  structures[i].structure;
+
+                if (targetRepairStructure.structureType != STRUCTURE_ROAD 
+                    || targetRepairStructure.structureType != STRUCTURE_CONTAINER
+                    || targetRepairStructure.structureType != STRUCTURE_SPAWN
+                    || targetRepairStructure.structureType != STRUCTURE_LINK
+                    ) {
+                    
+                        continue;
+                }
+               
+
+                if (targetRepairStructure.hits < targetRepairStructure.hitsMax) {
+                    var repairStatus = creep.repair(targetRepairStructure);
+                    
+                    if (creep.room.name == "E46S1") {
+                //   console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
+                    // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                   }                   
+
+                    break;
+                }
+                 
+              }
+        } catch (e) {
+        
+            console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error while repairing roads is ' + e);
+        }
+    },
+
     numberWithCommas: function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }, 

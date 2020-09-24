@@ -1,6 +1,8 @@
 var util = require('Util'); 
 const { overlayInfo } = require('Util');
 var fileName = "Lorry       ";
+var debugRoomName = "E21S52";
+var debugColor = "Yellow";
 
 
 module.exports = {
@@ -40,10 +42,9 @@ module.exports = {
         // ********************************************************************************//;
         //          if creep is supposed to transfer energy to a structure
         // ********************************************************************************//;
-
         if (creep.memory.working == true) {
             // find closest spawn, extension or tower which is not full
-            var structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+            var targetStructure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
@@ -63,40 +64,34 @@ module.exports = {
             
                 });
 
-                if (creep.room.name == "E44S2x" && creep.room.terminal != undefined)  {
-                    
-                    var terminalE44S2 = creep.room.terminal
-                  // var terminalEnergy = _.sum(terminalE44S2.store);
-                   var terminalEnergy = terminalE44S2.store.energy;
-
-                   // const terminalEnergy = _.sum(Game.rooms[creep.room.name].terminal.store); size="1"
-                //    console.log('[' + fileName + 'line:' + util.LineNumber() + '] <b><font color="yellow">terminalEnergy is ' + terminalEnergy +"</font></b>");
-                    if (terminalEnergy < 13600) {
-                        structure = terminalE44S2;
-                    }
-
-                }
+            // #Hack E21S52 Room Hack
+            if (creep.room.name == "E21S52") {
+                targetStructure = creep.room.storage;
+            }    
 
 
-            if (structure == undefined) {
-                structure = creep.room.terminal;
+            if (creep.room.name == debugRoomName) {
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targetStructure is ' + targetStructure +'</>');
+             
+             }
+
+
+            if (targetStructure == undefined) {
+                targetStructure = creep.room.terminal;
             }
 
             // if we found one
-            if (structure != undefined) {
+            if (targetStructure != undefined) {
                 // try to transfer energy, if it is not in range
-                if (creep.transfer(structure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                if (creep.transfer(targetStructure, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     // move towards it
-                    creep.moveTo(structure);
+                    creep.moveTo(targetStructure);
                 }
             }
         }
-
-
        // ********************************************************************************//;
        // else creep is supposed to get energy
        // ********************************************************************************//;
-
         else {
            
             if (creep.room.name =="E44S2") {
