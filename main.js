@@ -180,6 +180,7 @@ for (let spawnName in Game.spawns) {
 //test
 }
 
+var hkhjgkjgj = undefined;
 //var sp1 = Memory.spawns.Spawn1;
 //util.initFirstRoom(sp1);
 
@@ -188,7 +189,9 @@ for (let spawnName in Game.spawns) {
 //***************************************** */
 
 module.exports.loop = function () {
-  
+    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + ']============== The very start (' + util.numberWithCommas(Game.cpu.bucket) + ') ============== </>');
+    
+
     statOverlay(Game.spawns.Spawn1,15,5,"yellow");
     statOverlay(Game.spawns.Spawn2,45,15,"yellow");
     statOverlay(Game.spawns.Spawn4,15,15,"yellow");
@@ -2486,7 +2489,8 @@ function statOverlay(spawn,x,y,displayColor){
   if (terminalRampart != undefined) {
     new RoomVisual(spawn.room.name).text("terminal Rampart: "                  + util.numberWithCommas((terminalRampart.hits).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
    }
-
+   console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + ']============== The very end   (' + util.numberWithCommas(Game.cpu.bucket) + ') ============== </>');
+   console.log();
 };
 
 function getRampartAt(someStructure){

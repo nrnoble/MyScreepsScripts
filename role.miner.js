@@ -1,7 +1,7 @@
 var util = require('Util');
 var fileName = "Miner       ";
 //let debugRoomName = "E25S51";
-let debugRoomName = "E21S52";
+let debugRoomName = "E21S52x";
 let debugColor = "green";
 
 
@@ -18,6 +18,13 @@ module.exports = {
         util.pickupResources(creep, 2);
         util.minorRepairer(creep);
 
+ 
+        var nearToterminalStatus = creep.pos.isNearTo(creep.room.terminal);
+        var nearToStorageStatus = creep.pos.isNearTo(creep.room.storage);
+        var storageFreeCapacity = creep.room.storage.store.getFreeCapacity();
+        var nearestLink = creep.findNearestLink(1);
+        var nearestSpawn = creep.findNearestSpawn(1);
+    
 
         
 
@@ -62,6 +69,20 @@ module.exports = {
             }
         }
 
+        if (creep.room.name == "E21S52") {
+          //  triggerTime = 50;
+          //  triggerTime =  calcTiggerTime(creep, triggerTime) 
+
+            if ( creep.memory.triggerTime != undefined) {
+                triggerTime = creep.memory.triggerTime;
+            }
+            else{
+                triggerTime = 50;
+                triggerTime =  calcTiggerTime(creep, triggerTime)     
+
+            }
+        }
+
 
 
         /* #region  Call Respawn XX ticks before death. Don't randomally mess with logic.  */
@@ -83,7 +104,8 @@ module.exports = {
 
                 name = spawn.createMiner(spawn, creep.memory.sourceId);
               //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creating miner is ' + name + ' </>');
-                var spawnStats = false;
+               // var spawnStats = false;
+                var spawnStatus = false;
                 if (spawn.spawning != null) {
                     spawnStatus = spawn.spawning.name.includes("mine");
                 }
@@ -210,11 +232,12 @@ module.exports = {
             //     spawnNearSource2 = spawns[0];
             // }
 
-             var nearToterminalStatus = creep.pos.isNearTo(creep.room.terminal);
-             var nearToStorageStatus = creep.pos.isNearTo(creep.room.storage);
-             var storageFreeCapacity = creep.room.storage.store.getFreeCapacity();
-             var nearestLink = creep.findNearestLink(1);
-             var nearestSpawn = creep.findNearestSpawn(1);
+            //  var nearToterminalStatus = creep.pos.isNearTo(creep.room.terminal);
+            //  var nearToStorageStatus = creep.pos.isNearTo(creep.room.storage);
+            //  var storageFreeCapacity = creep.room.storage.store.getFreeCapacity();
+            //  var nearestLink = creep.findNearestLink(1);
+            //  var nearestSpawn = creep.findNearestSpawn(1);
+
              if (creep.room.name == debugRoomName) {
                  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nearestSpawn is ' + nearestSpawn +'</>');
               
@@ -224,11 +247,13 @@ module.exports = {
              // *************************************************************************************
              // get container structure underneath miner           
              // *************************************************************************************
-             if (creep.room.name == debugRoomName) {
+          //   if (creep.room.name == debugRoomName) {
+             if (true) {
+
               
                 var containerUnderMiner = creep.getObjectAtCreepPos(STRUCTURE_CONTAINER);
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] xxxxxxxxxxxxxx containerUnderMiner is ' + containerUnderMiner  +'</>');
+                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containerUnderMiner is ' + containerUnderMiner  +'</>');
 
                 if (containerUnderMiner !=  undefined && containerUnderMiner.store.getFreeCapacity() !=0 && energySource.energy != 0 ) {
                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] dropping energy </>');
@@ -288,28 +313,80 @@ module.exports = {
 
         //    var nearToLink2Status= creep.pos.isNearTo(link2);
 
-             if (creep.room.name == debugRoomName) {
-                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] nearToterminalStatus is ' + nearToterminalStatus +'</>');
-                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  nearToStorageStatus is ' + nearToStorageStatus +'</>');
-                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  storageFreeCapacity is ' + storageFreeCapacity +'</>');
-              }
+            //  if (creep.room.name == debugRoomName) {
+            //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] nearToterminalStatus is ' + nearToterminalStatus +'</>');
+            //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  nearToStorageStatus is ' + nearToStorageStatus +'</>');
+            //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  storageFreeCapacity is ' + storageFreeCapacity +'</>');
+            //   }
+
+
+
 
             // *******************************************************************************
             // If spawn is next to minor, make sure it full of energy
             // *******************************************************************************
-            if ((nearestSpawn != undefined || nearestSpawn != null) && (nearestSpawn.store.getFreeCapacity() > 0)) {
-             if (creep.room.name == debugRoomName) {
-                debugColor = "red";
-                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
+            if (nearestSpawn != null && (nearestSpawn.store.getFreeCapacity()  == null || nearestSpawn.store.getFreeCapacity() > 0)) {
+                if (creep.room.name == debugRoomName) {
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn is ' + nearestSpawn + '</>');
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn.store is ' + nearestSpawn.store + '</>');
+                    console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn.store.getFreeCapacity() is ' + nearestSpawn.store.getFreeCapacity() + '</>');
                 }
-                debugColor = "green";
-                    creep.transfer(nearestSpawn,RESOURCE_ENERGY);
-                return;
+            //     if (creep.room.name == debugRoomName) {
+            //         debugColor = "red";
+            //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
+            //     }
+
+            //     debugColor = "green";
+                        creep.transfer(nearestSpawn,RESOURCE_ENERGY);
+            //        return;
+        
             }
+
+
+            // if (creep.room.name == debugRoomName) {
+            //     debugColor = "green";
+              
+
+            //      if (nearestSpawn != null && (nearestSpawn.store.getFreeCapacity()  == null || nearestSpawn.store.getFreeCapacity() > 0)) {
+            //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn is ' + nearestSpawn + '</>');
+            //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn.store is ' + nearestSpawn.store + '</>');
+            //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] KKKKKKKKKKK nearestSpawn.store.getFreeCapacity() is ' + nearestSpawn.store.getFreeCapacity() + '</>');
+                 
+            //     //     if (creep.room.name == debugRoomName) {
+            //     //         debugColor = "red";
+            //     //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
+            //     //     }
+
+            //     //     debugColor = "green";
+            //                 creep.transfer(nearestSpawn,RESOURCE_ENERGY);
+            //     //        return;
+            //      }else{
+            //       //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] YYYYYYYYYYYY nearestSpawn.store is ' + nearestSpawn.store.getFreeCapacity() + '</>');
+
+            //      }
+
+
+            //}
+
+
+            // if ((nearestSpawn != undefined || nearestSpawn != null) && (nearestSpawn.store.getFreeCapacity() > 0 || nearestSpawn.store.getFreeCapacity() ==null )) {
+            //     if (creep.room.name == debugRoomName) {
+            //         debugColor = "red";
+            //         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] where is code here!!!!  nearestSpawn.store.getFreeCapacity(): ' + nearestSpawn.store.getFreeCapacity() +' </>');
+            //     }
+            //     debugColor = "green";
+            //         creep.transfer(nearestSpawn,RESOURCE_ENERGY);
+            //     return;
+            // }
+
+
+
+
+
             // *********************************************************************************
             // deposit energy into Storage when next to miner
             // *********************************************************************************
-            else if (nearToStorageStatus == true && creep.room.storage.store.getFreeCapacity() >= 100 ) {
+            if (nearToStorageStatus == true && creep.room.storage.store.getFreeCapacity() >= 100 ) {
                 var storageTransferStatus = creep.transfer(creep.room.storage,RESOURCE_ENERGY);
                 if (creep.room.name == debugRoomName) {
                     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] storageTransferStatus is ' + storageTransferStatus +'</>');
@@ -340,6 +417,9 @@ module.exports = {
             //          return;
             //      }  
             //  }
+
+
+
              // *********************************************************************************
              // deposit energy into link next to miner
              // *********************************************************************************
@@ -401,7 +481,7 @@ module.exports = {
             const currentStoredEngery = _.sum(container.store);
 
             creep.harvest(energySource);
-             if (currentStoredEngery <= 1999) {
+             if (currentStoredEngery <= 2000) {
             //     creep.harvest(energySource);
              }
             else {
@@ -450,8 +530,15 @@ module.exports = {
 
 function calcTiggerTime(creep, triggerTime) {
     if (creep.ticksToLive < 500 && creep.memory.triggerTime == undefined) {
-        var spawns = creep.room.find(FIND_MY_SPAWNS);
-        var spawn = spawns[0];
+        // var spawns = creep.room.find(FIND_MY_SPAWNS);
+        var spawn = creep.pos.findClosestByRange(FIND_MY_SPAWNS,1);
+        if (creep.room.name == debugRoomName) {
+            console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] YYYYYYYYYYYY closest spawn to miner is ' + spawn +'</>');
+         
+         }
+
+
+       // var spawn = spawns[0];
         var startPos = new RoomPosition(spawn.pos.x, spawn.pos.y, creep.room.name);
         var endPos = new RoomPosition(creep.pos.x, creep.pos.y, creep.room.name);
         var path = PathFinder.search(startPos, endPos);
@@ -459,7 +546,12 @@ function calcTiggerTime(creep, triggerTime) {
         opacity: .2, lineStyle: 'dashed'}); 
         var Distance = path.path.length;
         triggerTime = Distance * 2.5 + (creep.body.length * 3);
+        triggerTime = triggerTime -10;
+        if (triggerTime < 10) {
+            triggerTime = 10;
+        }
         creep.memory.triggerTime = triggerTime;
     }
-    return { spawns, spawn, startPos, endPos, path, Distance, triggerTime };
+    //return { spawns, spawn, startPos, endPos, path, Distance, triggerTime };
+    return  creep.memory.triggerTime;
 }

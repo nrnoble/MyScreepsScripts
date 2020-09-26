@@ -79,8 +79,16 @@ module.exports = function () {
         }
     }
 
+
+    // *************************************************************************************
+    // Could return undefined or null of creep is in a unclaimed room.
+    // *************************************************************************************
     Creep.prototype.findNearestSpawn = function(range)
     {
+        // spawn could be undefined or null of creep is in a unclaimed room.
+        // const spawn = this.pos.findClosestByRange(FIND_MY_SPAWNS,range);
+        // return spawn;
+
         const spawns = this.pos.findInRange(FIND_MY_STRUCTURES, range,{filter: {structureType: STRUCTURE_SPAWN}});
         if (spawns.length > 0)
         {
