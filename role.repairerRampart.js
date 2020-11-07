@@ -8,12 +8,15 @@ var roleBuilder = require('role.builder');
  
 var fileName = 'rrampart';
 
+let debugRoomName = "E27S51";
+let debugColor = "yellow";
  
 module.exports = {
     run: function (creep) {
+       
+    util.pickupResources(creep,0);
+    util.say(creep,"ram",300); 
  
-util.pickupResources(creep,0);
-util.say(creep,"ram",300); 
  
         // // 5d4f2eb0ac2d2d20dcee9a27
         // creep.memory.targetStructureId = "5d4f2eb0ac2d2d20dcee9a27";
@@ -30,21 +33,33 @@ util.say(creep,"ram",300);
         // //     localTargetStructure = creep.memory.targetStructureId;
         // // }
        
-
+        // if (creep.room.name == debugRoomName) {
+        //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.memory.working is ' + creep.memory.working +'</>');       
+        //  }
         
 
         // if creep is trying to repair something but has no energy left
         if (creep.memory.working == true && creep.carry.energy == 0) {
             // switch state
             creep.memory.working = false;
+            if (creep.room.name == debugRoomName) {
+                console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.memory.working is ' + creep.memory.working +'</>');       
+             }
+            
         }
         // if creep is harvesting energy but is full
         else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
             // switch state
             creep.memory.working = true;
+            // if (creep.room.name == debugRoomName) {
+            //     console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] creep.memory.working is ' + creep.memory.working +'</>');       
+            //  }
+            
         }
 
+        // ********************************************************************************//;
         // if creep is supposed to repair something
+        // ********************************************************************************//;
         if (creep.memory.working == true) {
 
             // check for a specific structure
@@ -141,8 +156,9 @@ util.say(creep,"ram",300);
         else {
             // find closest container // s.structureType == STRUCTURE_CONTAINER || 
             let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
-                filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-                    s.store[RESOURCE_ENERGY] > 0
+                filter: s => (s.structureType == STRUCTURE_CONTAINER 
+                    || s.structureType == STRUCTURE_STORAGE) 
+                    && s.store[RESOURCE_ENERGY] > 0
             });
             // if one was found
             if (container != undefined) {

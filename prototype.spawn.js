@@ -328,13 +328,13 @@ module.exports = function () {
         const nearestSpawnToSource = sourceObj.pos.findClosestByRange(FIND_MY_SPAWNS);
         if (nearestSpawnToSource.room.name == "E21S52") {
             if (nearestSpawnToSource.spawning != null || nearestSpawnToSource.spawning != undefined) {
-                nearestSpawnToSource.spawning.setDirections([BOTTOM,BOTTOM_RIGHT]);
+                nearestSpawnToSource.spawning.setDirections([BOTTOM_RIGHT, BOTTOM]);
             }
         }
 
 
         if (nearestSpawnToSource.spawning != null || nearestSpawnToSource.spawning != undefined) {
-            nearestSpawnToSource.spawning.setDirections([BOTTOM,BOTTOM_RIGHT]);
+            nearestSpawnToSource.spawning.setDirections([BOTTOM_RIGHT, BOTTOM]);
         }
         
 

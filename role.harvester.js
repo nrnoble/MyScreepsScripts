@@ -208,6 +208,14 @@ module.exports = {
 
            // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' ClosestContainer engery is ' + ClosestContainer);
 
+
+           if (creep.room.name == "E25S51") {
+            //   console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  is ' +  +'</>');
+               ClosestContainer = Game.getObjectById("5f3fd508fd8e9a43adde46a9");
+            
+            }
+
+
             if (ClosestContainer != undefined) {
                 // try to withdraw energy, if the container is not in range
                 

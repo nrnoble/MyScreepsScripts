@@ -5,7 +5,10 @@
 
 // room E25S55 Level 5 June 9th, 2020
 // room E25S55 Level 6 June 15th, 2020 6:00pm
-// Aug 19, 2021 Added E25S51 & E27S51
+// Aug 19, 2020 Added E25S51 & E27S51
+// Oct 3rd 2020 E27S51 Level 7 about 2am
+// Oct 4rd 2020 E25S51 Level 7 at 3:10pm
+
 
 // TRAVELER: heavy cpu use: builder _39269030, cpu: 1104 origin: [room E25S51 pos 25,35], dest: [room E25S51 pos 27,34]
 
@@ -18,6 +21,8 @@
 // import modules
 require('prototype.spawn')();
 require('prototype.creep')();
+//require('prototype.Game')();
+
 //var events = require('events');
 require('Traveler');
 var roleHarvester = require('role.harvester');
@@ -91,7 +96,7 @@ console.log('[' + fileName + 'line:' + util.LineNumber() + ']  ');
 var currentTime = Date.now();
 var currentTick = Game.time;
 var currentProgress;
-// currentProgress = Game.spawns.Spawn4.room.controller.progress;
+// currentProgress = Game.spawns.Spawn5.room.controller.progress;
 
 // const startObj = [];
 // startObj.push(currentTime);
@@ -99,7 +104,7 @@ var currentProgress;
 // startObj.push(currentProgress);
 
 // Game.spawns.Spawn5.memory.startObj = startObj;
-// Game.spawns.Spawn6.memory.startObj = startObj;
+ //Game.spawns.Spawn6.memory.startObj = startObj;
 
 
 
@@ -120,10 +125,11 @@ var currentProgress;
 
 let consoleDelay = 5;
 let unitsToTransfer = 51000;
-unitsToTransfer = 200000; //test
+unitsToTransfer = 100000; //test
 
   
- //term.transferEnergy("E27S51","E25S52",600);  //test
+ //    term.transferEnergy("E25S52","E27S51",unitsToTransfer);  //test
+// term.transferEnergy("E21S55","E27S51",unitsToTransfer);  //test
 
 //term.transferEnergy("E45S2","E46S3",unitsToTransfer); 
 
@@ -524,7 +530,7 @@ module.exports.loop = function () {
 
 
 
-        else if (creep.memory.role == 'repairerRampart') {
+        else if (creep.memory.role == 'repairRampart') {
             roleRepairerRampart.run(creep);
         }
 
@@ -611,6 +617,21 @@ module.exports.loop = function () {
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
   
+        // ******************************************************************************
+        // Handle energy overflow
+        // ******************************************************************************
+        let fromRoom = "E21S55";
+        let toRoom = "E25S51";
+        let transferAmount = 25000;
+        overFlowEnergyTransfer(spawn, fromRoom, toRoom, transferAmount);
+
+
+        fromRoom = "E25S51";
+        toRoom = "E27S51";
+        transferAmount = 25000;
+        overFlowEnergyTransfer(spawn, fromRoom, toRoom, transferAmount);
+
+
         if (spawn.name == debugSpawnName) {
             console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] debugSpawnName is ' + debugSpawnName +' is set to true </>');
         }
@@ -1052,7 +1073,7 @@ module.exports.loop = function () {
 
         if (spawn.room.name == "E25S51") {
             var energy = 600;
-            var builderEnergy = spawn.memory.EnergyManagement.builder;
+           // var builderEnergy = Game.Spawns.Spawn5.memory.EnergyManagement.builder;
         }
 
         if (spawn.room.name == "E27S51") {
@@ -2310,6 +2331,9 @@ module.exports.loop = function () {
 
 };
 
+
+
+
 function formatNumber(number) {
     // if (number < 10) {
     //     number = "0" + number;
@@ -2504,4 +2528,60 @@ function getRampartAt(someStructure){
     });
 
     return rampart;
+}
+
+function setupTerminalTransfer(sourceRoomName, targetRoomName, energyAmount)
+{
+    Memory.transferEnergyFromRoom = sourceRoomName;
+    Memory.transferEnergyToRoom = targetRoomName;
+    Memory.transferEnergyAmount = energyAmount;
+}
+
+// when room is overflowing with energy transfer energy to another room
+function overFlowEnergyTransfer(spawn, fromRoom, toRoom, transferAmount) {
+    if (spawn.room.name == fromRoom && (spawn.room.terminal.store[RESOURCE_ENERGY] == 300000)) {
+       // if (spawn.room.name == fromRoom && (spawn.room.storage.store[RESOURCE_ENERGY] >= 999999)) {
+        setupTerminalTransfer(spawn.room.name, toRoom, transferAmount);
+        terminalToTerminalTransfer(spawn);
+
+        //  var transferStatus =   transferTermEnergyWhenFull(spawn, "E43S3","E46S2", 25000);
+    }
+}
+
+
+function terminalToTerminalTransfer(spawn) {
+    
+
+        var energyTransferAmount = Memory.transferEnergyAmount;
+      //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferAmount is ' + energyTransferAmount +'</>');
+        if (energyTransferAmount == 0) {
+            return;
+        }
+        
+     //   console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] energyTransferAmount is '+ energyTransferAmount +' </>');
+        
+        var energyTransferStatus = TranferEngeryFromRoomToRoom();
+    //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] energyTransferStatus is '+ energyTransferStatus +' </>');
+          
+        if (energyTransferStatus == 0) {
+            console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferStatus successful from room[' + Memory.transferEnergyFromRoom + '] to [' + Memory.transferEnergyToRoom + '] energy Amount:' + energyTransferAmount + '</>');
+        }
+        else {
+        //    console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferStatus failed. Error: ' + energyTransferStatus + ' from room[' + Memory.transferEnergyFromRoom + '] to [' + Memory.transferEnergyToRoom + '] energy Amount:' + energyTransferAmount + '</>');
+        }
+    
+}
+
+
+function TranferEngeryFromRoomToRoom() {
+    if (Memory.transferEnergyAmount > 0) {
+        transferEnergyAmount = Memory.transferEnergyAmount;
+        Memory.transferEnergyAmount = 0;
+        transferEnergyFromRoom = Memory.transferEnergyFromRoom;
+        transferEnergyToRoom = Memory.transferEnergyToRoom;
+        return term.transferEnergy(transferEnergyFromRoom, transferEnergyToRoom, transferEnergyAmount);
+    }
+    else{
+        return -1;
+    }
 }

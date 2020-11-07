@@ -253,16 +253,20 @@ module.exports = {
               
                 var containerUnderMiner = creep.getObjectAtCreepPos(STRUCTURE_CONTAINER);
 
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containerUnderMiner is ' + containerUnderMiner  +'</>');
-
+               
+                if (creep.room.name == debugRoomName) {
+                  //  console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX nearestSpawn is ' + nearestSpawn +'</>');
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] containerUnderMiner is ' + containerUnderMiner  +'</>');
+                 
+                 }
                 if (containerUnderMiner !=  undefined && containerUnderMiner.store.getFreeCapacity() !=0 && energySource.energy != 0 ) {
-                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] dropping energy </>');
+                   // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] dropping energy </>');
                     var dropEnergyStatus = creep.drop(RESOURCE_ENERGY);
                     if (creep.room.name == debugRoomName) {
                         console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx dropEnergyStatus is ' + dropEnergyStatus +'</>');           
                      }
                 }
-                 console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] containerUnderMiner is ' + containerUnderMiner +'</>');
+                 // console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] containerUnderMiner is ' + containerUnderMiner +'</>');
               }
 
             //   if (spawnNearSource2 !=  undefined) {

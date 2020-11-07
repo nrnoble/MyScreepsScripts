@@ -27,7 +27,7 @@ module.exports = function () {
 
             if(lookObject.type == LOOK_STRUCTURES &&
                 lookObject[LOOK_STRUCTURES].structureType == myStructureType) {
-                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] debug  is ' + lookObject[LOOK_STRUCTURES].structureType  +'</>');
+               // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] debug  is ' + lookObject[LOOK_STRUCTURES].structureType  +'</>');
                 returnValue = lookObject[LOOK_STRUCTURES];
             
                 }
