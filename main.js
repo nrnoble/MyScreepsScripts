@@ -12,7 +12,7 @@
 
 // TRAVELER: heavy cpu use: builder _39269030, cpu: 1104 origin: [room E25S51 pos 25,35], dest: [room E25S51 pos 27,34]
 
-//test 2
+//test 22
 
 
 
@@ -35,6 +35,7 @@ var roleLongDistanceBuilder = require('role.longDistanceBuilder');
 var roleClaimer = require('role.claimer');
 var roleReserver = require('role.reserveController');
 var roleMiner = require('role.miner');
+var roleMinerSource2 = require('role.minerSource2');
 var roleMinerV2 = require('role.minerV2');
 var roleLorry = require('role.lorry');
 var roleTestCreep = require('role.Test');
@@ -195,124 +196,45 @@ var hkhjgkjgj = undefined;
 //***************************************** */
 
 module.exports.loop = function () {
+    
     console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + ']============== The very start (' + util.numberWithCommas(Game.cpu.bucket) + ') ============== </>');
     
+ 
+    statOverlay2(Game.spawns.Spawn6,4,8,"yellow");
 
-    statOverlay(Game.spawns.Spawn1,15,5,"yellow");
-    statOverlay(Game.spawns.Spawn2,45,15,"yellow");
-    statOverlay(Game.spawns.Spawn4,15,15,"yellow");
-    statOverlay(Game.spawns.Spawn5,32,15,"yellow");
-    statOverlay(Game.spawns.Spawn6,15,5,"yellow");
+    for (let roomName in Game.rooms){
 
+        if (roomName == "E27S51") {
+            var x = 10
+            var y = 22
+           roomOverlay(roomName, x, y);
+        }
 
+        if (roomName == "E25S52") {
+            var x = 9
+            var y = 29
+           roomOverlay(roomName, x, y);
+        }
 
+        if (roomName == "E25S51") {
+            var x = 21
+            var y = 17
+           roomOverlay(roomName, x, y);
+        }
 
-
-// //    let myDate = new Date(1589134000166);
-//     var startObj = Game.spawns.Spawn1.memory.startObj
-//     var startTime = startObj[0];
-//     var startTick = startObj[1];
-//     var startProgress = startObj[2];
-
-//     currentTime = Date.now();
-//     currentTick = Game.time;
-//     currentProgress = Game.spawns.Spawn1.room.controller.progress;
-
-//   //  currentProgress = Game.spawns.Spawn1.room.controller.progress;
-//     currentProgress = Game.spawns.Spawn1.room.controller.progress;
-//     const level8energy = Game.spawns.Spawn1.room.controller.progressTotal; // 10935000;
-//   //  currentProgress = level8energy - currentProgress
-
-
+        
+    }
     
-//     const iProgress = currentProgress - startProgress;
-//     const iRemainingProgress =  level8energy - currentProgress;
-//     const iTime = currentTime - startTime;
-//     const iSeconds = iTime / 1000;
-//     const iMinutes = iSeconds / 60;
-//     const iHours = iMinutes / 60;
 
-//     const iTicks = currentTick - startTick; 
-
-
-
-//     let myOffSet = new Date(3600000 * 7);
-//     // start time in milliseconds = 1589134000166
-//     let UTC = new Date();
-//     let now = new Date() - UTC;
-
-//     let myDate = new Date (startTime - myOffSet); 
-// //    let myDate = new Date (startTime);
-
-//     let iDate = new Date (iTime);
-
-//     let month = iDate.getMonth() + 1;
-//     // let year = myDate.getFullYear();
-//     let day = iDate.getDate()-1;
-//     let hours = iDate.getHours();
-//     let minutes = iDate.getMinutes();
-//     let seconds = iDate.getSeconds();
-
-
-//     seconds = formatNumber(seconds);
-//     minutes = formatNumber(minutes);
-//     hours = formatNumber(hours);
-//     day = formatNumber(day);
-
-
-
-
-//     // let offSet = myDate.getTimezoneOffset();
-
-
-//    // formatDate =  myDate.toLocaleString();
-
-//  //   var iformatDate = month + "." + day + ":" + year + " " + hours + ":" + minutes + ":" + seconds + " (" + offSet + ")"; 
-//     var iformatDate = day + "." + hours + ":" + minutes + ":" + seconds
-//     var formatDate =  myDate.toLocaleString();
-//     //var iformatDate =  iDate.toLocaleString();
-
-
-
-
-
-//    // new RoomVisual(Game.spawns.Spawn1.room.name).text(formatDate,                                                                          15, 5, { color: 'green', font: 0.8, align: "right"  });
-//     new RoomVisual(Game.spawns.Spawn1.room.name).text(iformatDate              + " (" + util.numberWithCommas(iTime) + ")",                15, 6, { color: 'green', font: 0.8, align: "right"  });
-//     new RoomVisual(Game.spawns.Spawn1.room.name).text("Energy Per Hour: "       + util.numberWithCommas(Math.trunc(iProgress / iHours)),  15, 7, { color: 'green', font: 0.8, align: "right"  });
-//     new RoomVisual(Game.spawns.Spawn1.room.name).text("Ticks Per Min: "        + util.numberWithCommas(Math.trunc(iTicks /  iMinutes )),       15, 8, { color: 'green', font: 0.8, align: "right"  });
-//     new RoomVisual(Game.spawns.Spawn1.room.name).text("iMinutes: "             + Math.trunc(iMinutes),                                     15, 9, { color: 'green', font: 0.8, align: "right"  });
-
-
-//      new RoomVisual(Game.spawns.Spawn2.room.name).text(formatDate, 5, 5, { color: 'green', font: 0.8 });
-
-
-
-
-
-
-    //currentTime = Date.now();
-    //currentTick = Game.time;
-    // var mostRecentTimeTick = [];
-    // mostRecentTimeTick.push(Date.now());
-    // mostRecentTimeTick.push(Game.time);
-    // Memory.mostRecentTimeTick = mostRecentTimeTick;
     
 
     var sp1 = Memory.spawns.Spawn1;
    // console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] sp1.room.name is ' + sp1.room.name +'</>');
-   //  util.initFirstRoom("W2N5");
-    //  var workCost = BODYPART_COST[WORK];
-    //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] workCost is ' + workCost +'</>');
-    //var energyRemainging = Game.rooms["E45S2"].terminal.energy
-    // const energyRemainging = _.sum(Game.rooms['E45S2'].terminal.store);
+
     var energyRemainging;
     
     
-    if (Memory.halt == true) {
-        console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] WARNING! All scripts have been suspended. Memory.halt is ' + Memory.halt + '</>');
-        new RoomVisual(sp1.name).text(Game.cpu.bucket, 1, 1, { color: 'green', font: 0.8 });
-        return;
-    }
+
 
 
     //************************************** */    
@@ -470,6 +392,10 @@ module.exports.loop = function () {
             //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running miner ');
             roleMiner.run(creep);
         }
+        else if (creep.memory.role == 'minerSource2') {
+            //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running miner ');
+            roleMinerSource2.run(creep);
+        }
         // if creep is minerV2, call minerV2 script
         else if (creep.memory.role == 'minerV2') {
             //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' running miner ');
@@ -555,19 +481,19 @@ module.exports.loop = function () {
 
         // run for every creep
 
-        if (Game.time % 5) {
-            if (false) {
+        // if (Game.time % 5) {
+        //     if (false) {
 
-                console.log();
-                console.log("********************************************************************************");
+        //         console.log();
+        //         console.log("********************************************************************************");
 
-                testCode.run(creep);
+        //         testCode.run(creep);
 
-                console.log("********************************************************************************");
-                console.log();
+        //         console.log("********************************************************************************");
+        //         console.log();
 
-            }
-        }
+        //     }
+        // }
 
     }
 
@@ -592,31 +518,47 @@ module.exports.loop = function () {
     for (let spawnName in Game.spawns) {
 
 
+
+//       #roomVisuals 
+    //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + Game.spawns[spawnName].name + '] Game.spawns[spawnName].name is ' + Game.spawns[spawnName].name +' is set to true </>');
+
+        // debugSpawnName = "E25S52";
+        // if (spawnName == debugSpawnName) {
+        //     console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + Game.spawns[spawnName].name + '] Game.spawns[spawnName].name is ' + Game.spawns[spawnName].name +' is set to true </>');
+        // }        
+        var storageEnergy = Game.spawns["Spawn4"].room.storage.store[RESOURCE_ENERGY];
+        new RoomVisual("E25S52").text("storage: " + util.numberWithCommas(storageEnergy), 1, 44, { color: 'green', font: 0.8, align: 'left' });
         
+        var terminalEnergy = Game.spawns["Spawn4"].room.terminal.store[RESOURCE_ENERGY];
+        new RoomVisual("E25S52").text("Terminal: " + util.numberWithCommas(terminalEnergy), 1, 46, { color: 'green', font: 0.8, align: 'left' });
+       // new RoomVisual(Game.spawns[spawnName].room.name).text("test ", 41, 44, { color: 'green', font: 0.6, align: 'left' });
+       new RoomVisual("E25S52").text(util.numberWithCommas(Game.cpu.bucket), 3, 48, { align: 'right', color: 'green', font: 0.8 });
 
-        // if (spawnName == "Spawn2" && Game.time % 2 == 0) {
-        //     ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
-        //     continue;
+
+        // if (Game.spawns[spawnName].name == "E25S52") {
+        //     var storageEnergy = spawn.room.storage.store[RESOURCE_ENERGY];
+        //     new RoomVisual(spawn.room.name).text("storage: " + storageEnergy, 40, 44, { color: 'green', font: 0.6, align: 'left' });
         // }
-        // else {
-        //     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
-
-        // }
 
 
-        // if (spawnName == "Spawn6" && Game.time % 2 != 0) {
-        //     ////  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Skipping spawn: ' + spawnName +'</>');
-        //     continue;
-        // }
-        // else {
-        //     //  console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] Not Skipping spawn: ' + spawnName +'</>');
-
-        // }
 
 
         /** @type {Spawn} */
         let spawn = Game.spawns[spawnName];
   
+        
+        const target = spawn.pos.findInRange(FIND_MY_CREEPS, 1, {
+            filter: s => s.ticksToLive < 1454
+        })[0];
+
+        if (target != undefined) {
+            console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] RenewCreep target is ' + target + '</>');
+            var renewStatus = spawn.renewCreep(target);
+        }
+
+
+
+
         // ******************************************************************************
         // Handle energy overflow
         // ******************************************************************************
@@ -776,9 +718,11 @@ module.exports.loop = function () {
             const link2Flag = Game.flags.Link2_E25S51;
             const link1Flag = Game.flags.Link1_E25S51;  
 
-            var source2LinkObjId     = "5f425a5ddd7780b916b58555";
-            var storageLinkObjId    = "5f424954eba63bf56a2b148c";
-            var controllerLinkObjId = "5f576dcab0f4143f794cae32";
+            var source2LinkObjId        = "5f425a5ddd7780b916b58555";
+            var storageLinkObjId        = "600c1dcfe09fe06b34fbb30f";
+         //   var storageLinkObjId        = "5f424954eba63bf56a2b148c";
+            
+            var controllerLinkObjId     = "5f576dcab0f4143f794cae32";
 
             var storageLinkObj = Game.getObjectById(storageLinkObjId);
             var sourceLinkObj = Game.getObjectById(source2LinkObjId);
@@ -2334,6 +2278,17 @@ module.exports.loop = function () {
 
 
 
+function roomOverlay(roomName, x, y) {
+    var storageEnergy = Game.rooms[roomName].storage.store[RESOURCE_ENERGY];
+    new RoomVisual(roomName).text("storage: " + util.numberWithCommas(storageEnergy), x, y, { color: 'green', font: 0.8, align: 'left' });
+
+    var terminalEnergy = Game.rooms[roomName].terminal.store[RESOURCE_ENERGY];
+    new RoomVisual(roomName).text("Terminal: " + util.numberWithCommas(terminalEnergy), x, y + 1, { color: 'green', font: 0.8, align: 'left' });
+    // new RoomVisual(Game.spawns[spawnName].room.name).text("test ", 41, 44, { color: 'green', font: 0.6, align: 'left' });
+    new RoomVisual(roomName).text(util.numberWithCommas(Game.cpu.bucket), x, y + 2, { align: 'left', color: 'green', font: 0.8 });
+ //   return { storageEnergy, terminalEnergy };
+}
+
 function formatNumber(number) {
     // if (number < 10) {
     //     number = "0" + number;
@@ -2517,6 +2472,19 @@ function statOverlay(spawn,x,y,displayColor){
    console.log();
 };
 
+function statOverlay2(spawn,x,y,displayColor){
+    //var startObj = spawn.memory.startObj
+    //var startTime = startObj[0];
+    //var startTick = startObj[1];
+    //var startProgress = startObj[2];
+    
+//    new RoomVisual(spawn.room.name).text(formatDate,                                                                                                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+    new RoomVisual(spawn.room.name).text("Game.time: "+ util.numberWithCommas(Game.time),x, y++, { color: displayColor, font: 0.8, align: "left"  });
+ //   new RoomVisual(spawn.room.name).text("Energy Per Tick: "                + util.numberWithCommas((iProgress / iTicks).toFixed(2)),                    x, y++, { color: displayColor, font: 0.8, align: "right"  });
+  //  new RoomVisual(spawn.room.name).text("Ticks Per Min: "                  + util.numberWithCommas((iTicks /  iMinutes ).toFixed(2)),                   x, y++, { color: displayColor, font: 0.8, align: "right"  });
+  
+};
+
 function getRampartAt(someStructure){
    if (someStructure ==  undefined) {
        return someStructure;
@@ -2564,7 +2532,7 @@ function terminalToTerminalTransfer(spawn) {
     //    console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] energyTransferStatus is '+ energyTransferStatus +' </>');
           
         if (energyTransferStatus == 0) {
-            console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferStatus successful from room[' + Memory.transferEnergyFromRoom + '] to [' + Memory.transferEnergyToRoom + '] energy Amount:' + energyTransferAmount + '</>');
+         //   console.log('<font color = "green">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferStatus successful from room[' + Memory.transferEnergyFromRoom + '] to [' + Memory.transferEnergyToRoom + '] energy Amount:' + energyTransferAmount + '</>');
         }
         else {
         //    console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + spawn.room.name + '] energyTransferStatus failed. Error: ' + energyTransferStatus + ' from room[' + Memory.transferEnergyFromRoom + '] to [' + Memory.transferEnergyToRoom + '] energy Amount:' + energyTransferAmount + '</>');

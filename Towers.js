@@ -17,13 +17,15 @@ module.exports =
 
             var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
 
-            var maxWallHits = 160000;
-            var maxRampartsHits = 1000000;
-            
+            var maxWallHits = 100000;
+            var maxRampartsHits = 1100000;
+            var debugRoomName = "E21S52x"; 
+            var towerId = 0;
+
             // for each tower
             for (let tower of towers) {
 
-
+                towerId++;
              //   console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + ']  tower.room.Test is ' + tower.room.Test  +'</>');
                 //  tower.memory.test = "test";
                 // find closes hostile creep that has a heal part.
@@ -47,7 +49,17 @@ module.exports =
                     firstSpawn.memory.maxWallHits = maxWallHits;
                 }
                 else{
+                    
                     maxWallHits =  firstSpawn.memory.maxWallHits;
+
+                    if (Game.time % 100 == 0 && tower.room.storage.store[RESOURCE_ENERGY] > 998000) {
+                        firstSpawn.memory.maxWallHits = firstSpawn.memory.maxWallHits //+1667;
+                        maxWallHits =  firstSpawn.memory.maxWallHits + 1000;
+                    }
+                    
+                    
+
+
                 }
 
 
@@ -55,20 +67,43 @@ module.exports =
                     firstSpawn.memory.maxRampartsHits = maxRampartsHits;
                 }
                 else{
-                    if (Game.time % 100 == 0) {
-                            firstSpawn.memory.spawnRampartHits = firstSpawn.memory.spawnRampartHits// + 1250;
+                    if (Game.time % 100 == 0 && tower.room.storage.store[RESOURCE_ENERGY] > 998000) {
+                        if (firstSpawn.name != "E21S52") {
+                            firstSpawn.memory.spawnRampartHits = firstSpawn.memory.spawnRampartHits + 200;
+                            }
                         }
-                        
+
+
                         spawnRampartHits = firstSpawn.memory.spawnRampartHits;
 
-                    if (Game.time % 200 == 0) {
-                        firstSpawn.memory.maxRampartsHits = firstSpawn.memory.maxRampartsHits// + 250;
+                        if(tower.room.storage.store[RESOURCE_ENERGY] > 998000)
+                        {
+                            spawnRampartHits =  300000000;
+
+        
+                        }
+        
+
+                    if (Game.time % 200 == 0 && tower.room.storage.store[RESOURCE_ENERGY] > 998000) {
+                        if (firstSpawn.name != "E21S52") {
+                            firstSpawn.memory.maxRampartsHits = firstSpawn.memory.maxRampartsHits + 75;  
+                        }
                     }
                     
                     maxRampartsHits = firstSpawn.memory.maxRampartsHits;
 
                 }
+
+
+
              
+
+                // maxRampartsHits
+                if (tower.room.name == debugRoomName) {
+                    // console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  is ' +  +'</>');
+                     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] 1maxRampartsHits is ' + maxRampartsHits + '</>');
+                  
+                  }
 
 
            //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + ']  firstSpawn is ' + firstSpawn +'</>');
@@ -97,7 +132,7 @@ module.exports =
                 // there no point in attacking invaders during safeMode, just a waste of energy.
                 /* #region  Attack only when Safe mode is undefied. */
                 if (safeModeTimeRemaining == undefined) {
-                    if (invadersCount > 0) {
+                    if (invadersCount == 1) {
 
                         var evilCreep = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
                         var evilCreepHeal = tower.pos.findClosestByRange(FIND_HOSTILE_CREEPS, { filter: (s) => s.getActiveBodyparts(HEAL) });
@@ -177,6 +212,17 @@ module.exports =
 
 
                     }
+                    else
+                    {
+                    //   hostileCreeps =  tower.room.find(FIND_HOSTILE_CREEPS)
+                    //   if (towerId % 2 == 0) {
+                    //     var attackStatus =  tower.attack(evilCreepHeal[towerId]);
+                    //     //
+                    //   } 
+                    //   else if(towerId % 3 == 0){
+                    //     var attackStatus =  tower.attack(evilCreepHeal[towerId]);
+                    //   } 
+                    }
 
                 }
 
@@ -218,6 +264,7 @@ module.exports =
 
 
 
+
                 // if one is found...
                 if (targetCreep != null && targetCreep.my == true && targetCreep.hits < targetCreep.hitsMax) {
                     // ...heal
@@ -225,13 +272,20 @@ module.exports =
                     tower.heal(targetCreep);
                     continue;
                 }
+            
+            //    console.log('test')
+                // if(tower.room.name == "E25S1"){
+                //     console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] maxWallHits is ' + maxWallHits +'</>');
+                // }
 
-
+               
                 // if (creep != null && tower.energy > 300)
                 if (tower.energy > 599) {
 
+                    if(tower.room.name == "E25S51"){
+                        console.log('<font color = "red">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] maxWallHits is ' + maxWallHits +'</>');
+                    }
 
-        //          console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + '] maxWallHits is ' + maxWallHits +'</>');
                     var structure = tower.pos.findClosestByPath(FIND_STRUCTURES, {
                         // the second argument for findClosestByPath is an object which takes
                         // a property called filter which can be a function
@@ -239,26 +293,64 @@ module.exports =
                         //filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
                         filter: (s) => s.structureType == STRUCTURE_ROAD && s.hits < s.hitsMax
                             || s.structureType == STRUCTURE_WALL && s.hits <   maxWallHits
-                            || s.structureType == STRUCTURE_RAMPART && s.hits < maxRampartsHits 
-                            || s.structureType == STRUCTURE_CONTAINER && s.hits < s.hitsMax
+                                && s.pos.y >= 24
+                                && s.id != "5f48b794b6228e24a0785de3" 
+                                && s.id != "6002b6364327f569bab92f45" // 11,6
+                                && s.id != "6002b6417751e2416a8cf963" 
+                                && s.id != "6002b621c2d8d92c2239d707" // 8,6
+                                && s.id != "6002b64c095866dda7d4160c" 
+                                && s.id != "6002b62c330db8d34d50f361"  // 11,5
+                                && s.id != "6002b64c095866dda7d4160c"  // 8,6
+                                && s.id != "6002b61622fe5b0531d0f159"  // 8,4
+                                && s.id != "6002b60c6f9a2a16d2698414"  // 8,3
+                                && s.id != "6002b65876b38a6cf4e62c62"  // 8,2
+                                && s.id != "6002b601330db8533350f34e"  // 9,2
+                                
+                                
+                                
 
+                            || s.structureType == STRUCTURE_RAMPART && s.hits < maxRampartsHits
+                            || s.structureType == STRUCTURE_CONTAINER && s.hits < s.hitsMax
+                            && s.id != "5f3cc42d516442320c95e5a9"  // E25S1 10,4
+                            && s.id != "5f94c6e3c27fd1514042dc92"  // E25S2 41,13
+                            
+
+                            
                             || s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(firstSpawn) && s.hits < spawnRampartHits
                             || s.structureType == STRUCTURE_RAMPART && s.pos.isEqualTo(firstSpawn.room.storage) && s.hits < spawnRampartHits    
 
                     });
                     //  filter: (s) => s.hits < s.hitsMax && s.structureType != STRUCTURE_WALL});
+                  
+            
+                    // if (tower.room.name == "E25S52") {
+                    //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
+                        
+                    // }
 
 
                     // if one is found...750000
                     if (structure != undefined) {
 
-                        //   console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
+                        if (tower.room.name == "E25S52x") {
+                            console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
+                            
+                        }
+                        
+                        
                         if (structure.hitsMax == 750000 && structure.structureType == STRUCTURE_ROAD && structure.hits < 750000) {
                             // console.log('[' + fileName + 'line:' + util.LineNumber() + '] Structure is defined as ' + structure.structureType);
                             var status = tower.repair(structure);
                         }
                         else if (structure.structureType == STRUCTURE_RAMPART && structure.hits < 100000) {
-                          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
+                            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] 222 Repairing rampart hitz is ' + structure.hits + " type  is " + structure.structureType);
+                            
+                            if (tower.room.name == debugRoomName) {
+                                console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + tower.room.name + ']  structure is ' + structure  +'</>');
+                                
+                            }
+                         
+                         
                             var status = tower.repair(structure);
                         }
                         else if (structure.structureType == STRUCTURE_WALL && structure.hits < maxWallHits) {
@@ -266,6 +358,8 @@ module.exports =
                             var status = tower.repair(structure);
                         }
                         else {
+
+
 
                             var status = tower.repair(structure);
                             if (status != 0) {

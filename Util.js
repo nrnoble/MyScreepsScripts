@@ -1272,7 +1272,7 @@ module.exports =
         new RoomVisual(spawn.room.name).text(this.numberWithCommas(Game.cpu.bucket), 3, 49, { align: 'right', color: 'green', font: 0.8 });
 
     //    new RoomVisual(spawn.room.name).text(this.numberWithCommas(spawn.room.storage.store[RESOURCE_ENERGY]), 3, 1, { align: 'right', color: 'green', font: 0.8 });
-        new RoomVisual(spawn.room.name).text(this.numberWithCommas(Game.cpu.bucket), 3, 2, { align: 'right', color: 'green', font: 0.8 });
+        new RoomVisual(spawn.room.name).text(this.numberWithCommas(Game.cpu.bucket), 3, 2, { align: 'right', color: 'green', font: 0.4 });
 
     },
 
@@ -1303,6 +1303,231 @@ module.exports =
             spawnx.memory.roomInit = "completed";
         }
     },
+
+    buildIt: function(creep, debug = false){
+
+        if(debug){ console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] debugging BuildIt function</>');}
+
+        // try {
+            var constructionSitesFound = creep.room.lookForAtArea(LOOK_CONSTRUCTION_SITES, creep.pos.y-3, creep.pos.x-3, creep.pos.y+3, creep.pos.x+3, true);
+           
+            if (constructionSitesFound == undefined || constructionSitesFound == [] || constructionSitesFound.length == 0)
+            {
+               // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] no construction Sites Found:' + constructionSitesFound +'</>');
+                return;
+            }
+
+
+           
+            // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);
+            
+            //console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] repairContainers  start ' + '' +'</>');
+           
+            var workParts = creep.getActiveBodyparts(WORK);
+            if (workParts == 0) {
+            //console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] no work parts found unable to repair ' + '' +'</>');
+                
+                return -1;
+            }
+
+
+            //console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] construction Sites Found: ' + JSON.stringify(constructionSitesFound) +'</>');
+           // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] constructionSitesFound.length: ' + constructionSitesFound.length +'</>');
+
+            for (let i = 0; i < constructionSitesFound.length; i++) {
+          
+//                console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+          
+        //         if (constructionSitesFound[i].structure.structureType != STRUCTURE_CONTAINER) {
+        //  //       if (structures[i].structureType != "container") {
+  
+        //       //   console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i]) +'</>');
+        //        // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                   
+        //             continue;
+        //         }
+
+                var constructionSiteToBuild =  constructionSitesFound[i].constructionSite;
+                console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] constructionSiteToBuild: ' + JSON.stringify(constructionSiteToBuild)+'</>');
+                
+                var buildStatus = creep.build(constructionSiteToBuild);
+
+               console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] buildStatus: ' + buildStatus +'</>');
+              //  console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                // if (constructionSiteToBuild.hits < constructionSiteToBuild.hitsMax) {
+                //     var repairStatus = creep.build(constructionSiteToBuild);
+                //    if (creep.room.name == "E46S1") {
+                //   //     console.log('<font color = "blue">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
+                //     // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                //    }                   
+
+                //     break;
+                // }
+                 
+            }
+        // } catch (e) {
+        
+        //     console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+        // }
+    },
+
+    repairRamparts: function(creep,rampartSize, repairRange = 1, debug = false, debugColor = "yellow"){
+
+        var debugFunctionName = this.getMyName() //.split(".")[1];
+       // var debugTest = debugFunctionName.split(".")[1];
+       // console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] room[' + creep.room.name + '] repairRange is ' + repairRange +'</>');
+        // console.log("*******************************************************************************************************************");
+
+        // try {
+            var structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-repairRange, creep.pos.x-repairRange, creep.pos.y+repairRange, creep.pos.x+repairRange, true);
+            if (debug) {console.log('<font color = "' + debugColor +'">[' + fileName + 'line:' + this.LineNumber() + '] debugging "repairRamparts" function is set to: ' + debug +'</>');}
+            
+            if (debug) {
+                console.log('<font color = "' + debugColor +'">[' + fileName + 'line:' + this.LineNumber() + '] debug ' + debugFunctionName +': structures is' + structures +'</>');
+                console.log('<font color = "' + debugColor +'">[' + fileName + 'line:' + this.LineNumber() + '] debug ' + debugFunctionName +': ' + rampartSize +'</>');
+            }
+ 
+            // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] repairContainers  start ' + '' +'</>');
+           
+            var workParts = creep.getActiveBodyparts(WORK);
+            if (workParts == 0) {
+                console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] WARNING miner has no work parts found unable to repair ' + '' +'</>');
+                
+                return -1;
+            }
+
+            if (structures == undefined || structures == [])
+            {
+                console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] WARNING no structures found in area around creep No repairs to be performed my miner during this tick. structure found:' + structures +'</>');
+                return;
+            }
+
+            if (debug) {
+                console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] debugFunctionName is ' + debugFunctionName +'</>');
+                console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' rampartSize is ' + rampartSize);
+                console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures.length is ' + structures.length);    
+            }
+
+
+            for (let i = 0; i < structures.length; i++) {
+          
+            //    console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+          
+                if (structures[i].structure.structureType != STRUCTURE_RAMPART) {
+         //       if (structures[i].structureType != "container") {
+  
+              //   console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] skipping structure :' + structures[i].structure.structureType +'</>');
+
+              //   console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i]) +'</>');
+               // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                   
+                    continue;
+                }
+
+                var structureToBeRepaired =  structures[i].structure;
+
+                if(structureToBeRepaired.hits >= rampartSize)
+                {
+                    if (debug) {
+                        console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] skipping structure repair['+ structures[i].structure.structureType +'] it has '+structures[i].structure.hits+' hits </>');
+                        console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] skipping structure.hits :' + structures[i].structure.hits +'</>');        
+                    }
+                
+                    continue;
+                }
+                console.log('<font color = "yellow">[' + fileName + 'line:' + this.LineNumber() + '] debug '+ this.getMyName() +': structureToBeRepaired is ' + structureToBeRepaired +'</>');
+               // console.log('<font color = "green">[' + fileName + 'line:' + this.LineNumber() + '] structureToBeRepaired: ' + structureToBeRepaired +'</>');
+              //  console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                if (structureToBeRepaired.hits < rampartSize) {
+                    var repairStatus = creep.repair(structureToBeRepaired);
+                //    if (creep.room.name == "E46S1") {
+                //        console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
+                //     // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                //    }                   
+                   return;
+                    break;
+                }
+                 
+            }
+        // } catch (e) {
+        
+        //     console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+        // }
+    },
+
+    repairContainers: function(creep){
+
+
+        // try {
+            var structures = creep.room.lookForAtArea(LOOK_STRUCTURES, creep.pos.y-1, creep.pos.x-1, creep.pos.y+1, creep.pos.x+1, true);
+           // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' structures is ' + structures);
+            
+            //console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] repairContainers  start ' + '' +'</>');
+           
+            var workParts = creep.getActiveBodyparts(WORK);
+            if (workParts == 0) {
+            //console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] no work parts found unable to repair ' + '' +'</>');
+                
+                return -1;
+            }
+
+            if (structures == undefined || structures == [])
+            {
+               // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] no structures found in area around creep. structures:' + structures +'</>');
+                return;
+            }
+
+
+
+            for (let i = 0; i < structures.length; i++) {
+          
+//                console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+          
+                if (structures[i].structure.structureType != STRUCTURE_CONTAINER) {
+         //       if (structures[i].structureType != "container") {
+  
+              //   console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i]) +'</>');
+               // console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i]):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                   
+                    continue;
+                }
+
+                var structureToBeRepaired =  structures[i].structure;
+              //  console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] structureToBeRepaired' + structureToBeRepaired +'</>');
+              //  console.log('<font color = "orange">[' + fileName + 'line:' + this.LineNumber() + '] JSON.stringify(structures[i] to repaired):' + JSON.stringify(structures[i].structure.structureType) +'</>');
+
+                if (structureToBeRepaired.hits < structureToBeRepaired.hitsMax) {
+                    var repairStatus = creep.repair(structureToBeRepaired);
+                   if (creep.room.name == "E46S1") {
+                  //     console.log('<font color = "blue">[' + fileName + 'line:' + this.LineNumber() + '] repairStatus is ' + repairStatus +'</>');
+                    // console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + '  repairStatus is ' + repairStatus);
+                   }                   
+
+                    break;
+                }
+                 
+            }
+        // } catch (e) {
+        
+        //     console.log('[' + fileName + 'line:' + this.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' Trapped error is ' + e);
+        // }
+    },
+
+    getMyName: function () {
+        var e = new Error('dummy');
+        var stack = e.stack
+                      .split('\n')[2]
+                      // " at functionName ( ..." => "functionName"
+                      .replace(/^\s+at\s+(.+?)\s.+/g, '$1');
+                     return stack.split(".")[1];
+                     // return stack
+
+    },  
 
 
     };

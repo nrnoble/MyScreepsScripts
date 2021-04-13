@@ -6,7 +6,6 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
         util.say(creep,"rpr");
-//return;
 
         // check to see if engery == 0 and ttl < 75
         //var status = util.SelfSecide(creep);
@@ -29,7 +28,7 @@ module.exports = {
 
 
         // 5d4f2eb0ac2d2d20dcee9a27
-     //   creep.memory.targetStructureId = "5d4f2eb0ac2d2d20dcee9a27";
+     //   creep.memory.targetStructureId = "5f48b794b6228e24a0785de3";
     //    var localTargetStructure = null; //5d1dde21b6fe552a9e36646c
     //    if(creep.memory.targetStructureId == undefined)
    //     {
@@ -59,6 +58,21 @@ module.exports = {
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // **********************************************************************
         // if creep is supposed to repair something (working == true)
         // **********************************************************************
@@ -68,23 +82,22 @@ module.exports = {
             // check for a specific structure
          //  console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' asdfasdfsafdsafasdfds creep.memory.targetStructure is ' + creep.memory.targetStructureId);
             
-            // if(creep.memory.targetStructureId != undefined){
-            //    //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
-            //     structure = Game.getObjectById(creep.memory.targetStructureId);
-            //     // if (structure.hits == structure.hitsMax) {
+            if(creep.memory.targetStructureId != undefined){
+               //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+                structure = Game.getObjectById(creep.memory.targetStructureId);
+                // if (structure.hits == structure.hitsMax) {
                 
-            //     //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
-            //     //     creep.memory.targetStructureId = undefined;
-            //     // }
-            //    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
-            //     var repairStatus = creep.repair(structure);
-            //        // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
-            //         if (repairStatus == ERR_NOT_IN_RANGE) {
-            //             // move towards structure
-            //            //console.log('[' + fileName + 'line:' + util.LineNumber() + '] moving towards a road tunnel ');
-            //             creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
-            //         }
-            // }
+                //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
+                //     creep.memory.targetStructureId = undefined;
+                // }
+               // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
+                var repairStatus = creep.repair(structure);
+                   // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+                    if (repairStatus == ERR_NOT_IN_RANGE) {
+                        creep.travelTo(structure, { visualizePathStyle: { stroke: '#ffaa00' } });
+                        
+                    }
+            }
 
             // find closest structure with less than max hits
             // Exclude walls because they have way too many max hits and would keep
@@ -97,7 +110,7 @@ module.exports = {
             // the second argument for findClosestByPath is an object which takes
             // a property called filter which can be a function
             // we use the arrow operator to define it
-            //   filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
+             //  filter: (s) => s.hits  < (s.hitsMax ) && s.structureType != STRUCTURE_WALL && s.structureType != STRUCTURE_RAMPART
                 filter: (s) => s.hits  < (s.hitsMax ) && s.structureType == STRUCTURE_CONTAINER
             });
 

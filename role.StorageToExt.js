@@ -87,6 +87,7 @@ module.exports = {
 
 
 
+//#TransferEnergy
 
         // ********************************************************************************//;
         //  // if creep is supposed to transfer energy to a structure
@@ -142,29 +143,29 @@ module.exports = {
 
             });
 
-            if (structure == undefined) {
+        //     if (structure == undefined) {
             
-                var storageLink = util.findNearestLinkToStorage(creep,10);
+        //         var storageLink = util.findNearestLinkToStorage(creep,10);
 
-                if (creep.room.name == "E21S55" ) {
-                    if (storageLink.store[RESOURCE_ENERGY] < 600) {
-                        structure = storageLink;
-                    }
+        //         if (creep.room.name == "E21S55" ) {
+        //             if (storageLink.store[RESOURCE_ENERGY] < 600) {
+        //                 structure = storageLink;
+        //             }
       
-                }
+        //         }
 
-                // structure = creep.room.storage.findClosestByPath(FIND_MY_STRUCTURES, {
-                //     // the second argument for findClosestByPath is an object which takes
-                //     // a property called filter which can be a function
-                //     // we use the arrow operator to define it
-                //     filter: (s) => (s.structureType == STRUCTURE_LINK
-                //         && s.energy < 600)
-                //});
+        //         // structure = creep.room.storage.findClosestByPath(FIND_MY_STRUCTURES, {
+        //         //     // the second argument for findClosestByPath is an object which takes
+        //         //     // a property called filter which can be a function
+        //         //     // we use the arrow operator to define it
+        //         //     filter: (s) => (s.structureType == STRUCTURE_LINK
+        //         //         && s.energy < 600)
+        //         //});
 
-            }
+        //     }
 
             if (structure == undefined) {
-            structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
                 // the second argument for findClosestByPath is an object which takes
                 // a property called filter which can be a function
                 // we use the arrow operator to define it
@@ -173,24 +174,112 @@ module.exports = {
 
             });
 
-        }
+         }
+
+        //     // tower less than 100
+        //     if (structure == undefined) {
+        //         var id = "5d4dd12e31f4ac407ed9c69b";
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 100
+        //                 && s.energy < s.energyCapacity
+        //                 && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+
+        //         });
+        //     }
 
 
-            if (structure == undefined) {
-                var id = "5d4dd12e31f4ac407ed9c69b";
-                structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
-                    filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < s.energyCapacity - 300
-                        && s.energy < s.energyCapacity
-                        && s.id != "5d4dd12e31f4ac407ed9c69b")
-                    //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+        //     // tower less than 200
+        //     if (structure == undefined) {
+        //         var id = "5d4dd12e31f4ac407ed9c69b";
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 200
+        //                 && s.energy < s.energyCapacity
+        //                 && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
 
-                });
+        //         });
+        //     }
+
+        // // tower less than 300
+        //     if (structure == undefined) {
+        //         var id = "";
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 300
+        //                 && s.energy < s.energyCapacity)
+        //            //     && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+
+        //         });
+        //     }
+
+
+        //     if (structure == undefined) {
+        //         var id = "";
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 400
+        //                 && s.energy < s.energyCapacity)
+        //            //     && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+
+        //         });
+        //     }
+        //     if (structure == undefined) {
+        //         var id = "";
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 500
+        //                 && s.energy < s.energyCapacity)
+        //            //     && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+
+        //         });
+        //     }
+
+        //     if (structure == undefined) {
+              
+        //         structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+        //             // the second argument for findClosestByPath is an object which takes
+        //             // a property called filter which can be a function
+        //             // we use the arrow operator to define it
+        //             filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < 600
+        //                 && s.energy < s.energyCapacity)
+        //            //     && s.id != "5d4dd12e31f4ac407ed9c69b")
+        //             //   filter: (s) => (s.structureType ==  STRUCTURE_TERMINAL) 
+
+        //         });
+        //     }
+
+            for (let index = 1; index < 9; index++) {
+                var energyAmount = index * 100;
+                if (structure == undefined) {
+              
+                    structure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                        filter: (s) => (s.structureType == STRUCTURE_TOWER && s.energy < energyAmount
+                            && s.energy < s.energyCapacity)                
+                    });
+                }
+
+                if (structure != undefined) {
+                    console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] EnergyAmount is ' + energyAmount +'</>');
+                    break;
+                }
+    
             }
-
-
 
 
             if (structure == undefined) {
@@ -449,7 +538,7 @@ module.exports = {
 
         /* #endregion */
 
-
+//#GetEnergy
         // ********************************************************************************//;
         // // if creep is supposed to harvest energy from source
         // ********************************************************************************//;
@@ -459,24 +548,6 @@ module.exports = {
 
 
             var ClosestContainer 
-            if (util.isRoom(creep, "E44S2") || !util.isRoom(creep, "E45S3")) {
-                ClosestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                    // the second argument for findClosestByPath is an object which takes
-                    // a property called filter which can be a function
-                    // we use the arrow operator to define it
-                    // filter: s => s.structureType == STRUCTURE_CONTAINER &&
-                    // s.store[RESOURCE_ENERGY] > 75
-                  //  filter: s => s.structureType == STRUCTURE_STORAGE
-                    filter: s => s.structureType == STRUCTURE_TERMINAL && s.store[RESOURCE_ENERGY] >200000
-
-                });
-
-                if (creep.room.name == "E46S3") {
-                    console.log('<font color = "reds">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xcxcxcxc11 ClosestContainer is ' + ClosestContainer +'</>');
-                    ClosestContainer = undefined;
-                }
-            }
-
 
 
             if (creep.room.name == "E46S3") {
@@ -503,18 +574,15 @@ module.exports = {
             if (creep.room.name == "E46S3") {
                 console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] xcxcxcxc11 ClosestContainer is ' + ClosestContainer +'</>');
             }
-
+            // **************************************
+            // use storage if storage is defined
+            // **************************************
             if (ClosestContainer == undefined ){
+                if (creep.room.storage != undefined) {
+                    ClosestContainer =  creep.room.storage;   
+                }
 
-
-                ClosestContainer = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-
-                    filter: s => s.structureType == STRUCTURE_STORAGE
-                    //filter: s => s.structureType == STRUCTURE_TERMINAL
-
-                });
-
-                //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room [' + creep.room.name + '] ClosestContainer is ' + ClosestContainer +'</>');
+//      console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room [' + creep.room.name + '] ClosestContainer is ' + ClosestContainer +'</>');
 
             }
 

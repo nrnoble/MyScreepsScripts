@@ -7,7 +7,9 @@ module.exports = {
     // a function to run the logic for this role
     run: function (creep) {
 
-   // return;
+        if (creep.room.name == "E25S51") {
+            creep.memory.targetStructureId = "5f48b794b6228e24a0785de3"; 
+        }
 
         // if resouces are nearby, attempt to pickup.
         util.pickupResources(creep,0);
@@ -32,6 +34,29 @@ module.exports = {
         // if creep is supposed to repair something
         if (creep.memory.working == true) {
             // find all walls in the room
+
+                        
+            if(creep.memory.targetStructureId != undefined){
+                //console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + '  creep.memory.targetStructure is ' + creep.memory.targetStructureId);
+                 wall = Game.getObjectById(creep.memory.targetStructureId);
+                 // if (structure.hits == structure.hitsMax) {
+                 
+                 //     console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' + creep.room.name + ' ' + creep.name + ' hits = MaxHits. Changing target to undefined  ');
+                 //     creep.memory.targetStructureId = undefined;
+                 // }
+                // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' XXXXXXXXXstructure is '  + structure);
+                 var repairStatus = creep.repair(wall);
+                    // console.log('[' + fileName + 'line:' + util.LineNumber() + '] ' +  creep.name + ' repair status is ' + repairStatus);
+                     if (repairStatus == ERR_NOT_IN_RANGE) {
+                         creep.travelTo(wall, { visualizePathStyle: { stroke: '#ffaa00' } });
+                     }
+
+                     // only one target, so there nothing else that needs to be done
+                     return;
+             }
+ 
+
+             
             var walls = creep.room.find(FIND_STRUCTURES, {
                 filter: (s) => s.structureType == STRUCTURE_WALL
                 && (s.x != 42 && s.y !=29)

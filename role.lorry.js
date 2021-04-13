@@ -1,7 +1,7 @@
 var util = require('Util'); 
 const { overlayInfo } = require('Util');
 var fileName = "Lorry       ";
-var debugRoomName = "E21S52x";
+var debugRoomName = "E25S52";
 var debugColor = "Yellow";
 
 
@@ -45,20 +45,10 @@ module.exports = {
         if (creep.memory.working == true) {
             // find closest spawn, extension or tower which is not full
             var targetStructure = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
-                // the second argument for findClosestByPath is an object which takes
-                // a property called filter which can be a function
-                // we use the arrow operator to define it
-
-                // filter: (s) => (s.structureType == STRUCTURE_SPAWN
-                //     || s.structureType == STRUCTURE_EXTENSION
-                //     || s.structureType == STRUCTURE_TOWER)
-                //     && s.energy < s.energyCapacity
-
-
                 filter: (s) => (
                  //   s.structureType == STRUCTURE_SPAWN
                      s.structureType == STRUCTURE_STORAGE)
-                    //|| s.structureType == STRUCTURE_TERMINAL
+                    || s.structureType == STRUCTURE_TERMINAL
                    // || s.structureType == STRUCTURE_CONTAINER)
                     && s.energy < s.energyCapacity
             
@@ -69,6 +59,9 @@ module.exports = {
                 targetStructure = creep.room.storage;
             }    
 
+            if (creep.room.name == "E25S51") {
+                targetStructure = creep.room.storage;
+            }    
 
             if (creep.room.name == debugRoomName) {
                 console.log('<font color = '+ debugColor + '>[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + '] targetStructure is ' + targetStructure +'</>');
@@ -94,22 +87,22 @@ module.exports = {
        // ********************************************************************************//;
         else {
            
-            if (creep.room.name =="E44S2") {
-                var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
-                    s.structureType == STRUCTURE_SPAWN 
-                    || s.structureType == STRUCTURE_EXTENSION
-                    && s.energy < s.energyCapacity)
+            // if (creep.room.name =="E44S2") {
+            //     var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
+            //         s.structureType == STRUCTURE_SPAWN 
+            //         || s.structureType == STRUCTURE_EXTENSION
+            //         && s.energy < s.energyCapacity)
              
-                 });
-            }
-            else{      
-                var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
-                s.structureType == STRUCTURE_SPAWN 
-                || s.structureType == STRUCTURE_EXTENSION
-                && s.energy < s.energyCapacity)
+            //      });
+            // }
+            // else{      
+            //     var energyTargets = creep.room.find(FIND_MY_STRUCTURES, {filter: (s) => (
+            //     s.structureType == STRUCTURE_SPAWN 
+            //     || s.structureType == STRUCTURE_EXTENSION
+            //     && s.energy < s.energyCapacity)
             
-                });
-            }
+            //     });
+            // }
             // find closest container
 
             // let container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -148,6 +141,9 @@ module.exports = {
                     // move towards it
                     creep.moveTo(container);
                 }
+            }
+            if(creep.room.name == "E25S52"){
+                creep.moveTo(new RoomPosition(35,41,"E25S52"));
             }
         }
     }

@@ -414,6 +414,13 @@ module.exports = {
             ClosestContainer = Game.getObjectById(creep.memory.sourceId);
         }
 
+        // if (creep.room.name == "W8N36") {
+        //     ClosestContainer = undefined;
+        //     console.log('<font color = "yellow">[' + fileName + 'line:' + util.LineNumber() + '] room[' + creep.room.name + ']  HACK WARNING ClosestContainer has been set to undefined for W8N36 to force Builder to get energy from source ' + ClosestContainer +'</>');
+
+        // }
+
+
         // **********************************************************************************\
         // Get energy from energy structure 
         // **********************************************************************************
